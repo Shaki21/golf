@@ -1,0 +1,46 @@
+<h1>Payment Successful!</h1>
+
+<p>Hi {{userName}},</p>
+
+<p>Thank you for your payment! We've successfully processed your payment for IUP Golf Academy.</p>
+
+<div class="highlight-box">
+  <p style="margin: 0;"><strong>Payment Details:</strong></p>
+  <p style="margin: 8px 0 0 0;">
+    Amount: <strong>{{formattedAmount}} {{currency}}</strong><br>
+    Plan: <strong>{{planType}}</strong><br>
+    Status: <span style="color: #10b981;"><strong>✓ Paid</strong></span>
+  </p>
+</div>
+
+{{#if invoiceUrl}}
+<h2>Your Invoice</h2>
+
+<p>You can download your invoice for your records:</p>
+
+<center style="margin: 24px 0;">
+  <a href="{{invoiceUrl}}" class="button">Download Invoice</a>
+</center>
+{{/if}}
+
+<h2>What's Next?</h2>
+
+<p>Your subscription is now active. You have full access to:</p>
+
+<ul>
+  <li><strong>Personalized Training Plans:</strong> Access your customized golf development program</li>
+  <li><strong>Expert Coaching:</strong> Connect with professional coaches</li>
+  <li><strong>Performance Tracking:</strong> Monitor your progress and improvements</li>
+  <li><strong>Video Analysis:</strong> Get detailed swing analysis and feedback</li>
+</ul>
+
+<center style="margin: 32px 0;">
+  <a href="{{billingUrl}}" class="button">View Billing Details</a>
+</center>
+
+<hr class="divider">
+
+<p>If you have any questions about your payment or subscription, please don't hesitate to contact us at <a href="mailto:{{supportEmail}}">{{supportEmail}}</a>.</p>
+
+<p style="margin-top: 32px;">Thank you for choosing IUP Golf Academy!<br>
+<strong>The IUP Golf Academy Team</strong></p>

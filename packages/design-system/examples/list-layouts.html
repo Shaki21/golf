@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List Layouts - AK Golf Academy Design System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --ak-primary: #10456A; --ak-primary-light: #2C5F7F; --ak-primary-50: #E8F1F5;
+            --ak-white: #FFFFFF; --ak-snow: #EDF0F2; --ak-surface: #EBE5DA;
+            --ak-success: #4A7C59; --ak-warning: #D4A84B; --ak-error: #C45B4E;
+            --ak-charcoal: #1C1C1E; --ak-steel: #8E8E93; --ak-mist: #E5E5EA; --ak-cloud: #F2F2F7;
+            --spacing-sm: 8px; --spacing-md: 12px; --spacing-lg: 16px; --spacing-xl: 24px; --spacing-xxl: 32px;
+            --radius-sm: 8px; --radius-md: 12px; --radius-lg: 16px; --radius-full: 999px;
+            --shadow-card: 0 2px 4px rgba(0, 0, 0, 0.06); --shadow-elevated: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 6px 16px rgba(0, 0, 0, 0.12);
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        :root.dark {
+            --ak-primary: #2C5F7F; --ak-white: #1C1C1E; --ak-snow: #1C1C1E; --ak-surface: #2C2C2E;
+            --ak-charcoal: #F2F2F7; --ak-steel: #AEAEB2; --ak-mist: #3A3A3C; --ak-cloud: #2C2C2E;
+            --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.3); --shadow-elevated: 0 4px 16px rgba(0, 0, 0, 0.4);
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: linear-gradient(135deg, var(--ak-surface) 0%, var(--ak-snow) 100%);
+            color: var(--ak-charcoal);
+            line-height: 1.6;
+        }
+
+        .showcase-nav {
+            background: var(--ak-white);
+            box-shadow: var(--shadow-card);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--spacing-lg) var(--spacing-xl);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--spacing-xl);
+            flex-wrap: wrap;
+        }
+
+        .nav-brand { display: flex; align-items: center; gap: var(--spacing-md); }
+        .nav-logo {
+            width: 40px;
+            height: 40px;
+            background: var(--ak-primary);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+        }
+
+        .nav-title { font-size: 17px; font-weight: 600; color: var(--ak-charcoal); }
+        .nav-subtitle { font-size: 13px; color: var(--ak-steel); }
+        .nav-links { display: flex; gap: var(--spacing-sm); flex-wrap: wrap; }
+        .nav-link {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border-radius: var(--radius-md);
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--ak-steel);
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .nav-link:hover { background: var(--ak-primary-50); color: var(--ak-primary); }
+        .nav-link.active { background: var(--ak-primary); color: white; }
+        .theme-toggle {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border-radius: var(--radius-md);
+            background: var(--ak-cloud);
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: var(--spacing-xxl) var(--spacing-xl); }
+        .page-header { text-align: center; margin-bottom: var(--spacing-xxl); }
+        .page-title {
+            font-size: 34px;
+            font-weight: 700;
+            color: var(--ak-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .page-description { font-size: 17px; color: var(--ak-steel); max-width: 600px; margin: 0 auto; }
+        .list-section {
+            background: var(--ak-white);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xxl);
+            margin-bottom: var(--spacing-xxl);
+            box-shadow: var(--shadow-card);
+        }
+
+        .section-title { font-size: 28px; font-weight: 700; color: var(--ak-primary); margin-bottom: var(--spacing-md); }
+        .section-subtitle { font-size: 15px; color: var(--ak-steel); margin-bottom: var(--spacing-xl); }
+
+        /* List Styles */
+        .list-container { display: flex; flex-direction: column; gap: var(--spacing-md); }
+        .list-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-lg);
+            background: var(--ak-cloud);
+            border-radius: var(--radius-md);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .list-item:hover {
+            background: var(--ak-primary-50);
+            transform: translateX(4px);
+        }
+
+        .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--ak-primary-200);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: var(--ak-primary);
+            flex-shrink: 0;
+        }
+
+        .list-content { flex: 1; min-width: 0; }
+        .list-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--ak-charcoal);
+            margin-bottom: 2px;
+        }
+
+        .list-subtitle { font-size: 13px; color: var(--ak-steel); }
+        .list-actions { display: flex; gap: var(--spacing-sm); }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-ghost { background: transparent; color: var(--ak-primary); }
+        .btn-ghost:hover { background: var(--ak-primary-50); }
+
+        .badge {
+            display: inline-flex;
+            padding: 4px 10px;
+            border-radius: var(--radius-full);
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .badge-success { background: rgba(74, 124, 89, 0.1); color: var(--ak-success); }
+        .badge-warning { background: rgba(212, 168, 75, 0.1); color: var(--ak-warning); }
+        .badge-info { background: var(--ak-primary-50); color: var(--ak-primary); }
+        .badge-neutral { background: var(--ak-mist); color: var(--ak-steel); }
+
+        /* Grouped Lists */
+        .list-group { margin-bottom: var(--spacing-xl); }
+        .group-header {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--ak-steel);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: var(--spacing-md) 0;
+            border-bottom: 2px solid var(--ak-mist);
+            margin-bottom: var(--spacing-md);
+        }
+
+        /* Card Grid */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .card {
+            background: var(--ak-white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+            transition: all 0.2s ease;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-2px);
+            cursor: pointer;
+        }
+
+        .card-image {
+            width: 100%;
+            height: 150px;
+            background: linear-gradient(135deg, var(--ak-primary) 0%, var(--ak-primary-light) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+        }
+
+        .card-body { padding: var(--spacing-lg); }
+        .card-title { font-size: 17px; font-weight: 600; color: var(--ak-charcoal); margin-bottom: var(--spacing-sm); }
+        .card-text { font-size: 13px; color: var(--ak-steel); margin-bottom: var(--spacing-md); }
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: var(--spacing-sm);
+        }
+
+        /* Data Table */
+        .data-table { display: flex; flex-direction: column; gap: 1px; }
+        .table-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 2fr 1fr;
+            gap: var(--spacing-lg);
+            align-items: center;
+            padding: var(--spacing-lg);
+            background: var(--ak-cloud);
+            transition: all 0.2s ease;
+        }
+
+        .table-row:hover { background: var(--ak-primary-50); }
+        .table-header {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 2fr 1fr;
+            gap: var(--spacing-lg);
+            padding: var(--spacing-md) var(--spacing-lg);
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--ak-steel);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .table-cell { display: flex; align-items: center; gap: var(--spacing-sm); }
+
+        /* Progress Bar */
+        .progress-bar {
+            height: 4px;
+            background: var(--ak-mist);
+            border-radius: 2px;
+            overflow: hidden;
+            width: 100px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--ak-primary);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        .progress-fill.success { background: var(--ak-success); }
+
+        /* Timeline */
+        .timeline { position: relative; padding-left: 40px; }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 12px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--ak-mist);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: -35px;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--ak-white);
+            border: 2px solid var(--ak-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .timeline-content {
+            background: var(--ak-cloud);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-md);
+        }
+
+        .timeline-time { font-size: 13px; color: var(--ak-steel); margin-bottom: var(--spacing-sm); }
+        .timeline-title { font-size: 15px; font-weight: 600; color: var(--ak-charcoal); margin-bottom: var(--spacing-sm); }
+        .timeline-description { font-size: 13px; color: var(--ak-steel); }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: var(--spacing-xxl);
+        }
+
+        .empty-icon { font-size: 64px; margin-bottom: var(--spacing-lg); opacity: 0.5; }
+        .empty-title { font-size: 20px; font-weight: 600; color: var(--ak-charcoal); margin-bottom: var(--spacing-sm); }
+        .empty-text { font-size: 15px; color: var(--ak-steel); margin-bottom: var(--spacing-xl); }
+
+        /* Skeleton */
+        .skeleton {
+            background: linear-gradient(90deg, var(--ak-mist) 25%, var(--ak-cloud) 50%, var(--ak-mist) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: var(--radius-sm);
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        .skeleton-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-lg);
+        }
+
+        .skeleton-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+        }
+
+        .skeleton-content { flex: 1; display: flex; flex-direction: column; gap: var(--spacing-sm); }
+        .skeleton-title { height: 16px; width: 60%; }
+        .skeleton-subtitle { height: 12px; width: 40%; }
+
+        @media (max-width: 768px) {
+            .card-grid { grid-template-columns: 1fr; }
+            .table-row, .table-header { grid-template-columns: 1fr; font-size: 12px; }
+            .page-title { font-size: 28px; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="showcase-nav">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <div class="nav-logo">⛳</div>
+                <div>
+                    <div class="nav-title">AK Golf Academy</div>
+                    <div class="nav-subtitle">Design System v3.0</div>
+                </div>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="component-gallery.html" class="nav-link">Components</a>
+                <a href="interaction-states.html" class="nav-link">States</a>
+                <a href="form-layouts.html" class="nav-link">Forms</a>
+                <a href="list-layouts.html" class="nav-link active">Lists</a>
+                <a href="theme-variations.html" class="nav-link">Themes</a>
+                <a href="animation-showcase.html" class="nav-link">Animations</a>
+                <a href="responsive-showcase.html" class="nav-link">Responsive</a>
+            </div>
+            <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+        </div>
+    </nav>
+
+    <main class="container">
+        <header class="page-header">
+            <h1 class="page-title">List Layouts</h1>
+            <p class="page-description">
+                Ulike liste-mønstre for å vise data, kontakter, aktiviteter og mer.
+            </p>
+        </header>
+
+        <!-- FLAT LIST -->
+        <section class="list-section">
+            <h2 class="section-title">📋 Flat List med Avatars</h2>
+            <p class="section-subtitle">Standard liste for kontakter eller spillere</p>
+
+            <div class="list-container">
+                <div class="list-item">
+                    <div class="avatar">MA</div>
+                    <div class="list-content">
+                        <div class="list-title">Magnus Andersen</div>
+                        <div class="list-subtitle">B-nivå • 16 år</div>
+                    </div>
+                    <div class="list-actions">
+                        <button class="btn btn-ghost">Se profil</button>
+                    </div>
+                </div>
+
+                <div class="list-item">
+                    <div class="avatar">SJ</div>
+                    <div class="list-content">
+                        <div class="list-title">Sara Johansen</div>
+                        <div class="list-subtitle">A-nivå • 18 år</div>
+                    </div>
+                    <div class="list-actions">
+                        <button class="btn btn-ghost">Se profil</button>
+                    </div>
+                </div>
+
+                <div class="list-item">
+                    <div class="avatar">EH</div>
+                    <div class="list-content">
+                        <div class="list-title">Erik Hansen</div>
+                        <div class="list-subtitle">C-nivå • 14 år</div>
+                    </div>
+                    <div class="list-actions">
+                        <button class="btn btn-ghost">Se profil</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- GROUPED LISTS -->
+        <section class="list-section">
+            <h2 class="section-title">📅 Grouped Lists</h2>
+            <p class="section-subtitle">Liste gruppert etter dato eller kategori</p>
+
+            <div class="list-group">
+                <h3 class="group-header">I dag</h3>
+                <div class="list-container">
+                    <div class="list-item">
+                        <div class="list-content">
+                            <div class="list-title">Swing Teknikk</div>
+                            <div class="list-subtitle">14:00 - 15:00</div>
+                        </div>
+                        <span class="badge badge-info">60 min</span>
+                    </div>
+                    <div class="list-item">
+                        <div class="list-content">
+                            <div class="list-title">Styrketrening</div>
+                            <div class="list-subtitle">16:00 - 16:45</div>
+                        </div>
+                        <span class="badge badge-info">45 min</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="list-group">
+                <h3 class="group-header">I morgen</h3>
+                <div class="list-container">
+                    <div class="list-item">
+                        <div class="list-content">
+                            <div class="list-title">Putting Drill</div>
+                            <div class="list-subtitle">10:00 - 11:30</div>
+                        </div>
+                        <span class="badge badge-info">90 min</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="list-group">
+                <h3 class="group-header">Denne uken</h3>
+                <div class="list-container">
+                    <div class="list-item">
+                        <div class="list-content">
+                            <div class="list-title">Mental Coaching</div>
+                            <div class="list-subtitle">Lørdag 11:00</div>
+                        </div>
+                        <span class="badge badge-info">30 min</span>
+                    </div>
+                    <div class="list-item">
+                        <div class="list-content">
+                            <div class="list-title">Bane-runde</div>
+                            <div class="list-subtitle">Søndag 09:00</div>
+                        </div>
+                        <span class="badge badge-info">180 min</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CARD GRID -->
+        <section class="list-section">
+            <h2 class="section-title">🃏 Card Grid</h2>
+            <p class="section-subtitle">Responsive grid: 1-kolonne (mobil) → 2-kolonne (tablet) → 3-kolonne (desktop)</p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-image">🏌️</div>
+                    <div class="card-body">
+                        <h3 class="card-title">Swing Analyse</h3>
+                        <p class="card-text">Detaljert analyse av din svingteknikk med video-feedback</p>
+                        <div class="card-footer">
+                            <span class="badge badge-info">Teknikk</span>
+                            <span style="font-size: 13px; color: var(--ak-steel);">60 min</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-image">💪</div>
+                    <div class="card-body">
+                        <h3 class="card-title">Styrketrening</h3>
+                        <p class="card-text">Golf-spesifikk styrke og mobilitetstrening</p>
+                        <div class="card-footer">
+                            <span class="badge badge-warning">Fysisk</span>
+                            <span style="font-size: 13px; color: var(--ak-steel);">45 min</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-image">🧠</div>
+                    <div class="card-body">
+                        <h3 class="card-title">Mental Game</h3>
+                        <p class="card-text">Utvikle ditt mentale spill og konkurransefokus</p>
+                        <div class="card-footer">
+                            <span class="badge badge-success">Mental</span>
+                            <span style="font-size: 13px; color: var(--ak-steel);">30 min</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DATA TABLE -->
+        <section class="list-section">
+            <h2 class="section-title">📊 Data Table</h2>
+            <p class="section-subtitle">Tabell-lignende layout for oversiktlig datapresentasjon</p>
+
+            <div class="data-table">
+                <div class="table-header">
+                    <div>Spiller</div>
+                    <div>Nivå</div>
+                    <div>Økter</div>
+                    <div>Fremgang</div>
+                    <div>Handling</div>
+                </div>
+
+                <div class="table-row">
+                    <div class="table-cell">
+                        <div class="avatar" style="width: 32px; height: 32px; font-size: 12px;">MA</div>
+                        <span>Magnus Andersen</span>
+                    </div>
+                    <div class="table-cell">
+                        <span class="badge badge-info">B-nivå</span>
+                    </div>
+                    <div class="table-cell">12</div>
+                    <div class="table-cell">
+                        <div class="progress-bar">
+                            <div class="progress-fill success" style="width: 85%"></div>
+                        </div>
+                        <span style="font-size: 13px;">85%</span>
+                    </div>
+                    <div class="table-cell">
+                        <button class="btn btn-ghost">Vis</button>
+                    </div>
+                </div>
+
+                <div class="table-row">
+                    <div class="table-cell">
+                        <div class="avatar" style="width: 32px; height: 32px; font-size: 12px;">SJ</div>
+                        <span>Sara Johansen</span>
+                    </div>
+                    <div class="table-cell">
+                        <span class="badge badge-success">A-nivå</span>
+                    </div>
+                    <div class="table-cell">15</div>
+                    <div class="table-cell">
+                        <div class="progress-bar">
+                            <div class="progress-fill success" style="width: 92%"></div>
+                        </div>
+                        <span style="font-size: 13px;">92%</span>
+                    </div>
+                    <div class="table-cell">
+                        <button class="btn btn-ghost">Vis</button>
+                    </div>
+                </div>
+
+                <div class="table-row">
+                    <div class="table-cell">
+                        <div class="avatar" style="width: 32px; height: 32px; font-size: 12px;">EH</div>
+                        <span>Erik Hansen</span>
+                    </div>
+                    <div class="table-cell">
+                        <span class="badge badge-neutral">C-nivå</span>
+                    </div>
+                    <div class="table-cell">8</div>
+                    <div class="table-cell">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 58%"></div>
+                        </div>
+                        <span style="font-size: 13px;">58%</span>
+                    </div>
+                    <div class="table-cell">
+                        <button class="btn btn-ghost">Vis</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TIMELINE -->
+        <section class="list-section">
+            <h2 class="section-title">⏱️ Activity Timeline</h2>
+            <p class="section-subtitle">Kronologisk visning av aktiviteter</p>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker">🏌️</div>
+                    <div class="timeline-content">
+                        <div class="timeline-time">2 timer siden</div>
+                        <div class="timeline-title">Fullførte Swing Analyse</div>
+                        <div class="timeline-description">60 min økt med fokus på backswing teknikk</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker">💪</div>
+                    <div class="timeline-content">
+                        <div class="timeline-time">I går</div>
+                        <div class="timeline-title">Styrketrening</div>
+                        <div class="timeline-description">45 min core og fleksibilitet</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker">🧠</div>
+                    <div class="timeline-content">
+                        <div class="timeline-time">Mandag</div>
+                        <div class="timeline-title">Mental Coaching</div>
+                        <div class="timeline-description">Visualisering og fokusteknikker</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EMPTY STATE -->
+        <section class="list-section">
+            <h2 class="section-title">📭 Empty State</h2>
+            <p class="section-subtitle">Når det ikke er noe innhold å vise</p>
+
+            <div class="empty-state">
+                <div class="empty-icon">📭</div>
+                <h3 class="empty-title">Ingen økter planlagt</h3>
+                <p class="empty-text">Du har ingen kommende treningsøkter. Book din første økt for å komme i gang!</p>
+                <button class="btn" style="background: var(--ak-primary); color: white; padding: 12px 24px;">
+                    Book en økt
+                </button>
+            </div>
+        </section>
+
+        <!-- LOADING SKELETON -->
+        <section class="list-section">
+            <h2 class="section-title">⏳ Loading Skeleton</h2>
+            <p class="section-subtitle">Placeholder mens innhold laster</p>
+
+            <div class="list-container">
+                <div class="skeleton-item">
+                    <div class="skeleton skeleton-avatar"></div>
+                    <div class="skeleton-content">
+                        <div class="skeleton skeleton-title"></div>
+                        <div class="skeleton skeleton-subtitle"></div>
+                    </div>
+                </div>
+                <div class="skeleton-item">
+                    <div class="skeleton skeleton-avatar"></div>
+                    <div class="skeleton-content">
+                        <div class="skeleton skeleton-title"></div>
+                        <div class="skeleton skeleton-subtitle"></div>
+                    </div>
+                </div>
+                <div class="skeleton-item">
+                    <div class="skeleton skeleton-avatar"></div>
+                    <div class="skeleton-content">
+                        <div class="skeleton skeleton-title"></div>
+                        <div class="skeleton skeleton-subtitle"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function toggleTheme() {
+            const root = document.documentElement;
+            const isDark = root.classList.contains('dark');
+            if (isDark) {
+                root.classList.remove('dark');
+                localStorage.setItem('ak-golf-theme', 'light');
+            } else {
+                root.classList.add('dark');
+                localStorage.setItem('ak-golf-theme', 'dark');
+            }
+        }
+
+        const savedTheme = localStorage.getItem('ak-golf-theme');
+        if (savedTheme === 'dark') {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+</body>
+</html>

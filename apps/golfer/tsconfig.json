@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "strict": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noFallthroughCasesInSwitch": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowJs": true,
+    "noImplicitAny": false,
+    "baseUrl": ".",
+    "paths": {
+      "@iup/design-system": ["../../packages/design-system/components/index.ts"],
+      "@iup/design-system/*": ["../../packages/design-system/*"],
+      "@/*": ["src/*"],
+      "@screens/*": ["screens/*"]
+    }
+  },
+  "include": ["src/**/*", "screens/**/*"],
+  "exclude": ["node_modules", "ios", "android"]
+}

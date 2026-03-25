@@ -1,0 +1,1589 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Component Gallery - AK Golf Academy Design System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ═══════════════════════════════════════════
+           DESIGN SYSTEM v3.0 - CSS VARIABLES
+           ═══════════════════════════════════════════ */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Brand Colors */
+            --ak-primary: #10456A;
+            --ak-primary-light: #2C5F7F;
+            --ak-primary-50: #E8F1F5;
+            --ak-primary-100: #D1E3EB;
+            --ak-primary-200: #A3C7D7;
+            --ak-gold: #C9A227;
+            --ak-white: #FFFFFF;
+            --ak-snow: #EDF0F2;
+            --ak-surface: #EBE5DA;
+            --ak-ink: #02060D;
+
+            /* Semantic Colors */
+            --ak-success: #4A7C59;
+            --ak-warning: #D4A84B;
+            --ak-error: #C45B4E;
+
+            /* Neutrals */
+            --ak-charcoal: #1C1C1E;
+            --ak-steel: #8E8E93;
+            --ak-mist: #E5E5EA;
+            --ak-cloud: #F2F2F7;
+
+            /* Gray Scale */
+            --gray-50: #F9FAFB;
+            --gray-100: #F2F4F7;
+            --gray-300: #D5D7DA;
+            --gray-500: #8E8E93;
+            --gray-600: #535862;
+            --gray-700: #414651;
+            --gray-900: #1C1C1E;
+
+            /* Spacing */
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 12px;
+            --spacing-lg: 16px;
+            --spacing-xl: 24px;
+            --spacing-xxl: 32px;
+
+            /* Border Radius */
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-full: 999px;
+
+            /* Shadows */
+            --shadow-card: 0 2px 4px rgba(0, 0, 0, 0.06);
+            --shadow-elevated: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 6px 16px rgba(0, 0, 0, 0.12);
+
+            /* Typography */
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        /* Dark Mode */
+        :root.dark {
+            --ak-primary: #2C5F7F;
+            --ak-primary-light: #3D7A9E;
+            --ak-primary-50: #1A2E3A;
+            --ak-primary-100: #234152;
+            --ak-white: #1C1C1E;
+            --ak-snow: #1C1C1E;
+            --ak-surface: #2C2C2E;
+            --ak-ink: #F2F2F7;
+
+            --ak-charcoal: #F2F2F7;
+            --ak-steel: #AEAEB2;
+            --ak-mist: #3A3A3C;
+            --ak-cloud: #2C2C2E;
+
+            --gray-50: #1C1C1E;
+            --gray-100: #2C2C2E;
+            --gray-300: #3A3A3C;
+            --gray-500: #AEAEB2;
+            --gray-900: #F2F2F7;
+
+            --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.3);
+            --shadow-elevated: 0 4px 16px rgba(0, 0, 0, 0.4);
+            --shadow-hover: 0 6px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: linear-gradient(135deg, var(--ak-surface) 0%, var(--ak-snow) 100%);
+            color: var(--ak-charcoal);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* ═══════════════════════════════════════════
+           NAVIGATION
+           ═══════════════════════════════════════════ */
+
+        .showcase-nav {
+            background: var(--ak-white);
+            box-shadow: var(--shadow-card);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--spacing-lg) var(--spacing-xl);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--spacing-xl);
+            flex-wrap: wrap;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .nav-logo {
+            width: 40px;
+            height: 40px;
+            background: var(--ak-primary);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+        }
+
+        .nav-title {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--ak-charcoal);
+        }
+
+        .nav-subtitle {
+            font-size: 13px;
+            color: var(--ak-steel);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: var(--spacing-sm);
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border-radius: var(--radius-md);
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--ak-steel);
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .nav-link:hover {
+            background: var(--ak-primary-50);
+            color: var(--ak-primary);
+        }
+
+        .nav-link.active {
+            background: var(--ak-primary);
+            color: white;
+        }
+
+        .theme-toggle {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border-radius: var(--radius-md);
+            background: var(--ak-cloud);
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .theme-toggle:hover {
+            background: var(--ak-mist);
+        }
+
+        /* ═══════════════════════════════════════════
+           MAIN LAYOUT
+           ═══════════════════════════════════════════ */
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--spacing-xxl) var(--spacing-xl);
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: var(--spacing-xxl);
+        }
+
+        .page-title {
+            font-size: 34px;
+            font-weight: 700;
+            color: var(--ak-primary);
+            margin-bottom: var(--spacing-sm);
+            letter-spacing: -0.4px;
+        }
+
+        .page-description {
+            font-size: 17px;
+            color: var(--ak-steel);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ═══════════════════════════════════════════
+           COMPONENT SECTIONS
+           ═══════════════════════════════════════════ */
+
+        .component-section {
+            background: var(--ak-white);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xxl);
+            margin-bottom: var(--spacing-xxl);
+            box-shadow: var(--shadow-card);
+        }
+
+        .section-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--ak-primary);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .section-subtitle {
+            font-size: 15px;
+            color: var(--ak-steel);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .subsection-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--ak-charcoal);
+            margin: var(--spacing-xl) 0 var(--spacing-lg);
+        }
+
+        .subsection-title:first-of-type {
+            margin-top: 0;
+        }
+
+        /* ═══════════════════════════════════════════
+           COMPONENT DEMO GRIDS
+           ═══════════════════════════════════════════ */
+
+        .component-grid {
+            display: grid;
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .grid-2col { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+        .grid-3col { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+        .grid-4col { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+        .grid-5col { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+
+        .component-demo {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+            padding: var(--spacing-xl);
+            background: var(--ak-cloud);
+            border-radius: var(--radius-md);
+            align-items: flex-start;
+        }
+
+        .component-demo.center {
+            align-items: center;
+            text-align: center;
+        }
+
+        .demo-label {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--ak-steel);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .code-snippet {
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Courier New', monospace;
+            font-size: 12px;
+            background: var(--ak-mist);
+            color: var(--ak-charcoal);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-sm);
+            align-self: stretch;
+        }
+
+        /* Dark background for light components */
+        .dark-bg {
+            background: var(--ak-charcoal);
+        }
+
+        .dark-bg .code-snippet {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--ak-cloud);
+        }
+
+        /* ═══════════════════════════════════════════
+           BUTTON COMPONENTS
+           ═══════════════════════════════════════════ */
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            border-radius: var(--radius-md);
+            font-family: var(--font-family);
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        /* Button Variants */
+        .btn-primary {
+            background: var(--ak-primary);
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: var(--ak-primary-light);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-elevated);
+        }
+
+        .btn-secondary {
+            background: var(--ak-snow);
+            color: var(--ak-primary);
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: var(--ak-primary-50);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--ak-primary);
+        }
+
+        .btn-ghost:hover:not(:disabled) {
+            background: var(--ak-primary-50);
+        }
+
+        .btn-danger {
+            background: var(--ak-error);
+            color: white;
+        }
+
+        .btn-danger:hover:not(:disabled) {
+            background: #A84D41;
+        }
+
+        .btn-success {
+            background: var(--ak-success);
+            color: white;
+        }
+
+        .btn-success:hover:not(:disabled) {
+            background: #3D6448;
+        }
+
+        /* Button Sizes */
+        .btn-sm {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            font-size: 13px;
+        }
+
+        .btn-md {
+            padding: var(--spacing-md) var(--spacing-xl);
+            font-size: 15px;
+        }
+
+        .btn-lg {
+            padding: var(--spacing-lg) var(--spacing-xxl);
+            font-size: 17px;
+        }
+
+        /* Button States */
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn:active:not(:disabled) {
+            transform: scale(0.98);
+        }
+
+        .btn-full {
+            width: 100%;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ═══════════════════════════════════════════
+           CARD COMPONENTS
+           ═══════════════════════════════════════════ */
+
+        .card {
+            background: var(--ak-white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+
+        .card-default {
+            box-shadow: var(--shadow-card);
+        }
+
+        .card-elevated {
+            box-shadow: var(--shadow-elevated);
+        }
+
+        .card-outlined {
+            box-shadow: none;
+            border: 1px solid var(--ak-mist);
+        }
+
+        .card-highlight {
+            box-shadow: 0 4px 12px rgba(16, 69, 106, 0.15);
+            border: 2px solid var(--ak-primary);
+        }
+
+        .card-hover:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-2px);
+            cursor: pointer;
+        }
+
+        .card-padding-none { padding: 0; }
+        .card-padding-sm { padding: var(--spacing-md); }
+        .card-padding-md { padding: var(--spacing-lg); }
+        .card-padding-lg { padding: var(--spacing-xl); }
+
+        .card-header {
+            padding: var(--spacing-lg);
+            border-bottom: 1px solid var(--ak-mist);
+        }
+
+        .card-title {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--ak-charcoal);
+        }
+
+        .card-subtitle {
+            font-size: 13px;
+            color: var(--ak-steel);
+            margin-top: 2px;
+        }
+
+        .card-body {
+            padding: var(--spacing-lg);
+        }
+
+        /* ═══════════════════════════════════════════
+           BADGE COMPONENTS
+           ═══════════════════════════════════════════ */
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            border-radius: var(--radius-full);
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        /* Badge Sizes */
+        .badge-sm {
+            padding: 2px 6px;
+            font-size: 11px;
+        }
+
+        .badge-md {
+            padding: 4px 10px;
+            font-size: 13px;
+        }
+
+        /* Badge Variants */
+        .badge-primary {
+            background: var(--ak-primary);
+            color: white;
+        }
+
+        .badge-secondary {
+            background: var(--ak-primary-50);
+            color: var(--ak-primary);
+        }
+
+        .badge-success {
+            background: rgba(74, 124, 89, 0.1);
+            color: var(--ak-success);
+        }
+
+        .badge-warning {
+            background: rgba(212, 168, 75, 0.1);
+            color: var(--ak-warning);
+        }
+
+        .badge-error {
+            background: rgba(196, 91, 78, 0.1);
+            color: var(--ak-error);
+        }
+
+        .badge-gold {
+            background: rgba(201, 162, 39, 0.1);
+            color: var(--ak-gold);
+        }
+
+        .badge-neutral {
+            background: var(--ak-mist);
+            color: var(--ak-steel);
+        }
+
+        /* ═══════════════════════════════════════════
+           INPUT COMPONENTS
+           ═══════════════════════════════════════════ */
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+
+        .input-label {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--ak-charcoal);
+        }
+
+        .input-helper {
+            font-size: 13px;
+            color: var(--ak-steel);
+        }
+
+        .input-error {
+            font-size: 13px;
+            color: var(--ak-error);
+        }
+
+        .input-success {
+            font-size: 13px;
+            color: var(--ak-success);
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="number"],
+        input[type="search"],
+        textarea,
+        select {
+            width: 100%;
+            padding: var(--spacing-md);
+            border: 2px solid var(--ak-mist);
+            border-radius: var(--radius-md);
+            font-family: var(--font-family);
+            font-size: 15px;
+            color: var(--ak-charcoal);
+            background: var(--ak-white);
+            transition: all 0.2s ease;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--ak-primary);
+            box-shadow: 0 0 0 3px rgba(16, 69, 106, 0.15);
+        }
+
+        input.error,
+        textarea.error,
+        select.error {
+            border-color: var(--ak-error);
+        }
+
+        input.success,
+        textarea.success,
+        select.success {
+            border-color: var(--ak-success);
+        }
+
+        input:disabled,
+        textarea:disabled,
+        select:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* ═══════════════════════════════════════════
+           AVATAR COMPONENTS
+           ═══════════════════════════════════════════ */
+
+        .avatar {
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            background: var(--ak-primary-100);
+            color: var(--ak-primary);
+        }
+
+        .avatar-xs {
+            width: 24px;
+            height: 24px;
+            font-size: 10px;
+        }
+
+        .avatar-sm {
+            width: 32px;
+            height: 32px;
+            font-size: 12px;
+        }
+
+        .avatar-md {
+            width: 40px;
+            height: 40px;
+            font-size: 14px;
+        }
+
+        .avatar-lg {
+            width: 56px;
+            height: 56px;
+            font-size: 18px;
+        }
+
+        .avatar-xl {
+            width: 80px;
+            height: 80px;
+            font-size: 24px;
+        }
+
+        .avatar-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .avatar-group .avatar {
+            margin-left: -8px;
+            border: 2px solid var(--ak-white);
+        }
+
+        .avatar-group .avatar:first-child {
+            margin-left: 0;
+        }
+
+        /* ═══════════════════════════════════════════
+           PROGRESS COMPONENTS
+           ═══════════════════════════════════════════ */
+
+        .progress-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+            width: 100%;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .progress-label {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--ak-charcoal);
+        }
+
+        .progress-value {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--ak-primary);
+        }
+
+        .progress-bar {
+            background: var(--ak-mist);
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+        }
+
+        .progress-bar-sm {
+            height: 4px;
+        }
+
+        .progress-bar-md {
+            height: 8px;
+        }
+
+        .progress-bar-lg {
+            height: 12px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--ak-primary);
+            border-radius: var(--radius-sm);
+            transition: width 0.3s ease;
+        }
+
+        .progress-fill.success {
+            background: var(--ak-success);
+        }
+
+        .progress-fill.warning {
+            background: var(--ak-warning);
+        }
+
+        .progress-fill.error {
+            background: var(--ak-error);
+        }
+
+        /* Circular Progress */
+        .circular-progress {
+            position: relative;
+            width: 80px;
+            height: 80px;
+        }
+
+        .circular-progress svg {
+            transform: rotate(-90deg);
+        }
+
+        .circular-progress-bg {
+            fill: none;
+            stroke: var(--ak-mist);
+            stroke-width: 8;
+        }
+
+        .circular-progress-fill {
+            fill: none;
+            stroke: var(--ak-primary);
+            stroke-width: 8;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 0.3s ease;
+        }
+
+        .circular-progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--ak-primary);
+        }
+
+        /* ═══════════════════════════════════════════
+           RESPONSIVE
+           ═══════════════════════════════════════════ */
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .nav-links {
+                width: 100%;
+                overflow-x: auto;
+            }
+
+            .grid-2col,
+            .grid-3col,
+            .grid-4col,
+            .grid-5col {
+                grid-template-columns: 1fr;
+            }
+
+            .page-title {
+                font-size: 28px;
+            }
+
+            .section-title {
+                font-size: 22px;
+            }
+
+            .component-section {
+                padding: var(--spacing-xl);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="showcase-nav">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <div class="nav-logo">⛳</div>
+                <div>
+                    <div class="nav-title">AK Golf Academy</div>
+                    <div class="nav-subtitle">Design System v3.0</div>
+                </div>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="component-gallery.html" class="nav-link active">Components</a>
+                <a href="interaction-states.html" class="nav-link">States</a>
+                <a href="form-layouts.html" class="nav-link">Forms</a>
+                <a href="list-layouts.html" class="nav-link">Lists</a>
+                <a href="theme-variations.html" class="nav-link">Themes</a>
+                <a href="animation-showcase.html" class="nav-link">Animations</a>
+                <a href="responsive-showcase.html" class="nav-link">Responsive</a>
+            </div>
+            <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container">
+        <header class="page-header">
+            <h1 class="page-title">Component Gallery</h1>
+            <p class="page-description">
+                Komplett oversikt over alle komponenter med varianter, størrelser og tilstander.
+                Bruk kodesnuttene for å implementere i dine egne prosjekter.
+            </p>
+        </header>
+
+        <!-- BUTTON COMPONENTS -->
+        <section class="component-section">
+            <h2 class="section-title">🔘 Button Components</h2>
+            <p class="section-subtitle">5 varianter × 3 størrelser × multiple tilstander = 75+ kombinasjoner</p>
+
+            <h3 class="subsection-title">Varianter (Medium Size)</h3>
+            <div class="component-grid grid-5col">
+                <div class="component-demo center">
+                    <span class="demo-label">Primary</span>
+                    <button class="btn btn-primary btn-md">Primary</button>
+                    <code class="code-snippet">btn-primary</code>
+                </div>
+
+                <div class="component-demo center">
+                    <span class="demo-label">Secondary</span>
+                    <button class="btn btn-secondary btn-md">Secondary</button>
+                    <code class="code-snippet">btn-secondary</code>
+                </div>
+
+                <div class="component-demo center">
+                    <span class="demo-label">Ghost</span>
+                    <button class="btn btn-ghost btn-md">Ghost</button>
+                    <code class="code-snippet">btn-ghost</code>
+                </div>
+
+                <div class="component-demo center">
+                    <span class="demo-label">Danger</span>
+                    <button class="btn btn-danger btn-md">Danger</button>
+                    <code class="code-snippet">btn-danger</code>
+                </div>
+
+                <div class="component-demo center">
+                    <span class="demo-label">Success</span>
+                    <button class="btn btn-success btn-md">Success</button>
+                    <code class="code-snippet">btn-success</code>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">Størrelser (Primary Variant)</h3>
+            <div class="component-grid grid-3col">
+                <div class="component-demo center">
+                    <span class="demo-label">Small</span>
+                    <button class="btn btn-primary btn-sm">Small Button</button>
+                    <code class="code-snippet">btn-sm (padding: 8px 16px)</code>
+                </div>
+
+                <div class="component-demo center">
+                    <span class="demo-label">Medium</span>
+                    <button class="btn btn-primary btn-md">Medium Button</button>
+                    <code class="code-snippet">btn-md (padding: 12px 24px)</code>
+                </div>
+
+                <div class="component-demo center">
+                    <span class="demo-label">Large</span>
+                    <button class="btn btn-primary btn-lg">Large Button</button>
+                    <code class="code-snippet">btn-lg (padding: 16px 32px)</code>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">Tilstander</h3>
+            <div class="component-grid grid-5col">
+                <div class="component-demo center">
+                    <span class="demo-label">Default</span>
+                    <button class="btn btn-primary btn-md">Normal</button>
+                    <code class="code-snippet">Normal state</code>
+                </div>
+
+                <div class="component-demo center">
+                    <span class="demo-label">Hover</span>
+                    <button class="btn btn-primary btn-md" style="background: #2C5F7F; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);">Hover</button>
+                    <code class="code-snippet">:hover effect</code>
+                </div>
+
+                <div class="component-demo center">
+                    <span class="demo-label">Active</span>
+                    <button class="btn btn-primary btn-md" style="transform: scale(0.98);">Active</button>
+                    <code class="code-snippet">:active scale(0.98)</code>
+                </div>
+
+                <div class="component-demo center">
+                    <span class="demo-label">Disabled</span>
+                    <button class="btn btn-primary btn-md" disabled>Disabled</button>
+                    <code class="code-snippet">:disabled opacity 0.5</code>
+                </div>
+
+                <div class="component-demo center">
+                    <span class="demo-label">Loading</span>
+                    <button class="btn btn-primary btn-md">
+                        <span class="spinner"></span> Laster...
+                    </button>
+                    <code class="code-snippet">With spinner</code>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">Med Ikoner</h3>
+            <div class="component-grid grid-3col">
+                <div class="component-demo center">
+                    <span class="demo-label">Ikon til venstre</span>
+                    <button class="btn btn-primary btn-md">
+                        <span>✓</span> Med ikon
+                    </button>
+                    <code class="code-snippet">Icon left position</code>
+                </div>
+
+                <div class="component-demo center">
+                    <span class="demo-label">Ikon til høyre</span>
+                    <button class="btn btn-primary btn-md">
+                        Med ikon <span>→</span>
+                    </button>
+                    <code class="code-snippet">Icon right position</code>
+                </div>
+
+                <div class="component-demo center">
+                    <span class="demo-label">Full Width</span>
+                    <button class="btn btn-primary btn-md btn-full">Full Width Button</button>
+                    <code class="code-snippet">width: 100%</code>
+                </div>
+            </div>
+        </section>
+
+        <!-- CARD COMPONENTS -->
+        <section class="component-section">
+            <h2 class="section-title">🃏 Card Components</h2>
+            <p class="section-subtitle">4 varianter med forskjellige shadow og border stiler</p>
+
+            <h3 class="subsection-title">Varianter</h3>
+            <div class="component-grid grid-4col">
+                <div class="component-demo">
+                    <span class="demo-label">Default</span>
+                    <div class="card card-default card-padding-md">
+                        <div class="card-title">Default Card</div>
+                        <p style="font-size: 15px; color: var(--ak-steel); margin-top: 8px;">
+                            Subtil skygge for standard kort
+                        </p>
+                    </div>
+                    <code class="code-snippet">card-default</code>
+                </div>
+
+                <div class="component-demo">
+                    <span class="demo-label">Elevated</span>
+                    <div class="card card-elevated card-padding-md">
+                        <div class="card-title">Elevated Card</div>
+                        <p style="font-size: 15px; color: var(--ak-steel); margin-top: 8px;">
+                            Sterkere skygge for mer løft
+                        </p>
+                    </div>
+                    <code class="code-snippet">card-elevated</code>
+                </div>
+
+                <div class="component-demo">
+                    <span class="demo-label">Outlined</span>
+                    <div class="card card-outlined card-padding-md">
+                        <div class="card-title">Outlined Card</div>
+                        <p style="font-size: 15px; color: var(--ak-steel); margin-top: 8px;">
+                            Border i stedet for skygge
+                        </p>
+                    </div>
+                    <code class="code-snippet">card-outlined</code>
+                </div>
+
+                <div class="component-demo">
+                    <span class="demo-label">Highlight</span>
+                    <div class="card card-highlight card-padding-md">
+                        <div class="card-title">Highlight Card</div>
+                        <p style="font-size: 15px; color: var(--ak-steel); margin-top: 8px;">
+                            Fremhevet med primary farge
+                        </p>
+                    </div>
+                    <code class="code-snippet">card-highlight</code>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">Padding Varianter</h3>
+            <div class="component-grid grid-4col">
+                <div class="component-demo">
+                    <span class="demo-label">None (0px)</span>
+                    <div class="card card-default card-padding-none">
+                        <div style="padding: var(--spacing-lg);">
+                            <div class="card-title">No Padding</div>
+                        </div>
+                    </div>
+                    <code class="code-snippet">card-padding-none</code>
+                </div>
+
+                <div class="component-demo">
+                    <span class="demo-label">Small (12px)</span>
+                    <div class="card card-default card-padding-sm">
+                        <div class="card-title">Small Padding</div>
+                    </div>
+                    <code class="code-snippet">card-padding-sm</code>
+                </div>
+
+                <div class="component-demo">
+                    <span class="demo-label">Medium (16px)</span>
+                    <div class="card card-default card-padding-md">
+                        <div class="card-title">Medium Padding</div>
+                    </div>
+                    <code class="code-snippet">card-padding-md</code>
+                </div>
+
+                <div class="component-demo">
+                    <span class="demo-label">Large (24px)</span>
+                    <div class="card card-default card-padding-lg">
+                        <div class="card-title">Large Padding</div>
+                    </div>
+                    <code class="code-snippet">card-padding-lg</code>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">Med Header og Body</h3>
+            <div class="component-grid grid-3col">
+                <div class="component-demo">
+                    <div class="card card-default">
+                        <div class="card-header">
+                            <div class="card-title">Card Title</div>
+                            <div class="card-subtitle">Card subtitle</div>
+                        </div>
+                        <div class="card-body">
+                            Card body innhold går her. Dette er et eksempel på et kort med header og body seksjoner.
+                        </div>
+                    </div>
+                    <code class="code-snippet">card-header + card-body</code>
+                </div>
+
+                <div class="component-demo">
+                    <div class="card card-default card-hover">
+                        <div class="card-body">
+                            <div class="card-title" style="margin-bottom: 8px;">Hover Card</div>
+                            <p style="font-size: 15px; color: var(--ak-steel);">
+                                Hover over meg for å se løft-effekt
+                            </p>
+                        </div>
+                    </div>
+                    <code class="code-snippet">card-hover</code>
+                </div>
+
+                <div class="component-demo">
+                    <div class="card card-elevated card-padding-md">
+                        <div style="text-align: center;">
+                            <div style="font-size: 48px; margin-bottom: 8px;">⛳</div>
+                            <div class="card-title">Icon Card</div>
+                            <p style="font-size: 15px; color: var(--ak-steel); margin-top: 8px;">
+                                Kort med ikon
+                            </p>
+                        </div>
+                    </div>
+                    <code class="code-snippet">Centered content</code>
+                </div>
+            </div>
+        </section>
+
+        <!-- BADGE COMPONENTS -->
+        <section class="component-section">
+            <h2 class="section-title">🏷️ Badge Components</h2>
+            <p class="section-subtitle">7 fargevarianter × 2 størrelser = 14 kombinasjoner</p>
+
+            <h3 class="subsection-title">Varianter (Medium Size)</h3>
+            <div class="component-grid grid-4col">
+                <div class="component-demo center">
+                    <span class="demo-label">Primary</span>
+                    <span class="badge badge-primary badge-md">Primary</span>
+                    <code class="code-snippet">badge-primary</code>
+                </div>
+
+                <div class="component-demo center">
+                    <span class="demo-label">Secondary</span>
+                    <span class="badge badge-secondary badge-md">Secondary</span>
+                    <code class="code-snippet">badge-secondary</code>
+                </div>
+
+                <div class="component-demo center">
+                    <span class="demo-label">Success</span>
+                    <span class="badge badge-success badge-md">Success</span>
+                    <code class="code-snippet">badge-success</code>
+                </div>
+
+                <div class="component-demo center">
+                    <span class="demo-label">Warning</span>
+                    <span class="badge badge-warning badge-md">Warning</span>
+                    <code class="code-snippet">badge-warning</code>
+                </div>
+
+                <div class="component-demo center">
+                    <span class="demo-label">Error</span>
+                    <span class="badge badge-error badge-md">Error</span>
+                    <code class="code-snippet">badge-error</code>
+                </div>
+
+                <div class="component-demo center">
+                    <span class="demo-label">Gold</span>
+                    <span class="badge badge-gold badge-md">Gold</span>
+                    <code class="code-snippet">badge-gold</code>
+                </div>
+
+                <div class="component-demo center">
+                    <span class="demo-label">Neutral</span>
+                    <span class="badge badge-neutral badge-md">Neutral</span>
+                    <code class="code-snippet">badge-neutral</code>
+                </div>
+
+                <div class="component-demo dark-bg center">
+                    <span class="demo-label" style="color: white;">On Dark BG</span>
+                    <span class="badge badge-primary badge-md">Primary</span>
+                    <code class="code-snippet">On dark backgrounds</code>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">Størrelser</h3>
+            <div class="component-grid grid-3col">
+                <div class="component-demo center">
+                    <span class="demo-label">Small</span>
+                    <span class="badge badge-primary badge-sm">Small Badge</span>
+                    <code class="code-snippet">badge-sm (11px)</code>
+                </div>
+
+                <div class="component-demo center">
+                    <span class="demo-label">Medium</span>
+                    <span class="badge badge-primary badge-md">Medium Badge</span>
+                    <code class="code-snippet">badge-md (13px)</code>
+                </div>
+
+                <div class="component-demo center">
+                    <span class="demo-label">Med Ikon</span>
+                    <span class="badge badge-success badge-md">
+                        <span>✓</span> Completed
+                    </span>
+                    <code class="code-snippet">With icon</code>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">Praktisk Bruk</h3>
+            <div class="component-grid grid-3col">
+                <div class="component-demo">
+                    <div class="card card-default card-padding-md">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <div class="card-title">Training Session</div>
+                            <span class="badge badge-success badge-sm">✓ Completed</span>
+                        </div>
+                        <p style="font-size: 15px; color: var(--ak-steel);">
+                            Badges som status-indikatorer
+                        </p>
+                    </div>
+                </div>
+
+                <div class="component-demo">
+                    <div class="card card-default card-padding-md">
+                        <div class="card-title" style="margin-bottom: 8px;">Player Profile</div>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                            <span class="badge badge-primary badge-sm">B-nivå</span>
+                            <span class="badge badge-gold badge-sm">Elite</span>
+                            <span class="badge badge-secondary badge-sm">16 år</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="component-demo">
+                    <div class="card card-default card-padding-md">
+                        <div class="card-title" style="margin-bottom: 8px;">Notification</div>
+                        <div style="display: flex; gap: 8px; align-items: center;">
+                            <span>📬 Messages</span>
+                            <span class="badge badge-error badge-sm">3</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- INPUT COMPONENTS -->
+        <section class="component-section">
+            <h2 class="section-title">📝 Input Components</h2>
+            <p class="section-subtitle">Text inputs, textarea, select med ulike typer og tilstander</p>
+
+            <h3 class="subsection-title">Input Typer</h3>
+            <div class="component-grid grid-3col">
+                <div class="component-demo">
+                    <span class="demo-label">Text Input</span>
+                    <input type="text" placeholder="Enter text...">
+                    <code class="code-snippet">type="text"</code>
+                </div>
+
+                <div class="component-demo">
+                    <span class="demo-label">Email Input</span>
+                    <input type="email" placeholder="email@example.com">
+                    <code class="code-snippet">type="email"</code>
+                </div>
+
+                <div class="component-demo">
+                    <span class="demo-label">Password Input</span>
+                    <input type="password" placeholder="••••••••">
+                    <code class="code-snippet">type="password"</code>
+                </div>
+
+                <div class="component-demo">
+                    <span class="demo-label">Number Input</span>
+                    <input type="number" placeholder="0">
+                    <code class="code-snippet">type="number"</code>
+                </div>
+
+                <div class="component-demo">
+                    <span class="demo-label">Search Input</span>
+                    <input type="search" placeholder="Search...">
+                    <code class="code-snippet">type="search"</code>
+                </div>
+
+                <div class="component-demo">
+                    <span class="demo-label">Select Dropdown</span>
+                    <select>
+                        <option>Velg et alternativ...</option>
+                        <option>Alternativ 1</option>
+                        <option>Alternativ 2</option>
+                        <option>Alternativ 3</option>
+                    </select>
+                    <code class="code-snippet">select element</code>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">Tilstander</h3>
+            <div class="component-grid grid-3col">
+                <div class="component-demo">
+                    <span class="demo-label">Default State</span>
+                    <div class="input-group">
+                        <label class="input-label">Username</label>
+                        <input type="text" placeholder="Enter username">
+                        <span class="input-helper">Choose a unique username</span>
+                    </div>
+                    <code class="code-snippet">Normal with label</code>
+                </div>
+
+                <div class="component-demo">
+                    <span class="demo-label">Error State</span>
+                    <div class="input-group">
+                        <label class="input-label">Email</label>
+                        <input type="email" class="error" value="invalid-email">
+                        <span class="input-error">Please enter a valid email</span>
+                    </div>
+                    <code class="code-snippet">Error with message</code>
+                </div>
+
+                <div class="component-demo">
+                    <span class="demo-label">Success State</span>
+                    <div class="input-group">
+                        <label class="input-label">Username</label>
+                        <input type="text" class="success" value="johndoe">
+                        <span class="input-success">✓ Username is available</span>
+                    </div>
+                    <code class="code-snippet">Success with message</code>
+                </div>
+
+                <div class="component-demo">
+                    <span class="demo-label">Disabled State</span>
+                    <div class="input-group">
+                        <label class="input-label">Disabled Field</label>
+                        <input type="text" disabled value="Cannot edit">
+                    </div>
+                    <code class="code-snippet">:disabled opacity 0.5</code>
+                </div>
+
+                <div class="component-demo">
+                    <span class="demo-label">Focused State</span>
+                    <div class="input-group">
+                        <label class="input-label">Click to focus</label>
+                        <input type="text" placeholder="Click me" style="border-color: var(--ak-primary); box-shadow: 0 0 0 3px rgba(16, 69, 106, 0.15);">
+                    </div>
+                    <code class="code-snippet">:focus ring effect</code>
+                </div>
+
+                <div class="component-demo">
+                    <span class="demo-label">Textarea</span>
+                    <div class="input-group">
+                        <label class="input-label">Comments</label>
+                        <textarea placeholder="Enter your comments..." rows="3"></textarea>
+                    </div>
+                    <code class="code-snippet">textarea element</code>
+                </div>
+            </div>
+        </section>
+
+        <!-- AVATAR COMPONENTS -->
+        <section class="component-section">
+            <h2 class="section-title">👤 Avatar Components</h2>
+            <p class="section-subtitle">5 størrelser fra xs (24px) til xl (80px) + AvatarGroup</p>
+
+            <h3 class="subsection-title">Størrelser</h3>
+            <div class="component-grid grid-5col">
+                <div class="component-demo center">
+                    <span class="demo-label">Extra Small</span>
+                    <div class="avatar avatar-xs">MA</div>
+                    <code class="code-snippet">avatar-xs (24px)</code>
+                </div>
+
+                <div class="component-demo center">
+                    <span class="demo-label">Small</span>
+                    <div class="avatar avatar-sm">MA</div>
+                    <code class="code-snippet">avatar-sm (32px)</code>
+                </div>
+
+                <div class="component-demo center">
+                    <span class="demo-label">Medium</span>
+                    <div class="avatar avatar-md">MA</div>
+                    <code class="code-snippet">avatar-md (40px)</code>
+                </div>
+
+                <div class="component-demo center">
+                    <span class="demo-label">Large</span>
+                    <div class="avatar avatar-lg">MA</div>
+                    <code class="code-snippet">avatar-lg (56px)</code>
+                </div>
+
+                <div class="component-demo center">
+                    <span class="demo-label">Extra Large</span>
+                    <div class="avatar avatar-xl">MA</div>
+                    <code class="code-snippet">avatar-xl (80px)</code>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">Avatar Group</h3>
+            <div class="component-grid grid-3col">
+                <div class="component-demo center">
+                    <span class="demo-label">Overlapping Avatars</span>
+                    <div class="avatar-group">
+                        <div class="avatar avatar-md">MA</div>
+                        <div class="avatar avatar-md">SJ</div>
+                        <div class="avatar avatar-md">EH</div>
+                        <div class="avatar avatar-md">LN</div>
+                    </div>
+                    <code class="code-snippet">avatar-group</code>
+                </div>
+
+                <div class="component-demo center">
+                    <span class="demo-label">Med Overflow Count</span>
+                    <div class="avatar-group">
+                        <div class="avatar avatar-md">MA</div>
+                        <div class="avatar avatar-md">SJ</div>
+                        <div class="avatar avatar-md">EH</div>
+                        <div class="avatar avatar-md" style="background: var(--ak-steel); color: white;">+5</div>
+                    </div>
+                    <code class="code-snippet">With overflow count</code>
+                </div>
+
+                <div class="component-demo">
+                    <div class="card card-default card-padding-md">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div class="avatar avatar-lg">MA</div>
+                            <div>
+                                <div class="card-title">Magnus Andersen</div>
+                                <div class="card-subtitle">B-nivå • 16 år</div>
+                            </div>
+                        </div>
+                    </div>
+                    <code class="code-snippet">Profile card with avatar</code>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROGRESS COMPONENTS -->
+        <section class="component-section">
+            <h2 class="section-title">📊 Progress Components</h2>
+            <p class="section-subtitle">Progress bars (3 størrelser) og circular progress</p>
+
+            <h3 class="subsection-title">Progress Bar Størrelser</h3>
+            <div class="component-grid grid-3col">
+                <div class="component-demo">
+                    <span class="demo-label">Small (4px)</span>
+                    <div class="progress-wrapper">
+                        <div class="progress-header">
+                            <span class="progress-label">Teknikk</span>
+                            <span class="progress-value">75%</span>
+                        </div>
+                        <div class="progress-bar progress-bar-sm">
+                            <div class="progress-fill" style="width: 75%"></div>
+                        </div>
+                    </div>
+                    <code class="code-snippet">progress-bar-sm</code>
+                </div>
+
+                <div class="component-demo">
+                    <span class="demo-label">Medium (8px)</span>
+                    <div class="progress-wrapper">
+                        <div class="progress-header">
+                            <span class="progress-label">Fysisk</span>
+                            <span class="progress-value">60%</span>
+                        </div>
+                        <div class="progress-bar progress-bar-md">
+                            <div class="progress-fill" style="width: 60%"></div>
+                        </div>
+                    </div>
+                    <code class="code-snippet">progress-bar-md</code>
+                </div>
+
+                <div class="component-demo">
+                    <span class="demo-label">Large (12px)</span>
+                    <div class="progress-wrapper">
+                        <div class="progress-header">
+                            <span class="progress-label">Mental</span>
+                            <span class="progress-value">90%</span>
+                        </div>
+                        <div class="progress-bar progress-bar-lg">
+                            <div class="progress-fill" style="width: 90%"></div>
+                        </div>
+                    </div>
+                    <code class="code-snippet">progress-bar-lg</code>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">Progress Bar Varianter</h3>
+            <div class="component-grid grid-3col">
+                <div class="component-demo">
+                    <span class="demo-label">Primary (Default)</span>
+                    <div class="progress-wrapper">
+                        <div class="progress-header">
+                            <span class="progress-label">Default</span>
+                            <span class="progress-value">70%</span>
+                        </div>
+                        <div class="progress-bar progress-bar-md">
+                            <div class="progress-fill" style="width: 70%"></div>
+                        </div>
+                    </div>
+                    <code class="code-snippet">Primary color</code>
+                </div>
+
+                <div class="component-demo">
+                    <span class="demo-label">Success</span>
+                    <div class="progress-wrapper">
+                        <div class="progress-header">
+                            <span class="progress-label">Completed</span>
+                            <span class="progress-value">100%</span>
+                        </div>
+                        <div class="progress-bar progress-bar-md">
+                            <div class="progress-fill success" style="width: 100%"></div>
+                        </div>
+                    </div>
+                    <code class="code-snippet">Success color</code>
+                </div>
+
+                <div class="component-demo">
+                    <span class="demo-label">Warning</span>
+                    <div class="progress-wrapper">
+                        <div class="progress-header">
+                            <span class="progress-label">At Risk</span>
+                            <span class="progress-value">45%</span>
+                        </div>
+                        <div class="progress-bar progress-bar-md">
+                            <div class="progress-fill warning" style="width: 45%"></div>
+                        </div>
+                    </div>
+                    <code class="code-snippet">Warning color</code>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">Circular Progress</h3>
+            <div class="component-grid grid-3col">
+                <div class="component-demo center">
+                    <span class="demo-label">75% Complete</span>
+                    <div class="circular-progress">
+                        <svg width="80" height="80">
+                            <circle class="circular-progress-bg" cx="40" cy="40" r="36"></circle>
+                            <circle class="circular-progress-fill" cx="40" cy="40" r="36"
+                                    stroke-dasharray="226.2" stroke-dashoffset="56.55"></circle>
+                        </svg>
+                        <div class="circular-progress-text">75%</div>
+                    </div>
+                    <code class="code-snippet">Circular progress</code>
+                </div>
+
+                <div class="component-demo center">
+                    <span class="demo-label">50% Complete</span>
+                    <div class="circular-progress">
+                        <svg width="80" height="80">
+                            <circle class="circular-progress-bg" cx="40" cy="40" r="36"></circle>
+                            <circle class="circular-progress-fill" cx="40" cy="40" r="36"
+                                    stroke-dasharray="226.2" stroke-dashoffset="113.1"></circle>
+                        </svg>
+                        <div class="circular-progress-text">50%</div>
+                    </div>
+                    <code class="code-snippet">Half complete</code>
+                </div>
+
+                <div class="component-demo center">
+                    <span class="demo-label">90% Complete</span>
+                    <div class="circular-progress">
+                        <svg width="80" height="80">
+                            <circle class="circular-progress-bg" cx="40" cy="40" r="36"></circle>
+                            <circle class="circular-progress-fill" cx="40" cy="40" r="36"
+                                    stroke-dasharray="226.2" stroke-dashoffset="22.62"
+                                    style="stroke: var(--ak-success);"></circle>
+                        </svg>
+                        <div class="circular-progress-text" style="color: var(--ak-success);">90%</div>
+                    </div>
+                    <code class="code-snippet">Success variant</code>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Theme Toggle Functionality
+        function toggleTheme() {
+            const root = document.documentElement;
+            const isDark = root.classList.contains('dark');
+
+            if (isDark) {
+                root.classList.remove('dark');
+                localStorage.setItem('ak-golf-theme', 'light');
+            } else {
+                root.classList.add('dark');
+                localStorage.setItem('ak-golf-theme', 'dark');
+            }
+        }
+
+        // Initialize theme from localStorage
+        const savedTheme = localStorage.getItem('ak-golf-theme');
+        if (savedTheme === 'dark') {
+            document.documentElement.classList.add('dark');
+        }
+
+        // Smooth scroll behavior
+        document.documentElement.style.scrollBehavior = 'smooth';
+    </script>
+</body>
+</html>

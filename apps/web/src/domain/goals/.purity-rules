@@ -1,0 +1,20 @@
+# Purity Rules for domain/goals/**
+#
+# All functions in this directory must be PURE:
+# - Deterministic: same inputs → same outputs
+# - Side-effect free: no I/O, no logging, no global state
+# - Time-independent: no Date.now(), new Date() without arguments
+#
+# FORBIDDEN patterns in *.ts files (excluding *.test.ts):
+# - Date.now()
+# - new Date() without arguments
+# - Math.random()
+# - localStorage, sessionStorage
+# - window, document, navigator
+# - console.log, console.warn, console.error
+# - fetch, XMLHttpRequest
+# - setTimeout, setInterval
+# - process.env (use dependency injection)
+#
+# If a function needs current time, pass `now: Date` as a parameter.
+# If a function needs random values, pass `random: () => number` as a parameter.

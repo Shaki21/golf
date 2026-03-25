@@ -1,0 +1,56 @@
+<h1>Two-Factor Authentication Enabled 🛡️</h1>
+
+<p>Hi {{firstName}},</p>
+
+<p>Two-factor authentication (2FA) has been successfully enabled for your IUP Golf Academy account.</p>
+
+<div class="highlight-box" style="background: #ecfdf5; border-left-color: #10b981;">
+  <p style="margin: 0; color: #065f46;">
+    <strong>✓ Your account is now more secure!</strong>
+  </p>
+  <p style="margin: 8px 0 0 0; color: #065f46;">
+    From now on, you'll need both your password and a verification code from your authenticator app to sign in.
+  </p>
+</div>
+
+<h2>Your Backup Codes</h2>
+
+<p>Save these backup codes in a safe place. You can use them to access your account if you lose access to your authenticator app:</p>
+
+<div class="card">
+  {{#each backupCodes}}
+  <div style="font-family: 'Courier New', monospace; font-size: 16px; padding: 8px 0; border-bottom: 1px solid #e5e7eb;">
+    {{this}}
+  </div>
+  {{/each}}
+</div>
+
+<p style="font-size: 14px; color: #6b7280;">
+  <strong>Important:</strong> Each backup code can only be used once. Store them securely and don't share them with anyone.
+</p>
+
+<hr class="divider">
+
+<h2>What's Next?</h2>
+
+<p>The next time you sign in, you'll be prompted to enter a 6-digit code from your authenticator app after entering your password.</p>
+
+<h2>Need to Disable 2FA?</h2>
+
+<p>You can disable two-factor authentication anytime from your account settings. You'll need your current password to make this change.</p>
+
+<center style="margin: 32px 0;">
+  <a href="{{settingsUrl}}" class="button-secondary">Account Settings</a>
+</center>
+
+<div class="highlight-box" style="background: #fef2f2; border-left-color: #ef4444;">
+  <p style="margin: 0; color: #991b1b;">
+    <strong>⚠️ Didn't enable 2FA?</strong>
+  </p>
+  <p style="margin: 8px 0 0 0; color: #991b1b;">
+    If you didn't enable two-factor authentication, your account may have been compromised. Please contact our support team immediately.
+  </p>
+</div>
+
+<p style="margin-top: 32px;">Best regards,<br>
+<strong>The IUP Golf Academy Security Team</strong></p>

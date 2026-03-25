@@ -1,0 +1,210 @@
+{
+  "pageId": "coach-analyse-hub",
+  "path": "/coach/analyse",
+  "component": "CoachAnalyseHub",
+  "analyzedAt": "2026-01-13T02:05:00Z",
+  "jtbdFramework": {
+    "1_pageIdentification": {
+      "name": "CoachAnalyseHub (Coach Analysis Hub)",
+      "role": "coach",
+      "frequency": "weekly",
+      "context": "review",
+      "clarityScore": 7
+    },
+    "2_primaryJTBD": {
+      "decision": "What analysis tool should I use for my players?",
+      "isObviousIn5Seconds": true,
+      "clarity": 7,
+      "competingAttention": [
+        "Quick stats (4 metrics)",
+        "Featured action button",
+        "Navigation cards"
+      ],
+      "primaryCTA": {
+        "component": "Featured action",
+        "label": "View Statistics",
+        "isProminent": true
+      }
+    },
+    "3_decisionVsInfoRatio": {
+      "decisionElements": {
+        "count": 2,
+        "items": [
+          "Featured action: View Statistics",
+          "Navigation cards (assumed from CoachHubPage)"
+        ]
+      },
+      "informationElements": {
+        "count": 6,
+        "items": [
+          "Page title + subtitle",
+          "Help text",
+          "Quick stats (4 metrics)"
+        ]
+      },
+      "ratio": 0.25,
+      "assessment": "WEAK - Info-heavy for action hub (75% information)",
+      "dominantDecision": "Yes - 'View Statistics' is clear primary"
+    },
+    "4_visualHierarchy": {
+      "eyeLandsOnFirst": "CoachHubPage header",
+      "isCorrectFirstFocus": true,
+      "heroElement": "Featured action button",
+      "secondaryElements": [
+        "Quick stats",
+        "Navigation cards"
+      ],
+      "noiseElements": [],
+      "isFlatHierarchy": true,
+      "assessment": "MODERATE - Standard hub layout"
+    },
+    "5_kpiQuality": {
+      "kpis": [
+        {
+          "metric": "Exercises in Library",
+          "type": "lagging",
+          "isActionable": false,
+          "hasContext": false,
+          "quality": "vanity",
+          "note": "Count-based, no context"
+        },
+        {
+          "metric": "My Exercises",
+          "type": "lagging",
+          "isActionable": false,
+          "hasContext": false,
+          "quality": "vanity",
+          "note": "Count-based, no context"
+        },
+        {
+          "metric": "Session Templates",
+          "type": "lagging",
+          "isActionable": false,
+          "hasContext": false,
+          "quality": "vanity",
+          "note": "Count-based, no context"
+        },
+        {
+          "metric": "Reports",
+          "type": "lagging",
+          "isActionable": false,
+          "hasContext": false,
+          "quality": "vanity",
+          "note": "Count-based, no context"
+        }
+      ],
+      "leadingPercentage": 0.0,
+      "actionablePercentage": 0.0,
+      "assessment": "WEAK - All vanity metrics"
+    },
+    "6_languageAndMentalModel": {
+      "style": "system_neutral",
+      "actionVerbs": [
+        "View",
+        "Analyze",
+        "Explore",
+        "Manage"
+      ],
+      "systemNouns": [
+        "Analysis",
+        "Statistics",
+        "Library",
+        "Templates",
+        "Reports"
+      ],
+      "coachActionPercentage": 0.4,
+      "assessment": "MODERATE - Mix of action and system language",
+      "phrasesToRewrite": []
+    },
+    "7_flowAndNavigationCost": {
+      "clicksFromDashboard": 1,
+      "navigationDepth": 1,
+      "clicksToViewStats": 1,
+      "clicksToExerciseLibrary": 2,
+      "assessment": "GOOD - 1-2 clicks to reach content",
+      "shouldBeInline": []
+    },
+    "8_stateCoverage": {
+      "hasEmptyState": false,
+      "hasLoadingState": false,
+      "hasErrorState": false,
+      "hasSuccessState": false,
+      "hasOverloadedState": false,
+      "hasAtRiskState": false,
+      "assessment": "CRITICAL - No state handling",
+      "gaps": [
+        "No empty state",
+        "No loading state",
+        "No error handling",
+        "Hardcoded mock stats"
+      ]
+    },
+    "9_roleScalability": {
+      "hasRoleConditionals": false,
+      "beginnerFriendly": true,
+      "eliteFriendly": true,
+      "scalabilityIssues": [
+        "Hardcoded mock stats - not fetching real data"
+      ],
+      "recommendation": "Connect to real data API"
+    },
+    "10_strategicVerdict": {
+      "diagnosis": "Minimal placeholder hub with hardcoded data",
+      "currentBehavior": "Static landing page",
+      "desiredBehavior": "Analysis workspace",
+      "topIssues": [
+        {
+          "rank": 1,
+          "issue": "Hardcoded mock stats instead of real data",
+          "severity": "high",
+          "impact": "Not production-ready"
+        },
+        {
+          "rank": 2,
+          "issue": "All KPIs are vanity metrics",
+          "severity": "high",
+          "impact": "No actionable insights"
+        },
+        {
+          "rank": 3,
+          "issue": "No state handling",
+          "severity": "high",
+          "impact": "Fragile UX"
+        }
+      ],
+      "structuralFix": "Replace stats with actionable KPIs + connect to API + add state handling"
+    },
+    "11_crossPageConsistency": {
+      "note": "Uses CoachHubPage layout (consistent). Identical pattern to CoachSpillereHub - simple placeholder."
+    }
+  },
+  "codeAnalysis": {
+    "componentCount": {
+      "interactive": 1,
+      "display": 5
+    },
+    "stateHandling": {
+      "loading": "None",
+      "empty": "None",
+      "error": "None"
+    },
+    "dataSource": {
+      "isRealData": false,
+      "isMockData": true,
+      "note": "Hardcoded stats - NOT fetching from API"
+    },
+    "accessibility": {
+      "hasAriaLabels": false,
+      "semanticHTML": true,
+      "keyboardNav": "Unknown"
+    },
+    "responsiveDesign": {
+      "hasMobileLayout": true,
+      "breakpoints": ["inherited from CoachHubPage"],
+      "mobileFirst": true
+    }
+  },
+  "priorityScore": 80,
+  "implementationStatus": "placeholder",
+  "overallAssessment": "WEAK - Minimal placeholder needing real data integration"
+}

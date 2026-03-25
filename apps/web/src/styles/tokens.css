@@ -1,0 +1,86 @@
+/* TIER Golf Design Tokens — Premium Light
+   Stone × Midnight Blue × Emerald × Soft Gold
+   Stored as RGB triplets so Tailwind opacity modifiers work (e.g. /10).
+*/
+:root {
+  /* Stone */
+  --stone-50: 250 250 248; /* #FAFAF8 */
+  --stone-100: 244 243 239; /* #F4F3EF */
+  --stone-200: 233 231 226; /* #E9E7E2 */
+  --stone-300: 218 216 210; /* #DAD8D2 */
+  --stone-500: 107 110 116; /* #6B6E74 */
+  --stone-700: 68 70 75; /* #44464B */
+  --stone-800: 44 46 51; /* #2C2E33 */
+
+  /* Midnight Blue */
+  --blue-500: 36 90 133; /* #245A85 */
+  --blue-600: 26 90 138; /* #1A5A8A */
+  --blue-700: 16 69 106; /* #10456A */
+
+  /* Emerald */
+  --emerald-500: 47 163 122; /* #2FA37A */
+  --emerald-600: 31 122 92; /* #1F7A5C */
+
+  /* Soft Gold */
+  --gold-500: 198 162 77; /* #C6A24D */
+  --gold-600: 158 124 47; /* #9E7C2F */
+
+  /* Status */
+  --status-success: 5 150 105; /* #059669 */
+  --status-warning: 217 119 6; /* rgb(var(--status-warning)) */
+  --status-error: 220 38 38; /* rgb(var(--status-error)) */
+  --status-info: 2 132 199; /* #0284C7 */
+
+  /* Category hues (labels only) */
+  --cat-teknikk: 36 90 133;
+  --cat-fysisk: 31 122 92;
+  --cat-mental: 79 70 229;
+  --cat-spill: 14 116 144;
+  --cat-test: 68 70 75;
+
+  /* Category muted backgrounds */
+  --cat-teknikk-muted: 230 238 246;
+  --cat-fysisk-muted: 229 244 238;
+  --cat-mental-muted: 238 242 255;
+  --cat-spill-muted: 230 246 250;
+  --cat-test-muted: 238 241 244;
+
+  /* Semantic aliases (preferred) */
+  --tier-primary: 10 37 64; /* Navy blue for sidebar */
+  --tier-surface-page: 245 247 249; /* Light gray page background */
+  --tier-bg-app: var(--stone-50);
+  --tier-surface-card: var(--stone-200);
+  --tier-surface-elevated: var(--stone-100);
+  --tier-border: var(--stone-300);
+
+  --tier-text-primary: var(--stone-800);
+  --tier-text-body: var(--stone-700);
+  --tier-text-muted: var(--stone-500);
+
+  --tier-action-primary: var(--blue-700);
+  --tier-action-hover: var(--blue-600);
+  --tier-action-active: var(--blue-500);
+
+  --tier-progress: var(--emerald-600);
+  --tier-progress-soft: var(--emerald-500);
+
+  --tier-prestige: var(--gold-500);
+  --tier-prestige-strong: var(--gold-600);
+
+  --tier-status-success: var(--status-success);
+  --tier-status-warning: var(--status-warning);
+  --tier-status-error: var(--status-error);
+  --tier-status-info: var(--status-info);
+
+  --tier-category-teknikk: var(--cat-teknikk);
+  --tier-category-fysisk: var(--cat-fysisk);
+  --tier-category-mental: var(--cat-mental);
+  --tier-category-spill: var(--cat-spill);
+  --tier-category-test: var(--cat-test);
+
+  --tier-category-teknikk-muted: var(--cat-teknikk-muted);
+  --tier-category-fysisk-muted: var(--cat-fysisk-muted);
+  --tier-category-mental-muted: var(--cat-mental-muted);
+  --tier-category-spill-muted: var(--cat-spill-muted);
+  --tier-category-test-muted: var(--cat-test-muted);
+}

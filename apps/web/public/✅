@@ -1,0 +1,98 @@
+236:    .badge-icon-container {
+249:    .badge-icon-container svg {
+256:    .badge-icon-container::after {
+463:          <div class="badge-icon-container">
+481:          <div class="badge-icon-container">
+499:          <div class="badge-icon-container">
+517:          <div class="badge-icon-container">
+535:          <div class="badge-icon-container">
+553:          <div class="badge-icon-container">
+572:          <div class="badge-icon-container">
+591:          <div class="badge-icon-container">
+608:          <div class="badge-icon-container">
+625:          <div class="badge-icon-container">
+642:          <div class="badge-icon-container">
+660:          <div class="badge-icon-container">
+678:          <div class="badge-icon-container">
+696:          <div class="badge-icon-container">
+713:          <div class="badge-icon-container">
+742:          <div class="badge-icon-container">
+758:          <div class="badge-icon-container">
+774:          <div class="badge-icon-container">
+790:          <div class="badge-icon-container">
+806:          <div class="badge-icon-container">
+822:          <div class="badge-icon-container">
+838:          <div class="badge-icon-container">
+863:          <div class="badge-icon-container">
+888:          <div class="badge-icon-container">
+918:          <div class="badge-icon-container">
+938:          <div class="badge-icon-container">
+958:          <div class="badge-icon-container">
+978:          <div class="badge-icon-container">
+998:          <div class="badge-icon-container">🏆</div>
+1010:          <div class="badge-icon-container">🏆</div>
+1022:          <div class="badge-icon-container">🏆</div>
+1034:          <div class="badge-icon-container">🏆</div>
+1046:          <div class="badge-icon-container">
+1066:          <div class="badge-icon-container">
+1086:          <div class="badge-icon-container">
+1106:          <div class="badge-icon-container">
+1126:          <div class="badge-icon-container">
+1146:          <div class="badge-icon-container">
+1178:          <div class="badge-icon-container">
+1194:          <div class="badge-icon-container">
+1210:          <div class="badge-icon-container">
+1226:          <div class="badge-icon-container">
+1242:          <div class="badge-icon-container">
+1258:          <div class="badge-icon-container">
+1274:          <div class="badge-icon-container">
+1290:          <div class="badge-icon-container">💥</div>
+1302:          <div class="badge-icon-container">💥</div>
+1314:          <div class="badge-icon-container">💥</div>
+1340:        <div class="badge-card tier-standard"><div class="badge-icon-container">
+1347:        <div class="badge-card tier-bronze"><div class="badge-icon-container">
+1354:        <div class="badge-card tier-silver"><div class="badge-icon-container">
+1361:        <div class="badge-card tier-gold"><div class="badge-icon-container">
+1368:        <div class="badge-card tier-standard"><div class="badge-icon-container">
+1375:        <div class="badge-card tier-bronze"><div class="badge-icon-container">
+1382:        <div class="badge-card tier-silver"><div class="badge-icon-container">
+1389:        <div class="badge-card tier-gold"><div class="badge-icon-container">
+1396:        <div class="badge-card tier-silver"><div class="badge-icon-container">
+1403:        <div class="badge-card tier-gold"><div class="badge-icon-container">
+1422:        <div class="badge-card tier-bronze"><div class="badge-icon-container">
+1429:        <div class="badge-card tier-silver"><div class="badge-icon-container">
+1436:        <div class="badge-card tier-gold"><div class="badge-icon-container">
+1443:        <div class="badge-card tier-bronze"><div class="badge-icon-container">⭐</div><div class="badge-info"><div class="badge-name">One-Putt Artist</div><div class="badge-description">30%+ one-putt rate</div><div class="badge-meta"><span class="badge-tier tier-bronze">Bronze</span><span class="badge-xp">100 XP</span></div></div></div>
+1444:        <div class="badge-card tier-silver"><div class="badge-icon-container">⭐</div><div class="badge-info"><div class="badge-name">One-Putt Machine</div><div class="badge-description">40%+ one-putt rate</div><div class="badge-meta"><span class="badge-tier tier-silver">Silver</span><span class="badge-xp">250 XP</span></div></div></div>
+1445:        <div class="badge-card tier-gold"><div class="badge-icon-container">⭐</div><div class="badge-info"><div class="badge-name">One-Putt Legend</div><div class="badge-description">50%+ one-putt rate</div><div class="badge-meta"><span class="badge-tier tier-gold">Gold</span><span class="badge-xp">500 XP</span></div></div></div>
+1446:        <div class="badge-card tier-bronze"><div class="badge-icon-container">✅</div><div class="badge-info"><div class="badge-name">Gimme Killer</div><div class="badge-description">95%+ make rate innenfor 3ft</div><div class="badge-meta"><span class="badge-tier tier-bronze">Bronze</span><span class="badge-xp">100 XP</span></div></div></div>
+1447:        <div class="badge-card tier-gold"><div class="badge-icon-container">✅</div><div class="badge-info"><div class="badge-name">Never Miss</div><div class="badge-description">99%+ make rate innenfor 3ft</div><div class="badge-meta"><span class="badge-tier tier-gold">Gold</span><span class="badge-xp">300 XP</span></div></div></div>
+1448:        <div class="badge-card tier-silver"><div class="badge-icon-container">✅</div><div class="badge-info"><div class="badge-name">3-Putt Fri</div><div class="badge-description">Under 5% three-putt rate</div><div class="badge-meta"><span class="badge-tier tier-silver">Silver</span><span class="badge-xp">200 XP</span></div></div></div>
+1461:        <div class="badge-card tier-bronze"><div class="badge-icon-container">
+1468:        <div class="badge-card tier-silver"><div class="badge-icon-container">
+1475:        <div class="badge-card tier-gold"><div class="badge-icon-container">
+1482:        <div class="badge-card tier-bronze"><div class="badge-icon-container">
+1489:        <div class="badge-card tier-silver"><div class="badge-icon-container">
+1496:        <div class="badge-card tier-gold"><div class="badge-icon-container">
+1515:        <div class="badge-card tier-bronze"><div class="badge-icon-container">🏆</div><div class="badge-info"><div class="badge-name">Breaking 90</div><div class="badge-description">Spill en runde under 90</div><div class="badge-meta"><span class="badge-tier tier-bronze">Bronze</span><span class="badge-xp">150 XP</span></div></div></div>
+1516:        <div class="badge-card tier-silver"><div class="badge-icon-container">🏆</div><div class="badge-info"><div class="badge-name">Breaking 85</div><div class="badge-description">Spill en runde under 85</div><div class="badge-meta"><span class="badge-tier tier-silver">Silver</span><span class="badge-xp">250 XP</span></div></div></div>
+1517:        <div class="badge-card tier-gold"><div class="badge-icon-container">🏆</div><div class="badge-info"><div class="badge-name">Breaking 80</div><div class="badge-description">Spill en runde under 80</div><div class="badge-meta"><span class="badge-tier tier-gold">Gold</span><span class="badge-xp">400 XP</span></div></div></div>
+1518:        <div class="badge-card tier-platinum"><div class="badge-icon-container">🏆</div><div class="badge-info"><div class="badge-name">Breaking 75</div><div class="badge-description">Spill en runde under 75</div><div class="badge-meta"><span class="badge-tier tier-platinum">Platinum</span><span class="badge-xp">600 XP</span></div></div></div>
+1519:        <div class="badge-card tier-platinum"><div class="badge-icon-container">
+1527:        <div class="badge-card tier-bronze"><div class="badge-icon-container">
+1533:        <div class="badge-card tier-silver"><div class="badge-icon-container">
+1539:        <div class="badge-card tier-gold"><div class="badge-icon-container">
+1545:        <div class="badge-card tier-platinum"><div class="badge-icon-container">
+1553:        <div class="badge-card tier-bronze"><div class="badge-icon-container">
+1560:        <div class="badge-card tier-silver"><div class="badge-icon-container">
+1579:        <div class="badge-card tier-bronze"><div class="badge-icon-container">✅</div><div class="badge-info"><div class="badge-name">Grunnlag Fullført</div><div class="badge-description">Fullfør en grunnlagsperiode</div><div class="badge-meta"><span class="badge-tier tier-bronze">Bronze</span><span class="badge-xp">150 XP</span></div></div></div>
+1580:        <div class="badge-card tier-gold"><div class="badge-icon-container">
+1589:        <div class="badge-card tier-bronze"><div class="badge-icon-container">✅</div><div class="badge-info"><div class="badge-name">Plan Følger</div><div class="badge-description">80%+ compliance</div><div class="badge-meta"><span class="badge-tier tier-bronze">Bronze</span><span class="badge-xp">100 XP</span></div></div></div>
+1590:        <div class="badge-card tier-silver"><div class="badge-icon-container">✅</div><div class="badge-info"><div class="badge-name">Plan Mester</div><div class="badge-description">90%+ compliance</div><div class="badge-meta"><span class="badge-tier tier-silver">Silver</span><span class="badge-xp">200 XP</span></div></div></div>
+1591:        <div class="badge-card tier-gold"><div class="badge-icon-container">⭐</div><div class="badge-info"><div class="badge-name">Perfekt Utførelse</div><div class="badge-description">95%+ compliance</div><div class="badge-meta"><span class="badge-tier tier-gold">Gold</span><span class="badge-xp">400 XP</span></div></div></div>
+1592:        <div class="badge-card tier-silver"><div class="badge-icon-container">
+1613:        <div class="badge-card tier-bronze"><div class="badge-icon-container">
+1624:        <div class="badge-card tier-silver"><div class="badge-icon-container">
+1635:        <div class="badge-card tier-gold"><div class="badge-icon-container">
+1658:        <div class="badge-card tier-bronze"><div class="badge-icon-container">
+1674:        <div class="badge-card tier-gold"><div class="badge-icon-container">

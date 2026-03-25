@@ -1,0 +1,256 @@
+/**
+ * TIER Golf Dashboard - Full-Width Responsive Layout
+ * WCAG AA Compliant Grid System
+ *
+ * Breakpoints:
+ * - Mobile:  320px - 639px  (single column, 16px padding)
+ * - Tablet:  640px - 1023px (2 columns, 24px padding)
+ * - Desktop: 1024px+        (2fr main + 1fr sidebar, 32px padding)
+ *
+ * Uses layout variables from index.css:
+ * --layout-padding-mobile, --layout-padding-tablet, --layout-padding-desktop
+ */
+
+/* ==================== BASE LAYOUT ==================== */
+
+.dashboard-layout {
+  display: grid;
+  gap: var(--layout-gap, 24px);
+  width: 100%;
+  max-width: none; /* Full width - no constraints */
+  padding-left: var(--layout-padding-mobile, 1rem);
+  padding-right: var(--layout-padding-mobile, 1rem);
+  padding-top: var(--layout-padding-mobile, 1rem);
+  padding-bottom: var(--layout-padding-mobile, 1rem);
+}
+
+/* Full-width items that span all columns */
+.dashboard-full-width {
+  grid-column: 1 / -1;
+}
+
+/* Main content area */
+.dashboard-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg, 24px);
+}
+
+/* Sidebar content area */
+.dashboard-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg, 24px);
+}
+
+/* ==================== MOBILE (< 640px) ==================== */
+
+@media (max-width: 639px) {
+  .dashboard-layout {
+    grid-template-columns: 1fr;
+    padding: var(--layout-padding-mobile, 1rem);
+    gap: var(--layout-gap, 24px);
+  }
+
+  /* Stack everything in single column */
+  .dashboard-main,
+  .dashboard-sidebar {
+    grid-column: 1;
+  }
+
+  /* Smaller gaps on mobile */
+  .dashboard-main,
+  .dashboard-sidebar {
+    gap: var(--layout-gap, 24px);
+  }
+
+  /* Adjust card padding for mobile */
+  .dashboard-card {
+    padding: var(--layout-padding-mobile, 1rem);
+  }
+
+  /* Quick actions: 2x2 grid on mobile */
+  .dashboard-quick-actions {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* KPI grid: 2x2 on mobile */
+  .dashboard-kpi-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* Very small mobile (320px) */
+@media (max-width: 374px) {
+  .dashboard-layout {
+    padding: 0.75rem;
+    gap: 1rem;
+  }
+
+  /* Single column for quick actions on very small screens */
+  .dashboard-quick-actions {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* ==================== TABLET (640px - 1023px) ==================== */
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .dashboard-layout {
+    grid-template-columns: repeat(2, 1fr);
+    padding: var(--layout-padding-tablet, 1.5rem);
+    gap: var(--layout-gap, 24px);
+  }
+
+  /* Full-width sections */
+  .dashboard-hero,
+  .dashboard-action-card,
+  .dashboard-quick-actions-section,
+  .dashboard-kpi-section {
+    grid-column: 1 / -1;
+  }
+
+  /* Main and sidebar side by side */
+  .dashboard-main {
+    grid-column: 1 / 2;
+  }
+
+  .dashboard-sidebar {
+    grid-column: 2 / 3;
+  }
+
+  /* KPI grid: 4 columns on tablet */
+  .dashboard-kpi-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+
+  /* Quick actions: 4 columns */
+  .dashboard-quick-actions {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+}
+
+/* ==================== DESKTOP (1024px+) ==================== */
+
+@media (min-width: 1024px) {
+  .dashboard-layout {
+    grid-template-columns: 2fr 1fr;
+    padding: var(--layout-padding-desktop, 2rem);
+    gap: var(--layout-gap-lg, 32px);
+  }
+
+  /* Full-width sections */
+  .dashboard-hero,
+  .dashboard-action-card,
+  .dashboard-kpi-section,
+  .dashboard-quick-actions-section {
+    grid-column: 1 / -1;
+  }
+
+  /* Main content takes 2fr */
+  .dashboard-main {
+    grid-column: 1 / 2;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--layout-gap, 24px);
+    align-content: start;
+  }
+
+  /* Items that need full width in main area */
+  .dashboard-main-full {
+    grid-column: 1 / -1;
+  }
+
+  /* Sidebar takes 1fr */
+  .dashboard-sidebar {
+    grid-column: 2 / 3;
+    position: sticky;
+    top: var(--layout-padding-desktop, 2rem);
+    height: fit-content;
+    max-height: calc(100vh - var(--layout-padding-desktop, 2rem) * 2);
+    overflow-y: auto;
+  }
+
+  /* KPI grid: 4 columns full width */
+  .dashboard-kpi-grid {
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+
+  /* Quick actions: 4 columns */
+  .dashboard-quick-actions {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+}
+
+/* ==================== WIDE SCREENS (1440px+) ==================== */
+
+@media (min-width: 1440px) {
+  .dashboard-layout {
+    padding: var(--layout-padding-desktop, 2rem);
+    gap: var(--layout-gap-lg, 32px);
+  }
+}
+
+/* ==================== COMPONENT-SPECIFIC RESPONSIVE ==================== */
+
+/* Goals widget - adjust based on viewport */
+.dashboard-goals-list {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 1024px) {
+  .dashboard-goals-list {
+    max-height: 400px;
+    overflow-y: auto;
+  }
+}
+
+/* Messages widget */
+.dashboard-messages-list {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 1024px) {
+  .dashboard-messages-list {
+    max-height: 350px;
+    overflow-y: auto;
+  }
+}
+
+/* Sessions widget */
+.dashboard-sessions-list {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==================== PRINT STYLES ==================== */
+
+@media print {
+  .dashboard-layout {
+    display: block;
+    padding: 0;
+  }
+
+  .dashboard-sidebar {
+    display: none;
+  }
+
+  .dashboard-main {
+    display: block;
+  }
+
+  .dashboard-quick-actions-section {
+    display: none;
+  }
+}
+
+/* ==================== REDUCED MOTION ==================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .dashboard-sidebar {
+    position: static;
+  }
+}

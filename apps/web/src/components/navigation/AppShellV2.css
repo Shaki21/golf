@@ -1,0 +1,171 @@
+/**
+ * AppShellV2 Styles
+ *
+ * Main application layout with Left Rail + Flyout navigation.
+ * Uses semantic tokens exclusively.
+ *
+ * Layout:
+ * - Desktop: 64px rail margin + content
+ * - Mobile: 60px header margin + content
+ */
+
+.app-shell-v2 {
+  min-height: 100vh;
+  display: flex;
+  background-color: var(--background-default);
+}
+
+/* ─────────────────────────────────────────
+   SKIP LINK (Accessibility)
+   ───────────────────────────────────────── */
+
+.app-shell-v2__skip-link {
+  position: absolute;
+  top: -60px;
+  left: 0;
+  padding: 12px 20px;
+  background-color: var(--accent);
+  color: var(--text-inverse);
+  text-decoration: none;
+  font-size: var(--font-size-subheadline);
+  font-weight: 600;
+  border-radius: 0 0 var(--radius-sm) 0;
+  z-index: 9999;
+  transition: top 150ms ease;
+}
+
+.app-shell-v2__skip-link--focused,
+.app-shell-v2__skip-link:focus {
+  top: 0;
+}
+
+/* ─────────────────────────────────────────
+   CONTENT WRAPPER
+   ───────────────────────────────────────── */
+
+.app-shell-v2__wrapper {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background-default);
+  /* Desktop: offset by rail width */
+  margin-left: 64px;
+}
+
+/* Mobile: offset by header height instead */
+@media (max-width: 1023px) {
+  .app-shell-v2__wrapper {
+    margin-left: 0;
+    margin-top: calc(60px + var(--safe-area-inset-top));
+  }
+}
+
+/* ─────────────────────────────────────────
+   PAGE HEADER
+   ───────────────────────────────────────── */
+
+.app-shell-v2__header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background-color: var(--background-white);
+  border-bottom: 1px solid var(--border-subtle);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.app-shell-v2__header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 32px;
+  width: 100%;
+}
+
+@media (max-width: 767px) {
+  .app-shell-v2__header-content {
+    padding: 12px 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
+
+.app-shell-v2__header-titles {
+  flex: 1;
+  min-width: 0;
+}
+
+.app-shell-v2__title {
+  font-size: var(--font-size-title1);
+  line-height: var(--line-height-title1);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+@media (max-width: 767px) {
+  .app-shell-v2__title {
+    font-size: var(--font-size-title2);
+    line-height: var(--line-height-title2);
+  }
+}
+
+.app-shell-v2__subtitle {
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  color: var(--text-secondary);
+  margin: 4px 0 0;
+}
+
+@media (max-width: 767px) {
+  .app-shell-v2__subtitle {
+    font-size: var(--font-size-subheadline);
+  }
+}
+
+.app-shell-v2__header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 767px) {
+  .app-shell-v2__header-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+
+/* ─────────────────────────────────────────
+   MAIN CONTENT
+   ───────────────────────────────────────── */
+
+.app-shell-v2__main {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.app-shell-v2__main:focus {
+  outline: none;
+}
+
+.app-shell-v2__content {
+  padding: 24px 32px;
+  width: 100%;
+}
+
+@media (max-width: 767px) {
+  .app-shell-v2__content {
+    padding: 16px;
+  }
+}
+
+/* Add padding at bottom for mobile to account for any fixed elements */
+@media (max-width: 1023px) {
+  .app-shell-v2__content {
+    padding-bottom: calc(24px + var(--safe-area-inset-bottom));
+  }
+}

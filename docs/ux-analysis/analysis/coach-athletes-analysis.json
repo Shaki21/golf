@@ -1,0 +1,190 @@
+{
+  "pageId": "coach-athletes",
+  "path": "/coach/athletes",
+  "component": "CoachAthleteList",
+  "analyzedAt": "2026-01-13T02:12:00Z",
+  "jtbdFramework": {
+    "1_pageIdentification": {
+      "name": "CoachAthleteList (Alphabetical Player Index)",
+      "role": "coach",
+      "frequency": "daily",
+      "context": "review",
+      "clarityScore": 10
+    },
+    "2_primaryJTBD": {
+      "decision": "Which player should I review/contact now?",
+      "isObviousIn5Seconds": true,
+      "clarity": 10,
+      "competingAttention": [
+        "Search bar",
+        "Select mode toggle",
+        "Alphabetical player list"
+      ],
+      "primaryCTA": {
+        "component": "Player row click",
+        "label": "View player details",
+        "isProminent": true
+      }
+    },
+    "3_decisionVsInfoRatio": {
+      "decisionElements": {
+        "count": 7,
+        "items": [
+          "Player row clicks (filteredAthletes.length)",
+          "Search input",
+          "Select mode toggle",
+          "Select all/none button",
+          "Batch actions button",
+          "Individual checkboxes (when in select mode)"
+        ]
+      },
+      "informationElements": {
+        "count": 3,
+        "items": [
+          "Page title + subtitle",
+          "Help text",
+          "Player count display"
+        ]
+      },
+      "ratio": 0.70,
+      "assessment": "EXCELLENT - Strong decision focus for index page",
+      "dominantDecision": "Yes - Player selection is clear primary action"
+    },
+    "4_visualHierarchy": {
+      "eyeLandsOnFirst": "Search bar",
+      "isCorrectFirstFocus": true,
+      "heroElement": "Player list (alphabetical)",
+      "secondaryElements": [
+        "Select mode controls",
+        "Page header"
+      ],
+      "noiseElements": [],
+      "isFlatHierarchy": true,
+      "assessment": "EXCELLENT - Clean, purposeful layout with search-first UX"
+    },
+    "5_kpiQuality": {
+      "kpis": [
+        {
+          "metric": "Player count (filteredAthletes.length)",
+          "type": "neutral",
+          "isActionable": false,
+          "hasContext": true,
+          "quality": "neutral",
+          "note": "Informational only - intentionally neutral per contract"
+        }
+      ],
+      "leadingPercentage": 0.0,
+      "actionablePercentage": 0.0,
+      "assessment": "INTENTIONAL - No KPIs by design (neutral list archetype)",
+      "note": "Contract explicitly prohibits counts, badges, or performance indicators"
+    },
+    "6_languageAndMentalModel": {
+      "style": "neutral_admin",
+      "actionVerbs": [
+        "Search",
+        "Select",
+        "View"
+      ],
+      "systemNouns": [
+        "Players",
+        "Athletes",
+        "Spillere"
+      ],
+      "coachActionPercentage": 0.4,
+      "assessment": "GOOD - Neutral administrative language as per contract",
+      "phrasesToRewrite": []
+    },
+    "7_flowAndNavigationCost": {
+      "clicksFromDashboard": 1,
+      "navigationDepth": 1,
+      "clicksToPlayerDetail": 1,
+      "clicksToSearch": 0,
+      "clicksToSelectMultiple": 2,
+      "assessment": "EXCELLENT - 1 click to player details, 0 clicks to search",
+      "shouldBeInline": []
+    },
+    "8_stateCoverage": {
+      "hasEmptyState": false,
+      "hasLoadingState": true,
+      "hasErrorState": true,
+      "hasSuccessState": false,
+      "hasOverloadedState": false,
+      "hasAtRiskState": false,
+      "assessment": "GOOD - Loading and error states with retry",
+      "gaps": [
+        "No empty state for new coaches with no players",
+        "No success state after batch operations"
+      ]
+    },
+    "9_roleScalability": {
+      "hasRoleConditionals": false,
+      "beginnerFriendly": true,
+      "eliteFriendly": true,
+      "scalabilityIssues": [],
+      "recommendation": "Well-designed for scale - alphabetical sorting works for any roster size"
+    },
+    "10_strategicVerdict": {
+      "diagnosis": "Well-implemented neutral list following contract specifications",
+      "currentBehavior": "Alphabetical player index",
+      "desiredBehavior": "Alphabetical player index",
+      "topIssues": [
+        {
+          "rank": 1,
+          "issue": "Missing empty state for new coaches",
+          "severity": "low",
+          "impact": "First-time coaches see blank page"
+        },
+        {
+          "rank": 2,
+          "issue": "Batch operations panel implementation not visible in code",
+          "severity": "medium",
+          "impact": "Cannot assess batch UX quality"
+        },
+        {
+          "rank": 3,
+          "issue": "Mock data fallback on API error",
+          "severity": "low",
+          "impact": "May show fake data if API fails"
+        }
+      ],
+      "structuralFix": "Add empty state with onboarding + review BatchOperationsPanel UX"
+    },
+    "11_crossPageConsistency": {
+      "note": "Uses PageHeader + PageContainer pattern (consistent). Follows 'Archetype A - List/Index Page' contract with strict neutral presentation rules. Select mode feature is unique to this page."
+    }
+  },
+  "codeAnalysis": {
+    "componentCount": {
+      "interactive": 7,
+      "display": 4
+    },
+    "stateHandling": {
+      "loading": "LoadingState component using StateCard",
+      "empty": "None",
+      "error": "ErrorState component with retry button"
+    },
+    "dataSource": {
+      "isRealData": true,
+      "isMockData": true,
+      "hasFallback": true,
+      "note": "Fetches from coachesAPI with mock data fallback on error"
+    },
+    "accessibility": {
+      "hasAriaLabels": false,
+      "semanticHTML": true,
+      "keyboardNav": "Good - uses button elements for player rows"
+    },
+    "responsiveDesign": {
+      "hasMobileLayout": true,
+      "breakpoints": ["standard responsive grid"],
+      "mobileFirst": true
+    },
+    "contracts": {
+      "adherence": "STRICT",
+      "note": "Code includes contract references and strict notes enforcing neutral presentation"
+    }
+  },
+  "priorityScore": 85,
+  "implementationStatus": "implemented",
+  "overallAssessment": "EXCELLENT - Clean implementation following contract specifications, needs minor improvements for edge cases"
+}

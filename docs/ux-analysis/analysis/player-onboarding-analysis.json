@@ -1,0 +1,232 @@
+{
+  "pageId": "player-onboarding",
+  "path": "/onboarding",
+  "component": "OnboardingPage",
+  "analyzedAt": "2026-01-13T02:25:00Z",
+  "jtbdFramework": {
+    "1_pageIdentification": {
+      "name": "OnboardingPage (Annual Plan Wizard)",
+      "role": "player",
+      "frequency": "once",
+      "context": "setup",
+      "clarityScore": 8
+    },
+    "2_primaryJTBD": {
+      "decision": "How do I set up my annual training plan to reach my golf goals?",
+      "isObviousIn5Seconds": true,
+      "clarity": 8,
+      "competingAttention": [
+        "Multi-step wizard progress (7 steps)",
+        "Current step content",
+        "Next/Back navigation buttons"
+      ],
+      "primaryCTA": {
+        "component": "Next button / Generate Plan button",
+        "label": "Proceed to next step / Generate annual plan",
+        "isProminent": true
+      }
+    },
+    "3_decisionVsInfoRatio": {
+      "decisionElements": {
+        "count": 12,
+        "items": [
+          "Next button",
+          "Back button",
+          "Category checkboxes (5)",
+          "Goal type selection",
+          "Weekly hours slider",
+          "Tournament selection",
+          "Skip button",
+          "Generate plan button"
+        ]
+      },
+      "informationElements": {
+        "count": 7,
+        "items": [
+          "Wizard progress indicator",
+          "Step titles and descriptions",
+          "Category descriptions",
+          "Help text for each section",
+          "Preview of selections"
+        ]
+      },
+      "ratio": 0.63,
+      "assessment": "EXCELLENT - Strong decision focus for wizard flow",
+      "dominantDecision": "Yes - Next/Generate Plan is clear primary action"
+    },
+    "4_visualHierarchy": {
+      "eyeLandsOnFirst": "Wizard progress stepper",
+      "isCorrectFirstFocus": true,
+      "heroElement": "Current step content area",
+      "secondaryElements": [
+        "Progress indicator",
+        "Navigation buttons"
+      ],
+      "noiseElements": [],
+      "isFlatHierarchy": false,
+      "assessment": "EXCELLENT - Clear wizard pattern with step-by-step progression"
+    },
+    "5_kpiQuality": {
+      "kpis": [
+        {
+          "metric": "Completion progress (1 of 7 steps)",
+          "type": "leading",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "high",
+          "note": "Shows user where they are in the process"
+        }
+      ],
+      "leadingPercentage": 1.0,
+      "actionablePercentage": 1.0,
+      "assessment": "EXCELLENT - Progress tracking is actionable"
+    },
+    "6_languageAndMentalModel": {
+      "style": "action_oriented",
+      "actionVerbs": [
+        "Choose",
+        "Select",
+        "Set",
+        "Generate",
+        "Create"
+      ],
+      "systemNouns": [
+        "Categories",
+        "Goals",
+        "Plan",
+        "Training",
+        "Tournament"
+      ],
+      "coachActionPercentage": 0.7,
+      "assessment": "GOOD - Action-oriented wizard language",
+      "phrasesToRewrite": []
+    },
+    "7_flowAndNavigationCost": {
+      "clicksFromDashboard": 1,
+      "navigationDepth": 1,
+      "clicksToComplete": 7,
+      "clicksToSkip": 1,
+      "assessment": "EXCELLENT - Linear wizard flow with minimal friction",
+      "shouldBeInline": []
+    },
+    "8_stateCoverage": {
+      "hasEmptyState": false,
+      "hasLoadingState": true,
+      "hasErrorState": true,
+      "hasSuccessState": true,
+      "hasOverloadedState": false,
+      "hasAtRiskState": false,
+      "assessment": "EXCELLENT - Comprehensive state handling including plan generation loading/success/error",
+      "gaps": []
+    },
+    "9_roleScalability": {
+      "hasRoleConditionals": false,
+      "beginnerFriendly": true,
+      "eliteFriendly": true,
+      "scalabilityIssues": [],
+      "recommendation": "Well-designed for all skill levels - progressive disclosure through wizard"
+    },
+    "10_strategicVerdict": {
+      "diagnosis": "Professional multi-step onboarding wizard with comprehensive plan generation",
+      "currentBehavior": "7-step wizard that generates annual training plan",
+      "desiredBehavior": "7-step wizard that generates annual training plan",
+      "topIssues": [
+        {
+          "rank": 1,
+          "issue": "No ability to save partial progress and return later",
+          "severity": "medium",
+          "impact": "Users may lose selections if they exit before completing"
+        },
+        {
+          "rank": 2,
+          "issue": "No preview of generated plan before final commit",
+          "severity": "low",
+          "impact": "Users cannot verify plan before accepting"
+        },
+        {
+          "rank": 3,
+          "issue": "Navigation between steps requires linear progression",
+          "severity": "low",
+          "impact": "Cannot easily jump to edit previous step"
+        }
+      ],
+      "structuralFix": "Add draft saving + plan preview step before final generation + allow non-linear navigation"
+    },
+    "11_crossPageConsistency": {
+      "note": "Uses full-screen wizard pattern (breaks from standard PageHeader). Integrates with annual plan generation via planGenerationAPI. Unique one-time setup flow."
+    }
+  },
+  "codeAnalysis": {
+    "componentCount": {
+      "interactive": 12,
+      "display": 8
+    },
+    "stateHandling": {
+      "loading": "isGenerating state with loading spinner during plan generation",
+      "empty": "Not applicable for wizard",
+      "error": "showError state with error messages and retry option"
+    },
+    "dataSource": {
+      "isRealData": true,
+      "isMockData": false,
+      "note": "Calls planGenerationAPI.generateAnnualPlan with real backend integration"
+    },
+    "accessibility": {
+      "hasAriaLabels": true,
+      "semanticHTML": true,
+      "keyboardNav": "Good - wizard supports keyboard navigation with tab/enter"
+    },
+    "responsiveDesign": {
+      "hasMobileLayout": true,
+      "breakpoints": ["md:max-w-2xl centered container"],
+      "mobileFirst": true
+    },
+    "wizardSteps": [
+      {
+        "step": 1,
+        "title": "Choose Categories",
+        "description": "Select which golf categories you want to focus on",
+        "inputs": "Category checkboxes (Teknikk, Putting, Short Game, Long Game, Mental)"
+      },
+      {
+        "step": 2,
+        "title": "Set Goals",
+        "description": "Define your golf improvement goals",
+        "inputs": "Goal type selection + target metrics"
+      },
+      {
+        "step": 3,
+        "title": "Training Volume",
+        "description": "How much time can you dedicate to training?",
+        "inputs": "Weekly hours slider"
+      },
+      {
+        "step": 4,
+        "title": "Tournament Schedule",
+        "description": "Plan around important tournaments",
+        "inputs": "Tournament selection + dates"
+      },
+      {
+        "step": 5,
+        "title": "Review",
+        "description": "Review your selections",
+        "inputs": "Read-only summary"
+      },
+      {
+        "step": 6,
+        "title": "Generate",
+        "description": "Creating your personalized annual plan",
+        "inputs": "Generate button triggers API call"
+      },
+      {
+        "step": 7,
+        "title": "Success",
+        "description": "Your plan is ready",
+        "inputs": "View plan button"
+      }
+    ]
+  },
+  "priorityScore": 85,
+  "implementationStatus": "implemented",
+  "overallAssessment": "EXCELLENT - Professional wizard with comprehensive plan generation, needs minor improvements for UX flexibility"
+}

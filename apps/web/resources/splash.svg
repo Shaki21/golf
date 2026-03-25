@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2732 2732" fill="none">
+  <!-- Background gradient -->
+  <rect width="2732" height="2732" fill="#115e59"/>
+
+  <!-- Centered logo container -->
+  <g transform="translate(1016, 1016)">
+    <!-- Golf ball -->
+    <circle cx="350" cy="350" r="280" fill="#ffffff"/>
+
+    <!-- Dimples pattern -->
+    <circle cx="252" cy="234" r="35" fill="#e5e7eb"/>
+    <circle cx="357" cy="200" r="30" fill="#e5e7eb"/>
+    <circle cx="462" cy="252" r="33" fill="#e5e7eb"/>
+    <circle cx="497" cy="357" r="31" fill="#e5e7eb"/>
+    <circle cx="448" cy="462" r="35" fill="#e5e7eb"/>
+    <circle cx="336" cy="497" r="33" fill="#e5e7eb"/>
+    <circle cx="224" cy="434" r="30" fill="#e5e7eb"/>
+    <circle cx="210" cy="329" r="31" fill="#e5e7eb"/>
+    <circle cx="350" cy="350" r="28" fill="#e5e7eb"/>
+    <circle cx="287" cy="378" r="26" fill="#e5e7eb"/>
+    <circle cx="413" cy="322" r="24" fill="#e5e7eb"/>
+    <circle cx="308" cy="280" r="22" fill="#e5e7eb"/>
+    <circle cx="392" cy="406" r="26" fill="#e5e7eb"/>
+
+    <!-- Golf flag accent -->
+    <path d="M515 90 L585 155 L515 220 Z" fill="#f59e0b"/>
+    <rect x="506" y="155" width="18" height="175" rx="4" fill="#f59e0b"/>
+  </g>
+
+  <!-- App name -->
+  <text x="1366" y="1650" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="120" font-weight="700" fill="#ffffff">
+    AK Golf
+  </text>
+  <text x="1366" y="1750" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="56" font-weight="400" fill="#ffffff" opacity="0.8">
+    Individuell Utviklingsplan
+  </text>
+</svg>

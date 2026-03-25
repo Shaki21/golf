@@ -1,0 +1,61 @@
+{
+  "short_name": "TIER Golf",
+  "name": "TIER Golf - IUP",
+  "description": "Individuell Utviklingsplan for golfspillere",
+  "icons": [
+    {
+      "src": "/icons/icon-48.webp",
+      "type": "image/webp",
+      "sizes": "48x48",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-72.webp",
+      "type": "image/webp",
+      "sizes": "72x72",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-96.webp",
+      "type": "image/webp",
+      "sizes": "96x96",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-128.webp",
+      "type": "image/webp",
+      "sizes": "128x128",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-192.webp",
+      "type": "image/webp",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-256.webp",
+      "type": "image/webp",
+      "sizes": "256x256",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.webp",
+      "type": "image/webp",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#0A2540",
+  "background_color": "#F8FAFC",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "no",
+  "categories": [
+    "sports",
+    "education",
+    "productivity"
+  ]
+}

@@ -1,0 +1,1075 @@
+openapi: 3.1.0
+info:
+  title: IUP Golf Academy API
+  version: 1.0.0
+  description: |
+    Enterprise-grade REST API for Individual Development Plan (IUP) system for golf training academies.
+
+    ## Features
+    - Multi-tenant architecture with organization isolation
+    - Role-based access control (Admin, Coach, Player)
+    - JWT-based authentication with refresh tokens
+    - Real-time WebSocket updates
+    - Comprehensive player development tracking
+    - Exercise library and session planning
+    - Performance testing and benchmarking
+    - Calendar and booking management
+    - Analytics and reporting
+
+    ## Authentication
+    Most endpoints require authentication using JWT Bearer tokens. Obtain tokens via the `/auth/login` endpoint.
+
+  contact:
+    name: AK Golf Academy
+    email: anders@akgolf.no
+  license:
+    name: UNLICENSED
+
+servers:
+  - url: http://localhost:3001
+    description: Development server
+  - url: https://api.iup-golf.com
+    description: Production server
+  - url: https://staging-api.iup-golf.com
+    description: Staging server
+
+tags:
+  - name: Auth
+    description: Authentication and authorization
+  - name: Players
+    description: Player profile and management
+  - name: Coaches
+    description: Coach profile and management
+  - name: Exercises
+    description: Exercise library management
+  - name: Sessions
+    description: Training session templates
+  - name: Tests
+    description: Player testing and evaluation
+  - name: Goals
+    description: Player goal setting and tracking
+  - name: Achievements
+    description: Player achievements and milestones
+  - name: Bookings
+    description: Session booking management
+  - name: Calendar
+    description: Calendar and event management
+  - name: Notes
+    description: Coach notes and observations
+  - name: Analytics
+    description: Analytics and reporting
+  - name: Archive
+    description: Data archiving
+  - name: Monitoring
+    description: System health and metrics
+
+security:
+  - bearerAuth: []
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT access token obtained from /auth/login
+
+  schemas:
+    Error:
+      type: object
+      required:
+        - success
+        - error
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: object
+          required:
+            - code
+            - message
+          properties:
+            code:
+              type: string
+              example: NOT_FOUND
+            message:
+              type: string
+              example: Resource not found
+            details:
+              type: object
+              nullable: true
+
+    SuccessResponse:
+      type: object
+      required:
+        - success
+        - data
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          type: object
+
+    PaginationMeta:
+      type: object
+      properties:
+        total:
+          type: integer
+          example: 100
+        limit:
+          type: integer
+          example: 50
+        offset:
+          type: integer
+          example: 0
+        hasMore:
+          type: boolean
+          example: true
+
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+          format: email
+        firstName:
+          type: string
+        lastName:
+          type: string
+        role:
+          type: string
+          enum: [ADMIN, COACH, PLAYER]
+        tenantId:
+          type: string
+          format: uuid
+        isActive:
+          type: boolean
+        lastLoginAt:
+          type: string
+          format: date-time
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+
+    AuthTokens:
+      type: object
+      required:
+        - accessToken
+        - refreshToken
+        - expiresIn
+        - user
+      properties:
+        accessToken:
+          type: string
+          description: JWT access token (15 min expiry)
+        refreshToken:
+          type: string
+          description: Refresh token (7 days expiry)
+        expiresIn:
+          type: integer
+          example: 900
+          description: Access token expiry in seconds
+        user:
+          $ref: '#/components/schemas/User'
+
+    Player:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        userId:
+          type: string
+          format: uuid
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+          format: email
+        dateOfBirth:
+          type: string
+          format: date
+        handicap:
+          type: number
+          format: float
+        memberSince:
+          type: string
+          format: date
+        status:
+          type: string
+          enum: [ACTIVE, INACTIVE, SUSPENDED]
+        assignedCoachId:
+          type: string
+          format: uuid
+          nullable: true
+        profileImageUrl:
+          type: string
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+
+    Exercise:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+          enum: [DRIVING, IRON_PLAY, SHORT_GAME, PUTTING, PHYSICAL, MENTAL]
+        difficulty:
+          type: string
+          enum: [BEGINNER, INTERMEDIATE, ADVANCED, EXPERT]
+        duration:
+          type: integer
+          description: Estimated duration in minutes
+        instructions:
+          type: string
+        videoUrl:
+          type: string
+          nullable: true
+        equipmentNeeded:
+          type: array
+          items:
+            type: string
+        createdBy:
+          type: string
+          format: uuid
+        isPublic:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+
+    Goal:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        playerId:
+          type: string
+          format: uuid
+        title:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+          enum: [HANDICAP, TOURNAMENT, SKILL, FITNESS, MENTAL]
+        targetValue:
+          type: number
+        currentValue:
+          type: number
+        unit:
+          type: string
+        targetDate:
+          type: string
+          format: date
+        status:
+          type: string
+          enum: [NOT_STARTED, IN_PROGRESS, COMPLETED, ABANDONED]
+        progress:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 100
+        createdBy:
+          type: string
+          format: uuid
+        createdAt:
+          type: string
+          format: date-time
+
+paths:
+  # ============================================================================
+  # MONITORING ENDPOINTS
+  # ============================================================================
+  /health:
+    get:
+      tags:
+        - Monitoring
+      summary: Health check endpoint
+      description: Returns service health status and metrics
+      security: []
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: healthy
+                  timestamp:
+                    type: string
+                    format: date-time
+                  uptime:
+                    type: number
+                  memory:
+                    type: object
+                  metrics:
+                    type: object
+
+  /metrics:
+    get:
+      tags:
+        - Monitoring
+      summary: Prometheus metrics
+      description: Returns metrics in Prometheus format
+      security: []
+      responses:
+        '200':
+          description: Metrics data
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /ready:
+    get:
+      tags:
+        - Monitoring
+      summary: Readiness check
+      description: Kubernetes readiness probe endpoint
+      security: []
+      responses:
+        '200':
+          description: Service is ready
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ready:
+                    type: boolean
+                  timestamp:
+                    type: string
+                    format: date-time
+
+  /live:
+    get:
+      tags:
+        - Monitoring
+      summary: Liveness check
+      description: Kubernetes liveness probe endpoint
+      security: []
+      responses:
+        '200':
+          description: Service is alive
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  alive:
+                    type: boolean
+                  timestamp:
+                    type: string
+                    format: date-time
+
+  # ============================================================================
+  # AUTH ENDPOINTS
+  # ============================================================================
+  /api/v1/auth/register:
+    post:
+      tags:
+        - Auth
+      summary: Register new user and organization
+      description: Create a new user account and organization (tenant)
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+                - firstName
+                - lastName
+                - organizationName
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  minLength: 8
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+                organizationName:
+                  type: string
+      responses:
+        '201':
+          description: Registration successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: '#/components/schemas/AuthTokens'
+        '409':
+          description: User already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Login with credentials
+      description: Authenticate user and receive JWT tokens
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: '#/components/schemas/AuthTokens'
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/auth/refresh:
+    post:
+      tags:
+        - Auth
+      summary: Refresh access token
+      description: Get new access token using refresh token
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - refreshToken
+              properties:
+                refreshToken:
+                  type: string
+      responses:
+        '200':
+          description: Token refreshed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: '#/components/schemas/AuthTokens'
+        '401':
+          description: Invalid or expired refresh token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/auth/logout:
+    post:
+      tags:
+        - Auth
+      summary: Logout user
+      description: Revoke refresh token and logout
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - refreshToken
+              properties:
+                refreshToken:
+                  type: string
+      responses:
+        '200':
+          description: Logout successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+
+  /api/v1/auth/me:
+    get:
+      tags:
+        - Auth
+      summary: Get current user
+      description: Retrieve authenticated user information
+      responses:
+        '200':
+          description: User information retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: '#/components/schemas/User'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  # ============================================================================
+  # PLAYER ENDPOINTS
+  # ============================================================================
+  /api/v1/players:
+    get:
+      tags:
+        - Players
+      summary: List all players
+      description: Retrieve paginated list of players (tenant-scoped)
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 50
+            maximum: 100
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
+        - name: search
+          in: query
+          description: Search by name or email
+          schema:
+            type: string
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [ACTIVE, INACTIVE, SUSPENDED]
+      responses:
+        '200':
+          description: Players retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Player'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+
+    post:
+      tags:
+        - Players
+      summary: Create new player
+      description: Create a new player profile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - firstName
+                - lastName
+                - email
+                - dateOfBirth
+              properties:
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                dateOfBirth:
+                  type: string
+                  format: date
+                handicap:
+                  type: number
+                memberSince:
+                  type: string
+                  format: date
+                assignedCoachId:
+                  type: string
+                  format: uuid
+      responses:
+        '201':
+          description: Player created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: '#/components/schemas/Player'
+
+  /api/v1/players/{playerId}:
+    parameters:
+      - name: playerId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+
+    get:
+      tags:
+        - Players
+      summary: Get player by ID
+      description: Retrieve single player profile
+      responses:
+        '200':
+          description: Player retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: '#/components/schemas/Player'
+        '404':
+          description: Player not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    patch:
+      tags:
+        - Players
+      summary: Update player
+      description: Update player profile (partial update)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+                handicap:
+                  type: number
+                status:
+                  type: string
+                  enum: [ACTIVE, INACTIVE, SUSPENDED]
+                assignedCoachId:
+                  type: string
+                  format: uuid
+      responses:
+        '200':
+          description: Player updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: '#/components/schemas/Player'
+
+    delete:
+      tags:
+        - Players
+      summary: Delete player
+      description: Soft delete player (archive)
+      responses:
+        '200':
+          description: Player deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+
+  # ============================================================================
+  # EXERCISE ENDPOINTS
+  # ============================================================================
+  /api/v1/exercises:
+    get:
+      tags:
+        - Exercises
+      summary: List exercises
+      description: Retrieve paginated list of exercises
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 50
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
+        - name: category
+          in: query
+          schema:
+            type: string
+            enum: [DRIVING, IRON_PLAY, SHORT_GAME, PUTTING, PHYSICAL, MENTAL]
+        - name: difficulty
+          in: query
+          schema:
+            type: string
+            enum: [BEGINNER, INTERMEDIATE, ADVANCED, EXPERT]
+      responses:
+        '200':
+          description: Exercises retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Exercise'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+
+    post:
+      tags:
+        - Exercises
+      summary: Create exercise
+      description: Create new exercise in library
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - description
+                - category
+                - difficulty
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                category:
+                  type: string
+                  enum: [DRIVING, IRON_PLAY, SHORT_GAME, PUTTING, PHYSICAL, MENTAL]
+                difficulty:
+                  type: string
+                  enum: [BEGINNER, INTERMEDIATE, ADVANCED, EXPERT]
+                duration:
+                  type: integer
+                instructions:
+                  type: string
+                videoUrl:
+                  type: string
+                equipmentNeeded:
+                  type: array
+                  items:
+                    type: string
+                isPublic:
+                  type: boolean
+      responses:
+        '201':
+          description: Exercise created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: '#/components/schemas/Exercise'
+
+  # ============================================================================
+  # GOAL ENDPOINTS
+  # ============================================================================
+  /api/v1/goals:
+    get:
+      tags:
+        - Goals
+      summary: List goals
+      description: Retrieve player goals (filtered by player or coach)
+      parameters:
+        - name: playerId
+          in: query
+          schema:
+            type: string
+            format: uuid
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [NOT_STARTED, IN_PROGRESS, COMPLETED, ABANDONED]
+      responses:
+        '200':
+          description: Goals retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Goal'
+
+    post:
+      tags:
+        - Goals
+      summary: Create goal
+      description: Create new player goal
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - playerId
+                - title
+                - category
+                - targetValue
+                - targetDate
+              properties:
+                playerId:
+                  type: string
+                  format: uuid
+                title:
+                  type: string
+                description:
+                  type: string
+                category:
+                  type: string
+                  enum: [HANDICAP, TOURNAMENT, SKILL, FITNESS, MENTAL]
+                targetValue:
+                  type: number
+                unit:
+                  type: string
+                targetDate:
+                  type: string
+                  format: date
+      responses:
+        '201':
+          description: Goal created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: '#/components/schemas/Goal'
+
+  /api/v1/goals/{goalId}:
+    parameters:
+      - name: goalId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+
+    get:
+      tags:
+        - Goals
+      summary: Get goal by ID
+      responses:
+        '200':
+          description: Goal retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: '#/components/schemas/Goal'
+
+    patch:
+      tags:
+        - Goals
+      summary: Update goal
+      description: Update goal progress and status
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                currentValue:
+                  type: number
+                status:
+                  type: string
+                  enum: [NOT_STARTED, IN_PROGRESS, COMPLETED, ABANDONED]
+      responses:
+        '200':
+          description: Goal updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: '#/components/schemas/Goal'
+
+  # ============================================================================
+  # ANALYTICS ENDPOINTS
+  # ============================================================================
+  /api/v1/coach-analytics/{coachId}:
+    parameters:
+      - name: coachId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+
+    get:
+      tags:
+        - Analytics
+      summary: Get coach analytics
+      description: Retrieve comprehensive analytics for a coach
+      parameters:
+        - name: period
+          in: query
+          schema:
+            type: string
+            enum: [WEEK, MONTH, QUARTER, YEAR]
+            default: MONTH
+      responses:
+        '200':
+          description: Analytics retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                    properties:
+                      totalPlayers:
+                        type: integer
+                      activePlayers:
+                        type: integer
+                      totalSessions:
+                        type: integer
+                      completionRate:
+                        type: number
+                      averageImprovement:
+                        type: number
+
+  /api/v1/dashboard:
+    get:
+      tags:
+        - Analytics
+      summary: Get dashboard data
+      description: Retrieve dashboard summary for current user
+      responses:
+        '200':
+          description: Dashboard data retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                    properties:
+                      upcomingSessions:
+                        type: array
+                        items:
+                          type: object
+                      recentAchievements:
+                        type: array
+                        items:
+                          type: object
+                      activeGoals:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Goal'
+                      stats:
+                        type: object

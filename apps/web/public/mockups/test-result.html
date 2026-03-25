@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testresultat - TIER Golf</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Sans:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #F9FAFB;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border: 1px solid #F2F4F7;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            color: #10456A;
+            font-size: 28px;
+            font-weight: 700;
+            font-family: 'DM Sans', sans-serif;
+            margin-bottom: 8px;
+        }
+
+        .test-title {
+            font-size: 24px;
+            color: #666;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .section {
+            margin-bottom: 32px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #10456A;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .description-box {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #1a3d2e;
+            margin-bottom: 24px;
+        }
+
+        .requirement {
+            background: #e3f2fd;
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin-top: 12px;
+            font-weight: bold;
+            color: #1976d2;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #1a3d2e;
+            box-shadow: 0 0 0 3px rgba(26, 61, 46, 0.1);
+        }
+
+        input[type="number"] {
+            font-size: 24px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .unit {
+            color: #999;
+            font-size: 18px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #1a3d2e 0%, #2d5a45 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 24px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(26, 61, 46, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .result-section {
+            margin-top: 40px;
+            padding-top: 40px;
+            border-top: 2px solid #e0e0e0;
+            display: none;
+        }
+
+        .result-section.show {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .result-value-box {
+            background: linear-gradient(135deg, #1a3d2e 0%, #2d5a45 100%);
+            color: white;
+            padding: 32px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .result-value {
+            font-size: 64px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .result-label {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        .score-ring {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 32px;
+            position: relative;
+        }
+
+        .score-ring svg {
+            transform: rotate(-90deg);
+        }
+
+        .score-ring-circle {
+            fill: none;
+            stroke: #e0e0e0;
+            stroke-width: 16;
+        }
+
+        .score-ring-progress {
+            fill: none;
+            stroke-width: 16;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 1s ease;
+        }
+
+        .score-ring-progress.pass {
+            stroke: url(#gradient-pass);
+        }
+
+        .score-ring-progress.fail {
+            stroke: url(#gradient-fail);
+        }
+
+        .score-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .score-value {
+            font-size: 48px;
+            font-weight: bold;
+            color: #10456A;
+        }
+
+        .score-label {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 12px 32px;
+            border-radius: 24px;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 32px;
+        }
+
+        .status-badge.passed {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .status-badge.failed {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .detail-item {
+            background: #f5f5f5;
+            padding: 16px;
+            border-radius: 8px;
+        }
+
+        .detail-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 4px;
+        }
+
+        .detail-value {
+            font-size: 20px;
+            font-weight: bold;
+            color: #10456A;
+        }
+
+        .recommendation-box {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            padding: 24px;
+            border-radius: 12px;
+            border-left: 4px solid #4caf50;
+            margin-bottom: 24px;
+        }
+
+        .recommendation-box.warning {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border-left-color: #ff9800;
+        }
+
+        .recommendation-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #10456A;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .recommendation-text {
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #10456A;
+            border: 2px solid #1a3d2e;
+        }
+
+        .btn-secondary:hover {
+            background: #f5f5f5;
+        }
+
+        .improvement-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .improvement-list li {
+            padding: 8px 0;
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .improvement-list li:before {
+            content: "•";
+            position: absolute;
+            left: 8px;
+            color: #4caf50;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="header">
+                <h1>Registrer Testresultat</h1>
+                <div class="test-title">
+                    <span>🏌️</span>
+                    <span>TEST 1: DRIVER DISTANSE</span>
+                </div>
+            </div>
+
+            <!-- Test Description -->
+            <div class="section">
+                <div class="section-title">📋 TESTBESKRIVELSE</div>
+                <div class="description-box">
+                    Mål carry-distanse med driver. Beste av 3 slag.
+                    Måles med launch monitor eller GPS-enhet.
+                    <div class="requirement">
+                        🎯 Ditt krav (Kategori D): 240 meter
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input Form -->
+            <div class="section">
+                <div class="section-title">📊 REGISTRER RESULTAT</div>
+
+                <div class="form-group">
+                    <label for="distance">Distanse (meter):</label>
+                    <input type="number" id="distance" value="245" min="0" max="400">
+                </div>
+
+                <div class="form-group">
+                    <label for="date">Testdato:</label>
+                    <input type="date" id="date" value="2025-12-23">
+                </div>
+
+                <div class="form-group">
+                    <label for="notes">Notater (valgfritt):</label>
+                    <textarea id="notes" rows="3" placeholder="F.eks. værforhold, utstyr brukt, osv...">God kontakt, rette treff. Brukte ProV1.
+Temp: 15°C, lett medvind.</textarea>
+                </div>
+
+                <button class="btn" onclick="calculateResult()">
+                    🧮 Beregn resultat
+                </button>
+            </div>
+
+            <!-- Result Section (Hidden initially) -->
+            <div class="result-section" id="resultSection">
+                <div class="result-header">
+                    <div class="section-title">✨ BEREGNET RESULTAT</div>
+                </div>
+
+                <div class="result-value-box">
+                    <div class="result-value" id="resultValue">245m</div>
+                    <div class="result-label">Driver Distanse</div>
+                </div>
+
+                <div style="text-align: center;">
+                    <div class="score-ring">
+                        <svg width="200" height="200">
+                            <defs>
+                                <linearGradient id="gradient-pass" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#4caf50;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#8bc34a;stop-opacity:1" />
+                                </linearGradient>
+                                <linearGradient id="gradient-fail" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#f44336;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#ff9800;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                            <circle class="score-ring-circle" cx="100" cy="100" r="84"></circle>
+                            <circle class="score-ring-progress pass" id="scoreProgress" cx="100" cy="100" r="84"
+                                    stroke-dasharray="527.78" stroke-dashoffset="527.78"></circle>
+                        </svg>
+                        <div class="score-text">
+                            <div class="score-value" id="scoreValue">85</div>
+                            <div class="score-label">SCORE</div>
+                        </div>
+                    </div>
+
+                    <div class="status-badge passed" id="statusBadge">
+                        ✅ BESTÅTT KATEGORI D
+                    </div>
+                </div>
+
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <div class="detail-label">Resultat</div>
+                        <div class="detail-value" id="detailResult">245m</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Krav (Kategori D)</div>
+                        <div class="detail-value">240m</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Over/Under krav</div>
+                        <div class="detail-value" id="detailGap" style="color: #4caf50;">+5m (+2.1%)</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Percentile</div>
+                        <div class="detail-value">75%</div>
+                    </div>
+                </div>
+
+                <div class="recommendation-box" id="recommendationBox">
+                    <div class="recommendation-title">💡 ANBEFALING</div>
+                    <div class="recommendation-text">
+                        <p style="margin-bottom: 12px;">
+                            <strong>Bra!</strong> Du er 5m over kravet for kategori D.
+                        </p>
+                        <p style="margin-bottom: 12px;">
+                            For å nå kategori C (krav: 260m) trenger du:
+                        </p>
+                        <ul class="improvement-list">
+                            <li>+15m distanse</li>
+                            <li>Fokus på swing speed (+2-3 mph)</li>
+                            <li>Optimaliser smash factor</li>
+                        </ul>
+                        <div style="margin-top: 16px;">
+                            <button class="btn" style="width: auto; padding: 10px 24px; font-size: 14px;">
+                                📋 Se treningsplan →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn">💾 Lagre resultat</button>
+                    <button class="btn btn-secondary">📊 Se historikk</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calculateResult() {
+            const distance = parseFloat(document.getElementById('distance').value);
+            const requirement = 240; // Category D requirement
+
+            // Calculate score (0-100)
+            const score = Math.min(100, Math.round((distance / requirement) * 100));
+
+            // Calculate gap
+            const gap = distance - requirement;
+            const gapPercent = ((gap / requirement) * 100).toFixed(1);
+
+            // Determine if passed
+            const passed = distance >= requirement;
+
+            // Update UI
+            document.getElementById('resultValue').textContent = distance + 'm';
+            document.getElementById('scoreValue').textContent = score;
+            document.getElementById('detailResult').textContent = distance + 'm';
+            document.getElementById('detailGap').textContent =
+                (gap >= 0 ? '+' : '') + gap + 'm (' + (gap >= 0 ? '+' : '') + gapPercent + '%)';
+            document.getElementById('detailGap').style.color = gap >= 0 ? '#4caf50' : '#f44336';
+
+            // Update status badge
+            const statusBadge = document.getElementById('statusBadge');
+            if (passed) {
+                statusBadge.className = 'status-badge passed';
+                statusBadge.innerHTML = '✅ BESTÅTT KATEGORI D';
+            } else {
+                statusBadge.className = 'status-badge failed';
+                statusBadge.innerHTML = '❌ IKKE BESTÅTT';
+            }
+
+            // Update score ring
+            const circle = document.getElementById('scoreProgress');
+            const radius = 84;
+            const circumference = radius * 2 * Math.PI;
+            const offset = circumference - (score / 100 * circumference);
+
+            circle.className = 'score-ring-progress ' + (passed ? 'pass' : 'fail');
+            setTimeout(() => {
+                circle.style.strokeDashoffset = offset;
+            }, 100);
+
+            // Update recommendation
+            const recommendationBox = document.getElementById('recommendationBox');
+            if (passed) {
+                recommendationBox.className = 'recommendation-box';
+            } else {
+                recommendationBox.className = 'recommendation-box warning';
+                recommendationBox.innerHTML = `
+                    <div class="recommendation-title">⚠️ TRENINGSPLAN ANBEFALT</div>
+                    <div class="recommendation-text">
+                        <p style="margin-bottom: 12px;">
+                            Du er ${Math.abs(gap)}m under kravet. Dette er identifisert som et <strong>Breaking Point</strong>.
+                        </p>
+                        <p style="margin-bottom: 12px;">
+                            Anbefalte tiltak:
+                        </p>
+                        <ul class="improvement-list">
+                            <li>Fokusert driver-trening 2x/uke</li>
+                            <li>Arbeid med swing speed</li>
+                            <li>Teknisk analyse med coach</li>
+                            <li>Smash factor optimalisering</li>
+                        </ul>
+                        <div style="margin-top: 16px;">
+                            <button class="btn" style="width: auto; padding: 10px 24px; font-size: 14px; background: #ff9800;">
+                                📋 Generer treningsplan →
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Show result section
+            document.getElementById('resultSection').classList.add('show');
+
+            // Scroll to result
+            setTimeout(() => {
+                document.getElementById('resultSection').scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }, 100);
+        }
+
+        // Auto-calculate on page load
+        window.addEventListener('load', () => {
+            calculateResult();
+        });
+
+        // Recalculate on distance change
+        document.getElementById('distance').addEventListener('input', () => {
+            if (document.getElementById('resultSection').classList.contains('show')) {
+                calculateResult();
+            }
+        });
+    </script>
+</body>
+</html>

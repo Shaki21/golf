@@ -1,0 +1,224 @@
+{
+  "pageId": "coach-dashboard",
+  "path": "/coach",
+  "component": "CoachDashboard",
+  "analyzedAt": "2026-01-13T01:57:00Z",
+  "jtbdFramework": {
+    "1_pageIdentification": {
+      "name": "CoachDashboard (Coach Overview)",
+      "role": "coach",
+      "frequency": "daily",
+      "context": "before_training",
+      "clarityScore": 7
+    },
+    "2_primaryJTBD": {
+      "decision": "Which athlete needs my attention today?",
+      "isObviousIn5Seconds": true,
+      "clarity": 7,
+      "competingAttention": [
+        "Profile overview card",
+        "Quick actions (4 buttons)",
+        "Critical alerts",
+        "Athletes list",
+        "Pending items"
+      ],
+      "primaryCTA": {
+        "component": "CoachPlayerAlerts",
+        "label": "Critical alerts requiring attention",
+        "isProminent": true
+      }
+    },
+    "3_decisionVsInfoRatio": {
+      "decisionElements": {
+        "count": 11,
+        "items": [
+          "Quick actions (4 buttons)",
+          "Critical alerts (max 4)",
+          "Athletes list items (5)",
+          "Pending items (5)",
+          "Refresh button"
+        ]
+      },
+      "informationElements": {
+        "count": 6,
+        "items": [
+          "Profile overview card",
+          "Weekly stats (4 metrics)",
+          "Last updated timestamp",
+          "Search input"
+        ]
+      },
+      "ratio": 0.65,
+      "assessment": "GOOD - Strong decision focus for operational dashboard",
+      "dominantDecision": "No - Multiple competing actions (alerts, athletes, pending)"
+    },
+    "4_visualHierarchy": {
+      "eyeLandsOnFirst": "ProfileOverviewCard (profile + stats)",
+      "isCorrectFirstFocus": false,
+      "heroElement": "CoachPlayerAlerts",
+      "secondaryElements": [
+        "Quick actions grid",
+        "Athletes list",
+        "Pending items"
+      ],
+      "noiseElements": [
+        "Profile card might be too prominent for daily-use dashboard"
+      ],
+      "isFlatHierarchy": true,
+      "assessment": "MODERATE - Alerts should be more prominent than profile"
+    },
+    "5_kpiQuality": {
+      "kpis": [
+        {
+          "metric": "Active players",
+          "type": "lagging",
+          "isActionable": false,
+          "hasContext": false,
+          "quality": "vanity",
+          "note": "Count-based, no context"
+        },
+        {
+          "metric": "Sessions this week",
+          "type": "lagging",
+          "isActionable": false,
+          "hasContext": false,
+          "quality": "vanity",
+          "note": "Volume metric without quality context"
+        },
+        {
+          "metric": "Hours trained",
+          "type": "lagging",
+          "isActionable": false,
+          "hasContext": false,
+          "quality": "vanity",
+          "note": "Volume metric"
+        },
+        {
+          "metric": "Pending count",
+          "type": "leading",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "medium",
+          "note": "Tells coach there's work to do, but lacks urgency"
+        }
+      ],
+      "leadingPercentage": 0.25,
+      "actionablePercentage": 0.25,
+      "assessment": "WEAK - Mostly vanity metrics, only 'pending' is actionable"
+    },
+    "6_languageAndMentalModel": {
+      "style": "mixed",
+      "actionVerbs": [
+        "View",
+        "Search",
+        "Refresh"
+      ],
+      "systemNouns": [
+        "Dashboard",
+        "Overview",
+        "Spillere",
+        "Varsler",
+        "Pending"
+      ],
+      "coachActionPercentage": 0.3,
+      "assessment": "MODERATE - Mix of Norwegian and English, mostly passive language",
+      "phrasesToRewrite": [
+        "'Oversikt over dine spillere' → 'Your athletes today'",
+        "'Venter på deg' → 'Action required'",
+        "'Se alle' → 'View all athletes'"
+      ]
+    },
+    "7_flowAndNavigationCost": {
+      "clicksFromDashboard": 0,
+      "navigationDepth": 0,
+      "clicksToViewAthlete": 1,
+      "clicksToHandleAlert": 1,
+      "clicksToQuickAction": 1,
+      "assessment": "EXCELLENT - All primary actions are 1 click",
+      "shouldBeInline": []
+    },
+    "8_stateCoverage": {
+      "hasEmptyState": true,
+      "hasLoadingState": true,
+      "hasErrorState": true,
+      "hasSuccessState": false,
+      "hasOverloadedState": false,
+      "hasAtRiskState": false,
+      "assessment": "GOOD - Loading/error/empty states handled with StateCard",
+      "gaps": [
+        "No success state for completing pending items",
+        "No overloaded state for coaches with many athletes"
+      ]
+    },
+    "9_roleScalability": {
+      "hasRoleConditionals": true,
+      "beginnerFriendly": true,
+      "eliteFriendly": false,
+      "scalabilityIssues": [
+        "Athletes list limited to 5 items - may be insufficient for coaches with 20+ athletes",
+        "No grouping or filtering beyond search",
+        "Mock data fallback suggests incomplete API integration"
+      ],
+      "recommendation": "Add filters (by category, last active) + pagination for large rosters"
+    },
+    "10_strategicVerdict": {
+      "diagnosis": "Operational dashboard with weak KPIs and mixed information architecture",
+      "currentBehavior": "Status overview",
+      "desiredBehavior": "Action triage dashboard",
+      "topIssues": [
+        {
+          "rank": 1,
+          "issue": "Weak KPIs - mostly vanity metrics without actionable insights",
+          "severity": "high",
+          "impact": "Coach can't make decisions from stats shown"
+        },
+        {
+          "rank": 2,
+          "issue": "Profile card too prominent - takes valuable space on daily-use dashboard",
+          "severity": "medium",
+          "impact": "Pushes critical alerts below fold"
+        },
+        {
+          "rank": 3,
+          "issue": "Mock data fallback indicates incomplete API integration",
+          "severity": "medium",
+          "impact": "Not production-ready"
+        }
+      ],
+      "structuralFix": "Replace vanity stats with actionable KPIs (at-risk athletes, overdue plans, response time) + minimize profile card + complete API integration"
+    },
+    "11_crossPageConsistency": {
+      "note": "Uses PageHeader + PageContainer pattern (consistent). ProfileOverviewCard unique to coach role. Mix of Norwegian and English inconsistent with player pages."
+    }
+  },
+  "codeAnalysis": {
+    "componentCount": {
+      "interactive": 11,
+      "display": 8
+    },
+    "stateHandling": {
+      "loading": "LoadingState component using StateCard",
+      "empty": "Empty state for pending items (Bell icon + message)",
+      "error": "ErrorState component with retry button"
+    },
+    "dataSource": {
+      "isRealData": true,
+      "isMockData": true,
+      "hasFallback": true,
+      "note": "Fetches from coachesAPI with mock data fallback on error"
+    },
+    "accessibility": {
+      "hasAriaLabels": false,
+      "semanticHTML": true,
+      "keyboardNav": "Unknown - needs testing"
+    },
+    "responsiveDesign": {
+      "hasMobileLayout": true,
+      "breakpoints": ["md:grid-cols-2", "md:grid-cols-4"],
+      "mobileFirst": true
+    }
+  },
+  "priorityScore": 95,
+  "implementationStatus": "partial",
+  "overallAssessment": "MODERATE - Good structure and state handling but needs better KPIs and complete API integration"
+}

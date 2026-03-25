@@ -1,0 +1,212 @@
+{
+  "pageId": "coach-booking",
+  "path": "/coach/booking",
+  "component": "CoachBookingCalendar",
+  "analyzedAt": "2026-01-13T02:27:00Z",
+  "jtbdFramework": {
+    "1_pageIdentification": {
+      "name": "CoachBookingCalendar (Session Booking Management)",
+      "role": "coach",
+      "frequency": "daily",
+      "context": "scheduling",
+      "clarityScore": 9
+    },
+    "2_primaryJTBD": {
+      "decision": "Which booking requests should I approve/decline and when should I schedule sessions?",
+      "isObviousIn5Seconds": true,
+      "clarity": 9,
+      "competingAttention": [
+        "Calendar grid (dominant)",
+        "Pending requests panel",
+        "Create booking button"
+      ],
+      "primaryCTA": {
+        "component": "Approve/Decline buttons + Create booking button",
+        "label": "Manage booking requests / Schedule new session",
+        "isProminent": true
+      }
+    },
+    "3_decisionVsInfoRatio": {
+      "decisionElements": {
+        "count": 9,
+        "items": [
+          "Approve button (per request)",
+          "Decline button (per request)",
+          "Create booking button",
+          "Calendar cell click",
+          "View switcher (Week/Day/Month)",
+          "Date navigation",
+          "Request click (opens details)",
+          "Edit booking button",
+          "Delete booking button"
+        ]
+      },
+      "informationElements": {
+        "count": 6,
+        "items": [
+          "Calendar grid with bookings",
+          "Pending requests list",
+          "Booking details panel",
+          "Request count badge",
+          "Booking status indicators",
+          "Time conflict warnings"
+        ]
+      },
+      "ratio": 0.60,
+      "assessment": "EXCELLENT - Strong decision focus for scheduling tool",
+      "dominantDecision": "Yes - Approve/decline and create booking are clear primaries"
+    },
+    "4_visualHierarchy": {
+      "eyeLandsOnFirst": "Pending requests panel (top)",
+      "isCorrectFirstFocus": true,
+      "heroElement": "Pending requests requiring action",
+      "secondaryElements": [
+        "Calendar grid",
+        "Create booking button"
+      ],
+      "noiseElements": [],
+      "isFlatHierarchy": false,
+      "assessment": "EXCELLENT - Prioritizes pending actions above calendar view"
+    },
+    "5_kpiQuality": {
+      "kpis": [
+        {
+          "metric": "Pending requests count (badge)",
+          "type": "leading",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "high",
+          "note": "Shows number of requests requiring decision"
+        },
+        {
+          "metric": "Upcoming bookings (calendar events)",
+          "type": "leading",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "high",
+          "note": "Visual schedule showing committed time"
+        },
+        {
+          "metric": "Time conflicts (visual warnings)",
+          "type": "leading",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "high",
+          "note": "Prevents double-booking"
+        }
+      ],
+      "leadingPercentage": 1.0,
+      "actionablePercentage": 1.0,
+      "assessment": "EXCELLENT - All metrics drive immediate decisions"
+    },
+    "6_languageAndMentalModel": {
+      "style": "action_oriented",
+      "actionVerbs": [
+        "Approve",
+        "Decline",
+        "Create",
+        "Schedule",
+        "Confirm",
+        "Cancel"
+      ],
+      "systemNouns": [
+        "Booking",
+        "Request",
+        "Session",
+        "Appointment"
+      ],
+      "coachActionPercentage": 0.75,
+      "assessment": "EXCELLENT - Coach-centric action language",
+      "phrasesToRewrite": []
+    },
+    "7_flowAndNavigationCost": {
+      "clicksFromDashboard": 1,
+      "navigationDepth": 1,
+      "clicksToApproveRequest": 1,
+      "clicksToCreateBooking": 2,
+      "clicksToViewDetails": 1,
+      "assessment": "EXCELLENT - Inline actions minimize navigation",
+      "shouldBeInline": []
+    },
+    "8_stateCoverage": {
+      "hasEmptyState": true,
+      "hasLoadingState": true,
+      "hasErrorState": true,
+      "hasSuccessState": true,
+      "hasOverloadedState": false,
+      "hasAtRiskState": false,
+      "assessment": "EXCELLENT - Comprehensive state handling",
+      "gaps": []
+    },
+    "9_roleScalability": {
+      "hasRoleConditionals": false,
+      "beginnerFriendly": true,
+      "eliteFriendly": true,
+      "scalabilityIssues": [],
+      "recommendation": "Well-designed for all coach types - scales from solo coach to academy"
+    },
+    "10_strategicVerdict": {
+      "diagnosis": "Professional booking management system with strong UX",
+      "currentBehavior": "Dual-focus: pending requests + calendar view",
+      "desiredBehavior": "Dual-focus: pending requests + calendar view",
+      "topIssues": [
+        {
+          "rank": 1,
+          "issue": "No bulk approve/decline for multiple requests",
+          "severity": "medium",
+          "impact": "Coaches with many requests must approve one by one"
+        },
+        {
+          "rank": 2,
+          "issue": "No filtering/sorting of pending requests",
+          "severity": "low",
+          "impact": "Cannot prioritize by date, player, or type"
+        },
+        {
+          "rank": 3,
+          "issue": "No availability template/recurring slots feature",
+          "severity": "medium",
+          "impact": "Coach must manually create all available time slots"
+        }
+      ],
+      "structuralFix": "Add batch operations for requests + filtering UI + availability templates"
+    },
+    "11_crossPageConsistency": {
+      "note": "Uses full-page calendar layout (similar to NotionCalendarPage). Integrates with booking request system via bookingsAPI. Follows coach action-oriented patterns."
+    }
+  },
+  "codeAnalysis": {
+    "componentCount": {
+      "interactive": 9,
+      "display": 7
+    },
+    "stateHandling": {
+      "loading": "isLoading state during API calls with loading spinners",
+      "empty": "Empty state for no pending requests and no bookings",
+      "error": "Error handling with retry option for failed API calls"
+    },
+    "dataSource": {
+      "isRealData": true,
+      "isMockData": false,
+      "note": "Fetches real data from bookingsAPI with WebSocket updates for real-time sync"
+    },
+    "accessibility": {
+      "hasAriaLabels": true,
+      "semanticHTML": true,
+      "keyboardNav": "Good - supports keyboard navigation for approve/decline"
+    },
+    "responsiveDesign": {
+      "hasMobileLayout": true,
+      "breakpoints": ["Stacked layout on mobile, side-by-side on desktop"],
+      "mobileFirst": true
+    },
+    "integrations": {
+      "api": "bookingsAPI (CRUD operations)",
+      "websocket": "Real-time updates for new requests",
+      "calendar": "Integrates with coach calendar for conflict detection"
+    }
+  },
+  "priorityScore": 90,
+  "implementationStatus": "implemented",
+  "overallAssessment": "EXCELLENT - Professional booking system with strong decision-first UX, needs batch operations for scale"
+}

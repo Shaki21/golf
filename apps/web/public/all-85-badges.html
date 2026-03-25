@@ -1,0 +1,1839 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TIER Golf - Alle 85 Designede Badges</title>
+  <style>
+    :root {
+      /* TIER Golf Design System v3.0 - Blue Palette 01 */
+      --ak-ink: #02060D;
+      --ak-primary: #10456A;
+      --ak-primary-light: #2C5F7F;
+      --ak-snow: #EDF0F2;
+      --ak-surface: #EBE5DA;
+      --ak-gold: #C9A227;
+      --ak-success: #4A7C59;
+      --ak-warning: #D4A84B;
+      --ak-error: #C45B4E;
+      --ak-steel: #8A9BA8;
+
+      /* Tier colors */
+      --tier-standard: #8A9BA8;
+      --tier-bronze: #B08D57;
+      --tier-silver: #8A9BA8;
+      --tier-gold: #C9A227;
+      --tier-platinum: #E5E4E2;
+
+      /* Rarity colors */
+      --rarity-common: #9CA3AF;
+      --rarity-uncommon: var(--ak-success);
+      --rarity-rare: var(--ak-primary-light);
+      --rarity-epic: #8B5CF6;
+      --rarity-legendary: var(--ak-gold);
+
+      /* Legacy aliases */
+      --primary: var(--ak-primary);
+      --primary-light: var(--ak-primary-light);
+      --surface: var(--ak-surface);
+      --snow: var(--ak-snow);
+      --charcoal: var(--ak-ink);
+      --steel: var(--ak-steel);
+      --gold: var(--ak-gold);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--ak-ink);
+      color: var(--ak-snow);
+      line-height: 1.5;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--ak-primary) 0%, var(--ak-primary-light) 100%);
+      padding: 2rem;
+      text-align: center;
+      border-bottom: 3px solid var(--gold);
+    }
+
+    header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      opacity: 0.9;
+      font-size: 1rem;
+    }
+
+    .stats-bar {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      padding: 1rem 2rem;
+      background: #111;
+      border-bottom: 1px solid #333;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--steel);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .container {
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .category-nav {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 1rem 2rem;
+      background: #111;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid #333;
+    }
+
+    .category-btn {
+      padding: 0.5rem 1rem;
+      border: 1px solid #444;
+      background: transparent;
+      color: #ccc;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+
+    .category-btn:hover {
+      background: #222;
+      border-color: #666;
+    }
+
+    .category-btn.active {
+      background: var(--gold);
+      color: #000;
+      border-color: var(--gold);
+    }
+
+    .category-section {
+      margin-bottom: 3rem;
+    }
+
+    .category-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid #333;
+    }
+
+    .category-icon {
+      font-size: 2rem;
+    }
+
+    .category-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    .category-count {
+      background: #333;
+      padding: 0.25rem 0.75rem;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      color: var(--steel);
+    }
+
+    .category-status {
+      margin-left: auto;
+      padding: 0.25rem 0.75rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .status-available {
+      background: rgba(74, 124, 89, 0.2);
+      color: var(--ak-success);
+    }
+
+    .status-missing {
+      background: rgba(196, 91, 78, 0.2);
+      color: var(--ak-error);
+    }
+
+    .status-partial {
+      background: rgba(212, 168, 75, 0.2);
+      color: var(--ak-warning);
+    }
+
+    .badges-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1rem;
+    }
+
+    .badge-card {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 12px;
+      padding: 1.25rem;
+      display: flex;
+      gap: 1rem;
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .badge-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+    }
+
+    .badge-card.tier-standard::before { background: var(--tier-standard); }
+    .badge-card.tier-bronze::before { background: var(--tier-bronze); }
+    .badge-card.tier-silver::before { background: linear-gradient(90deg, #666 0%, #999 50%, #666 100%); }
+    .badge-card.tier-gold::before { background: linear-gradient(90deg, #B8860B 0%, #FFD700 50%, #B8860B 100%); }
+    .badge-card.tier-platinum::before { background: linear-gradient(90deg, #C0C0C0 0%, #FFFFFF 50%, #C0C0C0 100%); }
+
+    .badge-card:hover {
+      border-color: #555;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    }
+
+    .badge-icon-container {
+      width: 56px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #252525;
+      border-radius: 12px;
+      font-size: 1.75rem;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .badge-icon-container svg {
+      width: 28px;
+      height: 28px;
+      stroke: currentColor;
+      fill: none;
+    }
+
+    .badge-icon-container::after {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: 14px;
+      padding: 2px;
+      background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.1) 100%);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+    }
+
+    .badge-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .badge-name {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+      color: #fff;
+    }
+
+    .badge-description {
+      font-size: 0.8rem;
+      color: #888;
+      margin-bottom: 0.5rem;
+      line-height: 1.4;
+    }
+
+    .badge-meta {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .badge-tier {
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .tier-standard { background: rgba(138, 155, 168, 0.2); color: var(--tier-standard); }
+    .tier-bronze { background: rgba(176, 141, 87, 0.2); color: var(--tier-bronze); }
+    .tier-silver { background: rgba(138, 155, 168, 0.2); color: #aaa; }
+    .tier-gold { background: rgba(201, 162, 39, 0.2); color: var(--tier-gold); }
+    .tier-platinum { background: rgba(229, 228, 226, 0.2); color: var(--tier-platinum); }
+
+    .badge-xp {
+      font-size: 0.75rem;
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    .badge-rarity {
+      font-size: 0.65rem;
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    .rarity-common { background: rgba(156, 163, 175, 0.2); color: var(--rarity-common); }
+    .rarity-uncommon { background: rgba(34, 197, 94, 0.2); color: var(--rarity-uncommon); }
+    .rarity-rare { background: rgba(59, 130, 246, 0.2); color: var(--rarity-rare); }
+    .rarity-epic { background: rgba(139, 92, 246, 0.2); color: var(--rarity-epic); }
+    .rarity-legendary { background: rgba(245, 158, 11, 0.2); color: var(--rarity-legendary); }
+
+    .badge-requirement {
+      font-size: 0.7rem;
+      color: #666;
+      margin-top: 0.5rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid #333;
+    }
+
+    .legend {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      padding: 1.5rem;
+      background: #111;
+      border-top: 1px solid #333;
+      flex-wrap: wrap;
+    }
+
+    .legend-group {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .legend-title {
+      font-size: 0.75rem;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .legend-items {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .legend-item {
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    /* Symbol mapping for display */
+    .symbol-flame::before { content: '🔥'; }
+    .symbol-trophy::before { content: '🏆'; }
+    .symbol-star::before { content: '⭐'; }
+    .symbol-target::before { content: '🎯'; }
+    .symbol-clock::before { content: '⏱️'; }
+    .symbol-check::before { content: '✅'; }
+    .symbol-lightning::before { content: '⚡'; }
+    .symbol-zap::before { content: '💥'; }
+    .symbol-flag::before { content: '🚩'; }
+    .symbol-medal::before { content: '🏅'; }
+    .symbol-dumbbell::before { content: '💪'; }
+    .symbol-brain::before { content: '🧠'; }
+    .symbol-sunrise::before { content: '🌅'; }
+    .symbol-moon::before { content: '🌙'; }
+    .symbol-snowflake::before { content: '❄️'; }
+    .symbol-sun::before { content: '☀️'; }
+    .symbol-book::before { content: '📚'; }
+    .symbol-award::before { content: '🎖️'; }
+
+    @media (max-width: 768px) {
+      .stats-bar {
+        gap: 1rem;
+      }
+
+      .badges-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .category-nav {
+        padding: 0.75rem 1rem;
+      }
+
+      .category-btn {
+        padding: 0.4rem 0.75rem;
+        font-size: 0.75rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>85 Designede Badges</h1>
+    <p>Komplett badge-katalog for TIER Golf (Ikke integrert ennå)</p>
+  </header>
+
+  <div class="stats-bar">
+    <div class="stat">
+      <div class="stat-value">85</div>
+      <div class="stat-label">Totalt Badges</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">11</div>
+      <div class="stat-label">Kategorier</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">22,250</div>
+      <div class="stat-label">Total XP</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">5</div>
+      <div class="stat-label">Tier Levels</div>
+    </div>
+  </div>
+
+  <nav class="category-nav">
+    <button class="category-btn active" data-category="all">Alle (85)</button>
+    <button class="category-btn" data-category="volume">📊 Volume (16)</button>
+    <button class="category-btn" data-category="streak">🔥 Streak (9)</button>
+    <button class="category-btn" data-category="strength">💪 Strength (15)</button>
+    <button class="category-btn" data-category="speed">⚡ Speed (12)</button>
+    <button class="category-btn" data-category="accuracy">🎯 Accuracy (10)</button>
+    <button class="category-btn" data-category="putting">🏌️ Putting (10)</button>
+    <button class="category-btn" data-category="short_game">⛳ Short Game (6)</button>
+    <button class="category-btn" data-category="milestone">🏆 Scoring (12)</button>
+    <button class="category-btn" data-category="phase">📅 Phase (6)</button>
+    <button class="category-btn" data-category="mental">🧠 Mental (3)</button>
+    <button class="category-btn" data-category="seasonal">🌟 Seasonal (2)</button>
+  </nav>
+
+  <div class="container" id="badges-container">
+    <!-- Volume Badges -->
+    <section class="category-section" data-category="volume">
+      <div class="category-header">
+        <span class="category-icon">📊</span>
+        <h2 class="category-title">Volume Badges</h2>
+        <span class="category-count">16 badges</span>
+        <span class="category-status status-available">Data tilgjengelig</span>
+      </div>
+      <div class="badges-grid">
+        <div class="badge-card tier-standard">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">Dedikert Start</div>
+            <div class="badge-description">Logg 10 timer trening totalt</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-standard">Standard</span>
+              <span class="badge-xp">50 XP</span>
+              <span class="badge-rarity rarity-common">Common</span>
+            </div>
+            <div class="badge-requirement">Krav: volume.totalHours ≥ 10</div>
+          </div>
+        </div>
+        <div class="badge-card tier-bronze">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">Fokusert Innsats</div>
+            <div class="badge-description">Logg 50 timer trening totalt</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-bronze">Bronze</span>
+              <span class="badge-xp">100 XP</span>
+              <span class="badge-rarity rarity-common">Common</span>
+            </div>
+            <div class="badge-requirement">Krav: volume.totalHours ≥ 50</div>
+          </div>
+        </div>
+        <div class="badge-card tier-silver">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">Century Club</div>
+            <div class="badge-description">Logg 100 timer trening totalt</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-silver">Silver</span>
+              <span class="badge-xp">200 XP</span>
+              <span class="badge-rarity rarity-uncommon">Uncommon</span>
+            </div>
+            <div class="badge-requirement">Krav: volume.totalHours ≥ 100</div>
+          </div>
+        </div>
+        <div class="badge-card tier-silver">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">Seriøs Utøver</div>
+            <div class="badge-description">Logg 250 timer trening totalt</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-silver">Silver</span>
+              <span class="badge-xp">350 XP</span>
+              <span class="badge-rarity rarity-uncommon">Uncommon</span>
+            </div>
+            <div class="badge-requirement">Krav: volume.totalHours ≥ 250</div>
+          </div>
+        </div>
+        <div class="badge-card tier-gold">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">Halvveis til 1000</div>
+            <div class="badge-description">Logg 500 timer trening totalt</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-gold">Gold</span>
+              <span class="badge-xp">500 XP</span>
+              <span class="badge-rarity rarity-rare">Rare</span>
+            </div>
+            <div class="badge-requirement">Krav: volume.totalHours ≥ 500</div>
+          </div>
+        </div>
+        <div class="badge-card tier-gold">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 9H4a2 2 0 0 0 0 4h2M18 9h2a2 2 0 0 1 0 4h-2"/>
+              <path d="M6 4h12v6a6 6 0 0 1-12 0V4z"/>
+              <path d="M12 16v4M8 20h8"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">1000-Timers Klubben</div>
+            <div class="badge-description">Logg 1000 timer trening totalt</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-gold">Gold</span>
+              <span class="badge-xp">1000 XP</span>
+              <span class="badge-rarity rarity-epic">Epic</span>
+            </div>
+            <div class="badge-requirement">Krav: volume.totalHours ≥ 1000</div>
+          </div>
+        </div>
+        <div class="badge-card tier-platinum">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 9H4a2 2 0 0 0 0 4h2M18 9h2a2 2 0 0 1 0 4h-2"/>
+              <path d="M6 4h12v6a6 6 0 0 1-12 0V4z"/>
+              <path d="M12 16v4M8 20h8"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">Mester i Dedikasjon</div>
+            <div class="badge-description">Logg 2500 timer trening totalt</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-platinum">Platinum</span>
+              <span class="badge-xp">2500 XP</span>
+              <span class="badge-rarity rarity-legendary">Legendary</span>
+            </div>
+            <div class="badge-requirement">Krav: volume.totalHours ≥ 2500</div>
+          </div>
+        </div>
+        <div class="badge-card tier-standard">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">Rutinebygger</div>
+            <div class="badge-description">Fullfør 25 treningsøkter</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-standard">Standard</span>
+              <span class="badge-xp">50 XP</span>
+              <span class="badge-rarity rarity-common">Common</span>
+            </div>
+            <div class="badge-requirement">Krav: volume.totalSessions ≥ 25</div>
+          </div>
+        </div>
+        <div class="badge-card tier-bronze">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">Økt-Entusiast</div>
+            <div class="badge-description">Fullfør 100 treningsøkter</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-bronze">Bronze</span>
+              <span class="badge-xp">150 XP</span>
+              <span class="badge-rarity rarity-uncommon">Uncommon</span>
+            </div>
+            <div class="badge-requirement">Krav: volume.totalSessions ≥ 100</div>
+          </div>
+        </div>
+        <div class="badge-card tier-gold">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">Økt-Veteran</div>
+            <div class="badge-description">Fullfør 500 treningsøkter</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-gold">Gold</span>
+              <span class="badge-xp">500 XP</span>
+              <span class="badge-rarity rarity-rare">Rare</span>
+            </div>
+            <div class="badge-requirement">Krav: volume.totalSessions ≥ 500</div>
+          </div>
+        </div>
+        <div class="badge-card tier-standard">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L13 9L20 7L15 12L22 14L14 16L17 22L12 17L7 22L10 16L2 14L9 12L4 7L11 9Z" fill="currentColor" stroke="none"/>
+              <circle cx="12" cy="12" r="3" stroke-width="2"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">Swing Starter</div>
+            <div class="badge-description">Slå 1000 slag totalt</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-standard">Standard</span>
+              <span class="badge-xp">50 XP</span>
+              <span class="badge-rarity rarity-common">Common</span>
+            </div>
+            <div class="badge-requirement">Krav: volume.totalSwings ≥ 1000</div>
+          </div>
+        </div>
+        <div class="badge-card tier-silver">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L13 9L20 7L15 12L22 14L14 16L17 22L12 17L7 22L10 16L2 14L9 12L4 7L11 9Z" fill="currentColor" stroke="none"/>
+              <circle cx="12" cy="12" r="3" stroke-width="2"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">Swing Maskin</div>
+            <div class="badge-description">Slå 10,000 slag totalt</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-silver">Silver</span>
+              <span class="badge-xp">200 XP</span>
+              <span class="badge-rarity rarity-uncommon">Uncommon</span>
+            </div>
+            <div class="badge-requirement">Krav: volume.totalSwings ≥ 10000</div>
+          </div>
+        </div>
+        <div class="badge-card tier-gold">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L13 9L20 7L15 12L22 14L14 16L17 22L12 17L7 22L10 16L2 14L9 12L4 7L11 9Z" fill="currentColor" stroke="none"/>
+              <circle cx="12" cy="12" r="3" stroke-width="2"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">Swing Legend</div>
+            <div class="badge-description">Slå 50,000 slag totalt</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-gold">Gold</span>
+              <span class="badge-xp">500 XP</span>
+              <span class="badge-rarity rarity-rare">Rare</span>
+            </div>
+            <div class="badge-requirement">Krav: volume.totalSwings ≥ 50000</div>
+          </div>
+        </div>
+        <div class="badge-card tier-bronze">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">Perfekt Uke</div>
+            <div class="badge-description">Fullfør alle planlagte økter i en uke</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-bronze">Bronze</span>
+              <span class="badge-xp">100 XP</span>
+              <span class="badge-rarity rarity-uncommon">Uncommon</span>
+            </div>
+            <div class="badge-requirement">Krav: streaks.perfectWeeks ≥ 1</div>
+          </div>
+        </div>
+        <div class="badge-card tier-gold">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">Ukemester</div>
+            <div class="badge-description">Fullfør alle planlagte økter i 10 uker</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-gold">Gold</span>
+              <span class="badge-xp">300 XP</span>
+              <span class="badge-rarity rarity-rare">Rare</span>
+            </div>
+            <div class="badge-requirement">Krav: streaks.perfectWeeks ≥ 10</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Streak Badges -->
+    <section class="category-section" data-category="streak">
+      <div class="category-header">
+        <span class="category-icon">🔥</span>
+        <h2 class="category-title">Streak Badges</h2>
+        <span class="category-count">9 badges</span>
+        <span class="category-status status-available">Data tilgjengelig</span>
+      </div>
+      <div class="badges-grid">
+        <div class="badge-card tier-standard">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">På Gang</div>
+            <div class="badge-description">Tren 3 dager på rad</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-standard">Standard</span>
+              <span class="badge-xp">25 XP</span>
+              <span class="badge-rarity rarity-common">Common</span>
+            </div>
+          </div>
+        </div>
+        <div class="badge-card tier-bronze">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">Uke Warrior</div>
+            <div class="badge-description">Tren 7 dager på rad</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-bronze">Bronze</span>
+              <span class="badge-xp">75 XP</span>
+              <span class="badge-rarity rarity-common">Common</span>
+            </div>
+          </div>
+        </div>
+        <div class="badge-card tier-silver">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">To Uker Sterk</div>
+            <div class="badge-description">Tren 14 dager på rad</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-silver">Silver</span>
+              <span class="badge-xp">150 XP</span>
+              <span class="badge-rarity rarity-uncommon">Uncommon</span>
+            </div>
+          </div>
+        </div>
+        <div class="badge-card tier-gold">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">Månedens Utholdenhet</div>
+            <div class="badge-description">Tren 30 dager på rad</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-gold">Gold</span>
+              <span class="badge-xp">300 XP</span>
+              <span class="badge-rarity rarity-rare">Rare</span>
+            </div>
+          </div>
+        </div>
+        <div class="badge-card tier-gold">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">To Måneders Mester</div>
+            <div class="badge-description">Tren 60 dager på rad</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-gold">Gold</span>
+              <span class="badge-xp">600 XP</span>
+              <span class="badge-rarity rarity-epic">Epic</span>
+            </div>
+          </div>
+        </div>
+        <div class="badge-card tier-platinum">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">Century Streak</div>
+            <div class="badge-description">Tren 100 dager på rad</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-platinum">Platinum</span>
+              <span class="badge-xp">1000 XP</span>
+              <span class="badge-rarity rarity-legendary">Legendary</span>
+            </div>
+          </div>
+        </div>
+        <div class="badge-card tier-bronze">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="4"/>
+              <line x1="12" y1="2" x2="12" y2="4"/>
+              <line x1="12" y1="20" x2="12" y2="22"/>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+              <line x1="2" y1="12" x2="4" y2="12"/>
+              <line x1="20" y1="12" x2="22" y2="12"/>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+              <line x1="2" y1="16" x2="22" y2="16" stroke-width="2"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">Morgenfugl</div>
+            <div class="badge-description">Tren før kl. 09:00 ti ganger</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-bronze">Bronze</span>
+              <span class="badge-xp">100 XP</span>
+              <span class="badge-rarity rarity-uncommon">Uncommon</span>
+            </div>
+          </div>
+        </div>
+        <div class="badge-card tier-gold">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="4"/>
+              <line x1="12" y1="2" x2="12" y2="4"/>
+              <line x1="12" y1="20" x2="12" y2="22"/>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+              <line x1="2" y1="12" x2="4" y2="12"/>
+              <line x1="20" y1="12" x2="22" y2="12"/>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+              <line x1="2" y1="16" x2="22" y2="16" stroke-width="2"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">Soloppgangsmester</div>
+            <div class="badge-description">Tren før kl. 09:00 femti ganger</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-gold">Gold</span>
+              <span class="badge-xp">250 XP</span>
+              <span class="badge-rarity rarity-rare">Rare</span>
+            </div>
+          </div>
+        </div>
+        <div class="badge-card tier-bronze">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+              <path d="M15 3l.5 1.5L17 5l-1.5.5L15 7l-.5-1.5L13 5l1.5-.5L15 3z" fill="currentColor" stroke="none"/>
+              <path d="M19 9l.3.9.9.3-.9.3-.3.9-.3-.9-.9-.3.9-.3.3-.9z" fill="currentColor" stroke="none"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">Kveldstrener</div>
+            <div class="badge-description">Tren etter kl. 19:00 ti ganger</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-bronze">Bronze</span>
+              <span class="badge-xp">100 XP</span>
+              <span class="badge-rarity rarity-uncommon">Uncommon</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Strength Badges -->
+    <section class="category-section" data-category="strength">
+      <div class="category-header">
+        <span class="category-icon">💪</span>
+        <h2 class="category-title">Strength Badges</h2>
+        <span class="category-count">15 badges</span>
+        <span class="category-status status-missing">Mangler data (Gym UI)</span>
+      </div>
+      <div class="badges-grid">
+        <div class="badge-card tier-standard">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 12c0-3 2-5 4-5 1 0 2 .5 2 2 0 1.5-1 2-2 2-2 0-4 1-4 4 0 2 1 4 3 5"/>
+              <path d="M10 11c1 0 2-.5 2-2V6c0-2 2-3 4-3 3 0 5 2 5 5v4"/>
+              <path d="M21 12c0 3-1 6-3 8"/>
+              <ellipse cx="8" cy="18" rx="4" ry="3"/>
+              <ellipse cx="16" cy="19" rx="3" ry="2.5"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">Første Tonn</div>
+            <div class="badge-description">Løft 1000 kg total tonnasje</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-standard">Standard</span>
+              <span class="badge-xp">50 XP</span>
+              <span class="badge-rarity rarity-common">Common</span>
+            </div>
+          </div>
+        </div>
+        <div class="badge-card tier-bronze">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 12c0-3 2-5 4-5 1 0 2 .5 2 2 0 1.5-1 2-2 2-2 0-4 1-4 4 0 2 1 4 3 5"/>
+              <path d="M10 11c1 0 2-.5 2-2V6c0-2 2-3 4-3 3 0 5 2 5 5v4"/>
+              <path d="M21 12c0 3-1 6-3 8"/>
+              <ellipse cx="8" cy="18" rx="4" ry="3"/>
+              <ellipse cx="16" cy="19" rx="3" ry="2.5"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">10 Tonn Klubben</div>
+            <div class="badge-description">Løft 10,000 kg total tonnasje</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-bronze">Bronze</span>
+              <span class="badge-xp">100 XP</span>
+              <span class="badge-rarity rarity-common">Common</span>
+            </div>
+          </div>
+        </div>
+        <div class="badge-card tier-silver">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 12c0-3 2-5 4-5 1 0 2 .5 2 2 0 1.5-1 2-2 2-2 0-4 1-4 4 0 2 1 4 3 5"/>
+              <path d="M10 11c1 0 2-.5 2-2V6c0-2 2-3 4-3 3 0 5 2 5 5v4"/>
+              <path d="M21 12c0 3-1 6-3 8"/>
+              <ellipse cx="8" cy="18" rx="4" ry="3"/>
+              <ellipse cx="16" cy="19" rx="3" ry="2.5"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">50 Tonn Beast</div>
+            <div class="badge-description">Løft 50,000 kg total tonnasje</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-silver">Silver</span>
+              <span class="badge-xp">250 XP</span>
+              <span class="badge-rarity rarity-uncommon">Uncommon</span>
+            </div>
+          </div>
+        </div>
+        <div class="badge-card tier-gold">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 12c0-3 2-5 4-5 1 0 2 .5 2 2 0 1.5-1 2-2 2-2 0-4 1-4 4 0 2 1 4 3 5"/>
+              <path d="M10 11c1 0 2-.5 2-2V6c0-2 2-3 4-3 3 0 5 2 5 5v4"/>
+              <path d="M21 12c0 3-1 6-3 8"/>
+              <ellipse cx="8" cy="18" rx="4" ry="3"/>
+              <ellipse cx="16" cy="19" rx="3" ry="2.5"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">100 Tonn Legend</div>
+            <div class="badge-description">Løft 100,000 kg total tonnasje</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-gold">Gold</span>
+              <span class="badge-xp">500 XP</span>
+              <span class="badge-rarity rarity-rare">Rare</span>
+            </div>
+          </div>
+        </div>
+        <div class="badge-card tier-standard">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 9H4a2 2 0 0 0 0 4h2M18 9h2a2 2 0 0 1 0 4h-2"/>
+              <path d="M6 4h12v6a6 6 0 0 1-12 0V4z"/>
+              <path d="M12 16v4M8 20h8"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">Første PR</div>
+            <div class="badge-description">Sett din første personlige rekord</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-standard">Standard</span>
+              <span class="badge-xp">50 XP</span>
+              <span class="badge-rarity rarity-common">Common</span>
+            </div>
+          </div>
+        </div>
+        <div class="badge-card tier-bronze">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 9H4a2 2 0 0 0 0 4h2M18 9h2a2 2 0 0 1 0 4h-2"/>
+              <path d="M6 4h12v6a6 6 0 0 1-12 0V4z"/>
+              <path d="M12 16v4M8 20h8"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">PR Jeger</div>
+            <div class="badge-description">Sett 10 personlige rekorder</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-bronze">Bronze</span>
+              <span class="badge-xp">150 XP</span>
+              <span class="badge-rarity rarity-uncommon">Uncommon</span>
+            </div>
+          </div>
+        </div>
+        <div class="badge-card tier-silver">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 9H4a2 2 0 0 0 0 4h2M18 9h2a2 2 0 0 1 0 4h-2"/>
+              <path d="M6 4h12v6a6 6 0 0 1-12 0V4z"/>
+              <path d="M12 16v4M8 20h8"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">PR Master</div>
+            <div class="badge-description">Sett 25 personlige rekorder</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-silver">Silver</span>
+              <span class="badge-xp">300 XP</span>
+              <span class="badge-rarity rarity-rare">Rare</span>
+            </div>
+          </div>
+        </div>
+        <div class="badge-card tier-gold">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 9H4a2 2 0 0 0 0 4h2M18 9h2a2 2 0 0 1 0 4h-2"/>
+              <path d="M6 4h12v6a6 6 0 0 1-12 0V4z"/>
+              <path d="M12 16v4M8 20h8"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">PR Legend</div>
+            <div class="badge-description">Sett 50 personlige rekorder</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-gold">Gold</span>
+              <span class="badge-xp">500 XP</span>
+              <span class="badge-rarity rarity-epic">Epic</span>
+            </div>
+          </div>
+        </div>
+        <div class="badge-card tier-bronze">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 12c0-3 2-5 4-5 1 0 2 .5 2 2 0 1.5-1 2-2 2-2 0-4 1-4 4 0 2 1 4 3 5"/>
+              <path d="M10 11c1 0 2-.5 2-2V6c0-2 2-3 4-3 3 0 5 2 5 5v4"/>
+              <path d="M21 12c0 3-1 6-3 8"/>
+              <ellipse cx="8" cy="18" rx="4" ry="3"/>
+              <ellipse cx="16" cy="19" rx="3" ry="2.5"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">Squat: Kroppsvekt</div>
+            <div class="badge-description">Squat din egen kroppsvekt</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-bronze">Bronze</span>
+              <span class="badge-xp">150 XP</span>
+              <span class="badge-rarity rarity-uncommon">Uncommon</span>
+            </div>
+          </div>
+        </div>
+        <div class="badge-card tier-silver">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 12c0-3 2-5 4-5 1 0 2 .5 2 2 0 1.5-1 2-2 2-2 0-4 1-4 4 0 2 1 4 3 5"/>
+              <path d="M10 11c1 0 2-.5 2-2V6c0-2 2-3 4-3 3 0 5 2 5 5v4"/>
+              <path d="M21 12c0 3-1 6-3 8"/>
+              <ellipse cx="8" cy="18" rx="4" ry="3"/>
+              <ellipse cx="16" cy="19" rx="3" ry="2.5"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">Squat: 1.5x Kroppsvekt</div>
+            <div class="badge-description">Squat 1.5x din kroppsvekt</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-silver">Silver</span>
+              <span class="badge-xp">300 XP</span>
+              <span class="badge-rarity rarity-rare">Rare</span>
+            </div>
+          </div>
+        </div>
+        <div class="badge-card tier-gold">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 12c0-3 2-5 4-5 1 0 2 .5 2 2 0 1.5-1 2-2 2-2 0-4 1-4 4 0 2 1 4 3 5"/>
+              <path d="M10 11c1 0 2-.5 2-2V6c0-2 2-3 4-3 3 0 5 2 5 5v4"/>
+              <path d="M21 12c0 3-1 6-3 8"/>
+              <ellipse cx="8" cy="18" rx="4" ry="3"/>
+              <ellipse cx="16" cy="19" rx="3" ry="2.5"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">Squat: 2x Kroppsvekt</div>
+            <div class="badge-description">Squat 2x din kroppsvekt</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-gold">Gold</span>
+              <span class="badge-xp">500 XP</span>
+              <span class="badge-rarity rarity-epic">Epic</span>
+            </div>
+          </div>
+        </div>
+        <div class="badge-card tier-silver">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 12c0-3 2-5 4-5 1 0 2 .5 2 2 0 1.5-1 2-2 2-2 0-4 1-4 4 0 2 1 4 3 5"/>
+              <path d="M10 11c1 0 2-.5 2-2V6c0-2 2-3 4-3 3 0 5 2 5 5v4"/>
+              <path d="M21 12c0 3-1 6-3 8"/>
+              <ellipse cx="8" cy="18" rx="4" ry="3"/>
+              <ellipse cx="16" cy="19" rx="3" ry="2.5"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">Deadlift: 1.5x Kroppsvekt</div>
+            <div class="badge-description">Deadlift 1.5x din kroppsvekt</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-silver">Silver</span>
+              <span class="badge-xp">300 XP</span>
+              <span class="badge-rarity rarity-rare">Rare</span>
+            </div>
+          </div>
+        </div>
+        <div class="badge-card tier-gold">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 12c0-3 2-5 4-5 1 0 2 .5 2 2 0 1.5-1 2-2 2-2 0-4 1-4 4 0 2 1 4 3 5"/>
+              <path d="M10 11c1 0 2-.5 2-2V6c0-2 2-3 4-3 3 0 5 2 5 5v4"/>
+              <path d="M21 12c0 3-1 6-3 8"/>
+              <ellipse cx="8" cy="18" rx="4" ry="3"/>
+              <ellipse cx="16" cy="19" rx="3" ry="2.5"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">Deadlift: 2x Kroppsvekt</div>
+            <div class="badge-description">Deadlift 2x din kroppsvekt</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-gold">Gold</span>
+              <span class="badge-xp">500 XP</span>
+              <span class="badge-rarity rarity-epic">Epic</span>
+            </div>
+          </div>
+        </div>
+        <div class="badge-card tier-bronze">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 12c0-3 2-5 4-5 1 0 2 .5 2 2 0 1.5-1 2-2 2-2 0-4 1-4 4 0 2 1 4 3 5"/>
+              <path d="M10 11c1 0 2-.5 2-2V6c0-2 2-3 4-3 3 0 5 2 5 5v4"/>
+              <path d="M21 12c0 3-1 6-3 8"/>
+              <ellipse cx="8" cy="18" rx="4" ry="3"/>
+              <ellipse cx="16" cy="19" rx="3" ry="2.5"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">Gym Rutine</div>
+            <div class="badge-description">Tren på gym 4 uker på rad</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-bronze">Bronze</span>
+              <span class="badge-xp">100 XP</span>
+              <span class="badge-rarity rarity-uncommon">Uncommon</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Speed Badges -->
+    <section class="category-section" data-category="speed">
+      <div class="category-header">
+        <span class="category-icon">⚡</span>
+        <h2 class="category-title">Speed Badges</h2>
+        <span class="category-count">12 badges</span>
+        <span class="category-status status-partial">Delvis data</span>
+      </div>
+      <div class="badges-grid">
+        <div class="badge-card tier-bronze">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z" fill="currentColor" stroke="none"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">100+ Club</div>
+            <div class="badge-description">Oppnå 100+ mph driver speed</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-bronze">Bronze</span>
+              <span class="badge-xp">150 XP</span>
+              <span class="badge-rarity rarity-uncommon">Uncommon</span>
+            </div>
+          </div>
+        </div>
+        <div class="badge-card tier-silver">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z" fill="currentColor" stroke="none"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">105+ Club</div>
+            <div class="badge-description">Oppnå 105+ mph driver speed</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-silver">Silver</span>
+              <span class="badge-xp">250 XP</span>
+              <span class="badge-rarity rarity-rare">Rare</span>
+            </div>
+          </div>
+        </div>
+        <div class="badge-card tier-gold">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z" fill="currentColor" stroke="none"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">110+ Club</div>
+            <div class="badge-description">Oppnå 110+ mph driver speed</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-gold">Gold</span>
+              <span class="badge-xp">400 XP</span>
+              <span class="badge-rarity rarity-epic">Epic</span>
+            </div>
+          </div>
+        </div>
+        <div class="badge-card tier-platinum">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z" fill="currentColor" stroke="none"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">115+ Club</div>
+            <div class="badge-description">Oppnå 115+ mph driver speed</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-platinum">Platinum</span>
+              <span class="badge-xp">600 XP</span>
+              <span class="badge-rarity rarity-legendary">Legendary</span>
+            </div>
+          </div>
+        </div>
+        <div class="badge-card tier-bronze">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z" fill="currentColor" stroke="none"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">Hastighetsøkning</div>
+            <div class="badge-description">Øk driver speed med 3+ mph fra baseline</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-bronze">Bronze</span>
+              <span class="badge-xp">150 XP</span>
+              <span class="badge-rarity rarity-uncommon">Uncommon</span>
+            </div>
+          </div>
+        </div>
+        <div class="badge-card tier-silver">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z" fill="currentColor" stroke="none"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">Speed Demon</div>
+            <div class="badge-description">Øk driver speed med 5+ mph fra baseline</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-silver">Silver</span>
+              <span class="badge-xp">300 XP</span>
+              <span class="badge-rarity rarity-rare">Rare</span>
+            </div>
+          </div>
+        </div>
+        <div class="badge-card tier-gold">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z" fill="currentColor" stroke="none"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">Speed King</div>
+            <div class="badge-description">Øk driver speed med 10+ mph fra baseline</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-gold">Gold</span>
+              <span class="badge-xp">500 XP</span>
+              <span class="badge-rarity rarity-epic">Epic</span>
+            </div>
+          </div>
+        </div>
+        <div class="badge-card tier-bronze">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L13 9L20 7L15 12L22 14L14 16L17 22L12 17L7 22L10 16L2 14L9 12L4 7L11 9Z" fill="currentColor" stroke="none"/>
+              <circle cx="12" cy="12" r="3" stroke-width="2"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">Solid Kontakt</div>
+            <div class="badge-description">Oppnå 1.45+ smash factor</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-bronze">Bronze</span>
+              <span class="badge-xp">100 XP</span>
+              <span class="badge-rarity rarity-uncommon">Uncommon</span>
+            </div>
+          </div>
+        </div>
+        <div class="badge-card tier-silver">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L13 9L20 7L15 12L22 14L14 16L17 22L12 17L7 22L10 16L2 14L9 12L4 7L11 9Z" fill="currentColor" stroke="none"/>
+              <circle cx="12" cy="12" r="3" stroke-width="2"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">Perfekt Treff</div>
+            <div class="badge-description">Oppnå 1.48+ smash factor</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-silver">Silver</span>
+              <span class="badge-xp">200 XP</span>
+              <span class="badge-rarity rarity-rare">Rare</span>
+            </div>
+          </div>
+        </div>
+        <div class="badge-card tier-gold">
+          <div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L13 9L20 7L15 12L22 14L14 16L17 22L12 17L7 22L10 16L2 14L9 12L4 7L11 9Z" fill="currentColor" stroke="none"/>
+              <circle cx="12" cy="12" r="3" stroke-width="2"/>
+            </svg>
+          </div>
+          <div class="badge-info">
+            <div class="badge-name">Maksimal Effektivitet</div>
+            <div class="badge-description">Oppnå 1.50 smash factor</div>
+            <div class="badge-meta">
+              <span class="badge-tier tier-gold">Gold</span>
+              <span class="badge-xp">400 XP</span>
+              <span class="badge-rarity rarity-epic">Epic</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- More sections follow the same pattern... -->
+    <!-- I'll add a condensed version of the remaining categories -->
+
+    <!-- Accuracy Badges -->
+    <section class="category-section" data-category="accuracy">
+      <div class="category-header">
+        <span class="category-icon">🎯</span>
+        <h2 class="category-title">Accuracy Badges</h2>
+        <span class="category-count">10 badges</span>
+        <span class="category-status status-missing">Mangler data (Runde-logging)</span>
+      </div>
+      <div class="badges-grid">
+        <div class="badge-card tier-standard"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/>
+              <circle cx="12" cy="12" r="5"/>
+              <circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">Fairway Finder</div><div class="badge-description">Oppnå 50%+ fairway hit</div><div class="badge-meta"><span class="badge-tier tier-standard">Standard</span><span class="badge-xp">75 XP</span></div></div></div>
+        <div class="badge-card tier-bronze"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/>
+              <circle cx="12" cy="12" r="5"/>
+              <circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">Fairway Konsistent</div><div class="badge-description">Oppnå 60%+ fairway hit</div><div class="badge-meta"><span class="badge-tier tier-bronze">Bronze</span><span class="badge-xp">150 XP</span></div></div></div>
+        <div class="badge-card tier-silver"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/>
+              <circle cx="12" cy="12" r="5"/>
+              <circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">Fairway Ekspert</div><div class="badge-description">Oppnå 70%+ fairway hit</div><div class="badge-meta"><span class="badge-tier tier-silver">Silver</span><span class="badge-xp">300 XP</span></div></div></div>
+        <div class="badge-card tier-gold"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/>
+              <circle cx="12" cy="12" r="5"/>
+              <circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">Fairway Master</div><div class="badge-description">Oppnå 80%+ fairway hit</div><div class="badge-meta"><span class="badge-tier tier-gold">Gold</span><span class="badge-xp">500 XP</span></div></div></div>
+        <div class="badge-card tier-standard"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="6" y1="3" x2="6" y2="21"/>
+              <path d="M6 3 L18 6.5 L6 10 Z" fill="currentColor"/>
+              <ellipse cx="12" cy="20" rx="6" ry="2"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">Green Seeker</div><div class="badge-description">Oppnå 40%+ GIR</div><div class="badge-meta"><span class="badge-tier tier-standard">Standard</span><span class="badge-xp">75 XP</span></div></div></div>
+        <div class="badge-card tier-bronze"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="6" y1="3" x2="6" y2="21"/>
+              <path d="M6 3 L18 6.5 L6 10 Z" fill="currentColor"/>
+              <ellipse cx="12" cy="20" rx="6" ry="2"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">Approach Konsistent</div><div class="badge-description">Oppnå 50%+ GIR</div><div class="badge-meta"><span class="badge-tier tier-bronze">Bronze</span><span class="badge-xp">150 XP</span></div></div></div>
+        <div class="badge-card tier-silver"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="6" y1="3" x2="6" y2="21"/>
+              <path d="M6 3 L18 6.5 L6 10 Z" fill="currentColor"/>
+              <ellipse cx="12" cy="20" rx="6" ry="2"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">Iron Ekspert</div><div class="badge-description">Oppnå 60%+ GIR</div><div class="badge-meta"><span class="badge-tier tier-silver">Silver</span><span class="badge-xp">300 XP</span></div></div></div>
+        <div class="badge-card tier-gold"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="6" y1="3" x2="6" y2="21"/>
+              <path d="M6 3 L18 6.5 L6 10 Z" fill="currentColor"/>
+              <ellipse cx="12" cy="20" rx="6" ry="2"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">Approach Master</div><div class="badge-description">Oppnå 70%+ GIR</div><div class="badge-meta"><span class="badge-tier tier-gold">Gold</span><span class="badge-xp">500 XP</span></div></div></div>
+        <div class="badge-card tier-silver"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/>
+              <circle cx="12" cy="12" r="5"/>
+              <circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">Pin Seeker</div><div class="badge-description">Snitt under 10m fra hull</div><div class="badge-meta"><span class="badge-tier tier-silver">Silver</span><span class="badge-xp">200 XP</span></div></div></div>
+        <div class="badge-card tier-gold"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/>
+              <circle cx="12" cy="12" r="5"/>
+              <circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">Laser Focus</div><div class="badge-description">Snitt under 7m fra hull</div><div class="badge-meta"><span class="badge-tier tier-gold">Gold</span><span class="badge-xp">400 XP</span></div></div></div>
+      </div>
+    </section>
+
+    <!-- Putting Badges -->
+    <section class="category-section" data-category="putting">
+      <div class="category-header">
+        <span class="category-icon">🏌️</span>
+        <h2 class="category-title">Putting Badges</h2>
+        <span class="category-count">10 badges</span>
+        <span class="category-status status-missing">Mangler data (Runde-logging)</span>
+      </div>
+      <div class="badges-grid">
+        <div class="badge-card tier-bronze"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="6" y1="3" x2="6" y2="21"/>
+              <path d="M6 3 L18 6.5 L6 10 Z" fill="currentColor"/>
+              <ellipse cx="12" cy="20" rx="6" ry="2"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">Solid Putter</div><div class="badge-description">Under 34 putts per runde</div><div class="badge-meta"><span class="badge-tier tier-bronze">Bronze</span><span class="badge-xp">100 XP</span></div></div></div>
+        <div class="badge-card tier-silver"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="6" y1="3" x2="6" y2="21"/>
+              <path d="M6 3 L18 6.5 L6 10 Z" fill="currentColor"/>
+              <ellipse cx="12" cy="20" rx="6" ry="2"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">Putter Pro</div><div class="badge-description">Under 32 putts per runde</div><div class="badge-meta"><span class="badge-tier tier-silver">Silver</span><span class="badge-xp">200 XP</span></div></div></div>
+        <div class="badge-card tier-gold"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="6" y1="3" x2="6" y2="21"/>
+              <path d="M6 3 L18 6.5 L6 10 Z" fill="currentColor"/>
+              <ellipse cx="12" cy="20" rx="6" ry="2"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">Putter Master</div><div class="badge-description">Under 30 putts per runde</div><div class="badge-meta"><span class="badge-tier tier-gold">Gold</span><span class="badge-xp">400 XP</span></div></div></div>
+        <div class="badge-card tier-bronze"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">One-Putt Artist</div><div class="badge-description">30%+ one-putt rate</div><div class="badge-meta"><span class="badge-tier tier-bronze">Bronze</span><span class="badge-xp">100 XP</span></div></div></div>
+        <div class="badge-card tier-silver"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">One-Putt Machine</div><div class="badge-description">40%+ one-putt rate</div><div class="badge-meta"><span class="badge-tier tier-silver">Silver</span><span class="badge-xp">250 XP</span></div></div></div>
+        <div class="badge-card tier-gold"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">One-Putt Legend</div><div class="badge-description">50%+ one-putt rate</div><div class="badge-meta"><span class="badge-tier tier-gold">Gold</span><span class="badge-xp">500 XP</span></div></div></div>
+        <div class="badge-card tier-bronze"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">Gimme Killer</div><div class="badge-description">95%+ make rate innenfor 3ft</div><div class="badge-meta"><span class="badge-tier tier-bronze">Bronze</span><span class="badge-xp">100 XP</span></div></div></div>
+        <div class="badge-card tier-gold"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">Never Miss</div><div class="badge-description">99%+ make rate innenfor 3ft</div><div class="badge-meta"><span class="badge-tier tier-gold">Gold</span><span class="badge-xp">300 XP</span></div></div></div>
+        <div class="badge-card tier-silver"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">3-Putt Fri</div><div class="badge-description">Under 5% three-putt rate</div><div class="badge-meta"><span class="badge-tier tier-silver">Silver</span><span class="badge-xp">200 XP</span></div></div></div>
+      </div>
+    </section>
+
+    <!-- Short Game Badges -->
+    <section class="category-section" data-category="short_game">
+      <div class="category-header">
+        <span class="category-icon">⛳</span>
+        <h2 class="category-title">Short Game Badges</h2>
+        <span class="category-count">6 badges</span>
+        <span class="category-status status-missing">Mangler data</span>
+      </div>
+      <div class="badges-grid">
+        <div class="badge-card tier-bronze"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="6" y1="3" x2="6" y2="21"/>
+              <path d="M6 3 L18 6.5 L6 10 Z" fill="currentColor"/>
+              <ellipse cx="12" cy="20" rx="6" ry="2"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">Scrambler</div><div class="badge-description">40%+ up-and-down rate</div><div class="badge-meta"><span class="badge-tier tier-bronze">Bronze</span><span class="badge-xp">100 XP</span></div></div></div>
+        <div class="badge-card tier-silver"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="6" y1="3" x2="6" y2="21"/>
+              <path d="M6 3 L18 6.5 L6 10 Z" fill="currentColor"/>
+              <ellipse cx="12" cy="20" rx="6" ry="2"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">Scramble Expert</div><div class="badge-description">50%+ up-and-down rate</div><div class="badge-meta"><span class="badge-tier tier-silver">Silver</span><span class="badge-xp">200 XP</span></div></div></div>
+        <div class="badge-card tier-gold"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="6" y1="3" x2="6" y2="21"/>
+              <path d="M6 3 L18 6.5 L6 10 Z" fill="currentColor"/>
+              <ellipse cx="12" cy="20" rx="6" ry="2"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">Scramble Master</div><div class="badge-description">60%+ up-and-down rate</div><div class="badge-meta"><span class="badge-tier tier-gold">Gold</span><span class="badge-xp">400 XP</span></div></div></div>
+        <div class="badge-card tier-bronze"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="6" y1="3" x2="6" y2="21"/>
+              <path d="M6 3 L18 6.5 L6 10 Z" fill="currentColor"/>
+              <ellipse cx="12" cy="20" rx="6" ry="2"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">Bunker Fighter</div><div class="badge-description">40%+ sand save rate</div><div class="badge-meta"><span class="badge-tier tier-bronze">Bronze</span><span class="badge-xp">100 XP</span></div></div></div>
+        <div class="badge-card tier-silver"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="6" y1="3" x2="6" y2="21"/>
+              <path d="M6 3 L18 6.5 L6 10 Z" fill="currentColor"/>
+              <ellipse cx="12" cy="20" rx="6" ry="2"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">Bunker Expert</div><div class="badge-description">50%+ sand save rate</div><div class="badge-meta"><span class="badge-tier tier-silver">Silver</span><span class="badge-xp">250 XP</span></div></div></div>
+        <div class="badge-card tier-gold"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="6" y1="3" x2="6" y2="21"/>
+              <path d="M6 3 L18 6.5 L6 10 Z" fill="currentColor"/>
+              <ellipse cx="12" cy="20" rx="6" ry="2"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">Bunker Master</div><div class="badge-description">60%+ sand save rate</div><div class="badge-meta"><span class="badge-tier tier-gold">Gold</span><span class="badge-xp">500 XP</span></div></div></div>
+      </div>
+    </section>
+
+    <!-- Scoring/Milestone Badges -->
+    <section class="category-section" data-category="milestone">
+      <div class="category-header">
+        <span class="category-icon">🏆</span>
+        <h2 class="category-title">Scoring & Milestone Badges</h2>
+        <span class="category-count">12 badges</span>
+        <span class="category-status status-partial">Delvis data</span>
+      </div>
+      <div class="badges-grid">
+        <div class="badge-card tier-bronze"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 9H4a2 2 0 0 0 0 4h2M18 9h2a2 2 0 0 1 0 4h-2"/>
+              <path d="M6 4h12v6a6 6 0 0 1-12 0V4z"/>
+              <path d="M12 16v4M8 20h8"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">Breaking 90</div><div class="badge-description">Spill en runde under 90</div><div class="badge-meta"><span class="badge-tier tier-bronze">Bronze</span><span class="badge-xp">150 XP</span></div></div></div>
+        <div class="badge-card tier-silver"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 9H4a2 2 0 0 0 0 4h2M18 9h2a2 2 0 0 1 0 4h-2"/>
+              <path d="M6 4h12v6a6 6 0 0 1-12 0V4z"/>
+              <path d="M12 16v4M8 20h8"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">Breaking 85</div><div class="badge-description">Spill en runde under 85</div><div class="badge-meta"><span class="badge-tier tier-silver">Silver</span><span class="badge-xp">250 XP</span></div></div></div>
+        <div class="badge-card tier-gold"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 9H4a2 2 0 0 0 0 4h2M18 9h2a2 2 0 0 1 0 4h-2"/>
+              <path d="M6 4h12v6a6 6 0 0 1-12 0V4z"/>
+              <path d="M12 16v4M8 20h8"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">Breaking 80</div><div class="badge-description">Spill en runde under 80</div><div class="badge-meta"><span class="badge-tier tier-gold">Gold</span><span class="badge-xp">400 XP</span></div></div></div>
+        <div class="badge-card tier-platinum"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 9H4a2 2 0 0 0 0 4h2M18 9h2a2 2 0 0 1 0 4h-2"/>
+              <path d="M6 4h12v6a6 6 0 0 1-12 0V4z"/>
+              <path d="M12 16v4M8 20h8"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">Breaking 75</div><div class="badge-description">Spill en runde under 75</div><div class="badge-meta"><span class="badge-tier tier-platinum">Platinum</span><span class="badge-xp">600 XP</span></div></div></div>
+        <div class="badge-card tier-platinum"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="9" r="5"/>
+              <path d="M12 14L8 22l4-2 4 2z"/>
+              <circle cx="12" cy="9" r="2.5" fill="none" stroke-width="1"/>
+              <polygon points="12 7 12.5 8.5 14 9 12.5 9.5 12 11 11.5 9.5 10 9 11.5 8.5 12 7" fill="currentColor" stroke="none"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">Under Par</div><div class="badge-description">Spill en runde under par</div><div class="badge-meta"><span class="badge-tier tier-platinum">Platinum</span><span class="badge-xp">1000 XP</span><span class="badge-rarity rarity-legendary">Legendary</span></div></div></div>
+        <div class="badge-card tier-bronze"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L3 7v6c0 5.5 3.8 10.7 9 12 5.2-1.3 9-6.5 9-12V7l-9-5z"/>
+              <polygon points="12 7 13 10 16 10.5 13.5 12.5 14 15.5 12 14 10 15.5 10.5 12.5 8 10.5 11 10 12 7" fill="currentColor" stroke="none"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">Single-Digit Hunter</div><div class="badge-description">HCP under 20</div><div class="badge-meta"><span class="badge-tier tier-bronze">Bronze</span><span class="badge-xp">150 XP</span></div></div></div>
+        <div class="badge-card tier-silver"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L3 7v6c0 5.5 3.8 10.7 9 12 5.2-1.3 9-6.5 9-12V7l-9-5z"/>
+              <polygon points="12 7 13 10 16 10.5 13.5 12.5 14 15.5 12 14 10 15.5 10.5 12.5 8 10.5 11 10 12 7" fill="currentColor" stroke="none"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">Single-Digit</div><div class="badge-description">Enkeltsifret HCP</div><div class="badge-meta"><span class="badge-tier tier-silver">Silver</span><span class="badge-xp">300 XP</span></div></div></div>
+        <div class="badge-card tier-gold"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L3 7v6c0 5.5 3.8 10.7 9 12 5.2-1.3 9-6.5 9-12V7l-9-5z"/>
+              <polygon points="12 7 13 10 16 10.5 13.5 12.5 14 15.5 12 14 10 15.5 10.5 12.5 8 10.5 11 10 12 7" fill="currentColor" stroke="none"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">Low Single-Digit</div><div class="badge-description">HCP under 5</div><div class="badge-meta"><span class="badge-tier tier-gold">Gold</span><span class="badge-xp">500 XP</span></div></div></div>
+        <div class="badge-card tier-platinum"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="9" r="5"/>
+              <path d="M12 14L8 22l4-2 4 2z"/>
+              <circle cx="12" cy="9" r="2.5" fill="none" stroke-width="1"/>
+              <polygon points="12 7 12.5 8.5 14 9 12.5 9.5 12 11 11.5 9.5 10 9 11.5 8.5 12 7" fill="currentColor" stroke="none"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">Scratch Golfer</div><div class="badge-description">HCP 0 eller bedre</div><div class="badge-meta"><span class="badge-tier tier-platinum">Platinum</span><span class="badge-xp">1000 XP</span><span class="badge-rarity rarity-legendary">Legendary</span></div></div></div>
+        <div class="badge-card tier-bronze"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="6" y1="3" x2="6" y2="21"/>
+              <path d="M6 3 L18 6.5 L6 10 Z" fill="currentColor"/>
+              <ellipse cx="12" cy="20" rx="6" ry="2"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">Bane Entusiast</div><div class="badge-description">Spill 25 runder</div><div class="badge-meta"><span class="badge-tier tier-bronze">Bronze</span><span class="badge-xp">100 XP</span></div></div></div>
+        <div class="badge-card tier-silver"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="6" y1="3" x2="6" y2="21"/>
+              <path d="M6 3 L18 6.5 L6 10 Z" fill="currentColor"/>
+              <ellipse cx="12" cy="20" rx="6" ry="2"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">Bane Veteran</div><div class="badge-description">Spill 100 runder</div><div class="badge-meta"><span class="badge-tier tier-silver">Silver</span><span class="badge-xp">300 XP</span></div></div></div>
+      </div>
+    </section>
+
+    <!-- Phase Badges -->
+    <section class="category-section" data-category="phase">
+      <div class="category-header">
+        <span class="category-icon">📅</span>
+        <h2 class="category-title">Phase & Plan Badges</h2>
+        <span class="category-count">6 badges</span>
+        <span class="category-status status-available">Data tilgjengelig</span>
+      </div>
+      <div class="badges-grid">
+        <div class="badge-card tier-bronze"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">Grunnlag Fullført</div><div class="badge-description">Fullfør en grunnlagsperiode</div><div class="badge-meta"><span class="badge-tier tier-bronze">Bronze</span><span class="badge-xp">150 XP</span></div></div></div>
+        <div class="badge-card tier-gold"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+              <line x1="10" y1="6" x2="16" y2="6"/>
+              <line x1="10" y1="10" x2="16" y2="10"/>
+              <line x1="10" y1="14" x2="14" y2="14"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">Årssyklus</div><div class="badge-description">Fullfør alle 4 faser</div><div class="badge-meta"><span class="badge-tier tier-gold">Gold</span><span class="badge-xp">400 XP</span></div></div></div>
+        <div class="badge-card tier-bronze"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">Plan Følger</div><div class="badge-description">80%+ compliance</div><div class="badge-meta"><span class="badge-tier tier-bronze">Bronze</span><span class="badge-xp">100 XP</span></div></div></div>
+        <div class="badge-card tier-silver"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">Plan Mester</div><div class="badge-description">90%+ compliance</div><div class="badge-meta"><span class="badge-tier tier-silver">Silver</span><span class="badge-xp">200 XP</span></div></div></div>
+        <div class="badge-card tier-gold"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">Perfekt Utførelse</div><div class="badge-description">95%+ compliance</div><div class="badge-meta"><span class="badge-tier tier-gold">Gold</span><span class="badge-xp">400 XP</span></div></div></div>
+        <div class="badge-card tier-silver"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+              <line x1="10" y1="6" x2="16" y2="6"/>
+              <line x1="10" y1="10" x2="16" y2="10"/>
+              <line x1="10" y1="14" x2="14" y2="14"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">Årsplan Følger</div><div class="badge-description">80%+ årsplan compliance</div><div class="badge-meta"><span class="badge-tier tier-silver">Silver</span><span class="badge-xp">300 XP</span></div></div></div>
+      </div>
+    </section>
+
+    <!-- Mental Badges -->
+    <section class="category-section" data-category="mental">
+      <div class="category-header">
+        <span class="category-icon">🧠</span>
+        <h2 class="category-title">Mental Badges</h2>
+        <span class="category-count">3 badges</span>
+        <span class="category-status status-partial">Delvis data</span>
+      </div>
+      <div class="badges-grid">
+        <div class="badge-card tier-bronze"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 4C6 4 4 6.5 4 9c0 1.5.5 2.5 1.5 3.5C4.5 13.5 4 15 4 16c0 2.5 2 4.5 4.5 4.5.5 0 1-.1 1.5-.2"/>
+              <path d="M15 4c3 0 5 2.5 5 5 0 1.5-.5 2.5-1.5 3.5 1 1 1.5 2.5 1.5 3.5 0 2.5-2 4.5-4.5 4.5-.5 0-1-.1-1.5-.2"/>
+              <path d="M12 4v16"/>
+              <path d="M9 8c-1 0-2 .5-2 1.5s1 1.5 2 1.5"/>
+              <path d="M9 14c-1.5 0-2.5.5-2.5 1.5s1 1.5 2.5 1.5"/>
+              <path d="M15 8c1 0 2 .5 2 1.5s-1 1.5-2 1.5"/>
+              <path d="M15 14c1.5 0 2.5.5 2.5 1.5s-1 1.5-2.5 1.5"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">Mental Start</div><div class="badge-description">5+ timer mental trening</div><div class="badge-meta"><span class="badge-tier tier-bronze">Bronze</span><span class="badge-xp">100 XP</span></div></div></div>
+        <div class="badge-card tier-silver"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 4C6 4 4 6.5 4 9c0 1.5.5 2.5 1.5 3.5C4.5 13.5 4 15 4 16c0 2.5 2 4.5 4.5 4.5.5 0 1-.1 1.5-.2"/>
+              <path d="M15 4c3 0 5 2.5 5 5 0 1.5-.5 2.5-1.5 3.5 1 1 1.5 2.5 1.5 3.5 0 2.5-2 4.5-4.5 4.5-.5 0-1-.1-1.5-.2"/>
+              <path d="M12 4v16"/>
+              <path d="M9 8c-1 0-2 .5-2 1.5s1 1.5 2 1.5"/>
+              <path d="M9 14c-1.5 0-2.5.5-2.5 1.5s1 1.5 2.5 1.5"/>
+              <path d="M15 8c1 0 2 .5 2 1.5s-1 1.5-2 1.5"/>
+              <path d="M15 14c1.5 0 2.5.5 2.5 1.5s-1 1.5-2.5 1.5"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">Mental Warrior</div><div class="badge-description">25+ timer mental trening</div><div class="badge-meta"><span class="badge-tier tier-silver">Silver</span><span class="badge-xp">250 XP</span></div></div></div>
+        <div class="badge-card tier-gold"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 4C6 4 4 6.5 4 9c0 1.5.5 2.5 1.5 3.5C4.5 13.5 4 15 4 16c0 2.5 2 4.5 4.5 4.5.5 0 1-.1 1.5-.2"/>
+              <path d="M15 4c3 0 5 2.5 5 5 0 1.5-.5 2.5-1.5 3.5 1 1 1.5 2.5 1.5 3.5 0 2.5-2 4.5-4.5 4.5-.5 0-1-.1-1.5-.2"/>
+              <path d="M12 4v16"/>
+              <path d="M9 8c-1 0-2 .5-2 1.5s1 1.5 2 1.5"/>
+              <path d="M9 14c-1.5 0-2.5.5-2.5 1.5s1 1.5 2.5 1.5"/>
+              <path d="M15 8c1 0 2 .5 2 1.5s-1 1.5-2 1.5"/>
+              <path d="M15 14c1.5 0 2.5.5 2.5 1.5s-1 1.5-2.5 1.5"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">Mental Master</div><div class="badge-description">100+ timer mental trening</div><div class="badge-meta"><span class="badge-tier tier-gold">Gold</span><span class="badge-xp">500 XP</span></div></div></div>
+      </div>
+    </section>
+
+    <!-- Seasonal Badges -->
+    <section class="category-section" data-category="seasonal">
+      <div class="category-header">
+        <span class="category-icon">🌟</span>
+        <h2 class="category-title">Seasonal Badges</h2>
+        <span class="category-count">2 badges</span>
+        <span class="category-status status-partial">Tidsbegrenset</span>
+      </div>
+      <div class="badges-grid">
+        <div class="badge-card tier-bronze"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="2" x2="12" y2="22"/>
+              <line x1="2" y1="12" x2="22" y2="12"/>
+              <line x1="5" y1="5" x2="19" y2="19"/>
+              <line x1="19" y1="5" x2="5" y2="19"/>
+              <polyline points="10 4 12 2 14 4"/>
+              <polyline points="10 20 12 22 14 20"/>
+              <polyline points="4 10 2 12 4 14"/>
+              <polyline points="20 10 22 12 20 14"/>
+              <polyline points="7 7 5 5 6 3"/>
+              <polyline points="17 17 19 19 18 21"/>
+              <polyline points="17 7 19 5 18 3"/>
+              <polyline points="7 17 5 19 6 21"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">Vinterkrigere</div><div class="badge-description">Tren ute i des-feb</div><div class="badge-meta"><span class="badge-tier tier-bronze">Bronze</span><span class="badge-xp">100 XP</span><span class="badge-rarity rarity-uncommon">Limited</span></div></div></div>
+        <div class="badge-card tier-gold"><div class="badge-icon-container">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="5"/>
+              <line x1="12" y1="2" x2="12" y2="5"/>
+              <line x1="12" y1="19" x2="12" y2="22"/>
+              <line x1="4.22" y1="4.22" x2="6.34" y2="6.34"/>
+              <line x1="17.66" y1="17.66" x2="19.78" y2="19.78"/>
+              <line x1="2" y1="12" x2="5" y2="12"/>
+              <line x1="19" y1="12" x2="22" y2="12"/>
+              <line x1="4.22" y1="19.78" x2="6.34" y2="17.66"/>
+              <line x1="17.66" y1="6.34" x2="19.78" y2="4.22"/>
+            </svg>
+          </div><div class="badge-info"><div class="badge-name">Sommergrinder</div><div class="badge-description">50+ timer jun-aug</div><div class="badge-meta"><span class="badge-tier tier-gold">Gold</span><span class="badge-xp">300 XP</span><span class="badge-rarity rarity-rare">Limited</span></div></div></div>
+      </div>
+    </section>
+  </div>
+
+  <div class="legend">
+    <div class="legend-group">
+      <span class="legend-title">Tier:</span>
+      <div class="legend-items">
+        <span class="legend-item tier-standard">Standard</span>
+        <span class="legend-item tier-bronze">Bronze</span>
+        <span class="legend-item tier-silver">Silver</span>
+        <span class="legend-item tier-gold">Gold</span>
+        <span class="legend-item tier-platinum">Platinum</span>
+      </div>
+    </div>
+    <div class="legend-group">
+      <span class="legend-title">Rarity:</span>
+      <div class="legend-items">
+        <span class="legend-item rarity-common">Common</span>
+        <span class="legend-item rarity-uncommon">Uncommon</span>
+        <span class="legend-item rarity-rare">Rare</span>
+        <span class="legend-item rarity-epic">Epic</span>
+        <span class="legend-item rarity-legendary">Legendary</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Category filter functionality
+    document.querySelectorAll('.category-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Update active button
+        document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const category = btn.dataset.category;
+
+        // Show/hide sections
+        document.querySelectorAll('.category-section').forEach(section => {
+          if (category === 'all' || section.dataset.category === category) {
+            section.style.display = 'block';
+          } else {
+            section.style.display = 'none';
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

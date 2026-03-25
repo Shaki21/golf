@@ -1,0 +1,200 @@
+{
+  "pageId": "player-plan-kalender",
+  "path": "/plan/kalender",
+  "component": "NotionCalendarPage",
+  "analyzedAt": "2026-01-13T02:10:00Z",
+  "jtbdFramework": {
+    "1_pageIdentification": {
+      "name": "NotionCalendarPage (Full Calendar Interface)",
+      "role": "player",
+      "frequency": "daily",
+      "context": "planning",
+      "clarityScore": 9
+    },
+    "2_primaryJTBD": {
+      "decision": "What training sessions do I have scheduled and when should I train next?",
+      "isObviousIn5Seconds": true,
+      "clarity": 9,
+      "competingAttention": [
+        "Calendar grid (dominant)",
+        "Mini calendar sidebar",
+        "Event details panel (when open)"
+      ],
+      "primaryCTA": {
+        "component": "Add event button / calendar cell click",
+        "label": "Schedule new session",
+        "isProminent": true
+      }
+    },
+    "3_decisionVsInfoRatio": {
+      "decisionElements": {
+        "count": 8,
+        "items": [
+          "Add event button",
+          "Calendar cell clicks",
+          "View switcher (Week/Day/Month)",
+          "Date navigation",
+          "Event click (opens details)",
+          "Start session button",
+          "Edit event button",
+          "Delete event button"
+        ]
+      },
+      "informationElements": {
+        "count": 5,
+        "items": [
+          "Calendar grid display",
+          "Mini calendar",
+          "Event details panel",
+          "Calendar list",
+          "Current date indicator"
+        ]
+      },
+      "ratio": 0.62,
+      "assessment": "EXCELLENT - Strong decision focus for planning tool",
+      "dominantDecision": "Yes - Add event / schedule session is clear primary"
+    },
+    "4_visualHierarchy": {
+      "eyeLandsOnFirst": "Calendar grid (main content area)",
+      "isCorrectFirstFocus": true,
+      "heroElement": "Calendar grid showing week/day/month view",
+      "secondaryElements": [
+        "Mini calendar sidebar",
+        "View switcher",
+        "Event details panel"
+      ],
+      "noiseElements": [],
+      "isFlatHierarchy": false,
+      "assessment": "EXCELLENT - Clear Notion-style layout with strong visual hierarchy"
+    },
+    "5_kpiQuality": {
+      "kpis": [
+        {
+          "metric": "Scheduled sessions (calendar events)",
+          "type": "leading",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "high",
+          "note": "Shows what's planned, user can act on it"
+        },
+        {
+          "metric": "Event status (planned/completed)",
+          "type": "leading",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "high",
+          "note": "Visual indicators for event status"
+        }
+      ],
+      "leadingPercentage": 1.0,
+      "actionablePercentage": 1.0,
+      "assessment": "EXCELLENT - All metrics are actionable"
+    },
+    "6_languageAndMentalModel": {
+      "style": "action_oriented",
+      "actionVerbs": [
+        "Start",
+        "Complete",
+        "Edit",
+        "Delete",
+        "Add event"
+      ],
+      "systemNouns": [
+        "Calendar",
+        "Session",
+        "Event"
+      ],
+      "coachActionPercentage": 0.7,
+      "assessment": "GOOD - Action-oriented language focused on user tasks",
+      "phrasesToRewrite": []
+    },
+    "7_flowAndNavigationCost": {
+      "clicksFromDashboard": 2,
+      "navigationDepth": 2,
+      "clicksToAddSession": 1,
+      "clicksToStartSession": 2,
+      "clicksToViewDetails": 1,
+      "assessment": "EXCELLENT - Inline actions minimize navigation cost",
+      "shouldBeInline": []
+    },
+    "8_stateCoverage": {
+      "hasEmptyState": false,
+      "hasLoadingState": true,
+      "hasErrorState": false,
+      "hasSuccessState": false,
+      "hasOverloadedState": false,
+      "hasAtRiskState": false,
+      "assessment": "MODERATE - Loading state present, but missing empty/error states",
+      "gaps": [
+        "No empty state for new users with no sessions",
+        "No error handling visible for API failures",
+        "No success confirmation after creating session"
+      ]
+    },
+    "9_roleScalability": {
+      "hasRoleConditionals": false,
+      "beginnerFriendly": true,
+      "eliteFriendly": true,
+      "scalabilityIssues": [],
+      "recommendation": "Well-designed for scale - Notion-style interface familiar to users"
+    },
+    "10_strategicVerdict": {
+      "diagnosis": "Professional calendar implementation with strong UX",
+      "currentBehavior": "Full-featured calendar",
+      "desiredBehavior": "Full-featured calendar",
+      "topIssues": [
+        {
+          "rank": 1,
+          "issue": "Missing empty state for new users",
+          "severity": "low",
+          "impact": "First-time users may be confused by blank calendar"
+        },
+        {
+          "rank": 2,
+          "issue": "No error handling visible",
+          "severity": "medium",
+          "impact": "Poor experience if API fails"
+        },
+        {
+          "rank": 3,
+          "issue": "No success confirmation after creating session",
+          "severity": "low",
+          "impact": "No positive feedback loop"
+        }
+      ],
+      "structuralFix": "Add empty state with onboarding + error boundaries + success toasts"
+    },
+    "11_crossPageConsistency": {
+      "note": "Full-page calendar layout breaks from standard PageHeader + PageContainer pattern - intentional for Notion replica. Consistent with calendar UX patterns."
+    }
+  },
+  "codeAnalysis": {
+    "componentCount": {
+      "interactive": 8,
+      "display": 6
+    },
+    "stateHandling": {
+      "loading": "isLoading prop passed to NotionCalendar",
+      "empty": "None visible",
+      "error": "error variable exists but not rendered"
+    },
+    "dataSource": {
+      "isRealData": true,
+      "isMockData": false,
+      "note": "Fetches real data from sessionsAPI via useCalendarEvents hook"
+    },
+    "accessibility": {
+      "hasAriaLabels": false,
+      "semanticHTML": true,
+      "keyboardNav": "Unknown - calendar grid likely keyboard navigable"
+    },
+    "responsiveDesign": {
+      "hasMobileLayout": true,
+      "breakpoints": ["full viewport height layout"],
+      "mobileFirst": false
+    }
+  },
+  "priorityScore": 85,
+  "implementationStatus": "implemented",
+  "overallAssessment": "EXCELLENT - Professional calendar with strong UX, needs minor improvements for edge cases"
+}

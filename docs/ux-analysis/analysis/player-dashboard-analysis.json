@@ -1,0 +1,199 @@
+{
+  "pageId": "player-dashboard",
+  "path": "/dashboard",
+  "component": "TodayView",
+  "analyzedAt": "2026-01-13T01:45:00Z",
+  "jtbdFramework": {
+    "1_pageIdentification": {
+      "name": "TodayView (Action-Centric Dashboard)",
+      "role": "player",
+      "frequency": "daily",
+      "context": "before_training",
+      "clarityScore": 9
+    },
+    "2_primaryJTBD": {
+      "decision": "What should I do for training today?",
+      "isObviousIn5Seconds": true,
+      "clarity": 9,
+      "competingAttention": [
+        "Goal insights (secondary)",
+        "Attention items (tertiary)"
+      ],
+      "primaryCTA": {
+        "component": "TodayHero",
+        "label": "Start Training / Quick Log",
+        "isProminent": true
+      }
+    },
+    "3_decisionVsInfoRatio": {
+      "decisionElements": {
+        "count": 7,
+        "items": [
+          "TodayHero action button",
+          "Quick Log button (top right)",
+          "Goal InsightKPI cards (4× with action links)",
+          "Quick Actions grid (4 items)"
+        ]
+      },
+      "informationElements": {
+        "count": 8,
+        "items": [
+          "Page header (greeting + subtitle)",
+          "Goal progress displays (4×)",
+          "Attention items list (4×)",
+          "Stats in Quick Stats"
+        ]
+      },
+      "ratio": 0.47,
+      "assessment": "EXCELLENT - Good balance for daily-use action page",
+      "dominantDecision": "Yes - TodayHero is clear primary action"
+    },
+    "4_visualHierarchy": {
+      "eyeLandsOnFirst": "TodayHero (primary action area)",
+      "isCorrectFirstFocus": true,
+      "heroElement": "TodayHero",
+      "secondaryElements": [
+        "Goal insights grid (2 columns)",
+        "Quick actions (4 buttons)"
+      ],
+      "noiseElements": [],
+      "isFlatHierarchy": false,
+      "assessment": "STRONG - Clear visual pyramid with TodayHero at top"
+    },
+    "5_kpiQuality": {
+      "kpis": [
+        {
+          "metric": "Goal progress (4× cards)",
+          "type": "leading",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "high",
+          "note": "Shows current vs target with recommended exercise"
+        },
+        {
+          "metric": "Sessions this month",
+          "type": "lagging",
+          "isActionable": false,
+          "hasContext": false,
+          "quality": "vanity",
+          "note": "Count-based, no implication of good/bad"
+        },
+        {
+          "metric": "Today's session status",
+          "type": "leading",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "high",
+          "note": "Tells user what to do now"
+        }
+      ],
+      "leadingPercentage": 0.67,
+      "actionablePercentage": 0.67,
+      "assessment": "GOOD - Majority are actionable leading indicators"
+    },
+    "6_languageAndMentalModel": {
+      "style": "coach_action",
+      "actionVerbs": [
+        "Start",
+        "Log",
+        "Focus",
+        "Your goals",
+        "Quick actions"
+      ],
+      "systemNouns": [
+        "Training session",
+        "Progress",
+        "Session"
+      ],
+      "coachActionPercentage": 0.75,
+      "assessment": "EXCELLENT - Strong action-oriented language",
+      "phrasesToRewrite": []
+    },
+    "7_flowAndNavigationCost": {
+      "clicksFromDashboard": 0,
+      "navigationDepth": 0,
+      "clicksToLog": 1,
+      "clicksToStartTraining": 1,
+      "clicksToViewGoals": 1,
+      "assessment": "EXCELLENT - Primary actions are 1 click away",
+      "shouldBeInline": []
+    },
+    "8_stateCoverage": {
+      "hasEmptyState": false,
+      "hasLoadingState": true,
+      "hasErrorState": false,
+      "hasSuccessState": true,
+      "hasOverloadedState": false,
+      "hasAtRiskState": true,
+      "assessment": "PARTIAL - Missing empty state and error handling",
+      "gaps": [
+        "No explicit empty state for 'no goals'",
+        "No error boundary visible",
+        "No handling for failed data fetch"
+      ]
+    },
+    "9_roleScalability": {
+      "hasRoleConditionals": false,
+      "beginnerFriendly": true,
+      "eliteFriendly": true,
+      "scalabilityIssues": [
+        "No progressive disclosure - shows all 4 goal cards always",
+        "Could be overwhelming for beginner with many goals"
+      ],
+      "recommendation": "Add beginner mode with single goal focus"
+    },
+    "10_strategicVerdict": {
+      "diagnosis": "Well-designed action dashboard with clear JTBD",
+      "currentBehavior": "Action cockpit",
+      "desiredBehavior": "Action cockpit",
+      "topIssues": [
+        {
+          "rank": 1,
+          "issue": "Missing empty state for new users with no goals",
+          "severity": "medium",
+          "impact": "First-time user experience"
+        },
+        {
+          "rank": 2,
+          "issue": "No error handling for data fetch failures",
+          "severity": "medium",
+          "impact": "Reliability perception"
+        },
+        {
+          "rank": 3,
+          "issue": "Could be overwhelming for beginners (no progressive disclosure)",
+          "severity": "low",
+          "impact": "Onboarding experience"
+        }
+      ],
+      "structuralFix": "Add StateCard for empty/error states + progressive disclosure based on user maturity"
+    },
+    "11_crossPageConsistency": {
+      "note": "First page analyzed - will compare after analyzing more pages"
+    }
+  },
+  "codeAnalysis": {
+    "componentCount": {
+      "interactive": 7,
+      "display": 8
+    },
+    "stateHandling": {
+      "loading": "useTodayData hook with isLoading",
+      "empty": "Partial - checks goals.length > 0 but no empty component",
+      "error": "None visible"
+    },
+    "accessibility": {
+      "hasAriaLabels": false,
+      "semanticHTML": true,
+      "keyboardNav": "Unknown - needs testing"
+    },
+    "responsiveDesign": {
+      "hasMobileLayout": true,
+      "breakpoints": ["lg:col-span-2", "lg:col-span-1"],
+      "mobileFirst": true
+    }
+  },
+  "priorityScore": 100,
+  "implementationStatus": "implemented",
+  "overallAssessment": "STRONG - One of the best-designed pages with clear JTBD and action focus"
+}

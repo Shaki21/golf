@@ -1,0 +1,179 @@
+{
+  "pageId": "coach-athlete-detail",
+  "path": "/coach/athletes/:id",
+  "component": "CoachAthleteDetail",
+  "analyzedAt": "2026-01-13T02:20:00Z",
+  "jtbdFramework": {
+    "1_pageIdentification": {
+      "name": "CoachAthleteDetail (Single Player Hub)",
+      "role": "coach",
+      "frequency": "daily",
+      "context": "review",
+      "clarityScore": 10
+    },
+    "2_primaryJTBD": {
+      "decision": "What should I do with this player?",
+      "isObviousIn5Seconds": true,
+      "clarity": 10,
+      "competingAttention": [
+        "4 navigation cards (equal weight)",
+        "Export button",
+        "Back button"
+      ],
+      "primaryCTA": {
+        "component": "Navigation cards",
+        "label": "4 equal-weight options (Proof/Trajectory/Plan/Notes)",
+        "isProminent": true
+      }
+    },
+    "3_decisionVsInfoRatio": {
+      "decisionElements": {
+        "count": 6,
+        "items": [
+          "4 navigation cards",
+          "Back button",
+          "Export button"
+        ]
+      },
+      "informationElements": {
+        "count": 3,
+        "items": [
+          "Page title (athlete name)",
+          "Subtitle",
+          "Help text"
+        ]
+      },
+      "ratio": 0.67,
+      "assessment": "EXCELLENT - Strong navigation focus",
+      "dominantDecision": "No - Intentionally neutral with 4 equal-weight options"
+    },
+    "4_visualHierarchy": {
+      "eyeLandsOnFirst": "Player avatar + name",
+      "isCorrectFirstFocus": true,
+      "heroElement": "Avatar + name header",
+      "secondaryElements": [
+        "4 navigation cards"
+      ],
+      "noiseElements": [],
+      "isFlatHierarchy": true,
+      "assessment": "EXCELLENT - Clear neutral hierarchy per contract"
+    },
+    "5_kpiQuality": {
+      "kpis": [],
+      "leadingPercentage": null,
+      "actionablePercentage": null,
+      "assessment": "INTENTIONAL - Zero KPIs by design (neutral hub per contract)",
+      "note": "Contract explicitly prohibits stats, tests, sessions, summaries"
+    },
+    "6_languageAndMentalModel": {
+      "style": "neutral_navigation",
+      "actionVerbs": [
+        "View",
+        "Edit",
+        "See"
+      ],
+      "systemNouns": [
+        "Documentation",
+        "Development",
+        "Training plan",
+        "Notes"
+      ],
+      "coachActionPercentage": 0.4,
+      "assessment": "GOOD - Neutral navigation language as per contract",
+      "phrasesToRewrite": []
+    },
+    "7_flowAndNavigationCost": {
+      "clicksFromDashboard": 2,
+      "navigationDepth": 2,
+      "clicksToPlayerProof": 1,
+      "clicksToTrajectory": 1,
+      "clicksToEditPlan": 1,
+      "clicksToNotes": 1,
+      "assessment": "EXCELLENT - All views are 1 click from this hub",
+      "shouldBeInline": []
+    },
+    "8_stateCoverage": {
+      "hasEmptyState": false,
+      "hasLoadingState": false,
+      "hasErrorState": false,
+      "hasSuccessState": false,
+      "hasOverloadedState": false,
+      "hasAtRiskState": false,
+      "assessment": "WEAK - No state handling",
+      "gaps": [
+        "No loading state",
+        "No error handling for player data fetch",
+        "No empty state if player not found"
+      ]
+    },
+    "9_roleScalability": {
+      "hasRoleConditionals": false,
+      "beginnerFriendly": true,
+      "eliteFriendly": true,
+      "scalabilityIssues": [],
+      "recommendation": "Well-designed neutral hub - scales for all players"
+    },
+    "10_strategicVerdict": {
+      "diagnosis": "Well-implemented neutral navigation hub following contract",
+      "currentBehavior": "Neutral gateway to coach tools",
+      "desiredBehavior": "Neutral gateway to coach tools",
+      "topIssues": [
+        {
+          "rank": 1,
+          "issue": "No state handling - missing loading/error/empty states",
+          "severity": "medium",
+          "impact": "Poor experience if player data fails to load"
+        },
+        {
+          "rank": 2,
+          "issue": "Static navigation - no indication of which view has updates",
+          "severity": "low",
+          "impact": "Coach may miss new proof or notes (but contract prohibits this)"
+        },
+        {
+          "rank": 3,
+          "issue": "Export button purpose unclear from label",
+          "severity": "low",
+          "impact": "Users may not know what gets exported"
+        }
+      ],
+      "structuralFix": "Add loading/error states + tooltip for export button"
+    },
+    "11_crossPageConsistency": {
+      "note": "Uses PageHeader + PageContainer pattern (consistent). Follows strict neutral presentation contract with explicit notes prohibiting summaries, stats, or prioritization. Identical contract adherence to CoachAthleteList."
+    }
+  },
+  "codeAnalysis": {
+    "componentCount": {
+      "interactive": 6,
+      "display": 4
+    },
+    "stateHandling": {
+      "loading": "None",
+      "empty": "None",
+      "error": "None"
+    },
+    "dataSource": {
+      "isRealData": false,
+      "isMockData": false,
+      "note": "No data fetching - receives athleteId + athleteName as props"
+    },
+    "accessibility": {
+      "hasAriaLabels": true,
+      "semanticHTML": true,
+      "keyboardNav": "Good - uses button elements and nav tag"
+    },
+    "responsiveDesign": {
+      "hasMobileLayout": true,
+      "breakpoints": ["standard responsive"],
+      "mobileFirst": true
+    },
+    "contracts": {
+      "adherence": "STRICT",
+      "note": "Code includes contract references and strict notes prohibiting stats/summaries/prioritization. Static neutral order enforced."
+    }
+  },
+  "priorityScore": 85,
+  "implementationStatus": "implemented",
+  "overallAssessment": "EXCELLENT - Clean neutral hub following contract specifications, needs state handling for edge cases"
+}

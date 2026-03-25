@@ -1,0 +1,226 @@
+/**
+ * NavFlyout Styles
+ *
+ * Flyout panel with section navigation and user footer.
+ * Uses semantic tokens exclusively.
+ *
+ * Visual Rules:
+ * - Panel feel, not dropdown
+ * - Clearly delimited surface
+ * - Never covers entire screen on desktop
+ * - Labels in text.secondary
+ * - Active label in text.primary
+ */
+
+.nav-flyout {
+  position: fixed;
+  top: 0;
+  left: 64px;
+  bottom: 0;
+  width: 240px;
+  background-color: var(--background-white);
+  border-right: 1px solid var(--border-default);
+  box-shadow: var(--shadow-elevated);
+  display: flex;
+  flex-direction: column;
+  z-index: 99;
+  animation: flyout-enter 150ms ease-out;
+}
+
+@keyframes flyout-enter {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Section Header */
+.nav-flyout__header {
+  padding: 20px 20px 16px;
+  border-bottom: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+}
+
+.nav-flyout__title {
+  font-size: var(--font-size-headline);
+  line-height: var(--line-height-headline);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+/* Content area with navigation items */
+.nav-flyout__content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 12px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-default) transparent;
+}
+
+.nav-flyout__content::-webkit-scrollbar {
+  width: 4px;
+}
+
+.nav-flyout__content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.nav-flyout__content::-webkit-scrollbar-thumb {
+  background-color: var(--border-default);
+  border-radius: 2px;
+}
+
+/* Navigation list */
+.nav-flyout__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* Navigation item */
+.nav-flyout__item {
+  display: block;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-subheadline);
+  line-height: var(--line-height-subheadline);
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: background-color 150ms ease, color 150ms ease;
+}
+
+.nav-flyout__item:hover {
+  background-color: var(--background-surface);
+  color: var(--text-primary);
+}
+
+.nav-flyout__item:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+/* Active navigation item */
+.nav-flyout__item--active {
+  background-color: var(--background-elevated);
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.nav-flyout__item--active:hover {
+  background-color: var(--background-elevated);
+}
+
+/* Divider */
+.nav-flyout__divider {
+  height: 1px;
+  background-color: var(--border-subtle);
+  margin: 0 12px;
+  flex-shrink: 0;
+}
+
+/* User Footer */
+.nav-flyout__footer {
+  padding: 16px 12px;
+  flex-shrink: 0;
+}
+
+/* User info section */
+.nav-flyout__user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background-color: var(--background-surface);
+  border-radius: var(--radius-sm);
+  margin-bottom: 12px;
+}
+
+.nav-flyout__user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: var(--accent);
+  color: var(--text-inverse);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-subheadline);
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.nav-flyout__user-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-flyout__user-name {
+  font-size: var(--font-size-subheadline);
+  font-weight: 500;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nav-flyout__user-email {
+  font-size: var(--font-size-caption1);
+  color: var(--text-tertiary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Action buttons */
+.nav-flyout__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.nav-flyout__action {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-subheadline);
+  color: var(--text-secondary);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 150ms ease, color 150ms ease;
+  width: 100%;
+  text-align: left;
+}
+
+.nav-flyout__action:hover {
+  background-color: var(--background-surface);
+  color: var(--text-primary);
+}
+
+.nav-flyout__action:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+/* Logout action - subtle styling */
+.nav-flyout__action--logout {
+  color: var(--text-tertiary);
+}
+
+.nav-flyout__action--logout:hover {
+  background-color: var(--error-muted);
+  color: var(--error);
+}

@@ -1,0 +1,119 @@
+<h1>Your Weekly Training Summary 📈</h1>
+
+<p>Hi {{firstName}},</p>
+
+<p>Here's your training summary for the week of <strong>{{weekStart}} - {{weekEnd}}</strong>.</p>
+
+<div class="stats">
+  <div class="stat-item">
+    <span class="stat-value">{{hoursTrained}}</span>
+    <span class="stat-label">Hours Trained</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-value">{{sessionsCompleted}}</span>
+    <span class="stat-label">Sessions</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-value">{{testsCompleted}}</span>
+    <span class="stat-label">Tests</span>
+  </div>
+</div>
+
+<h2>Training Highlights</h2>
+
+<div class="card">
+  <h3 style="margin: 0 0 16px 0; color: #10b981;">Top Improvements</h3>
+  {{#each improvements}}
+  <div style="margin: 12px 0;">
+    <div style="font-weight: 600; color: #1f2937;">{{skill}}</div>
+    <div style="display: flex; align-items: center; gap: 8px; margin-top: 4px;">
+      <div style="flex: 1; background: #e5e7eb; height: 6px; border-radius: 3px; overflow: hidden;">
+        <div style="background: #10b981; height: 100%; width: {{progress}}%;"></div>
+      </div>
+      <span style="font-weight: 700; color: #10b981; font-size: 14px;">+{{improvement}}%</span>
+    </div>
+  </div>
+  {{/each}}
+</div>
+
+<h2>Session Breakdown</h2>
+
+{{#each sessions}}
+<div style="border-left: 3px solid #10b981; padding-left: 16px; margin: 16px 0;">
+  <div style="font-weight: 600; color: #1f2937;">{{title}}</div>
+  <div style="font-size: 14px; color: #6b7280; margin-top: 4px;">
+    {{date}} • {{duration}} minutes • {{focusArea}}
+  </div>
+  {{#if notes}}
+  <div style="margin-top: 8px; font-size: 14px; color: #4a5568; font-style: italic;">
+    "{{notes}}"
+  </div>
+  {{/if}}
+</div>
+{{/each}}
+
+<center style="margin: 32px 0;">
+  <a href="{{dashboardUrl}}" class="button">View Full Dashboard</a>
+</center>
+
+<hr class="divider">
+
+<h2>Goals Progress</h2>
+
+{{#each goals}}
+<div style="margin: 20px 0;">
+  <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+    <span style="font-weight: 600; color: #1f2937;">{{name}}</span>
+    <span style="font-weight: 700; color: #10b981;">{{progress}}%</span>
+  </div>
+  <div style="background: #e5e7eb; height: 10px; border-radius: 5px; overflow: hidden;">
+    <div style="background: linear-gradient(90deg, #10b981 0%, #059669 100%); height: 100%; width: {{progress}}%;"></div>
+  </div>
+  <div style="font-size: 14px; color: #6b7280; margin-top: 4px;">
+    Target: {{target}} • Deadline: {{deadline}}
+  </div>
+</div>
+{{/each}}
+
+<h2>Coach's Notes</h2>
+
+<div class="highlight-box">
+  <p style="margin: 0; font-style: italic; color: #4a5568;">
+    "{{coachNotes}}"
+  </p>
+  <p style="margin: 12px 0 0 0; font-weight: 600; color: #1f2937;">
+    — {{coachName}}
+  </p>
+</div>
+
+<h2>Next Week's Plan</h2>
+
+<div class="card">
+  <p style="margin: 0 0 12px 0;"><strong>Upcoming Sessions:</strong></p>
+  {{#each upcomingSessions}}
+  <div style="padding: 12px; background: #f9fafb; border-radius: 6px; margin: 8px 0;">
+    <div style="font-weight: 600; color: #1f2937;">{{title}}</div>
+    <div style="font-size: 14px; color: #6b7280; margin-top: 4px;">
+      📅 {{date}} at {{time}}
+    </div>
+  </div>
+  {{/each}}
+</div>
+
+{{#if achievements}}
+<h2>Achievements This Week 🏆</h2>
+
+<div style="display: flex; gap: 12px; margin: 20px 0; flex-wrap: wrap;">
+  {{#each achievements}}
+  <div style="flex: 1; min-width: 120px; text-align: center; padding: 16px; background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-radius: 8px; border: 2px solid #f59e0b;">
+    <div style="font-size: 40px; margin-bottom: 8px;">{{emoji}}</div>
+    <p style="margin: 0; font-size: 12px; font-weight: 600; color: #92400e;">{{name}}</p>
+  </div>
+  {{/each}}
+</div>
+{{/if}}
+
+<p style="margin-top: 32px;">Great work this week, {{firstName}}! Keep up the excellent progress!</p>
+
+<p style="margin-top: 16px;">Best regards,<br>
+<strong>Your IUP Golf Academy Team</strong></p>

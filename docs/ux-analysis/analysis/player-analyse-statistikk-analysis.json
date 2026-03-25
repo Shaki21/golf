@@ -1,0 +1,238 @@
+{
+  "pageId": "player-analyse-statistikk",
+  "path": "/analyse/statistikk",
+  "component": "AnalyseStatistikkHub",
+  "analyzedAt": "2026-01-13T02:07:00Z",
+  "jtbdFramework": {
+    "1_pageIdentification": {
+      "name": "AnalyseStatistikkHub (Statistics Hub with 4 Tabs)",
+      "role": "player",
+      "frequency": "weekly",
+      "context": "review",
+      "clarityScore": 8
+    },
+    "2_primaryJTBD": {
+      "decision": "How is my golf performance trending and what should I focus on?",
+      "isObviousIn5Seconds": true,
+      "clarity": 8,
+      "competingAttention": [
+        "4 tabs (equal weight)",
+        "Key metrics cards",
+        "Charts",
+        "Insights sections"
+      ],
+      "primaryCTA": {
+        "component": "Tab navigation",
+        "label": "Navigate between analysis views",
+        "isProminent": true
+      }
+    },
+    "3_decisionVsInfoRatio": {
+      "decisionElements": {
+        "count": 8,
+        "items": [
+          "4 tab buttons",
+          "Breaking point cards (2)",
+          "View all links (3)",
+          "Show more/less toggle"
+        ]
+      },
+      "informationElements": {
+        "count": 20,
+        "items": [
+          "Key metric cards (3)",
+          "Charts (3-4 per tab)",
+          "Breaking point timeline",
+          "Trend indicators",
+          "Training area stats (4)",
+          "Goal progress bars",
+          "Insight cards (3)"
+        ]
+      },
+      "ratio": 0.29,
+      "assessment": "MODERATE - Information-heavy as expected for analytics page",
+      "dominantDecision": "No - Multiple equal-weight navigation options"
+    },
+    "4_visualHierarchy": {
+      "eyeLandsOnFirst": "Tab navigation bar",
+      "isCorrectFirstFocus": true,
+      "heroElement": "Active tab content area",
+      "secondaryElements": [
+        "Key metrics cards",
+        "Charts"
+      ],
+      "noiseElements": [],
+      "isFlatHierarchy": false,
+      "assessment": "GOOD - Clear tab-based hierarchy with visual separation"
+    },
+    "5_kpiQuality": {
+      "kpis": [
+        {
+          "metric": "Average score (12.4, ↓ 0.8)",
+          "type": "leading",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "high",
+          "note": "Shows trend and direction, actionable"
+        },
+        {
+          "metric": "Strokes Gained (+2.4, positive trend)",
+          "type": "leading",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "high",
+          "note": "Key performance metric with trend"
+        },
+        {
+          "metric": "Rounds last 30 days (12)",
+          "type": "lagging",
+          "isActionable": false,
+          "hasContext": false,
+          "quality": "vanity",
+          "note": "Count-based without context"
+        },
+        {
+          "metric": "Breaking points (timeline + cards)",
+          "type": "leading",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "high",
+          "note": "Identifies performance inflection points with recommendations"
+        },
+        {
+          "metric": "Training area success rates",
+          "type": "leading",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "high",
+          "note": "Shows improvement % with color coding"
+        },
+        {
+          "metric": "Goal progress (76%, 48%)",
+          "type": "leading",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "high",
+          "note": "Shows % of goal achieved with visual progress bars"
+        }
+      ],
+      "leadingPercentage": 0.83,
+      "actionablePercentage": 0.83,
+      "assessment": "EXCELLENT - Majority are actionable leading indicators"
+    },
+    "6_languageAndMentalModel": {
+      "style": "mixed",
+      "actionVerbs": [
+        "Follow",
+        "View",
+        "See"
+      ],
+      "systemNouns": [
+        "Statistics",
+        "Strokes Gained",
+        "Trends",
+        "Status",
+        "Goals",
+        "Breaking points",
+        "Insights"
+      ],
+      "coachActionPercentage": 0.35,
+      "assessment": "MODERATE - Mix of Norwegian and English, mostly passive language",
+      "phrasesToRewrite": [
+        "'Følg din utvikling med...' → 'Track your progress'",
+        "'Se alle' → 'View all' (consistency)"
+      ]
+    },
+    "7_flowAndNavigationCost": {
+      "clicksFromDashboard": 2,
+      "navigationDepth": 2,
+      "clicksToSpecificInsight": 3,
+      "clicksToDeepPage": 3,
+      "assessment": "GOOD - 2-3 clicks to reach detailed content",
+      "shouldBeInline": []
+    },
+    "8_stateCoverage": {
+      "hasEmptyState": true,
+      "hasLoadingState": true,
+      "hasErrorState": false,
+      "hasSuccessState": false,
+      "hasOverloadedState": false,
+      "hasAtRiskState": false,
+      "assessment": "GOOD - Loading and empty states for integrated sections",
+      "gaps": [
+        "No error handling visible",
+        "Mock data mixed with real API calls (TrenderTab fetches real data, others use mocks)"
+      ]
+    },
+    "9_roleScalability": {
+      "hasRoleConditionals": false,
+      "beginnerFriendly": false,
+      "eliteFriendly": true,
+      "scalabilityIssues": [
+        "Overwhelming for beginners - 4 tabs with dense analytics",
+        "Mixed mock/real data suggests incomplete implementation",
+        "No progressive disclosure - shows all complexity at once"
+      ],
+      "recommendation": "Add beginner mode with simplified view + complete API integration"
+    },
+    "10_strategicVerdict": {
+      "diagnosis": "Comprehensive analytics hub with good KPIs but mixed data sources",
+      "currentBehavior": "Multi-tab analytics dashboard",
+      "desiredBehavior": "Integrated performance insights workspace",
+      "topIssues": [
+        {
+          "rank": 1,
+          "issue": "Mixed mock and real data across tabs - incomplete implementation",
+          "severity": "high",
+          "impact": "Some tabs show fake data, confusing for users"
+        },
+        {
+          "rank": 2,
+          "issue": "Overwhelming for beginners with 4 dense analytics tabs",
+          "severity": "medium",
+          "impact": "High learning curve, may intimidate new users"
+        },
+        {
+          "rank": 3,
+          "issue": "No error handling for API failures",
+          "severity": "medium",
+          "impact": "Poor experience if data fetch fails"
+        }
+      ],
+      "structuralFix": "Complete API integration for all tabs + add progressive disclosure (simple/advanced toggle) + comprehensive error handling"
+    },
+    "11_crossPageConsistency": {
+      "note": "Uses PageHeader pattern (consistent). Tab-based navigation unique to this page. Integration with breaking points, training areas, and player insights shows good cross-feature coordination."
+    }
+  },
+  "codeAnalysis": {
+    "componentCount": {
+      "interactive": 10,
+      "display": 25
+    },
+    "stateHandling": {
+      "loading": "Loading spinners for breaking points, training areas, insights",
+      "empty": "Empty state messages for each section",
+      "error": "None visible"
+    },
+    "dataSource": {
+      "isRealData": true,
+      "isMockData": true,
+      "hasMixedSources": true,
+      "note": "TrenderTab fetches real API data, other tabs use mock data"
+    },
+    "accessibility": {
+      "hasAriaLabels": false,
+      "semanticHTML": true,
+      "keyboardNav": "Unknown - tabs likely keyboard navigable"
+    },
+    "responsiveDesign": {
+      "hasMobileLayout": true,
+      "breakpoints": ["md:grid-cols-2", "md:grid-cols-3", "md:grid-cols-4"],
+      "mobileFirst": true
+    }
+  },
+  "priorityScore": 85,
+  "implementationStatus": "partial",
+  "overallAssessment": "GOOD - Comprehensive analytics with strong KPIs but needs complete API integration and beginner-friendly mode"
+}

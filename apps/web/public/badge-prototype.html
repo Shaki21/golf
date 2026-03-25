@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TIER Golf — Badge System Prototype</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ═══════════════════════════════════════════
+       DESIGN TOKENS
+       ═══════════════════════════════════════════ */
+    :root {
+      /* Brand */
+      --ak-ink: #02060D;
+      --ak-primary: #10456A;
+      --ak-primary-light: #2C5F7F;
+      --ak-snow: #EDF0F2;
+      --ak-surface: #EBE5DA;
+      --ak-gold: #C9A227;
+      --ak-success: #4A7C59;
+      --ak-warning: #D4A84B;
+      --ak-error: #C45B4E;
+      --ak-gray-100: #F2F4F7;
+      --ak-gray-300: #D5D7DA;
+      --ak-gray-500: #8E8E93;
+      --ak-gray-700: #414651;
+      --ak-white: #FFFFFF;
+
+      /* Tiers */
+      --tier-standard: #8E8E93;
+      --tier-bronze: #B08D57;
+      --tier-silver: #8A9BA8;
+      --tier-gold: #C9A227;
+      --tier-platinum: #E5E4E2;
+
+      /* Tier Tints */
+      --tier-bronze-tint: rgba(176, 141, 87, 0.15);
+      --tier-silver-tint: rgba(138, 155, 168, 0.15);
+      --tier-gold-tint: rgba(201, 162, 39, 0.18);
+      --tier-platinum-tint: rgba(229, 228, 226, 0.22);
+    }
+
+    /* ═══════════════════════════════════════════
+       BASE STYLES
+       ═══════════════════════════════════════════ */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, system-ui, sans-serif;
+      background: var(--ak-ink);
+      color: var(--ak-snow);
+      min-height: 100vh;
+    }
+
+    /* ═══════════════════════════════════════════
+       LAYOUT
+       ═══════════════════════════════════════════ */
+    .app {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      min-height: 100vh;
+    }
+
+    @media (max-width: 900px) {
+      .app {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none;
+      }
+    }
+
+    /* ═══════════════════════════════════════════
+       SIDEBAR
+       ═══════════════════════════════════════════ */
+    .sidebar {
+      background: rgba(255,255,255,0.02);
+      border-right: 1px solid rgba(255,255,255,0.06);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .profile-card {
+      background: linear-gradient(135deg, var(--ak-primary) 0%, var(--ak-primary-light) 100%);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .profile-avatar {
+      width: 80px;
+      height: 80px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 50%;
+      margin: 0 auto 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      font-weight: 700;
+    }
+
+    .profile-name {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .profile-level {
+      font-size: 13px;
+      opacity: 0.8;
+      margin-bottom: 16px;
+    }
+
+    .xp-bar {
+      background: rgba(0,0,0,0.3);
+      border-radius: 8px;
+      height: 8px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+
+    .xp-fill {
+      height: 100%;
+      background: var(--ak-gold);
+      border-radius: 8px;
+      transition: width 0.5s ease;
+    }
+
+    .xp-text {
+      font-size: 12px;
+      opacity: 0.7;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .stat-item {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--ak-gold);
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: var(--ak-gray-500);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 4px;
+    }
+
+    .nav-section {
+      margin-top: auto;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: 10px;
+      color: var(--ak-gray-500);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .nav-item:hover {
+      background: rgba(255,255,255,0.05);
+      color: var(--ak-snow);
+    }
+
+    .nav-item.active {
+      background: var(--ak-primary);
+      color: var(--ak-white);
+    }
+
+    /* ═══════════════════════════════════════════
+       MAIN CONTENT
+       ═══════════════════════════════════════════ */
+    .main {
+      padding: 32px;
+      overflow-y: auto;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+    }
+
+    .header h1 {
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--ak-gold);
+      color: var(--ak-ink);
+    }
+
+    .btn-primary:hover {
+      background: #D4AF37;
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.08);
+      color: var(--ak-snow);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.12);
+    }
+
+    /* ═══════════════════════════════════════════
+       CATEGORY TABS
+       ═══════════════════════════════════════════ */
+    .category-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 32px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+    }
+
+    .category-tab {
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: transparent;
+      color: var(--ak-gray-500);
+    }
+
+    .category-tab:hover {
+      background: rgba(255,255,255,0.05);
+      color: var(--ak-snow);
+    }
+
+    .category-tab.active {
+      background: var(--ak-primary);
+      border-color: var(--ak-primary);
+      color: var(--ak-white);
+    }
+
+    .tab-count {
+      background: rgba(255,255,255,0.2);
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 12px;
+      margin-left: 8px;
+    }
+
+    /* ═══════════════════════════════════════════
+       BADGE GRID
+       ═══════════════════════════════════════════ */
+    .badge-section {
+      margin-bottom: 48px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .section-header h2 {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,0.1);
+    }
+
+    .badge-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 20px;
+    }
+
+    /* ═══════════════════════════════════════════
+       BADGE CARD
+       ═══════════════════════════════════════════ */
+    .badge-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      padding: 24px 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .badge-card:hover {
+      background: rgba(255,255,255,0.06);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+    }
+
+    .badge-card.locked {
+      opacity: 0.5;
+    }
+
+    .badge-card.locked:hover {
+      opacity: 0.7;
+    }
+
+    .badge-card.new {
+      border-color: var(--ak-gold);
+      box-shadow: 0 0 20px rgba(201, 162, 39, 0.2);
+    }
+
+    .badge-card.new::after {
+      content: 'NY';
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: var(--ak-gold);
+      color: var(--ak-ink);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    /* ═══════════════════════════════════════════
+       BADGE COMPONENT
+       ═══════════════════════════════════════════ */
+    .badge {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 16px;
+      position: relative;
+    }
+
+    .badge-rim {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 2.5px solid var(--tier-standard);
+      transition: all 0.3s;
+    }
+
+    .badge-field {
+      position: absolute;
+      inset: 5px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+    }
+
+    .badge-symbol {
+      width: 36px;
+      height: 36px;
+      stroke: var(--ak-snow);
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      transition: all 0.3s;
+    }
+
+    /* Tier Styles */
+    .badge--standard .badge-rim { border-style: dashed; border-color: var(--tier-standard); }
+
+    .badge--bronze .badge-rim { border-color: var(--tier-bronze); }
+    .badge--bronze .badge-field { background: var(--tier-bronze-tint); }
+
+    .badge--silver .badge-rim { border-color: var(--tier-silver); }
+    .badge--silver .badge-field { background: var(--tier-silver-tint); }
+
+    .badge--gold .badge-rim { border-color: var(--tier-gold); }
+    .badge--gold .badge-field { background: var(--tier-gold-tint); }
+
+    .badge--platinum .badge-rim {
+      border-color: var(--tier-platinum);
+      box-shadow: 0 0 12px rgba(229,228,226,0.3), inset 0 0 8px rgba(229,228,226,0.2);
+    }
+    .badge--platinum .badge-field { background: var(--tier-platinum-tint); }
+
+    /* Locked State */
+    .badge--locked .badge-rim {
+      border-style: dashed;
+      border-color: var(--ak-gray-700);
+    }
+    .badge--locked .badge-symbol {
+      stroke: var(--ak-gray-700);
+    }
+
+    /* Progress Ring */
+    .badge-progress {
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+    }
+
+    .badge-progress svg {
+      width: 100%;
+      height: 100%;
+      transform: rotate(-90deg);
+    }
+
+    .badge-progress circle {
+      fill: none;
+      stroke-width: 3;
+    }
+
+    .badge-progress .bg {
+      stroke: rgba(255,255,255,0.1);
+    }
+
+    .badge-progress .fill {
+      stroke: var(--ak-gold);
+      stroke-linecap: round;
+      transition: stroke-dashoffset 0.5s ease;
+    }
+
+    .badge-name {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: var(--ak-snow);
+    }
+
+    .badge-tier-label {
+      font-size: 11px;
+      color: var(--ak-gray-500);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-xp {
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--ak-gold);
+      font-weight: 600;
+    }
+
+    /* ═══════════════════════════════════════════
+       UNLOCK MODAL
+       ═══════════════════════════════════════════ */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 6, 13, 0.9);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .unlock-modal {
+      background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 24px;
+      padding: 48px;
+      text-align: center;
+      max-width: 400px;
+      transform: scale(0.9);
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .modal-overlay.active .unlock-modal {
+      transform: scale(1);
+    }
+
+    .unlock-title {
+      font-size: 14px;
+      color: var(--ak-gold);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 600;
+      margin-bottom: 24px;
+    }
+
+    .unlock-badge {
+      width: 128px;
+      height: 128px;
+      margin: 0 auto 24px;
+      position: relative;
+    }
+
+    .unlock-badge .badge-rim {
+      border-width: 3px;
+    }
+
+    .unlock-badge .badge-field {
+      inset: 8px;
+    }
+
+    .unlock-badge .badge-symbol {
+      width: 64px;
+      height: 64px;
+      stroke-width: 1.5;
+    }
+
+    .unlock-name {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .unlock-description {
+      font-size: 15px;
+      color: var(--ak-gray-500);
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .unlock-xp {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(201, 162, 39, 0.15);
+      color: var(--ak-gold);
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 32px;
+    }
+
+    .unlock-close {
+      padding: 14px 32px;
+      background: var(--ak-primary);
+      color: var(--ak-white);
+      border: none;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .unlock-close:hover {
+      background: var(--ak-primary-light);
+    }
+
+    /* Particles */
+    .particles {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .particle {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--ak-gold);
+    }
+
+    /* ═══════════════════════════════════════════
+       ANIMATIONS
+       ═══════════════════════════════════════════ */
+    @keyframes badgeUnlock {
+      0% { transform: scale(0.5); opacity: 0; }
+      50% { transform: scale(1.15); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(201, 162, 39, 0.4); }
+      50% { box-shadow: 0 0 0 15px rgba(201, 162, 39, 0); }
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    @keyframes particleExplode {
+      0% { transform: translate(0, 0) scale(1); opacity: 1; }
+      100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
+    }
+
+    .badge-card:hover .badge {
+      animation: float 2s ease-in-out infinite;
+    }
+
+    .badge--unlocking {
+      animation: badgeUnlock 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    .badge--unlocking .badge-rim {
+      animation: pulse 1s ease-out;
+    }
+
+    /* ═══════════════════════════════════════════
+       SKILL TREE VIEW
+       ═══════════════════════════════════════════ */
+    .skill-tree {
+      display: none;
+      padding: 32px;
+    }
+
+    .skill-tree.active {
+      display: block;
+    }
+
+    .skill-path {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 32px;
+      padding: 24px;
+      background: rgba(255,255,255,0.02);
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .skill-path-name {
+      font-size: 16px;
+      font-weight: 600;
+      min-width: 120px;
+    }
+
+    .skill-path-badges {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 1;
+    }
+
+    .skill-connector {
+      width: 24px;
+      height: 2px;
+      background: rgba(255,255,255,0.1);
+    }
+
+    .skill-connector.active {
+      background: var(--ak-gold);
+    }
+
+    .skill-badge {
+      width: 56px;
+      height: 56px;
+      flex-shrink: 0;
+    }
+
+    .skill-badge .badge-symbol {
+      width: 28px;
+      height: 28px;
+    }
+
+    /* ═══════════════════════════════════════════
+       TOAST NOTIFICATIONS
+       ═══════════════════════════════════════════ */
+    .toast-container {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .toast {
+      background: var(--ak-primary);
+      color: var(--ak-white);
+      padding: 16px 24px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    .toast-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--ak-gold);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .toast-content {
+      flex: 1;
+    }
+
+    .toast-title {
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .toast-message {
+      font-size: 12px;
+      opacity: 0.8;
+    }
+
+    /* ═══════════════════════════════════════════
+       EMPTY STATE
+       ═══════════════════════════════════════════ */
+    .empty-state {
+      text-align: center;
+      padding: 64px 32px;
+      color: var(--ak-gray-500);
+    }
+
+    .empty-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 16px;
+      opacity: 0.3;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="profile-card">
+        <div class="profile-avatar">AK</div>
+        <div class="profile-name">Anders Kristiansen</div>
+        <div class="profile-level">Level 12 • Elite Player</div>
+        <div class="xp-bar">
+          <div class="xp-fill" id="xpFill" style="width: 65%;"></div>
+        </div>
+        <div class="xp-text"><span id="currentXP">3,250</span> / 5,000 XP til Level 13</div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-value" id="badgeCount">18</div>
+          <div class="stat-label">Badges</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value" id="totalXP">12,450</div>
+          <div class="stat-label">Total XP</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value" id="streakCount">14</div>
+          <div class="stat-label">Dag Streak</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value" id="sessionCount">156</div>
+          <div class="stat-label">Treninger</div>
+        </div>
+      </div>
+
+      <nav class="nav-section">
+        <a class="nav-item active" onclick="showView('badges')">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          Alle Badges
+        </a>
+        <a class="nav-item" onclick="showView('skills')">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+          Skill Trees
+        </a>
+        <a class="nav-item" onclick="showView('recent')">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Nylig Opptjent
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+      <div class="header">
+        <h1>Dine Prestasjoner</h1>
+        <div class="header-actions">
+          <button class="btn btn-secondary" onclick="simulateProgress()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px;"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+            Simuler Trening
+          </button>
+          <button class="btn btn-primary" onclick="unlockRandomBadge()">
+            Lås Opp Badge
+          </button>
+        </div>
+      </div>
+
+      <!-- Category Tabs -->
+      <div class="category-tabs">
+        <button class="category-tab active" onclick="filterCategory('all')">
+          Alle<span class="tab-count" id="countAll">42</span>
+        </button>
+        <button class="category-tab" onclick="filterCategory('streak')">
+          Streaks<span class="tab-count">5</span>
+        </button>
+        <button class="category-tab" onclick="filterCategory('skill')">
+          Ferdigheter<span class="tab-count">20</span>
+        </button>
+        <button class="category-tab" onclick="filterCategory('achievement')">
+          Milepæler<span class="tab-count">12</span>
+        </button>
+        <button class="category-tab" onclick="filterCategory('seasonal')">
+          Sesong<span class="tab-count">5</span>
+        </button>
+      </div>
+
+      <!-- Badges View -->
+      <div id="badgesView">
+        <!-- Streak Section -->
+        <section class="badge-section" data-category="streak">
+          <div class="section-header">
+            <h2>Streak Badges</h2>
+            <div class="section-line"></div>
+          </div>
+          <div class="badge-grid" id="streakGrid">
+            <!-- Badges inserted by JS -->
+          </div>
+        </section>
+
+        <!-- Skill Section -->
+        <section class="badge-section" data-category="skill">
+          <div class="section-header">
+            <h2>Skill Mastery</h2>
+            <div class="section-line"></div>
+          </div>
+          <div class="badge-grid" id="skillGrid">
+            <!-- Badges inserted by JS -->
+          </div>
+        </section>
+
+        <!-- Achievement Section -->
+        <section class="badge-section" data-category="achievement">
+          <div class="section-header">
+            <h2>Milepæler</h2>
+            <div class="section-line"></div>
+          </div>
+          <div class="badge-grid" id="achievementGrid">
+            <!-- Badges inserted by JS -->
+          </div>
+        </section>
+
+        <!-- Seasonal Section -->
+        <section class="badge-section" data-category="seasonal">
+          <div class="section-header">
+            <h2>Sesong & Events</h2>
+            <div class="section-line"></div>
+          </div>
+          <div class="badge-grid" id="seasonalGrid">
+            <!-- Badges inserted by JS -->
+          </div>
+        </section>
+      </div>
+
+      <!-- Skill Tree View -->
+      <div id="skillTreeView" class="skill-tree">
+        <section class="badge-section">
+          <div class="section-header">
+            <h2>Putting Mastery</h2>
+            <div class="section-line"></div>
+          </div>
+          <div class="skill-path" id="puttingPath">
+            <div class="skill-path-name">Putting</div>
+            <div class="skill-path-badges">
+              <!-- Filled by JS -->
+            </div>
+          </div>
+        </section>
+
+        <section class="badge-section">
+          <div class="section-header">
+            <h2>Driving Power</h2>
+            <div class="section-line"></div>
+          </div>
+          <div class="skill-path" id="drivingPath">
+            <div class="skill-path-name">Driving</div>
+            <div class="skill-path-badges">
+              <!-- Filled by JS -->
+            </div>
+          </div>
+        </section>
+
+        <section class="badge-section">
+          <div class="section-header">
+            <h2>Short Game</h2>
+            <div class="section-line"></div>
+          </div>
+          <div class="skill-path" id="shortGamePath">
+            <div class="skill-path-name">Short Game</div>
+            <div class="skill-path-badges">
+              <!-- Filled by JS -->
+            </div>
+          </div>
+        </section>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Unlock Modal -->
+  <div class="modal-overlay" id="unlockModal">
+    <div class="unlock-modal">
+      <div class="particles" id="particles"></div>
+      <div class="unlock-title">Badge Opplåst!</div>
+      <div class="unlock-badge" id="modalBadge">
+        <!-- Badge content -->
+      </div>
+      <div class="unlock-name" id="modalName">Badge Name</div>
+      <div class="unlock-description" id="modalDescription">Badge description goes here</div>
+      <div class="unlock-xp">+<span id="modalXP">500</span> XP</div>
+      <button class="unlock-close" onclick="closeModal()">Fortsett</button>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script>
+    // ═══════════════════════════════════════════
+    // BADGE DATA
+    // ═══════════════════════════════════════════
+    const BADGE_SYMBOLS = {
+      flame: '<path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>',
+      trophy: '<path d="M6 9H4a2 2 0 0 0 0 4h2M18 9h2a2 2 0 0 1 0 4h-2"/><path d="M6 4h12v6a6 6 0 0 1-12 0V4z"/><path d="M12 16v4M8 20h8"/>',
+      star: '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',
+      target: '<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>',
+      clock: '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
+      check: '<polyline points="20 6 9 17 4 12"/>',
+      lightning: '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
+      flag: '<line x1="12" y1="3" x2="12" y2="21"/><path d="M12 3 L20 7 L12 11 Z"/>',
+      medal: '<circle cx="12" cy="8" r="6"/><path d="M12 14v8"/><path d="M8 22l4-2 4 2"/>',
+      sun: '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>',
+      moon: '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>',
+      award: '<circle cx="12" cy="8" r="6"/><path d="M8.21 13.89L7 23l5-3 5 3-1.21-9.12"/>',
+      book: '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>',
+      brain: '<path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/>',
+      dumbbell: '<rect x="2" y="10" width="3" height="4" rx="0.5"/><rect x="19" y="10" width="3" height="4" rx="0.5"/><rect x="5" y="8" width="2" height="8" rx="0.5"/><rect x="17" y="8" width="2" height="8" rx="0.5"/><line x1="7" y1="12" x2="17" y2="12" stroke-width="2.5"/>',
+      zap: '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
+      sunrise: '<path d="M12 2v4"/><path d="M4.93 10.93l2.83 2.83"/><path d="M2 18h4"/><path d="M18 18h4"/><path d="M16.24 13.76l2.83-2.83"/><path d="M12 18a6 6 0 0 0 0-12"/>',
+      snowflake: '<line x1="12" y1="2" x2="12" y2="22"/><path d="M12 6l-4-4M12 6l4-4M12 18l-4 4M12 18l4 4"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M6 12l-4-4M6 12l-4 4M18 12l4-4M18 12l4 4"/>',
+    };
+
+    const BADGES = {
+      streak: [
+        { id: 'streak-1', name: 'Hot Start', tier: 'bronze', symbol: 'flame', xp: 50, desc: '3-dagers streak', earned: true },
+        { id: 'streak-2', name: 'On Fire', tier: 'silver', symbol: 'flame', xp: 100, desc: '7-dagers streak', earned: true },
+        { id: 'streak-3', name: 'Blazing', tier: 'gold', symbol: 'flame', xp: 200, desc: '14-dagers streak', earned: true, isNew: true },
+        { id: 'streak-4', name: 'Unstoppable', tier: 'gold', symbol: 'flame', xp: 500, desc: '30-dagers streak', earned: false, progress: 47 },
+        { id: 'streak-5', name: 'Legendary', tier: 'platinum', symbol: 'flame', xp: 1000, desc: '60-dagers streak', earned: false, progress: 23 },
+      ],
+      skill: [
+        { id: 'putting-1', name: 'Putter', tier: 'bronze', symbol: 'target', xp: 100, desc: '10 putting drills', earned: true },
+        { id: 'putting-2', name: 'Green Reader', tier: 'silver', symbol: 'target', xp: 200, desc: '50 drills, 70% acc', earned: true },
+        { id: 'putting-3', name: 'Distance Control', tier: 'gold', symbol: 'target', xp: 400, desc: '100 drills, 80% acc', earned: false, progress: 75 },
+        { id: 'putting-4', name: 'Clutch Putter', tier: 'gold', symbol: 'target', xp: 800, desc: '200 drills', earned: false, progress: 0 },
+        { id: 'putting-5', name: 'Putting Master', tier: 'platinum', symbol: 'target', xp: 1600, desc: '500 drills, 90% acc', earned: false, progress: 0 },
+        { id: 'driving-1', name: 'Driver', tier: 'bronze', symbol: 'zap', xp: 100, desc: '10 driving sessions', earned: true },
+        { id: 'driving-2', name: 'Long Hitter', tier: 'silver', symbol: 'zap', xp: 300, desc: '+5 mph', earned: true },
+        { id: 'driving-3', name: 'Bomber', tier: 'gold', symbol: 'zap', xp: 600, desc: '+10 mph', earned: false, progress: 60 },
+        { id: 'driving-4', name: 'Speed Demon', tier: 'platinum', symbol: 'zap', xp: 1200, desc: '+15 mph', earned: false, progress: 0 },
+        { id: 'shortgame-1', name: 'Chipper', tier: 'bronze', symbol: 'flag', xp: 100, desc: '20 short game sessions', earned: true },
+        { id: 'shortgame-2', name: 'Bunker Escape', tier: 'silver', symbol: 'flag', xp: 300, desc: '80% up-and-down', earned: true },
+        { id: 'shortgame-3', name: 'Touch Artist', tier: 'gold', symbol: 'flag', xp: 600, desc: '90% up-and-down', earned: false, progress: 45 },
+        { id: 'iron-1', name: 'Iron Player', tier: 'bronze', symbol: 'target', xp: 100, desc: '30 iron sessions', earned: true },
+        { id: 'iron-2', name: 'Pin Seeker', tier: 'silver', symbol: 'target', xp: 300, desc: '70% GIR', earned: true },
+        { id: 'iron-3', name: 'Precision', tier: 'gold', symbol: 'target', xp: 600, desc: '80% GIR', earned: false, progress: 85 },
+        { id: 'mental-1', name: 'Focused', tier: 'bronze', symbol: 'brain', xp: 100, desc: '10 mental sessions', earned: true },
+        { id: 'mental-2', name: 'Calm Under Pressure', tier: 'silver', symbol: 'brain', xp: 300, desc: 'Consistent performance', earned: false, progress: 60 },
+        { id: 'physical-1', name: 'Athlete', tier: 'bronze', symbol: 'dumbbell', xp: 100, desc: '20 gym sessions', earned: true },
+        { id: 'physical-2', name: 'Strong', tier: 'silver', symbol: 'dumbbell', xp: 300, desc: '50 gym sessions', earned: true },
+        { id: 'physical-3', name: 'Peak Fitness', tier: 'gold', symbol: 'dumbbell', xp: 600, desc: '100 gym sessions', earned: false, progress: 35 },
+      ],
+      achievement: [
+        { id: 'first-steps', name: 'First Steps', tier: 'standard', symbol: 'check', xp: 50, desc: 'Fullført profil', earned: true },
+        { id: 'ready', name: 'Ready to Train', tier: 'standard', symbol: 'flag', xp: 50, desc: 'Første økt fullført', earned: true },
+        { id: 'week-one', name: 'Week One', tier: 'bronze', symbol: 'clock', xp: 100, desc: '7 dager aktiv', earned: true },
+        { id: 'month-strong', name: 'Month Strong', tier: 'silver', symbol: 'clock', xp: 200, desc: '30 dager aktiv', earned: true },
+        { id: 'committed', name: 'Committed', tier: 'gold', symbol: 'trophy', xp: 400, desc: '100 økter fullført', earned: true },
+        { id: 'lifer', name: 'Lifer', tier: 'platinum', symbol: 'trophy', xp: 1000, desc: '365 dager aktiv', earned: false, progress: 43 },
+        { id: 'perfect-week', name: 'Perfect Week', tier: 'bronze', symbol: 'star', xp: 150, desc: 'Alle økter i 1 uke', earned: true },
+        { id: 'consistent', name: 'Consistent', tier: 'silver', symbol: 'star', xp: 300, desc: '4 perfekte uker', earned: true },
+        { id: 'reliable', name: 'Reliable', tier: 'gold', symbol: 'check', xp: 600, desc: '90%+ completion', earned: false, progress: 88 },
+        { id: 'tournament-1', name: 'Tournament Ready', tier: 'silver', symbol: 'medal', xp: 200, desc: 'Fullført prep', earned: true },
+        { id: 'tournament-2', name: 'Battle Tested', tier: 'gold', symbol: 'medal', xp: 400, desc: '5 turneringer', earned: false, progress: 60 },
+        { id: 'champion', name: 'Champion', tier: 'platinum', symbol: 'trophy', xp: 1000, desc: 'Vunnet turnering', earned: false, progress: 0 },
+      ],
+      seasonal: [
+        { id: 'summer-2024', name: 'Summer Camp 2024', tier: 'gold', symbol: 'sun', xp: 300, desc: 'Deltatt sommercamp', earned: true },
+        { id: 'winter-2024', name: 'Winter Warrior', tier: 'silver', symbol: 'snowflake', xp: 200, desc: 'Trent hele vinteren', earned: true },
+        { id: 'early-bird', name: 'Early Bird', tier: 'bronze', symbol: 'sunrise', xp: 100, desc: '20 økter før 9', earned: true },
+        { id: 'night-owl', name: 'Night Owl', tier: 'bronze', symbol: 'moon', xp: 100, desc: '20 økter etter 19', earned: false, progress: 55 },
+        { id: 'nordic-2025', name: 'Nordic Championship', tier: 'platinum', symbol: 'award', xp: 500, desc: 'Deltatt NM 2025', earned: false, progress: 0, locked: true },
+      ],
+    };
+
+    // ═══════════════════════════════════════════
+    // RENDER FUNCTIONS
+    // ═══════════════════════════════════════════
+    function createBadgeSVG(symbol) {
+      return `<svg class="badge-symbol" viewBox="0 0 24 24">${BADGE_SYMBOLS[symbol] || BADGE_SYMBOLS.star}</svg>`;
+    }
+
+    function createProgressRing(progress) {
+      const circumference = 2 * Math.PI * 38;
+      const offset = circumference - (progress / 100) * circumference;
+      return `
+        <div class="badge-progress">
+          <svg viewBox="0 0 80 80">
+            <circle class="bg" cx="40" cy="40" r="38"/>
+            <circle class="fill" cx="40" cy="40" r="38"
+              stroke-dasharray="${circumference}"
+              stroke-dashoffset="${offset}"/>
+          </svg>
+        </div>
+      `;
+    }
+
+    function renderBadgeCard(badge) {
+      const tierClass = badge.earned ? `badge--${badge.tier}` : 'badge--locked';
+      const cardClass = badge.earned ? (badge.isNew ? 'new' : '') : 'locked';
+      const progressRing = !badge.earned && badge.progress > 0 ? createProgressRing(badge.progress) : '';
+
+      return `
+        <div class="badge-card ${cardClass}" data-id="${badge.id}" onclick="showBadgeDetail('${badge.id}')">
+          <div class="badge ${tierClass}">
+            ${progressRing}
+            <div class="badge-rim"></div>
+            <div class="badge-field">
+              ${createBadgeSVG(badge.symbol)}
+            </div>
+          </div>
+          <div class="badge-name">${badge.name}</div>
+          <div class="badge-tier-label">${badge.earned ? badge.tier.toUpperCase() : (badge.progress > 0 ? `${badge.progress}%` : 'Låst')}</div>
+          ${badge.earned ? `<div class="badge-xp">+${badge.xp} XP</div>` : ''}
+        </div>
+      `;
+    }
+
+    function renderBadges() {
+      document.getElementById('streakGrid').innerHTML = BADGES.streak.map(renderBadgeCard).join('');
+      document.getElementById('skillGrid').innerHTML = BADGES.skill.map(renderBadgeCard).join('');
+      document.getElementById('achievementGrid').innerHTML = BADGES.achievement.map(renderBadgeCard).join('');
+      document.getElementById('seasonalGrid').innerHTML = BADGES.seasonal.map(renderBadgeCard).join('');
+    }
+
+    function renderSkillTree(containerId, skillBadges) {
+      const container = document.querySelector(`#${containerId} .skill-path-badges`);
+      if (!container) return;
+
+      let html = '';
+      skillBadges.forEach((badge, i) => {
+        const tierClass = badge.earned ? `badge--${badge.tier}` : 'badge--locked';
+        const connectorClass = badge.earned ? 'active' : '';
+
+        if (i > 0) {
+          html += `<div class="skill-connector ${connectorClass}"></div>`;
+        }
+
+        html += `
+          <div class="badge skill-badge ${tierClass}">
+            <div class="badge-rim"></div>
+            <div class="badge-field">
+              ${createBadgeSVG(badge.symbol)}
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
+    // ═══════════════════════════════════════════
+    // INTERACTION HANDLERS
+    // ═══════════════════════════════════════════
+    function showView(view) {
+      document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+
+      document.getElementById('badgesView').style.display = view === 'badges' || view === 'recent' ? 'block' : 'none';
+      document.getElementById('skillTreeView').classList.toggle('active', view === 'skills');
+
+      if (view === 'skills') {
+        renderSkillTree('puttingPath', BADGES.skill.filter(b => b.id.startsWith('putting')));
+        renderSkillTree('drivingPath', BADGES.skill.filter(b => b.id.startsWith('driving')));
+        renderSkillTree('shortGamePath', BADGES.skill.filter(b => b.id.startsWith('shortgame')));
+      }
+    }
+
+    function filterCategory(category) {
+      document.querySelectorAll('.category-tab').forEach(tab => tab.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+
+      document.querySelectorAll('.badge-section').forEach(section => {
+        const cat = section.dataset.category;
+        section.style.display = (category === 'all' || cat === category) ? 'block' : 'none';
+      });
+    }
+
+    function showBadgeDetail(badgeId) {
+      // Find badge
+      let badge = null;
+      for (const category of Object.values(BADGES)) {
+        badge = category.find(b => b.id === badgeId);
+        if (badge) break;
+      }
+      if (!badge) return;
+
+      if (!badge.earned) {
+        showToast('Badge Låst', `Fullfør: ${badge.desc}`);
+        return;
+      }
+
+      // Show modal
+      const modal = document.getElementById('unlockModal');
+      const tierClass = `badge--${badge.tier}`;
+
+      document.getElementById('modalBadge').innerHTML = `
+        <div class="badge ${tierClass}">
+          <div class="badge-rim"></div>
+          <div class="badge-field">
+            ${createBadgeSVG(badge.symbol)}
+          </div>
+        </div>
+      `;
+      document.getElementById('modalBadge').querySelector('.badge').style.width = '128px';
+      document.getElementById('modalBadge').querySelector('.badge').style.height = '128px';
+      document.getElementById('modalName').textContent = badge.name;
+      document.getElementById('modalDescription').textContent = badge.desc;
+      document.getElementById('modalXP').textContent = badge.xp;
+
+      modal.classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('unlockModal').classList.remove('active');
+    }
+
+    // ═══════════════════════════════════════════
+    // UNLOCK SIMULATION
+    // ═══════════════════════════════════════════
+    function unlockRandomBadge() {
+      // Find a locked badge with progress
+      let lockedBadges = [];
+      for (const [category, badges] of Object.entries(BADGES)) {
+        badges.forEach(b => {
+          if (!b.earned && b.progress > 0 && !b.locked) {
+            lockedBadges.push({ ...b, category });
+          }
+        });
+      }
+
+      if (lockedBadges.length === 0) {
+        showToast('Ingen tilgjengelige', 'Alle badges med progress er opptjent!');
+        return;
+      }
+
+      // Pick random
+      const badge = lockedBadges[Math.floor(Math.random() * lockedBadges.length)];
+
+      // Unlock it
+      const categoryBadges = BADGES[badge.category];
+      const idx = categoryBadges.findIndex(b => b.id === badge.id);
+      if (idx >= 0) {
+        categoryBadges[idx].earned = true;
+        categoryBadges[idx].isNew = true;
+        categoryBadges[idx].progress = undefined;
+      }
+
+      // Update stats
+      updateStats(badge.xp);
+
+      // Show unlock animation
+      showUnlockModal(badge);
+
+      // Re-render
+      renderBadges();
+
+      // Animate the card
+      setTimeout(() => {
+        const card = document.querySelector(`[data-id="${badge.id}"]`);
+        if (card) {
+          card.querySelector('.badge').classList.add('badge--unlocking');
+        }
+      }, 100);
+    }
+
+    function showUnlockModal(badge) {
+      const modal = document.getElementById('unlockModal');
+      const tierClass = `badge--${badge.tier}`;
+
+      document.getElementById('modalBadge').innerHTML = `
+        <div class="badge ${tierClass} badge--unlocking">
+          <div class="badge-rim"></div>
+          <div class="badge-field">
+            ${createBadgeSVG(badge.symbol)}
+          </div>
+        </div>
+      `;
+
+      // Set badge size
+      const badgeEl = document.getElementById('modalBadge').querySelector('.badge');
+      badgeEl.style.width = '128px';
+      badgeEl.style.height = '128px';
+
+      document.getElementById('modalName').textContent = badge.name;
+      document.getElementById('modalDescription').textContent = badge.desc;
+      document.getElementById('modalXP').textContent = badge.xp;
+
+      // Create particles
+      createParticles();
+
+      modal.classList.add('active');
+    }
+
+    function createParticles() {
+      const container = document.getElementById('particles');
+      container.innerHTML = '';
+
+      const colors = ['var(--ak-gold)', 'var(--tier-platinum)', 'var(--ak-white)'];
+
+      for (let i = 0; i < 12; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.cssText = `
+          left: 50%;
+          top: 50%;
+          background: ${colors[i % colors.length]};
+          --tx: ${(Math.random() - 0.5) * 200}px;
+          --ty: ${(Math.random() - 0.5) * 200}px;
+          animation: particleExplode 0.6s ease-out forwards;
+          animation-delay: ${i * 0.03}s;
+        `;
+        container.appendChild(particle);
+      }
+    }
+
+    function simulateProgress() {
+      // Add progress to random locked badges
+      let updated = 0;
+      for (const badges of Object.values(BADGES)) {
+        badges.forEach(badge => {
+          if (!badge.earned && !badge.locked) {
+            const increment = Math.floor(Math.random() * 15) + 5;
+            badge.progress = Math.min(100, (badge.progress || 0) + increment);
+            updated++;
+          }
+        });
+      }
+
+      // Update streak
+      const streakEl = document.getElementById('streakCount');
+      streakEl.textContent = parseInt(streakEl.textContent) + 1;
+
+      // Update sessions
+      const sessionEl = document.getElementById('sessionCount');
+      sessionEl.textContent = parseInt(sessionEl.textContent) + 1;
+
+      // Add some XP
+      updateStats(50);
+
+      renderBadges();
+      showToast('Trening Simulert', `${updated} badges oppdatert!`);
+    }
+
+    function updateStats(xp) {
+      // Update total XP
+      const totalEl = document.getElementById('totalXP');
+      const current = parseInt(totalEl.textContent.replace(/,/g, ''));
+      totalEl.textContent = (current + xp).toLocaleString();
+
+      // Update current XP and bar
+      const currentXPEl = document.getElementById('currentXP');
+      const currentXP = parseInt(currentXPEl.textContent.replace(/,/g, '')) + xp;
+      const maxXP = 5000;
+
+      if (currentXP >= maxXP) {
+        currentXPEl.textContent = (currentXP - maxXP).toLocaleString();
+        // Level up notification
+        setTimeout(() => showToast('Level Up!', 'Du er nå Level 13!'), 500);
+      } else {
+        currentXPEl.textContent = currentXP.toLocaleString();
+      }
+
+      document.getElementById('xpFill').style.width = `${(currentXP % maxXP) / maxXP * 100}%`;
+
+      // Update badge count
+      let earnedCount = 0;
+      for (const badges of Object.values(BADGES)) {
+        earnedCount += badges.filter(b => b.earned).length;
+      }
+      document.getElementById('badgeCount').textContent = earnedCount;
+    }
+
+    function showToast(title, message) {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.innerHTML = `
+        <div class="toast-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#02060D" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="toast-content">
+          <div class="toast-title">${title}</div>
+          <div class="toast-message">${message}</div>
+        </div>
+      `;
+      container.appendChild(toast);
+
+      setTimeout(() => toast.remove(), 3000);
+    }
+
+    // ═══════════════════════════════════════════
+    // INITIALIZE
+    // ═══════════════════════════════════════════
+    document.addEventListener('DOMContentLoaded', () => {
+      renderBadges();
+
+      // Update total count
+      let total = 0;
+      for (const badges of Object.values(BADGES)) {
+        total += badges.length;
+      }
+      document.getElementById('countAll').textContent = total;
+    });
+
+    // Close modal on overlay click
+    document.getElementById('unlockModal').addEventListener('click', (e) => {
+      if (e.target.id === 'unlockModal') closeModal();
+    });
+
+    // Escape key closes modal
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+  </script>
+</body>
+</html>

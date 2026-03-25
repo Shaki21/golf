@@ -1,0 +1,228 @@
+{
+  "pageId": "player-plan-aarsplan",
+  "path": "/plan/aarsplan",
+  "component": "PlayerAnnualPlanOverview",
+  "analyzedAt": "2026-01-13T02:47:00Z",
+  "jtbdFramework": {
+    "1_pageIdentification": {
+      "name": "PlayerAnnualPlanOverview (Annual Training Plan)",
+      "role": "player",
+      "frequency": "monthly",
+      "context": "planning",
+      "clarityScore": 8
+    },
+    "2_primaryJTBD": {
+      "decision": "What is my training focus this period and am I on track?",
+      "isObviousIn5Seconds": true,
+      "clarity": 8,
+      "competingAttention": [
+        "Timeline visualization (4 periods)",
+        "Current period highlight",
+        "Period cards with focus areas",
+        "Export buttons (PDF/iCal)",
+        "Action buttons per period"
+      ],
+      "primaryCTA": {
+        "component": "Period expansion + focus area review",
+        "label": "Review current period plan",
+        "isProminent": true
+      }
+    },
+    "3_decisionVsInfoRatio": {
+      "decisionElements": {
+        "count": 7,
+        "items": [
+          "Expand/collapse period buttons (4)",
+          "Export PDF button",
+          "Export iCal button",
+          "Period timeline clicks",
+          "Focus area links (per period)"
+        ]
+      },
+      "informationElements": {
+        "count": 6,
+        "items": [
+          "Period timeline (visual)",
+          "Period status (active/upcoming/completed)",
+          "Focus areas list per period",
+          "Week ranges",
+          "Training volume indicators",
+          "Goal summaries"
+        ]
+      },
+      "ratio": 0.54,
+      "assessment": "GOOD - Balanced decision/information for long-term planning tool",
+      "dominantDecision": "Yes - Current period expansion is clear primary action"
+    },
+    "4_visualHierarchy": {
+      "eyeLandsOnFirst": "Timeline visualization with current period highlighted",
+      "isCorrectFirstFocus": true,
+      "heroElement": "PeriodTimeline component showing year at a glance",
+      "secondaryElements": [
+        "Period cards with expandable details",
+        "Export actions"
+      ],
+      "noiseElements": [],
+      "isFlatHierarchy": false,
+      "assessment": "EXCELLENT - Timeline-first design shows temporal context clearly"
+    },
+    "5_kpiQuality": {
+      "kpis": [
+        {
+          "metric": "Period status (active/upcoming/completed)",
+          "type": "leading",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "high",
+          "note": "Shows where player is in annual cycle"
+        },
+        {
+          "metric": "Focus areas per period (list)",
+          "type": "leading",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "high",
+          "note": "Specific training priorities for each period"
+        },
+        {
+          "metric": "Week ranges (e.g., Week 1-13)",
+          "type": "neutral",
+          "isActionable": false,
+          "hasContext": true,
+          "quality": "neutral",
+          "note": "Temporal context only"
+        },
+        {
+          "metric": "Training volume (hours/week)",
+          "type": "leading",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "high",
+          "note": "Specific commitment level per period"
+        }
+      ],
+      "leadingPercentage": 0.75,
+      "actionablePercentage": 0.75,
+      "assessment": "EXCELLENT - Strong actionable metrics for planning"
+    },
+    "6_languageAndMentalModel": {
+      "style": "mixed",
+      "actionVerbs": [
+        "Se detaljer",
+        "Eksporter",
+        "Last ned"
+      ],
+      "systemNouns": [
+        "Periode",
+        "Fokusområde",
+        "Uke",
+        "Treningsvolum"
+      ],
+      "coachActionPercentage": 0.5,
+      "assessment": "MODERATE - Mix of player and system language",
+      "phrasesToRewrite": [
+        "'Se detaljer' → 'View my plan' (player-centric)"
+      ]
+    },
+    "7_flowAndNavigationCost": {
+      "clicksFromDashboard": 2,
+      "navigationDepth": 2,
+      "clicksToViewPeriod": 1,
+      "clicksToExport": 1,
+      "clicksToSeeFocusAreas": 1,
+      "assessment": "EXCELLENT - Inline expansion, no navigation required",
+      "shouldBeInline": []
+    },
+    "8_stateCoverage": {
+      "hasEmptyState": true,
+      "hasLoadingState": true,
+      "hasErrorState": false,
+      "hasSuccessState": false,
+      "hasOverloadedState": false,
+      "hasAtRiskState": false,
+      "assessment": "GOOD - Has loading and empty state for new players",
+      "gaps": [
+        "No error handling visible for API failures",
+        "No success confirmation after export"
+      ]
+    },
+    "9_roleScalability": {
+      "hasRoleConditionals": false,
+      "beginnerFriendly": true,
+      "eliteFriendly": true,
+      "scalabilityIssues": [],
+      "recommendation": "Well-designed for all levels - visual timeline aids understanding"
+    },
+    "10_strategicVerdict": {
+      "diagnosis": "Solid annual planning tool with good temporal visualization",
+      "currentBehavior": "Timeline + expandable period cards with focus areas",
+      "desiredBehavior": "Timeline + expandable period cards with focus areas + progress tracking",
+      "topIssues": [
+        {
+          "rank": 1,
+          "issue": "No progress tracking within periods (are focus areas being worked on?)",
+          "severity": "medium",
+          "impact": "Player can't see if they're executing the plan"
+        },
+        {
+          "rank": 2,
+          "issue": "No error handling for API failures",
+          "severity": "medium",
+          "impact": "Silent failure if plan can't be loaded"
+        },
+        {
+          "rank": 3,
+          "issue": "Export functions may not be fully implemented (need to verify PDF/iCal generation)",
+          "severity": "low",
+          "impact": "Cannot share plan with coach/parent"
+        }
+      ],
+      "structuralFix": "Add progress indicators per focus area + add error handling + verify/complete export functionality"
+    },
+    "11_crossPageConsistency": {
+      "note": "Uses PageHeader + PageContainer pattern. Custom PeriodTimeline component (unique to annual planning). Integrates with usePlayerAnnualPlan hook."
+    }
+  },
+  "codeAnalysis": {
+    "componentCount": {
+      "interactive": 7,
+      "display": 8
+    },
+    "stateHandling": {
+      "loading": "loading state with 'Laster årsplan...' message",
+      "empty": "Empty state: 'Du har ingen årsplan ennå' with CTA to request one",
+      "error": "No visible error handling in code"
+    },
+    "dataSource": {
+      "isRealData": true,
+      "isMockData": false,
+      "note": "Uses usePlayerAnnualPlan hook for real API data"
+    },
+    "accessibility": {
+      "hasAriaLabels": false,
+      "semanticHTML": true,
+      "keyboardNav": "Good - uses button elements for expansion"
+    },
+    "responsiveDesign": {
+      "hasMobileLayout": true,
+      "breakpoints": ["Timeline collapses on mobile"],
+      "mobileFirst": true
+    },
+    "integrations": {
+      "hooks": [
+        "usePlayerAnnualPlan"
+      ],
+      "components": [
+        "PeriodTimeline",
+        "PeriodCard"
+      ],
+      "exports": [
+        "exportToPDF function",
+        "exportToICalendar function"
+      ]
+    }
+  },
+  "priorityScore": 75,
+  "implementationStatus": "implemented",
+  "overallAssessment": "GOOD - Solid annual planning visualization, needs progress tracking and error handling"
+}

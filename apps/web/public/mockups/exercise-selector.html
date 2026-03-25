@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Øvelsesvelger - TIER Golf</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Sans:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ak-ink: #02060D;
+            --ak-primary: #10456A;
+            --ak-primary-light: #2C5F7F;
+            --ak-snow: #EDF0F2;
+            --ak-surface: #EBE5DA;
+            --ak-gold: #C9A227;
+            --ak-white: #FFFFFF;
+            --gray-50: #F9FAFB;
+            --gray-100: #F2F4F7;
+            --gray-300: #D5D7DA;
+            --gray-500: #8E8E93;
+            --gray-600: #535862;
+            --ak-success: #4A7C59;
+            --ak-warning: #D4A84B;
+            --ak-error: #C45B4E;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--gray-50);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border: 1px solid var(--gray-100);
+        }
+
+        .header h1 {
+            color: var(--ak-primary);
+            margin-bottom: 16px;
+            font-size: 28px;
+            font-weight: 700;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .filters {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .filter-label {
+            font-size: 13px;
+            color: var(--gray-600);
+            font-weight: 500;
+        }
+
+        select, input {
+            padding: 10px 16px;
+            border: 2px solid var(--gray-300);
+            border-radius: 8px;
+            font-size: 14px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
+            color: var(--ak-ink);
+        }
+
+        select:hover, input:hover {
+            border-color: var(--ak-primary);
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: var(--ak-primary);
+            box-shadow: 0 0 0 3px rgba(16, 69, 106, 0.1);
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .exercise-grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .exercise-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border: 1px solid var(--gray-100);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .exercise-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-color: var(--ak-primary);
+        }
+
+        .exercise-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 16px;
+        }
+
+        .exercise-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--ak-ink);
+            margin-bottom: 4px;
+        }
+
+        .favorite-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            filter: grayscale(1);
+            opacity: 0.3;
+        }
+
+        .favorite-btn:hover {
+            transform: scale(1.2);
+            filter: grayscale(0);
+            opacity: 1;
+        }
+
+        .favorite-btn.active {
+            filter: grayscale(0);
+            opacity: 1;
+        }
+
+        .exercise-description {
+            color: var(--gray-600);
+            margin-bottom: 16px;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .tag {
+            background: rgba(74, 124, 89, 0.1);
+            color: var(--ak-success);
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .exercise-meta {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--gray-100);
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            color: var(--gray-600);
+        }
+
+        .difficulty {
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .difficulty.easy {
+            background: rgba(74, 124, 89, 0.1);
+            color: var(--ak-success);
+        }
+
+        .difficulty.medium {
+            background: rgba(212, 168, 75, 0.1);
+            color: var(--ak-warning);
+        }
+
+        .difficulty.hard {
+            background: rgba(196, 91, 78, 0.1);
+            color: var(--ak-error);
+        }
+
+        .exercise-details {
+            background: var(--gray-50);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+
+        .detail-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 4px;
+            color: var(--gray-600);
+        }
+
+        .detail-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .detail-row strong {
+            color: var(--ak-ink);
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-primary {
+            background: var(--ak-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--ak-primary-light);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--ak-primary);
+            border: 2px solid var(--ak-primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--ak-primary);
+            color: white;
+        }
+
+        .btn-success {
+            background: var(--ak-success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #3D6A4B;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 24px;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            border: 1px solid var(--gray-100);
+        }
+
+        .page-btn {
+            padding: 8px 16px;
+            border: 2px solid var(--gray-300);
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
+            color: var(--ak-ink);
+            font-size: 14px;
+        }
+
+        .page-btn:hover {
+            border-color: var(--ak-primary);
+            background: var(--gray-50);
+        }
+
+        .page-btn.active {
+            background: var(--ak-primary);
+            color: white;
+            border-color: var(--ak-primary);
+        }
+
+        .results-info {
+            text-align: center;
+            color: var(--gray-600);
+            margin-top: 16px;
+            font-size: 14px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .exercise-card {
+            animation: fadeIn 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header with Filters -->
+        <div class="header">
+            <h1>📚 Øvelsesbank</h1>
+            <div class="filters">
+                <div class="filter-group">
+                    <label class="filter-label">Kategori</label>
+                    <select id="category-filter">
+                        <option value="">Alle</option>
+                        <option value="D" selected>Kategori D</option>
+                        <option value="C">Kategori C</option>
+                        <option value="E">Kategori E</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">Periode</label>
+                    <select id="period-filter">
+                        <option value="">Alle</option>
+                        <option value="E">Evaluering (E)</option>
+                        <option value="G" selected>Grunnperiode (G)</option>
+                        <option value="S">Spesialisering (S)</option>
+                        <option value="T">Turnering (T)</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">Type</label>
+                    <select id="type-filter">
+                        <option value="">Alle</option>
+                        <option value="teknikk">Teknikk</option>
+                        <option value="fysisk">Fysisk</option>
+                        <option value="mental">Mental</option>
+                        <option value="spill">Spill</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">Søk</label>
+                    <input type="text" class="search-box" placeholder="🔍 Søk etter øvelse...">
+                </div>
+            </div>
+        </div>
+
+        <!-- Exercise Grid -->
+        <div class="exercise-grid">
+            <!-- Exercise Card 1 -->
+            <div class="exercise-card">
+                <div class="exercise-header">
+                    <div>
+                        <div class="exercise-title">🎯 Clock System Wedge Drill</div>
+                    </div>
+                    <button class="favorite-btn">⭐</button>
+                </div>
+
+                <div class="exercise-description">
+                    Bruk klokke-systemet for wedges: 7:30, 9:00, 10:30 posisjoner for konsistent avstandskontroll. Bygge repeterbart wedge-system med tre lengder per kølle.
+                </div>
+
+                <div class="tags">
+                    <span class="tag">wedge</span>
+                    <span class="tag">distance control</span>
+                    <span class="tag">system</span>
+                </div>
+
+                <div class="exercise-meta">
+                    <div class="meta-item">⏱️ 30 slag per posisjon</div>
+                    <div class="meta-item"><span class="difficulty medium">Medium</span></div>
+                    <div class="meta-item">📍 Range</div>
+                </div>
+
+                <div class="exercise-details">
+                    <div class="detail-row"><strong>📚 Learning Phase:</strong> L2, L3, L4</div>
+                    <div class="detail-row"><strong>🎯 Settings:</strong> S3, S4, S5</div>
+                    <div class="detail-row"><strong>💨 Club Speed:</strong> CS60-CS90</div>
+                    <div class="detail-row"><strong>✅ Utstyr:</strong> wedges, alignment sticks</div>
+                    <div class="detail-row"><strong>➕ Valgfritt:</strong> launch monitor</div>
+                </div>
+
+                <div class="actions">
+                    <button class="btn btn-secondary">📖 Les mer</button>
+                    <button class="btn btn-primary">➕ Legg til plan</button>
+                    <button class="btn btn-success">▶️ Start økt</button>
+                </div>
+            </div>
+
+            <!-- Exercise Card 2 -->
+            <div class="exercise-card">
+                <div class="exercise-header">
+                    <div>
+                        <div class="exercise-title">💪 Golf-Specific Foam Rolling</div>
+                    </div>
+                    <button class="favorite-btn active">⭐</button>
+                </div>
+
+                <div class="exercise-description">
+                    Foam rolling for golfere: thoracic spine, hips, lats, glutes. Mobilitet og recovery gjennom myofascial release.
+                </div>
+
+                <div class="tags">
+                    <span class="tag">recovery</span>
+                    <span class="tag">mobility</span>
+                    <span class="tag">foam rolling</span>
+                </div>
+
+                <div class="exercise-meta">
+                    <div class="meta-item">⏱️ 15 min</div>
+                    <div class="meta-item"><span class="difficulty easy">Lett</span></div>
+                    <div class="meta-item">📍 Gym</div>
+                </div>
+
+                <div class="exercise-details">
+                    <div class="detail-row"><strong>📚 Learning Phase:</strong> L2, L3, L4, L5</div>
+                    <div class="detail-row"><strong>🎯 Settings:</strong> S3-S8</div>
+                    <div class="detail-row"><strong>💨 Club Speed:</strong> CS60-CS100</div>
+                    <div class="detail-row"><strong>✅ Utstyr:</strong> foam roller</div>
+                </div>
+
+                <div class="actions">
+                    <button class="btn btn-secondary">📖 Les mer</button>
+                    <button class="btn btn-primary">➕ Legg til plan</button>
+                    <button class="btn btn-success">▶️ Start økt</button>
+                </div>
+            </div>
+
+            <!-- Exercise Card 3 -->
+            <div class="exercise-card">
+                <div class="exercise-header">
+                    <div>
+                        <div class="exercise-title">🏌️ Tournament Simulation Round</div>
+                    </div>
+                    <button class="favorite-btn">⭐</button>
+                </div>
+
+                <div class="exercise-description">
+                    Spill simulert turneringsrunde: full scoring, pre-shot routine, press-håndtering. Trene turnerings-situasjoner før konkurranse.
+                </div>
+
+                <div class="tags">
+                    <span class="tag">tournament</span>
+                    <span class="tag">simulation</span>
+                    <span class="tag">pressure</span>
+                </div>
+
+                <div class="exercise-meta">
+                    <div class="meta-item">⏱️ 18 hull</div>
+                    <div class="meta-item"><span class="difficulty hard">Vanskelig</span></div>
+                    <div class="meta-item">📍 Bane</div>
+                </div>
+
+                <div class="exercise-details">
+                    <div class="detail-row"><strong>📚 Learning Phase:</strong> L4, L5</div>
+                    <div class="detail-row"><strong>🎯 Settings:</strong> S7-S10</div>
+                    <div class="detail-row"><strong>💨 Club Speed:</strong> CS70-CS100</div>
+                    <div class="detail-row"><strong>✅ Utstyr:</strong> scorekort, turnerings-utstyr</div>
+                </div>
+
+                <div class="actions">
+                    <button class="btn btn-secondary">📖 Les mer</button>
+                    <button class="btn btn-primary">➕ Legg til plan</button>
+                    <button class="btn btn-success">▶️ Start økt</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+            <button class="page-btn">◀️ Forrige</button>
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <button class="page-btn">...</button>
+            <button class="page-btn">29</button>
+            <button class="page-btn">Neste ▶️</button>
+        </div>
+
+        <div class="results-info">
+            Viser 3 av 87 øvelser
+        </div>
+    </div>
+
+    <script>
+        // Toggle favorite
+        document.querySelectorAll('.favorite-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                btn.classList.toggle('active');
+            });
+        });
+
+        // Filter functionality
+        const filters = {
+            category: document.getElementById('category-filter'),
+            period: document.getElementById('period-filter'),
+            type: document.getElementById('type-filter')
+        };
+
+        Object.values(filters).forEach(filter => {
+            filter.addEventListener('change', () => {
+                console.log('Filters changed:', {
+                    category: filters.category.value,
+                    period: filters.period.value,
+                    type: filters.type.value
+                });
+                // In real app: fetch filtered exercises
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TIER Golf — Kategori Progressjon Plan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* AK Design Tokens - Blue Palette 01 */
+      --ak-ink: #02060D;
+      --ak-primary: #10456A;
+      --ak-primary-light: #2C5F7F;
+      --ak-snow: #EDF0F2;
+      --ak-surface: #EBE5DA;
+      --ak-gold: #C9A227;
+      --ak-success: #4A7C59;
+      --ak-warning: #D4A84B;
+      --ak-error: #C45B4E;
+      --ak-gray-100: #F2F4F7;
+      --ak-gray-300: #D5D7DA;
+      --ak-gray-500: #8E8E93;
+      --ak-gray-600: #535862;
+      --ak-white: #FFFFFF;
+
+      /* Tier Colors */
+      --tier-bronze: #B08D57;
+      --tier-silver: #8A9BA8;
+      --tier-gold: #C9A227;
+      --tier-platinum: #E5E4E2;
+
+      /* Category Colors */
+      --cat-elite: #C9A227;
+      --cat-elite-tint: rgba(201, 162, 39, 0.15);
+      --cat-high: #10456A;
+      --cat-high-tint: rgba(16, 69, 106, 0.15);
+      --cat-mid: #2C5F7F;
+      --cat-mid-tint: rgba(44, 95, 127, 0.15);
+      --cat-dev: #4A7C59;
+      --cat-dev-tint: rgba(74, 124, 89, 0.15);
+      --cat-beginner: #8A9BA8;
+      --cat-beginner-tint: rgba(138, 155, 168, 0.15);
+
+      /* Spacing */
+      --spacing-1: 4px;
+      --spacing-2: 8px;
+      --spacing-3: 12px;
+      --spacing-4: 16px;
+      --spacing-5: 20px;
+      --spacing-6: 24px;
+      --spacing-8: 32px;
+
+      /* Border Radius */
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-full: 999px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, system-ui, sans-serif;
+      background: var(--ak-ink);
+      color: var(--ak-snow);
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 40px 24px;
+    }
+
+    header {
+      margin-bottom: 32px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--ak-white);
+    }
+
+    .subtitle {
+      font-size: 15px;
+      color: var(--ak-gray-500);
+    }
+
+    h2 {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--ak-white);
+      margin: 32px 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    h2 svg {
+      width: 20px;
+      height: 20px;
+      color: var(--ak-primary-light);
+    }
+
+    h3 {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--ak-snow);
+      margin-bottom: 12px;
+    }
+
+    /* Category Selector */
+    .category-selector {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+
+    .cat-btn {
+      padding: 10px 20px;
+      border: 2px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.03);
+      color: var(--ak-snow);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .cat-btn:hover {
+      background: rgba(255,255,255,0.08);
+    }
+
+    .cat-btn.active {
+      color: var(--ak-ink);
+    }
+
+    .cat-btn.elite { border-color: var(--cat-elite); }
+    .cat-btn.elite.active { background: var(--cat-elite); }
+    .cat-btn.high { border-color: var(--ak-primary-light); }
+    .cat-btn.high.active { background: var(--ak-primary-light); }
+    .cat-btn.mid { border-color: var(--cat-mid); }
+    .cat-btn.mid.active { background: var(--cat-mid); }
+    .cat-btn.dev { border-color: var(--cat-dev); }
+    .cat-btn.dev.active { background: var(--cat-dev); }
+    .cat-btn.beginner { border-color: var(--cat-beginner); }
+    .cat-btn.beginner.active { background: var(--cat-beginner); }
+
+    /* Info Box / Card */
+    .info-box {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .info-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .cat-badge {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 700;
+      border: 2px solid currentColor;
+    }
+
+    .cat-badge.elite { color: var(--cat-elite); background: var(--cat-elite-tint); }
+    .cat-badge.high { color: var(--ak-primary-light); background: var(--cat-high-tint); }
+    .cat-badge.mid { color: var(--cat-mid); background: var(--cat-mid-tint); }
+    .cat-badge.dev { color: var(--cat-dev); background: var(--cat-dev-tint); }
+    .cat-badge.beginner { color: var(--cat-beginner); background: var(--cat-beginner-tint); }
+
+    .cat-info h3 { margin: 0; font-size: 20px; }
+    .cat-info p { color: var(--ak-gray-500); margin-top: 4px; font-size: 14px; }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .stat-item {
+      background: rgba(0,0,0,0.2);
+      padding: 16px;
+      border-radius: var(--radius-sm);
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--ak-primary-light);
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--ak-gray-500);
+      margin-top: 4px;
+    }
+
+    /* Test Requirements Table */
+    .test-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255,255,255,0.03);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+
+    .test-table th {
+      background: rgba(16, 69, 106, 0.3);
+      padding: 14px 16px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--ak-snow);
+    }
+
+    .test-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 14px;
+    }
+
+    .test-table tr:last-child td { border-bottom: none; }
+
+    .current-value { color: var(--ak-primary-light); font-weight: 600; }
+    .target-value { color: var(--ak-success); font-weight: 600; }
+    .gap { color: var(--ak-warning); font-size: 13px; }
+
+    /* Progression Card */
+    .progression-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin-bottom: 24px;
+      border-left: 4px solid var(--ak-success);
+    }
+
+    .progression-card h3 {
+      color: var(--ak-success);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .progression-card h3 svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .requirement-list {
+      list-style: none;
+    }
+
+    .requirement-list li {
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .requirement-list li:last-child { border-bottom: none; }
+
+    .req-icon {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(16, 69, 106, 0.2);
+      border-radius: var(--radius-sm);
+      flex-shrink: 0;
+    }
+
+    .req-icon svg {
+      width: 18px;
+      height: 18px;
+      color: var(--ak-primary-light);
+    }
+
+    .req-text { flex: 1; font-size: 14px; }
+    .req-value { font-weight: 600; color: var(--ak-primary-light); }
+
+    /* Training Distribution */
+    .training-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .training-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      text-align: center;
+    }
+
+    .training-card h4 {
+      color: var(--ak-gray-500);
+      margin-bottom: 8px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .training-hours {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--ak-primary-light);
+    }
+
+    .training-hours span {
+      font-size: 14px;
+      color: var(--ak-gray-500);
+      font-weight: 400;
+    }
+
+    /* Comparison View */
+    .comparison {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 24px;
+      align-items: start;
+      margin-bottom: 24px;
+    }
+
+    .arrow-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 0;
+    }
+
+    .arrow {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ak-success);
+    }
+
+    .arrow svg {
+      width: 32px;
+      height: 32px;
+    }
+
+    .arrow-label {
+      color: var(--ak-gray-500);
+      font-size: 13px;
+      margin-top: 8px;
+    }
+
+    /* Gap Analysis */
+    .gap-analysis {
+      background: rgba(212, 168, 75, 0.08);
+      border: 1px solid rgba(212, 168, 75, 0.2);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .gap-analysis h3 {
+      color: var(--ak-warning);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .gap-analysis h3 svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .gap-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .gap-item:last-child { border-bottom: none; }
+
+    .gap-number {
+      width: 24px;
+      height: 24px;
+      background: rgba(212, 168, 75, 0.2);
+      color: var(--ak-warning);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .gap-test { flex: 1; font-size: 14px; }
+    .gap-test strong { color: var(--ak-white); }
+
+    .gap-diff {
+      background: rgba(196, 91, 78, 0.2);
+      color: var(--ak-error);
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    /* Footer */
+    .footer-note {
+      text-align: center;
+      color: var(--ak-gray-600);
+      font-size: 13px;
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .footer-note p { margin-bottom: 4px; }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .training-grid { grid-template-columns: 1fr; }
+      .comparison { grid-template-columns: 1fr; }
+      .arrow-section { padding: 16px 0; }
+      .arrow svg { transform: rotate(90deg); }
+    }
+
+    @media (max-width: 640px) {
+      .container { padding: 24px 16px; }
+      h1 { font-size: 24px; }
+      .training-grid[style*="repeat(6"] { grid-template-columns: repeat(2, 1fr) !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Kategori Progressjon Plan</h1>
+      <p class="subtitle">TIER Golf — Krav for å nå neste nivå</p>
+    </header>
+
+    <!-- Category Selector -->
+    <div class="category-selector">
+      <button class="cat-btn elite" onclick="showCategory('A')">A</button>
+      <button class="cat-btn elite" onclick="showCategory('B')">B</button>
+      <button class="cat-btn high" onclick="showCategory('C')">C</button>
+      <button class="cat-btn high active" onclick="showCategory('D')">D</button>
+      <button class="cat-btn mid" onclick="showCategory('E')">E</button>
+      <button class="cat-btn mid" onclick="showCategory('F')">F</button>
+      <button class="cat-btn dev" onclick="showCategory('G')">G</button>
+      <button class="cat-btn dev" onclick="showCategory('H')">H</button>
+      <button class="cat-btn beginner" onclick="showCategory('I')">I</button>
+      <button class="cat-btn beginner" onclick="showCategory('J')">J</button>
+      <button class="cat-btn beginner" onclick="showCategory('K')">K</button>
+    </div>
+
+    <!-- Current Category Info -->
+    <div class="info-box" id="categoryInfo">
+      <div class="info-header">
+        <div class="cat-badge high">D</div>
+        <div class="cat-info">
+          <h3>Kategori D — Regional Spiller</h3>
+          <p>Klubbnivå+ | HCP 4-8 | Regionalt konkurransenivå</p>
+        </div>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-value">12-15</div>
+          <div class="stat-label">Timer/uke anbefalt</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">4-8</div>
+          <div class="stat-label">Handicap-range</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">10-15</div>
+          <div class="stat-label">Turneringer/år</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">4/7</div>
+          <div class="stat-label">Benchmark-krav</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Progression Target -->
+    <h2>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 8L22 12L18 16"/>
+        <path d="M2 12H22"/>
+      </svg>
+      Fra D til C: Hva må til?
+    </h2>
+
+    <div class="comparison">
+      <!-- Current (D) -->
+      <div class="info-box">
+        <h3 style="color: var(--ak-primary-light);">Kategori D (Nåværende)</h3>
+        <table class="test-table">
+          <tr><td>Driver Carry</td><td class="current-value">240m</td></tr>
+          <tr><td>3-tre Carry</td><td class="current-value">220m</td></tr>
+          <tr><td>5-jern Carry</td><td class="current-value">175m</td></tr>
+          <tr><td>PW Carry</td><td class="current-value">115m</td></tr>
+          <tr><td>Klubbhastighet</td><td class="current-value">169 km/t</td></tr>
+          <tr><td>Ballhastighet</td><td class="current-value">240 km/t</td></tr>
+          <tr><td>Smash Factor</td><td class="current-value">1.42</td></tr>
+          <tr><td>Approach PEI</td><td class="current-value">≤1.6</td></tr>
+          <tr><td>Benkpress</td><td class="current-value">110 kg</td></tr>
+          <tr><td>Markløft Trapbar</td><td class="current-value">155 kg</td></tr>
+          <tr><td>3000m Løping</td><td class="current-value">12:30</td></tr>
+          <tr><td>Putting 3m</td><td class="current-value">60%</td></tr>
+          <tr><td>Putting 6m</td><td class="current-value">25%</td></tr>
+        </table>
+      </div>
+
+      <div class="arrow-section">
+        <div class="arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14"/>
+            <path d="M12 5l7 7-7 7"/>
+          </svg>
+        </div>
+        <div class="arrow-label">Progresjon</div>
+      </div>
+
+      <!-- Target (C) -->
+      <div class="info-box">
+        <h3 style="color: var(--ak-success);">Kategori C (Mål)</h3>
+        <table class="test-table">
+          <tr><td>Driver Carry</td><td class="target-value">250m</td><td class="gap">+10m</td></tr>
+          <tr><td>3-tre Carry</td><td class="target-value">230m</td><td class="gap">+10m</td></tr>
+          <tr><td>5-jern Carry</td><td class="target-value">180m</td><td class="gap">+5m</td></tr>
+          <tr><td>PW Carry</td><td class="target-value">120m</td><td class="gap">+5m</td></tr>
+          <tr><td>Klubbhastighet</td><td class="target-value">177 km/t</td><td class="gap">+8 km/t</td></tr>
+          <tr><td>Ballhastighet</td><td class="target-value">255 km/t</td><td class="gap">+15 km/t</td></tr>
+          <tr><td>Smash Factor</td><td class="target-value">1.44</td><td class="gap">+0.02</td></tr>
+          <tr><td>Approach PEI</td><td class="target-value">≤1.4</td><td class="gap">-0.2</td></tr>
+          <tr><td>Benkpress</td><td class="target-value">120 kg</td><td class="gap">+10 kg</td></tr>
+          <tr><td>Markløft Trapbar</td><td class="target-value">170 kg</td><td class="gap">+15 kg</td></tr>
+          <tr><td>3000m Løping</td><td class="target-value">12:00</td><td class="gap">-30s</td></tr>
+          <tr><td>Putting 3m</td><td class="target-value">70%</td><td class="gap">+10%</td></tr>
+          <tr><td>Putting 6m</td><td class="target-value">30%</td><td class="gap">+5%</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Progression Requirements -->
+    <div class="progression-card">
+      <h3>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 11l3 3L22 4"/>
+          <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+        </svg>
+        Krav for Kategori-oppgradering (D → C)
+      </h3>
+      <ul class="requirement-list">
+        <li>
+          <span class="req-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 3v18h18"/>
+              <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/>
+            </svg>
+          </span>
+          <span class="req-text">Score-konsistens: Gjennomsnitt under <span class="req-value">76</span> over 10+ runder (3 mnd)</span>
+        </li>
+        <li>
+          <span class="req-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6.5 6.5l11 11"/>
+              <path d="M21 6.5l-3.5-3.5-11 11 3.5 3.5 11-11z"/>
+              <path d="M14.5 13.5L8 20l-5-1 1-5 6.5-6.5"/>
+              <path d="M14 4l6 6"/>
+            </svg>
+          </span>
+          <span class="req-text">Fysisk: Bestå <span class="req-value">2 av 3</span> fysiske tester på C-nivå</span>
+        </li>
+        <li>
+          <span class="req-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <circle cx="12" cy="12" r="6"/>
+              <circle cx="12" cy="12" r="2"/>
+            </svg>
+          </span>
+          <span class="req-text">Benchmark: Bestå <span class="req-value">4 av 7</span> golftester på C-nivå</span>
+        </li>
+        <li>
+          <span class="req-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2a3 3 0 0 0-3 3v4a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+              <line x1="12" x2="12" y1="19" y2="22"/>
+            </svg>
+          </span>
+          <span class="req-text">Mental: Pre-shot rutine konsistens ≥ <span class="req-value">70%</span></span>
+        </li>
+        <li>
+          <span class="req-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 6L9 17l-5-5"/>
+            </svg>
+          </span>
+          <span class="req-text">Trener-godkjenning: Bekreftelse fra hovedtrener</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Estimated Training -->
+    <h2>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <polyline points="12 6 12 12 16 14"/>
+      </svg>
+      Estimert Treningsbehov for Progresjon
+    </h2>
+    <div class="training-grid">
+      <div class="training-card">
+        <h4>Ukentlige Timer (Anbefalt)</h4>
+        <div class="training-hours">15-18 <span>t/uke</span></div>
+      </div>
+      <div class="training-card">
+        <h4>Estimert Tid til Progresjon</h4>
+        <div class="training-hours">6-12 <span>mnd</span></div>
+      </div>
+      <div class="training-card">
+        <h4>Benchmark-tester per År</h4>
+        <div class="training-hours">14 <span>uker</span></div>
+      </div>
+    </div>
+
+    <!-- Training Distribution -->
+    <h3>Anbefalt Treningsfordeling for D-spiller</h3>
+    <div class="training-grid" style="grid-template-columns: repeat(6, 1fr);">
+      <div class="training-card">
+        <h4>Teknikk</h4>
+        <div class="training-hours" style="font-size: 20px;">25%</div>
+        <div style="color: var(--ak-gray-500); font-size: 12px;">~4 timer</div>
+      </div>
+      <div class="training-card">
+        <h4>Golfslag</h4>
+        <div class="training-hours" style="font-size: 20px;">30%</div>
+        <div style="color: var(--ak-gray-500); font-size: 12px;">~5 timer</div>
+      </div>
+      <div class="training-card">
+        <h4>Spill</h4>
+        <div class="training-hours" style="font-size: 20px;">20%</div>
+        <div style="color: var(--ak-gray-500); font-size: 12px;">~3 timer</div>
+      </div>
+      <div class="training-card">
+        <h4>Kortspill</h4>
+        <div class="training-hours" style="font-size: 20px;">10%</div>
+        <div style="color: var(--ak-gray-500); font-size: 12px;">~1.5 timer</div>
+      </div>
+      <div class="training-card">
+        <h4>Fysisk</h4>
+        <div class="training-hours" style="font-size: 20px;">10%</div>
+        <div style="color: var(--ak-gray-500); font-size: 12px;">~1.5 timer</div>
+      </div>
+      <div class="training-card">
+        <h4>Mental</h4>
+        <div class="training-hours" style="font-size: 20px;">5%</div>
+        <div style="color: var(--ak-gray-500); font-size: 12px;">~45 min</div>
+      </div>
+    </div>
+
+    <!-- All Categories Overview -->
+    <h2>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+        <line x1="3" x2="21" y1="9" y2="9"/>
+        <line x1="9" x2="9" y1="21" y2="9"/>
+      </svg>
+      Komplett Kategorioversikt
+    </h2>
+    <table class="test-table">
+      <thead>
+        <tr>
+          <th>Kategori</th>
+          <th>Beskrivelse</th>
+          <th>HCP Range</th>
+          <th>Timer/Uke</th>
+          <th>Driver (m)</th>
+          <th>Klubb km/t</th>
+          <th>Benkpress (kg)</th>
+          <th>3000m (min)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background: var(--cat-elite-tint);">
+          <td><strong style="color: var(--cat-elite);">A</strong></td>
+          <td>Tour/Elite</td>
+          <td>+3 til +1</td>
+          <td>25-30</td>
+          <td>270</td>
+          <td>193</td>
+          <td>140</td>
+          <td>11:00</td>
+        </tr>
+        <tr style="background: rgba(201, 162, 39, 0.05);">
+          <td><strong style="color: var(--cat-elite);">B</strong></td>
+          <td>Elite Amateur</td>
+          <td>0-3</td>
+          <td>20-25</td>
+          <td>260</td>
+          <td>185</td>
+          <td>130</td>
+          <td>11:30</td>
+        </tr>
+        <tr style="background: var(--cat-high-tint);">
+          <td><strong style="color: var(--ak-primary-light);">C</strong></td>
+          <td>Høyt Nivå</td>
+          <td>1-4</td>
+          <td>18-22</td>
+          <td>250</td>
+          <td>177</td>
+          <td>120</td>
+          <td>12:00</td>
+        </tr>
+        <tr style="background: rgba(16, 69, 106, 0.08);">
+          <td><strong style="color: var(--ak-primary-light);">D</strong></td>
+          <td>Regional</td>
+          <td>4-8</td>
+          <td>15-18</td>
+          <td>240</td>
+          <td>169</td>
+          <td>110</td>
+          <td>12:30</td>
+        </tr>
+        <tr style="background: var(--cat-mid-tint);">
+          <td><strong style="color: var(--cat-mid);">E</strong></td>
+          <td>Klubb+</td>
+          <td>8-12</td>
+          <td>12-15</td>
+          <td>230</td>
+          <td>161</td>
+          <td>100</td>
+          <td>13:00</td>
+        </tr>
+        <tr style="background: rgba(44, 95, 127, 0.08);">
+          <td><strong style="color: var(--cat-mid);">F</strong></td>
+          <td>Klubbnivå</td>
+          <td>12-18</td>
+          <td>10-12</td>
+          <td>220</td>
+          <td>153</td>
+          <td>90</td>
+          <td>13:30</td>
+        </tr>
+        <tr style="background: var(--cat-dev-tint);">
+          <td><strong style="color: var(--cat-dev);">G</strong></td>
+          <td>Utvikling</td>
+          <td>18-24</td>
+          <td>8-10</td>
+          <td>210</td>
+          <td>145</td>
+          <td>80</td>
+          <td>14:00</td>
+        </tr>
+        <tr style="background: rgba(74, 124, 89, 0.08);">
+          <td><strong style="color: var(--cat-dev);">H</strong></td>
+          <td>Aktiv</td>
+          <td>24-30</td>
+          <td>6-8</td>
+          <td>200</td>
+          <td>137</td>
+          <td>70</td>
+          <td>15:00</td>
+        </tr>
+        <tr style="background: var(--cat-beginner-tint);">
+          <td><strong style="color: var(--cat-beginner);">I</strong></td>
+          <td>Junior+</td>
+          <td>30-36</td>
+          <td>5-7</td>
+          <td>190</td>
+          <td>129</td>
+          <td>60</td>
+          <td>16:00</td>
+        </tr>
+        <tr style="background: rgba(138, 155, 168, 0.08);">
+          <td><strong style="color: var(--cat-beginner);">J</strong></td>
+          <td>Nybegynner+</td>
+          <td>36-45</td>
+          <td>4-6</td>
+          <td>180</td>
+          <td>121</td>
+          <td>50</td>
+          <td>17:00</td>
+        </tr>
+        <tr style="background: rgba(138, 155, 168, 0.04);">
+          <td><strong style="color: var(--cat-beginner);">K</strong></td>
+          <td>Nybegynner</td>
+          <td>45+</td>
+          <td>3-5</td>
+          <td>170</td>
+          <td>113</td>
+          <td>40</td>
+          <td>18:00</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Gap Analysis -->
+    <div class="gap-analysis">
+      <h3>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+          <line x1="12" x2="12" y1="9" y2="13"/>
+          <line x1="12" x2="12.01" y1="17" y2="17"/>
+        </svg>
+        Vanlige Bruddpunkter D → C
+      </h3>
+      <p style="color: var(--ak-gray-500); margin-bottom: 16px; font-size: 14px;">
+        Basert på data fra spillere som har prøvd å gå fra D til C, er dette de vanligste områdene som holder dem tilbake:
+      </p>
+      <div class="gap-item">
+        <span class="gap-number">1</span>
+        <span class="gap-test"><strong>Klubbhastighet</strong> — Krever fysisk styrke og teknikk</span>
+        <span class="gap-diff">65% feiler her</span>
+      </div>
+      <div class="gap-item">
+        <span class="gap-number">2</span>
+        <span class="gap-test"><strong>Approach PEI</strong> — Wedge-presisjon under press</span>
+        <span class="gap-diff">55% feiler her</span>
+      </div>
+      <div class="gap-item">
+        <span class="gap-number">3</span>
+        <span class="gap-test"><strong>Score-konsistens</strong> — For mange dårlige runder</span>
+        <span class="gap-diff">50% feiler her</span>
+      </div>
+      <div class="gap-item">
+        <span class="gap-number">4</span>
+        <span class="gap-test"><strong>Fysiske tester</strong> — Spesielt benkpress og 3000m løping</span>
+        <span class="gap-diff">40% feiler her</span>
+      </div>
+    </div>
+
+    <div class="footer-note">
+      <p>Data basert på DATABASE_FORMLER_KOMPLETT.md og category-requirements.ts</p>
+      <p>Alle krav er for menn — kvinner har justerte krav (se dokumentasjon)</p>
+    </div>
+  </div>
+
+  <script>
+    const categoryData = {
+      A: { name: 'Tour/Elite', desc: 'OWGR Top 500 | HCP +3 til +1', badge: 'elite', hours: '25-30', hcp: '+3 til +1', tournaments: '20+' },
+      B: { name: 'Elite Amateur', desc: 'Landslagsnivå | HCP 0-3', badge: 'elite', hours: '20-25', hcp: '0-3', tournaments: '15-20' },
+      C: { name: 'Høyt Nivå', desc: 'Regionalt toppnivå | HCP 1-4', badge: 'high', hours: '18-22', hcp: '1-4', tournaments: '12-18' },
+      D: { name: 'Regional', desc: 'Klubbnivå+ | HCP 4-8', badge: 'high', hours: '15-18', hcp: '4-8', tournaments: '10-15' },
+      E: { name: 'Klubb+', desc: 'Aktiv klubbspiller | HCP 8-12', badge: 'mid', hours: '12-15', hcp: '8-12', tournaments: '8-12' },
+      F: { name: 'Klubbnivå', desc: 'Vanlig klubbspiller | HCP 12-18', badge: 'mid', hours: '10-12', hcp: '12-18', tournaments: '5-10' },
+      G: { name: 'Utvikling', desc: 'Under utvikling | HCP 18-24', badge: 'dev', hours: '8-10', hcp: '18-24', tournaments: '3-6' },
+      H: { name: 'Aktiv', desc: 'Aktiv hobbyspiller | HCP 24-30', badge: 'dev', hours: '6-8', hcp: '24-30', tournaments: '2-4' },
+      I: { name: 'Junior+', desc: 'Avansert nybegynner | HCP 30-36', badge: 'beginner', hours: '5-7', hcp: '30-36', tournaments: '1-3' },
+      J: { name: 'Nybegynner+', desc: 'Nybegynner med erfaring | HCP 36-45', badge: 'beginner', hours: '4-6', hcp: '36-45', tournaments: '0-2' },
+      K: { name: 'Nybegynner', desc: 'Helt ny til golf | HCP 45+', badge: 'beginner', hours: '3-5', hcp: '45+', tournaments: '0-1' }
+    };
+
+    function showCategory(cat) {
+      // Update active button
+      document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+
+      // Update info
+      const data = categoryData[cat];
+      const infoBox = document.getElementById('categoryInfo');
+      infoBox.innerHTML = `
+        <div class="info-header">
+          <div class="cat-badge ${data.badge}">${cat}</div>
+          <div class="cat-info">
+            <h3>Kategori ${cat} — ${data.name}</h3>
+            <p>${data.desc}</p>
+          </div>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-value">${data.hours}</div>
+            <div class="stat-label">Timer/uke anbefalt</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">${data.hcp}</div>
+            <div class="stat-label">Handicap-range</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">${data.tournaments}</div>
+            <div class="stat-label">Turneringer/år</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">4/7</div>
+            <div class="stat-label">Benchmark-krav</div>
+          </div>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<h1>Subscription Canceled</h1>
+
+<p>Hi {{userName}},</p>
+
+<p>We're sorry to see you go. Your subscription to the <strong>{{planType}}</strong> plan has been canceled as requested.</p>
+
+<div class="card">
+  <p style="margin: 0;"><strong>Cancellation Details:</strong></p>
+  <p style="margin: 8px 0 0 0;">
+    Plan: <strong>{{planType}}</strong><br>
+    Access Until: <strong>{{formattedEndDate}}</strong><br>
+    Status: <strong>Canceled</strong>
+  </p>
+</div>
+
+<h2>What This Means</h2>
+
+<ul>
+  <li><strong>Access Continues:</strong> You'll have full access to IUP Golf Academy until {{formattedEndDate}}</li>
+  <li><strong>No Future Charges:</strong> You won't be charged again</li>
+  <li><strong>Data Preserved:</strong> Your training data will be saved for 30 days after your access ends</li>
+</ul>
+
+<h2>Change Your Mind?</h2>
+
+<p>You can reactivate your subscription anytime before {{formattedEndDate}} to continue without interruption.</p>
+
+<center style="margin: 32px 0;">
+  <a href="{{reactivateUrl}}" class="button">Reactivate Subscription</a>
+</center>
+
+<hr class="divider">
+
+<h2>We'd Love Your Feedback</h2>
+
+<p>Would you mind sharing why you decided to cancel? Your feedback helps us improve IUP Golf Academy for everyone.</p>
+
+<center style="margin: 24px 0;">
+  <a href="{{feedbackUrl}}" class="button button-secondary">Share Feedback</a>
+</center>
+
+<p>If you had any issues or questions, please reach out to our support team. We're always here to help.</p>
+
+<p style="margin-top: 32px;">Thank you for being part of IUP Golf Academy!<br>
+<strong>The IUP Golf Academy Team</strong></p>

@@ -1,0 +1,228 @@
+{
+  "pageId": "coach-groups",
+  "path": "/coach/groups",
+  "component": "CoachGroupList",
+  "analyzedAt": "2026-01-13T02:55:00Z",
+  "jtbdFramework": {
+    "1_pageIdentification": {
+      "name": "CoachGroupList (Group Management)",
+      "role": "coach",
+      "frequency": "weekly",
+      "context": "organization",
+      "clarityScore": 9
+    },
+    "2_primaryJTBD": {
+      "decision": "Which group needs my attention for planning or member management?",
+      "isObviousIn5Seconds": true,
+      "clarity": 9,
+      "competingAttention": [
+        "Quick stats (3 cards)",
+        "Search and filter controls",
+        "Group cards list",
+        "Member preview avatars",
+        "Action menus per group"
+      ],
+      "primaryCTA": {
+        "component": "Group card click or Ny gruppe button",
+        "label": "View group details or create new group",
+        "isProminent": true
+      }
+    },
+    "3_decisionVsInfoRatio": {
+      "decisionElements": {
+        "count": 10,
+        "items": [
+          "Search input",
+          "4 filter buttons (All/WANG/Team Norway/Custom)",
+          "Ny gruppe button",
+          "Group card clicks (per group)",
+          "Dropdown menu (4 actions per group)",
+          "Delete confirmation modal"
+        ]
+      },
+      "informationElements": {
+        "count": 8,
+        "items": [
+          "Quick stats (total groups, players, with plans)",
+          "Group cards (name, type, description)",
+          "Member count",
+          "Next session indicator",
+          "Training plan badge",
+          "Member avatar previews",
+          "Group type badges"
+        ]
+      },
+      "ratio": 0.56,
+      "assessment": "GOOD - Strong decision focus for management tool",
+      "dominantDecision": "Yes - Group selection and creation are clear primary actions"
+    },
+    "4_visualHierarchy": {
+      "eyeLandsOnFirst": "Quick stats cards",
+      "isCorrectFirstFocus": true,
+      "heroElement": "Stats cards + filterable group list",
+      "secondaryElements": [
+        "Search and filter controls",
+        "Group action menus"
+      ],
+      "noiseElements": [],
+      "isFlatHierarchy": false,
+      "assessment": "EXCELLENT - Stats-first design shows overview, then enables action"
+    },
+    "5_kpiQuality": {
+      "kpis": [
+        {
+          "metric": "Total grupper (count)",
+          "type": "lagging",
+          "isActionable": false,
+          "hasContext": false,
+          "quality": "vanity",
+          "note": "Count without context"
+        },
+        {
+          "metric": "Spillere (unique count across groups)",
+          "type": "neutral",
+          "isActionable": false,
+          "hasContext": true,
+          "quality": "neutral",
+          "note": "Useful context but not directly actionable"
+        },
+        {
+          "metric": "Med treningsplan (count and implicit ratio)",
+          "type": "leading",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "high",
+          "note": "Shows how many groups still need plans"
+        },
+        {
+          "metric": "Next session (per group)",
+          "type": "leading",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "high",
+          "note": "Shows upcoming commitments per group"
+        }
+      ],
+      "leadingPercentage": 0.5,
+      "actionablePercentage": 0.5,
+      "assessment": "MODERATE - Mix of actionable and vanity metrics"
+    },
+    "6_languageAndMentalModel": {
+      "style": "action_oriented",
+      "actionVerbs": [
+        "Opprett",
+        "Rediger",
+        "Administrer",
+        "Slett"
+      ],
+      "systemNouns": [
+        "Gruppe",
+        "Medlemmer",
+        "Treningsplan",
+        "Spillere"
+      ],
+      "coachActionPercentage": 0.75,
+      "assessment": "EXCELLENT - Strong coach action language",
+      "phrasesToRewrite": []
+    },
+    "7_flowAndNavigationCost": {
+      "clicksFromDashboard": 1,
+      "navigationDepth": 1,
+      "clicksToViewGroup": 1,
+      "clicksToCreateGroup": 1,
+      "clicksToEditGroup": 2,
+      "clicksToManageMembers": 2,
+      "clicksToDeleteGroup": 3,
+      "assessment": "EXCELLENT - Inline actions via dropdown menu, minimal navigation",
+      "shouldBeInline": []
+    },
+    "8_stateCoverage": {
+      "hasEmptyState": true,
+      "hasLoadingState": true,
+      "hasErrorState": false,
+      "hasSuccessState": false,
+      "hasOverloadedState": false,
+      "hasAtRiskState": false,
+      "assessment": "GOOD - Has loading and empty states with create CTA",
+      "gaps": [
+        "No error handling visible (falls back to mock data on API failure)",
+        "No success confirmation after group deletion",
+        "No 'at risk' indicator for groups without training plans or upcoming sessions"
+      ]
+    },
+    "9_roleScalability": {
+      "hasRoleConditionals": false,
+      "beginnerFriendly": true,
+      "eliteFriendly": true,
+      "scalabilityIssues": [],
+      "recommendation": "Well-designed for all coach levels - clear group organization"
+    },
+    "10_strategicVerdict": {
+      "diagnosis": "Professional group management with good filtering and inline actions",
+      "currentBehavior": "Filterable group list with stats overview and dropdown menus for actions",
+      "desiredBehavior": "Filterable group list with stats overview and inline actions",
+      "topIssues": [
+        {
+          "rank": 1,
+          "issue": "Falls back to mock data on API failure (same pattern as CoachStatsOverview)",
+          "severity": "high",
+          "impact": "Coach sees fake groups instead of real data"
+        },
+        {
+          "rank": 2,
+          "issue": "No success feedback after deletion or other actions",
+          "severity": "medium",
+          "impact": "Coach uncertain if action completed"
+        },
+        {
+          "rank": 3,
+          "issue": "Stats don't show trends (are groups growing? Plans improving?)",
+          "severity": "low",
+          "impact": "Missing progress/momentum feedback"
+        }
+      ],
+      "structuralFix": "Remove mock data fallback + add success toasts for all actions + add trend indicators to stats"
+    },
+    "11_crossPageConsistency": {
+      "note": "Uses PageHeader pattern (consistent). Similar card-list layout to other coach pages. Dropdown menu pattern reused. Member avatar stacking is nice visual pattern. Modal for destructive actions (good practice)."
+    }
+  },
+  "codeAnalysis": {
+    "componentCount": {
+      "interactive": 10,
+      "display": 12
+    },
+    "stateHandling": {
+      "loading": "Full-screen spinner during initial load",
+      "empty": "Empty state with icon, message, and CTA (Opprett gruppe)",
+      "error": "Falls back to mock data (anti-pattern)"
+    },
+    "dataSource": {
+      "isRealData": true,
+      "isMockData": true,
+      "hasMixedSources": true,
+      "note": "Attempts API fetch, falls back to hardcoded mock data on error"
+    },
+    "accessibility": {
+      "hasAriaLabels": false,
+      "semanticHTML": true,
+      "keyboardNav": "Good - uses button elements"
+    },
+    "responsiveDesign": {
+      "hasMobileLayout": true,
+      "breakpoints": ["grid-cols-3 for stats"],
+      "mobileFirst": true
+    },
+    "advancedFeatures": {
+      "groupTypes": "Supports WANG, Team Norway, Custom groups with different badges",
+      "memberPreview": "Stacked avatar preview showing first 4 members",
+      "dropdownMenu": "Inline action menu per group (edit, manage members, training plan, delete)",
+      "deleteConfirmation": "Modal component for destructive action",
+      "uniquePlayerCount": "Calculates unique players across all groups",
+      "relativeTime": "Smart next session formatting (today, tomorrow, in X days)"
+    }
+  },
+  "priorityScore": 80,
+  "implementationStatus": "partial",
+  "overallAssessment": "GOOD - Professional group management with inline actions, needs to remove mock fallback and add success feedback"
+}

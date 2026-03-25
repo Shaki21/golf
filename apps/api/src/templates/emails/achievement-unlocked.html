@@ -1,0 +1,88 @@
+<h1>Achievement Unlocked! 🏆</h1>
+
+<p>Hi {{firstName}},</p>
+
+<p>Congratulations! You've just earned a new achievement:</p>
+
+<div class="card" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 3px solid #f59e0b; text-align: center; padding: 40px 24px;">
+  <div style="font-size: 80px; margin-bottom: 16px;">{{badgeEmoji}}</div>
+  <h2 style="margin: 0 0 8px 0; color: #92400e; font-size: 28px;">{{achievementName}}</h2>
+  <p style="margin: 0; color: #78350f; font-size: 18px; font-style: italic;">{{achievementTagline}}</p>
+</div>
+
+<div class="highlight-box">
+  <p style="margin: 0; color: #4a5568;">
+    {{achievementDescription}}
+  </p>
+</div>
+
+<h2>Your Achievement Stats</h2>
+
+<div class="stats">
+  <div class="stat-item">
+    <span class="stat-value">{{totalAchievements}}</span>
+    <span class="stat-label">Total Badges</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-value">{{categoryProgress}}%</span>
+    <span class="stat-label">Category {{category}}</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-value">{{rank}}</span>
+    <span class="stat-label">Overall Rank</span>
+  </div>
+</div>
+
+<center style="margin: 32px 0;">
+  <a href="{{achievementsUrl}}" class="button">View All Achievements</a>
+  <a href="{{shareUrl}}" class="button-secondary">Share Achievement</a>
+</center>
+
+<hr class="divider">
+
+<h2>What This Means</h2>
+
+<p>{{whatItMeans}}</p>
+
+{{#if nextMilestone}}
+<h2>Next Milestone</h2>
+
+<div class="card">
+  <div style="display: flex; align-items: center; gap: 16px;">
+    <div style="font-size: 48px;">{{nextMilestone.emoji}}</div>
+    <div>
+      <p style="margin: 0; font-weight: 600; color: #1f2937;">{{nextMilestone.name}}</p>
+      <p style="margin: 4px 0 0 0; color: #6b7280; font-size: 14px;">{{nextMilestone.requirement}}</p>
+      <div style="background: #e5e7eb; height: 8px; border-radius: 4px; overflow: hidden; margin-top: 8px;">
+        <div style="background: #10b981; height: 100%; width: {{nextMilestone.progress}}%;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+{{/if}}
+
+<h2>Keep the Momentum Going</h2>
+
+<ul>
+  {{#each suggestions}}
+  <li>{{this}}</li>
+  {{/each}}
+</ul>
+
+{{#if relatedAchievements}}
+<h2>Related Achievements You Can Earn</h2>
+
+<div style="display: flex; gap: 16px; margin: 20px 0; flex-wrap: wrap;">
+  {{#each relatedAchievements}}
+  <div style="flex: 1; min-width: 150px; text-align: center; padding: 16px; background: #f9fafb; border-radius: 8px; border: 1px solid #e5e7eb;">
+    <div style="font-size: 40px; margin-bottom: 8px;">{{emoji}}</div>
+    <p style="margin: 0; font-size: 14px; font-weight: 600; color: #1f2937;">{{name}}</p>
+  </div>
+  {{/each}}
+</div>
+{{/if}}
+
+<p style="margin-top: 32px;">Fantastic work, {{firstName}}! Your dedication and progress are truly impressive. Keep striving for excellence!</p>
+
+<p style="margin-top: 16px;">Best regards,<br>
+<strong>Your IUP Golf Academy Team</strong></p>

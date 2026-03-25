@@ -1,0 +1,229 @@
+{
+  "pageId": "player-plan-turneringer",
+  "path": "/plan/turneringer",
+  "component": "TournamentCalendarPage",
+  "analyzedAt": "2026-01-13T02:48:00Z",
+  "jtbdFramework": {
+    "1_pageIdentification": {
+      "name": "TournamentCalendarPage (Tournament Discovery)",
+      "role": "player",
+      "frequency": "monthly",
+      "context": "planning",
+      "clarityScore": 9
+    },
+    "2_primaryJTBD": {
+      "decision": "Which tournaments should I register for based on my level and schedule?",
+      "isObviousIn5Seconds": true,
+      "clarity": 9,
+      "competingAttention": [
+        "Quick filter tabs (My Level/Upcoming/All)",
+        "Search bar",
+        "Tournament cards with dates/details",
+        "Filter drawer button",
+        "Month navigation"
+      ],
+      "primaryCTA": {
+        "component": "Tournament card click → Details panel",
+        "label": "View tournament details",
+        "isProminent": true
+      }
+    },
+    "3_decisionVsInfoRatio": {
+      "decisionElements": {
+        "count": 9,
+        "items": [
+          "3 quick filter tabs",
+          "Search input",
+          "Filter drawer button",
+          "Month navigation (prev/next)",
+          "Tournament card clicks",
+          "Details panel actions",
+          "Close drawer button"
+        ]
+      },
+      "informationElements": {
+        "count": 7,
+        "items": [
+          "Tournament cards (date, name, level, location)",
+          "Active filters indicator",
+          "Results count",
+          "Month/year display",
+          "Details panel content",
+          "Calendar header"
+        ]
+      },
+      "ratio": 0.56,
+      "assessment": "GOOD - Strong decision focus for discovery tool",
+      "dominantDecision": "Yes - Filtering and selecting tournaments is clear primary action"
+    },
+    "4_visualHierarchy": {
+      "eyeLandsOnFirst": "Quick filter tabs (My Level/Upcoming/All)",
+      "isCorrectFirstFocus": true,
+      "heroElement": "Tournament cards grid with upcoming events",
+      "secondaryElements": [
+        "Search and advanced filter",
+        "Month navigation"
+      ],
+      "noiseElements": [],
+      "isFlatHierarchy": false,
+      "assessment": "EXCELLENT - Filter-first design with clear card grid"
+    },
+    "5_kpiQuality": {
+      "kpis": [
+        {
+          "metric": "Tournament count (filtered results)",
+          "type": "neutral",
+          "isActionable": false,
+          "hasContext": true,
+          "quality": "neutral",
+          "note": "Shows result count for current filter"
+        },
+        {
+          "metric": "Days until tournament (implicit from date)",
+          "type": "leading",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "high",
+          "note": "Helps prioritize registration urgency"
+        },
+        {
+          "metric": "Skill level match (via My Level filter)",
+          "type": "leading",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "high",
+          "note": "Shows tournaments appropriate for player"
+        },
+        {
+          "metric": "Registration deadline (in details)",
+          "type": "leading",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "high",
+          "note": "Critical deadline for decision"
+        }
+      ],
+      "leadingPercentage": 0.75,
+      "actionablePercentage": 0.75,
+      "assessment": "EXCELLENT - Strong actionable metrics for tournament selection"
+    },
+    "6_languageAndMentalModel": {
+      "style": "action_oriented",
+      "actionVerbs": [
+        "Søk",
+        "Filtrer",
+        "Velg",
+        "Registrer"
+      ],
+      "systemNouns": [
+        "Turnering",
+        "Nivå",
+        "Lokasjon",
+        "Dato"
+      ],
+      "coachActionPercentage": 0.7,
+      "assessment": "EXCELLENT - Player-centric discovery language",
+      "phrasesToRewrite": []
+    },
+    "7_flowAndNavigationCost": {
+      "clicksFromDashboard": 2,
+      "navigationDepth": 2,
+      "clicksToFilterTournaments": 1,
+      "clicksToViewDetails": 1,
+      "clicksToSearchKeyword": 0,
+      "assessment": "EXCELLENT - Minimal navigation, inline filtering",
+      "shouldBeInline": [
+        "Quick registration CTA in details panel (if not already present)"
+      ]
+    },
+    "8_stateCoverage": {
+      "hasEmptyState": true,
+      "hasLoadingState": true,
+      "hasErrorState": true,
+      "hasSuccessState": false,
+      "hasOverloadedState": false,
+      "hasAtRiskState": false,
+      "assessment": "EXCELLENT - Comprehensive state handling with StateCard",
+      "gaps": [
+        "No success state for saving tournament to calendar (if that feature exists)"
+      ]
+    },
+    "9_roleScalability": {
+      "hasRoleConditionals": false,
+      "beginnerFriendly": true,
+      "eliteFriendly": true,
+      "scalabilityIssues": [],
+      "recommendation": "Well-designed for all levels - level-based filtering helps beginners"
+    },
+    "10_strategicVerdict": {
+      "diagnosis": "Professional tournament discovery tool with excellent filtering UX",
+      "currentBehavior": "Filter-driven tournament calendar with details panel",
+      "desiredBehavior": "Filter-driven tournament calendar with registration integration",
+      "topIssues": [
+        {
+          "rank": 1,
+          "issue": "No registration integration visible (may need to verify details panel actions)",
+          "severity": "medium",
+          "impact": "Player must leave app to register for tournaments"
+        },
+        {
+          "rank": 2,
+          "issue": "URL-persisted filters may confuse users if they share/bookmark URLs",
+          "severity": "low",
+          "impact": "Shared links may have unexpected filter state"
+        },
+        {
+          "rank": 3,
+          "issue": "No 'save to my calendar' or 'interested' functionality",
+          "severity": "low",
+          "impact": "Cannot track tournaments without registering"
+        }
+      ],
+      "structuralFix": "Add registration workflow + add 'save to calendar' action + consider reset button for URL filters"
+    },
+    "11_crossPageConsistency": {
+      "note": "Uses modular component architecture (CalendarHeader, QuickFilterTabs, SearchBar, etc.). URL-persisted state via useFilterState hook (advanced pattern). StateCard for loading/error (consistent)."
+    }
+  },
+  "codeAnalysis": {
+    "componentCount": {
+      "interactive": 9,
+      "display": 8
+    },
+    "stateHandling": {
+      "loading": "StateCard component with loading spinner",
+      "empty": "StateCard with 'Ingen turneringer funnet' message and search guidance",
+      "error": "StateCard with error message and retry button"
+    },
+    "dataSource": {
+      "isRealData": true,
+      "isMockData": false,
+      "note": "Uses tournamentsAPI.getTournaments() for real tournament data"
+    },
+    "accessibility": {
+      "hasAriaLabels": false,
+      "semanticHTML": true,
+      "keyboardNav": "Good - uses button and input elements"
+    },
+    "responsiveDesign": {
+      "hasMobileLayout": true,
+      "breakpoints": ["grid-cols-1 md:grid-cols-2 lg:grid-cols-3"],
+      "mobileFirst": true
+    },
+    "advancedFeatures": {
+      "urlPersistedFilters": "useFilterState hook syncs filter state with URL query params",
+      "modularComponents": [
+        "CalendarHeader",
+        "QuickFilterTabs",
+        "SearchBar",
+        "TournamentGrid",
+        "TournamentCard",
+        "TournamentDetailsPanel",
+        "FilterDrawer"
+      ]
+    }
+  },
+  "priorityScore": 80,
+  "implementationStatus": "implemented",
+  "overallAssessment": "EXCELLENT - Professional tournament discovery with strong filtering, needs registration integration"
+}

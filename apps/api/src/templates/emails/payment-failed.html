@@ -1,0 +1,47 @@
+<h1>Payment Failed - Action Required</h1>
+
+<p>Hi {{userName}},</p>
+
+<p>We attempted to process your payment for IUP Golf Academy, but unfortunately it was unsuccessful.</p>
+
+<div class="card" style="border-left: 4px solid #ef4444; background: #fef2f2;">
+  <p style="margin: 0;"><strong>Payment Details:</strong></p>
+  <p style="margin: 8px 0 0 0;">
+    Amount: <strong>{{formattedAmount}} {{currency}}</strong><br>
+    Status: <span style="color: #ef4444;"><strong>✗ Failed</strong></span><br>
+    Reason: <strong>{{failureReason}}</strong>
+  </p>
+  {{#if retryDate}}
+  <p style="margin: 12px 0 0 0;">
+    We'll automatically retry on: <strong>{{formatDate retryDate 'long'}}</strong>
+  </p>
+  {{/if}}
+</div>
+
+<h2>What You Need to Do</h2>
+
+<p>To maintain your access to IUP Golf Academy, please update your payment method:</p>
+
+<ol>
+  <li>Check that your card has sufficient funds</li>
+  <li>Verify your card details are correct</li>
+  <li>Update your payment method if needed</li>
+</ol>
+
+<center style="margin: 32px 0;">
+  <a href="{{updatePaymentUrl}}" class="button" style="background: #ef4444;">Update Payment Method</a>
+</center>
+
+<hr class="divider">
+
+<h2>Need Help?</h2>
+
+<p>If you're having trouble updating your payment method or have questions about this charge, our support team is here to help:</p>
+
+<ul>
+  <li>Email us at <a href="mailto:{{supportEmail}}">{{supportEmail}}</a></li>
+  <li>Visit your <a href="{{updatePaymentUrl}}">billing settings</a> to manage your payment methods</li>
+</ul>
+
+<p style="margin-top: 32px;">We're here to help!<br>
+<strong>The IUP Golf Academy Team</strong></p>

@@ -1,0 +1,245 @@
+/**
+ * Print Styles for Training Plan Templates
+ * Optimizes template calendar and statistics for printing
+ */
+
+@media print {
+  /* Hide interactive elements */
+  .no-print,
+  button:not(.print-preserve),
+  input[type="date"],
+  .print-hide {
+    display: none !important;
+  }
+
+  /* Page setup */
+  @page {
+    size: A4 portrait;
+    margin: 1.5cm;
+  }
+
+  /* Reset page colors */
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  /* Prevent page breaks inside important elements */
+  .print-avoid-break {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* Template header */
+  .template-print-header {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #0A2540;
+  }
+
+  .template-print-header h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #0A2540;
+    margin-bottom: 0.5rem;
+  }
+
+  .template-print-header p {
+    color: #4a5568;
+    font-size: 0.875rem;
+  }
+
+  /* Week view grid */
+  .template-week-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.5rem;
+    margin: 1rem 0;
+    page-break-inside: avoid;
+  }
+
+  .template-day-column {
+    border: 1px solid #e2e8f0;
+    padding: 0.5rem;
+    min-height: 8cm;
+  }
+
+  .template-day-header {
+    font-weight: 600;
+    font-size: 0.75rem;
+    color: #0A2540;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.25rem;
+    border-bottom: 1px solid #cbd5e0;
+  }
+
+  /* Session blocks */
+  .template-session-block {
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    border: 1px solid #cbd5e0;
+    border-radius: 0.25rem;
+    background: white;
+    page-break-inside: avoid;
+  }
+
+  .template-session-block h4 {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #0A2540;
+    margin-bottom: 0.25rem;
+  }
+
+  .template-session-meta {
+    font-size: 0.625rem;
+    color: #4a5568;
+  }
+
+  /* Category color borders for print */
+  .template-session-tee {
+    border-left: 3px solid #C9A227;
+  }
+
+  .template-session-app {
+    border-left: 3px solid #0A2540;
+  }
+
+  .template-session-sgr {
+    border-left: 3px solid #10b981;
+  }
+
+  .template-session-pgr {
+    border-left: 3px solid #8b5cf6;
+  }
+
+  .template-session-gbr {
+    border-left: 3px solid #f59e0b;
+  }
+
+  /* Statistics panel */
+  .template-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+
+  .template-stat-card {
+    border: 1px solid #e2e8f0;
+    padding: 0.75rem;
+    page-break-inside: avoid;
+  }
+
+  .template-stat-value {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #0A2540;
+  }
+
+  .template-stat-label {
+    font-size: 0.75rem;
+    color: #4a5568;
+    margin-top: 0.25rem;
+  }
+
+  /* Category distribution */
+  .template-category-bar {
+    margin: 0.5rem 0;
+    page-break-inside: avoid;
+  }
+
+  .template-category-label {
+    font-size: 0.75rem;
+    color: #0A2540;
+    font-weight: 600;
+  }
+
+  .template-category-percentage {
+    font-size: 0.75rem;
+    color: #4a5568;
+  }
+
+  /* Progress bars - simplified for print */
+  .template-progress-bar {
+    height: 0.5rem;
+    background: #e2e8f0;
+    border-radius: 0.25rem;
+    overflow: hidden;
+    margin-top: 0.25rem;
+  }
+
+  .template-progress-fill {
+    height: 100%;
+    background: #C9A227;
+  }
+
+  /* Week summary */
+  .template-week-summary {
+    margin: 1rem 0;
+    padding: 0.75rem;
+    background: #f7fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.25rem;
+    page-break-inside: avoid;
+  }
+
+  /* Week navigation - show current week info only */
+  .template-week-nav {
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #0A2540;
+    margin: 1rem 0;
+    padding: 0.5rem;
+    border-top: 2px solid #e2e8f0;
+    border-bottom: 2px solid #e2e8f0;
+  }
+
+  /* Footer with metadata */
+  .template-print-footer {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #cbd5e0;
+    font-size: 0.75rem;
+    color: #718096;
+    text-align: center;
+  }
+
+  /* Force page breaks */
+  .print-page-break {
+    page-break-after: always;
+    break-after: page;
+  }
+
+  /* Badges - simplified */
+  .badge {
+    display: inline-block;
+    padding: 0.125rem 0.375rem;
+    border: 1px solid #cbd5e0;
+    border-radius: 0.25rem;
+    font-size: 0.625rem;
+    margin-right: 0.25rem;
+  }
+
+  /* Remove shadows and transitions */
+  * {
+    box-shadow: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+
+  /* Ensure links show URL */
+  a[href]:after {
+    content: " (" attr(href) ")";
+    font-size: 0.625rem;
+    color: #718096;
+  }
+
+  /* Hide drag handles and interactive icons */
+  .drag-handle,
+  [data-dnd-kit],
+  .selection-checkbox {
+    display: none !important;
+  }
+}

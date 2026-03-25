@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TIER Golf - iPhone Dynamic Island Mockup</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Sans:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Design System v3.0 Colors */
+            --ak-ink: #02060D;
+            --ak-primary: #10456A;
+            --ak-primary-light: #2C5F7F;
+            --ak-snow: #EDF0F2;
+            --ak-surface: #EBE5DA;
+            --ak-gold: #C9A227;
+            --ak-white: #FFFFFF;
+            --gray-50: #F9FAFB;
+            --gray-100: #F2F4F7;
+            --gray-300: #D5D7DA;
+            --gray-500: #8E8E93;
+            --gray-600: #535862;
+            --ak-success: #4A7C59;
+            --ak-warning: #D4A84B;
+            --ak-error: #C45B4E;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mockup-container {
+            display: flex;
+            gap: 60px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        /* iPhone Frame */
+        .iphone-frame {
+            width: 390px;
+            height: 844px;
+            background: #1c1c1e;
+            border-radius: 55px;
+            padding: 12px;
+            box-shadow:
+                0 0 0 2px #2c2c2e,
+                0 0 0 12px #1c1c1e,
+                0 30px 60px rgba(0,0,0,0.5),
+                inset 0 0 6px rgba(255,255,255,0.1);
+            position: relative;
+        }
+
+        /* Side Buttons */
+        .side-button {
+            position: absolute;
+            background: #2c2c2e;
+            border-radius: 2px;
+        }
+
+        .volume-up {
+            left: -3px;
+            top: 150px;
+            width: 3px;
+            height: 60px;
+        }
+
+        .volume-down {
+            left: -3px;
+            top: 230px;
+            width: 3px;
+            height: 60px;
+        }
+
+        .power-button {
+            right: -3px;
+            top: 200px;
+            width: 3px;
+            height: 90px;
+        }
+
+        /* Screen */
+        .iphone-screen {
+            width: 100%;
+            height: 100%;
+            background: var(--gray-50);
+            border-radius: 47px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Dynamic Island */
+        .dynamic-island {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 126px;
+            height: 37px;
+            background: #000000;
+            border-radius: 19px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .dynamic-island.expanded {
+            width: 350px;
+            height: 90px;
+            border-radius: 45px;
+        }
+
+        .island-content {
+            display: none;
+            width: 100%;
+            padding: 16px 20px;
+            color: white;
+        }
+
+        .island-content.active {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .island-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--ak-primary) 0%, var(--ak-primary-light) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .island-info {
+            flex: 1;
+        }
+
+        .island-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .island-subtitle {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
+        .island-action {
+            font-size: 11px;
+            background: rgba(255,255,255,0.15);
+            padding: 6px 12px;
+            border-radius: 16px;
+        }
+
+        /* Status Bar */
+        .status-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 54px;
+            padding: 0 33px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--ak-ink);
+            z-index: 999;
+            padding-top: 8px;
+        }
+
+        .status-left {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .status-right {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-icon {
+            width: 24px;
+            height: 12px;
+        }
+
+        /* App Content */
+        .app-content {
+            position: absolute;
+            top: 54px;
+            left: 0;
+            right: 0;
+            bottom: 34px;
+            overflow-y: auto;
+            background: var(--gray-50);
+        }
+
+        /* Header */
+        .app-header {
+            background: white;
+            padding: 20px;
+            border-bottom: 1px solid var(--gray-100);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .app-title {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--ak-primary);
+            margin-bottom: 8px;
+        }
+
+        .app-subtitle {
+            font-size: 15px;
+            color: var(--gray-600);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #FFD700 0%, var(--ak-gold) 100%);
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--ak-ink);
+        }
+
+        /* Stats Card */
+        .stats-card {
+            background: white;
+            margin: 16px;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border: 1px solid var(--gray-100);
+        }
+
+        .stats-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .stats-icon {
+            font-size: 20px;
+        }
+
+        .stats-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--ak-primary);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .stat-item {
+            background: var(--gray-50);
+            padding: 16px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--ak-ink);
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--gray-600);
+        }
+
+        /* Progress Ring */
+        .progress-ring-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .progress-ring {
+            width: 120px;
+            height: 120px;
+            position: relative;
+        }
+
+        .progress-ring svg {
+            transform: rotate(-90deg);
+        }
+
+        .progress-ring-bg {
+            stroke: var(--gray-100);
+            fill: none;
+            stroke-width: 10;
+        }
+
+        .progress-ring-fill {
+            stroke: var(--ak-primary);
+            fill: none;
+            stroke-width: 10;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 1s ease;
+        }
+
+        .progress-value {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--ak-primary);
+        }
+
+        /* Session Card */
+        .session-card {
+            background: white;
+            margin: 0 16px 16px;
+            padding: 16px;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border: 1px solid var(--gray-100);
+            display: flex;
+            gap: 16px;
+        }
+
+        .session-icon-circle {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--ak-primary) 0%, var(--ak-primary-light) 100%);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            flex-shrink: 0;
+        }
+
+        .session-info {
+            flex: 1;
+        }
+
+        .session-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--ak-ink);
+            margin-bottom: 4px;
+        }
+
+        .session-meta {
+            font-size: 13px;
+            color: var(--gray-600);
+            margin-bottom: 8px;
+        }
+
+        .session-tags {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: rgba(16, 69, 106, 0.1);
+            color: var(--ak-primary);
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        /* Bottom Nav */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 88px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 0.5px solid var(--gray-300);
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-around;
+            padding: 8px 20px 34px;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .nav-item.active .nav-icon {
+            color: var(--ak-primary);
+        }
+
+        .nav-item.active .nav-label {
+            color: var(--ak-primary);
+        }
+
+        .nav-icon {
+            font-size: 24px;
+            color: var(--gray-500);
+        }
+
+        .nav-label {
+            font-size: 10px;
+            color: var(--gray-500);
+            font-weight: 500;
+        }
+
+        /* Custom Icons */
+        .icon {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Info Panel */
+        .info-panel {
+            background: white;
+            border-radius: 20px;
+            padding: 32px;
+            max-width: 400px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .info-title {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--ak-primary);
+            margin-bottom: 16px;
+        }
+
+        .info-description {
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--gray-600);
+            margin-bottom: 24px;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-bottom: 24px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .feature-item:last-child {
+            border-bottom: none;
+        }
+
+        .feature-icon {
+            width: 32px;
+            height: 32px;
+            background: rgba(16, 69, 106, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .feature-text {
+            font-size: 14px;
+            color: var(--ak-ink);
+        }
+
+        .interaction-note {
+            background: rgba(16, 69, 106, 0.05);
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 13px;
+            color: var(--gray-600);
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .pulse {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .mockup-container {
+                flex-direction: column;
+            }
+
+            .info-panel {
+                margin: 0 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="mockup-container">
+        <!-- iPhone Frame -->
+        <div class="iphone-frame">
+            <!-- Side Buttons -->
+            <div class="side-button volume-up"></div>
+            <div class="side-button volume-down"></div>
+            <div class="side-button power-button"></div>
+
+            <!-- Screen -->
+            <div class="iphone-screen">
+                <!-- Dynamic Island -->
+                <div class="dynamic-island" id="dynamicIsland">
+                    <div class="island-content" id="islandContent">
+                        <div class="island-icon">🏌️</div>
+                        <div class="island-info">
+                            <div class="island-title">Treningsøkt startet</div>
+                            <div class="island-subtitle">Driver Teknikk • 15 min</div>
+                        </div>
+                        <div class="island-action">Pause</div>
+                    </div>
+                </div>
+
+                <!-- Status Bar -->
+                <div class="status-bar">
+                    <div class="status-left">9:41</div>
+                    <div class="status-right">
+                        <span>📶</span>
+                        <span>📡</span>
+                        <span>🔋</span>
+                    </div>
+                </div>
+
+                <!-- App Content -->
+                <div class="app-content">
+                    <!-- Header -->
+                    <div class="app-header">
+                        <div class="app-title">⛳ TIER Golf</div>
+                        <div class="app-subtitle">
+                            <span>Hei, Anders!</span>
+                            <span class="badge">Kategori D</span>
+                        </div>
+                    </div>
+
+                    <!-- Stats Card -->
+                    <div class="stats-card">
+                        <div class="stats-header">
+                            <span class="stats-icon">🎯</span>
+                            <span class="stats-title">KATEGORI FREMGANG</span>
+                        </div>
+
+                        <div class="progress-ring-container">
+                            <div class="progress-ring">
+                                <svg width="120" height="120">
+                                    <circle class="progress-ring-bg" cx="60" cy="60" r="52"></circle>
+                                    <circle class="progress-ring-fill" cx="60" cy="60" r="52"
+                                            stroke-dasharray="326.73" stroke-dashoffset="81.68"></circle>
+                                </svg>
+                                <div class="progress-value">75%</div>
+                            </div>
+                        </div>
+
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value">5.4</div>
+                                <div class="stat-label">Handicap</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">15/20</div>
+                                <div class="stat-label">Tester</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Session Card -->
+                    <div class="session-card">
+                        <div class="session-icon-circle">🎯</div>
+                        <div class="session-info">
+                            <div class="session-title">Driver Teknikk</div>
+                            <div class="session-meta">🕐 I dag, 16:00 • 📍 Range</div>
+                            <div class="session-tags">
+                                <span class="tag">⏱ 90 min</span>
+                                <span class="tag">📚 L2</span>
+                                <span class="tag">🎯 S1-S2</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Session Card 2 -->
+                    <div class="session-card">
+                        <div class="session-icon-circle">💪</div>
+                        <div class="session-info">
+                            <div class="session-title">Fysisk Styrke</div>
+                            <div class="session-meta">🕐 I morgen, 10:00 • 📍 Gym</div>
+                            <div class="session-tags">
+                                <span class="tag">⏱ 60 min</span>
+                                <span class="tag">📚 L2</span>
+                                <span class="tag">🎯 S3</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Session Card 3 -->
+                    <div class="session-card">
+                        <div class="session-icon-circle">⛳</div>
+                        <div class="session-info">
+                            <div class="session-title">Short Game - Wedge</div>
+                            <div class="session-meta">🕐 Onsdag, 15:00 • 📍 Range</div>
+                            <div class="session-tags">
+                                <span class="tag">⏱ 90 min</span>
+                                <span class="tag">📚 L3</span>
+                                <span class="tag">🎯 S2-S3</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Spacing for bottom nav -->
+                    <div style="height: 20px;"></div>
+                </div>
+
+                <!-- Bottom Navigation -->
+                <div class="bottom-nav">
+                    <div class="nav-item active">
+                        <div class="nav-icon">🏠</div>
+                        <div class="nav-label">Hjem</div>
+                    </div>
+                    <div class="nav-item">
+                        <div class="nav-icon">📅</div>
+                        <div class="nav-label">Plan</div>
+                    </div>
+                    <div class="nav-item">
+                        <div class="nav-icon">📚</div>
+                        <div class="nav-label">Øvelser</div>
+                    </div>
+                    <div class="nav-item">
+                        <div class="nav-icon">📊</div>
+                        <div class="nav-label">Stats</div>
+                    </div>
+                    <div class="nav-item">
+                        <div class="nav-icon">👤</div>
+                        <div class="nav-label">Profil</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Panel -->
+        <div class="info-panel">
+            <div class="info-title">iPhone Dynamic Island</div>
+            <div class="info-description">
+                TIER Golf optimalisert for iPhone 14 Pro/15 Pro med Dynamic Island support.
+            </div>
+
+            <ul class="feature-list">
+                <li class="feature-item">
+                    <div class="feature-icon">🏝️</div>
+                    <div class="feature-text">Dynamic Island viser aktiv treningsøkt</div>
+                </li>
+                <li class="feature-item">
+                    <div class="feature-icon">🎨</div>
+                    <div class="feature-text">Blue Design System v3.0</div>
+                </li>
+                <li class="feature-item">
+                    <div class="feature-icon">📱</div>
+                    <div class="feature-text">Native iOS design patterns</div>
+                </li>
+                <li class="feature-item">
+                    <div class="feature-icon">🎯</div>
+                    <div class="feature-text">Custom golf-specific icons</div>
+                </li>
+                <li class="feature-item">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-text">Smooth animations & transitions</div>
+                </li>
+                <li class="feature-item">
+                    <div class="feature-icon">🌙</div>
+                    <div class="feature-text">Dark mode ready</div>
+                </li>
+            </ul>
+
+            <div class="interaction-note pulse">
+                👆 Klikk på Dynamic Island for å utvide/kollapse
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dynamic Island interaction
+        const island = document.getElementById('dynamicIsland');
+        const islandContent = document.getElementById('islandContent');
+        let isExpanded = false;
+
+        island.addEventListener('click', () => {
+            isExpanded = !isExpanded;
+
+            if (isExpanded) {
+                island.classList.add('expanded');
+                islandContent.classList.add('active');
+            } else {
+                island.classList.remove('expanded');
+                islandContent.classList.remove('active');
+            }
+        });
+
+        // Auto-expand after 2 seconds to show feature
+        setTimeout(() => {
+            island.click();
+        }, 2000);
+
+        // Progress ring animation
+        window.addEventListener('load', () => {
+            const circle = document.querySelector('.progress-ring-fill');
+            const radius = 52;
+            const circumference = radius * 2 * Math.PI;
+            const percent = 75;
+            const offset = circumference - (percent / 100 * circumference);
+
+            // Animate the ring
+            setTimeout(() => {
+                circle.style.strokeDashoffset = offset;
+            }, 500);
+        });
+
+        // Bottom nav interaction
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', () => {
+                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animation Showcase - AK Golf Academy Design System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Brand Colors */
+            --ak-primary: #10456A;
+            --ak-primary-light: #2C5F7F;
+            --ak-gold: #C9A227;
+            --ak-snow: #EDF0F2;
+            --ak-surface: #EBE5DA;
+            --ak-cloud: #D8D8D8;
+            --ak-mist: #E8E8E8;
+            --ak-success: #4A7C59;
+            --ak-warning: #D4A84B;
+            --ak-error: #C45B4E;
+            --ak-charcoal: #1C1C1E;
+            --ak-steel: #8E8E93;
+            --ak-text: #1C1C1E;
+            --ak-text-secondary: #6E6E73;
+            --ak-background: #FFFFFF;
+            --ak-border: #D1D1D6;
+
+            /* Spacing */
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+
+            /* Border Radius */
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-full: 9999px;
+
+            /* Shadows */
+            --shadow-card: 0 2px 4px rgba(0, 0, 0, 0.06);
+            --shadow-elevated: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+            /* Animation Durations */
+            --duration-instant: 100ms;
+            --duration-fast: 150ms;
+            --duration-normal: 250ms;
+            --duration-slow: 350ms;
+            --duration-slower: 500ms;
+
+            /* Easing Functions */
+            --easing-default: cubic-bezier(0.4, 0, 0.2, 1);
+            --easing-in: cubic-bezier(0.4, 0, 1, 1);
+            --easing-out: cubic-bezier(0, 0, 0.2, 1);
+            --easing-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            --easing-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+            /* Typography */
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-size-xs: 12px;
+            --font-size-sm: 14px;
+            --font-size-base: 16px;
+            --font-size-lg: 18px;
+            --font-size-xl: 20px;
+            --font-size-2xl: 24px;
+            --font-size-3xl: 32px;
+            --font-size-4xl: 40px;
+        }
+
+        :root.dark {
+            --ak-primary: #2C5F7F;
+            --ak-primary-light: #3D7FA0;
+            --ak-gold: #D4B84E;
+            --ak-snow: #1C1C1E;
+            --ak-surface: #2C2C2E;
+            --ak-cloud: #3A3A3C;
+            --ak-mist: #48484A;
+            --ak-success: #6B9D7A;
+            --ak-warning: #E5C07A;
+            --ak-error: #D8867C;
+            --ak-charcoal: #F2F2F7;
+            --ak-steel: #98989D;
+            --ak-text: #F2F2F7;
+            --ak-text-secondary: #98989D;
+            --ak-background: #000000;
+            --ak-border: #38383A;
+            --shadow-card: 0 2px 4px rgba(0, 0, 0, 0.3);
+            --shadow-elevated: 0 4px 12px rgba(0, 0, 0, 0.4);
+            --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Keyframe Animations */
+        @keyframes fade-in {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fade-out {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        @keyframes fade-in-up {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fade-in-down {
+            from { opacity: 0; transform: translateY(-16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fade-in-left {
+            from { opacity: 0; transform: translateX(16px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes fade-in-right {
+            from { opacity: 0; transform: translateX(-16px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes scale-in {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes scale-out {
+            from { opacity: 1; transform: scale(1); }
+            to { opacity: 0; transform: scale(0.95); }
+        }
+
+        @keyframes pop-in {
+            0% { opacity: 0; transform: scale(0.8); }
+            70% { transform: scale(1.05); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        @keyframes slide-in-right {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+
+        @keyframes slide-out-right {
+            from { transform: translateX(0); }
+            to { transform: translateX(100%); }
+        }
+
+        @keyframes slide-in-left {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+
+        @keyframes slide-in-up {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        @keyframes slide-in-down {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        @keyframes pulse-scale {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+            20%, 40%, 60%, 80% { transform: translateX(4px); }
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-3deg); }
+            75% { transform: rotate(3deg); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 4px rgba(16, 69, 106, 0.3); }
+            50% { box-shadow: 0 0 16px rgba(16, 69, 106, 0.6); }
+        }
+
+        @keyframes skeleton-shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes progress {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: var(--ak-background);
+            color: var(--ak-text);
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Navigation */
+        .showcase-nav {
+            background: var(--ak-surface);
+            border-bottom: 1px solid var(--ak-border);
+            padding: var(--spacing-md) 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--spacing-lg);
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .nav-logo {
+            font-size: var(--font-size-2xl);
+        }
+
+        .nav-title {
+            font-size: var(--font-size-lg);
+            font-weight: 700;
+            color: var(--ak-text);
+        }
+
+        .nav-subtitle {
+            font-size: var(--font-size-sm);
+            color: var(--ak-text-secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: var(--spacing-md);
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            color: var(--ak-text-secondary);
+            text-decoration: none;
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-sm);
+            transition: all 0.2s;
+        }
+
+        .nav-link:hover {
+            color: var(--ak-primary);
+            background: var(--ak-cloud);
+        }
+
+        .nav-link.active {
+            color: var(--ak-primary);
+            background: rgba(16, 69, 106, 0.1);
+        }
+
+        .theme-toggle {
+            background: var(--ak-cloud);
+            border: 1px solid var(--ak-border);
+            color: var(--ak-text);
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-size: var(--font-size-lg);
+            transition: all 0.2s;
+        }
+
+        .theme-toggle:hover {
+            background: var(--ak-mist);
+            transform: scale(1.05);
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--spacing-2xl) var(--spacing-lg);
+        }
+
+        .page-header {
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .page-title {
+            font-size: var(--font-size-4xl);
+            font-weight: 700;
+            color: var(--ak-text);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .page-description {
+            font-size: var(--font-size-lg);
+            color: var(--ak-text-secondary);
+        }
+
+        /* Section */
+        .section {
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .section-title {
+            font-size: var(--font-size-2xl);
+            font-weight: 600;
+            color: var(--ak-text);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .section-description {
+            font-size: var(--font-size-base);
+            color: var(--ak-text-secondary);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        /* Animation Grid */
+        .animation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .animation-card {
+            background: var(--ak-surface);
+            border: 1px solid var(--ak-border);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .animation-title {
+            font-size: var(--font-size-base);
+            font-weight: 600;
+            color: var(--ak-text);
+            text-align: center;
+        }
+
+        .animation-demo {
+            width: 100%;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--ak-cloud);
+            border-radius: var(--radius-md);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .animation-target {
+            background: var(--ak-primary);
+            color: white;
+            padding: var(--spacing-md) var(--spacing-lg);
+            border-radius: var(--radius-md);
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+        }
+
+        .replay-btn {
+            background: var(--ak-primary);
+            color: white;
+            border: none;
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .replay-btn:hover {
+            background: var(--ak-primary-light);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-card);
+        }
+
+        .animation-code {
+            background: var(--ak-cloud);
+            padding: var(--spacing-sm);
+            border-radius: var(--radius-sm);
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: var(--font-size-xs);
+            color: var(--ak-primary);
+            text-align: center;
+        }
+
+        /* Loading States */
+        .skeleton {
+            background: linear-gradient(90deg, var(--ak-mist) 0%, var(--ak-cloud) 50%, var(--ak-mist) 100%);
+            background-size: 200% 100%;
+            animation: skeleton-shimmer 1.5s infinite;
+            border-radius: var(--radius-sm);
+            height: 20px;
+            width: 100%;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--ak-border);
+            border-top-color: var(--ak-primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--ak-cloud);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--ak-primary);
+            animation: progress 2s ease-out infinite;
+        }
+
+        /* Continuous Animations */
+        .continuous-demo {
+            animation-iteration-count: infinite !important;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .nav-links {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .animation-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-title {
+                font-size: var(--font-size-3xl);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="showcase-nav">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <div class="nav-logo">⛳</div>
+                <div>
+                    <div class="nav-title">AK Golf Academy</div>
+                    <div class="nav-subtitle">Design System v3.0</div>
+                </div>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="component-gallery.html" class="nav-link">Components</a>
+                <a href="interaction-states.html" class="nav-link">States</a>
+                <a href="form-layouts.html" class="nav-link">Forms</a>
+                <a href="list-layouts.html" class="nav-link">Lists</a>
+                <a href="theme-variations.html" class="nav-link">Themes</a>
+                <a href="animation-showcase.html" class="nav-link active">Animations</a>
+                <a href="responsive-showcase.html" class="nav-link">Responsive</a>
+                <a href="dashboard-showcase.html" class="nav-link">Dashboard</a>
+            </div>
+            <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <div class="page-header">
+            <h1 class="page-title">Animation Showcase</h1>
+            <p class="page-description">21+ CSS keyframe animations with timing functions and easing options.</p>
+        </div>
+
+        <!-- Fade Animations -->
+        <section class="section">
+            <h2 class="section-title">Fade Animations</h2>
+            <p class="section-description">Smooth opacity transitions with directional movement.</p>
+
+            <div class="animation-grid">
+                <div class="animation-card">
+                    <div class="animation-title">Fade In</div>
+                    <div class="animation-demo">
+                        <div class="animation-target" id="fade-in-target">Element</div>
+                    </div>
+                    <button class="replay-btn" onclick="replay('fade-in-target', 'fade-in 250ms ease-out forwards')">▶ Replay</button>
+                    <div class="animation-code">animation: fade-in 250ms</div>
+                </div>
+
+                <div class="animation-card">
+                    <div class="animation-title">Fade In Up</div>
+                    <div class="animation-demo">
+                        <div class="animation-target" id="fade-in-up-target">Element</div>
+                    </div>
+                    <button class="replay-btn" onclick="replay('fade-in-up-target', 'fade-in-up 250ms ease-out forwards')">▶ Replay</button>
+                    <div class="animation-code">animation: fade-in-up 250ms</div>
+                </div>
+
+                <div class="animation-card">
+                    <div class="animation-title">Fade In Down</div>
+                    <div class="animation-demo">
+                        <div class="animation-target" id="fade-in-down-target">Element</div>
+                    </div>
+                    <button class="replay-btn" onclick="replay('fade-in-down-target', 'fade-in-down 250ms ease-out forwards')">▶ Replay</button>
+                    <div class="animation-code">animation: fade-in-down 250ms</div>
+                </div>
+
+                <div class="animation-card">
+                    <div class="animation-title">Fade In Left</div>
+                    <div class="animation-demo">
+                        <div class="animation-target" id="fade-in-left-target">Element</div>
+                    </div>
+                    <button class="replay-btn" onclick="replay('fade-in-left-target', 'fade-in-left 250ms ease-out forwards')">▶ Replay</button>
+                    <div class="animation-code">animation: fade-in-left 250ms</div>
+                </div>
+
+                <div class="animation-card">
+                    <div class="animation-title">Fade In Right</div>
+                    <div class="animation-demo">
+                        <div class="animation-target" id="fade-in-right-target">Element</div>
+                    </div>
+                    <button class="replay-btn" onclick="replay('fade-in-right-target', 'fade-in-right 250ms ease-out forwards')">▶ Replay</button>
+                    <div class="animation-code">animation: fade-in-right 250ms</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Scale Animations -->
+        <section class="section">
+            <h2 class="section-title">Scale Animations</h2>
+            <p class="section-description">Transform elements with scaling effects.</p>
+
+            <div class="animation-grid">
+                <div class="animation-card">
+                    <div class="animation-title">Scale In</div>
+                    <div class="animation-demo">
+                        <div class="animation-target" id="scale-in-target">Element</div>
+                    </div>
+                    <button class="replay-btn" onclick="replay('scale-in-target', 'scale-in 250ms cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards')">▶ Replay</button>
+                    <div class="animation-code">animation: scale-in 250ms</div>
+                </div>
+
+                <div class="animation-card">
+                    <div class="animation-title">Pop In</div>
+                    <div class="animation-demo">
+                        <div class="animation-target" id="pop-in-target">Element</div>
+                    </div>
+                    <button class="replay-btn" onclick="replay('pop-in-target', 'pop-in 350ms cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards')">▶ Replay</button>
+                    <div class="animation-code">animation: pop-in 350ms</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide Animations -->
+        <section class="section">
+            <h2 class="section-title">Slide Animations</h2>
+            <p class="section-description">Slide elements from different directions.</p>
+
+            <div class="animation-grid">
+                <div class="animation-card">
+                    <div class="animation-title">Slide In Right</div>
+                    <div class="animation-demo">
+                        <div class="animation-target" id="slide-in-right-target">Element</div>
+                    </div>
+                    <button class="replay-btn" onclick="replay('slide-in-right-target', 'slide-in-right 250ms ease-out forwards')">▶ Replay</button>
+                    <div class="animation-code">animation: slide-in-right 250ms</div>
+                </div>
+
+                <div class="animation-card">
+                    <div class="animation-title">Slide In Left</div>
+                    <div class="animation-demo">
+                        <div class="animation-target" id="slide-in-left-target">Element</div>
+                    </div>
+                    <button class="replay-btn" onclick="replay('slide-in-left-target', 'slide-in-left 250ms ease-out forwards')">▶ Replay</button>
+                    <div class="animation-code">animation: slide-in-left 250ms</div>
+                </div>
+
+                <div class="animation-card">
+                    <div class="animation-title">Slide In Up</div>
+                    <div class="animation-demo">
+                        <div class="animation-target" id="slide-in-up-target">Element</div>
+                    </div>
+                    <button class="replay-btn" onclick="replay('slide-in-up-target', 'slide-in-up 250ms ease-out forwards')">▶ Replay</button>
+                    <div class="animation-code">animation: slide-in-up 250ms</div>
+                </div>
+
+                <div class="animation-card">
+                    <div class="animation-title">Slide In Down</div>
+                    <div class="animation-demo">
+                        <div class="animation-target" id="slide-in-down-target">Element</div>
+                    </div>
+                    <button class="replay-btn" onclick="replay('slide-in-down-target', 'slide-in-down 250ms ease-out forwards')">▶ Replay</button>
+                    <div class="animation-code">animation: slide-in-down 250ms</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Continuous Animations -->
+        <section class="section">
+            <h2 class="section-title">Continuous Animations</h2>
+            <p class="section-description">Looping animations that run indefinitely.</p>
+
+            <div class="animation-grid">
+                <div class="animation-card">
+                    <div class="animation-title">Bounce</div>
+                    <div class="animation-demo">
+                        <div class="animation-target continuous-demo" style="animation: bounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;">⛳</div>
+                    </div>
+                    <div class="animation-code">animation: bounce 0.6s infinite</div>
+                </div>
+
+                <div class="animation-card">
+                    <div class="animation-title">Pulse</div>
+                    <div class="animation-demo">
+                        <div class="animation-target continuous-demo" style="animation: pulse 2s ease infinite;">Element</div>
+                    </div>
+                    <div class="animation-code">animation: pulse 2s infinite</div>
+                </div>
+
+                <div class="animation-card">
+                    <div class="animation-title">Pulse Scale</div>
+                    <div class="animation-demo">
+                        <div class="animation-target continuous-demo" style="animation: pulse-scale 2s ease infinite;">Element</div>
+                    </div>
+                    <div class="animation-code">animation: pulse-scale 2s infinite</div>
+                </div>
+
+                <div class="animation-card">
+                    <div class="animation-title">Glow</div>
+                    <div class="animation-demo">
+                        <div class="animation-target continuous-demo" style="animation: glow 2s ease-in-out infinite;">Element</div>
+                    </div>
+                    <div class="animation-code">animation: glow 2s infinite</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Attention Grabbers -->
+        <section class="section">
+            <h2 class="section-title">Attention Grabbers</h2>
+            <p class="section-description">Animations that draw user attention to important elements.</p>
+
+            <div class="animation-grid">
+                <div class="animation-card">
+                    <div class="animation-title">Shake</div>
+                    <div class="animation-demo">
+                        <div class="animation-target" id="shake-target">Error!</div>
+                    </div>
+                    <button class="replay-btn" onclick="replay('shake-target', 'shake 0.5s ease-in-out')">▶ Replay</button>
+                    <div class="animation-code">animation: shake 0.5s</div>
+                </div>
+
+                <div class="animation-card">
+                    <div class="animation-title">Wiggle</div>
+                    <div class="animation-demo">
+                        <div class="animation-target" id="wiggle-target">🔔</div>
+                    </div>
+                    <button class="replay-btn" onclick="replay('wiggle-target', 'wiggle 0.5s ease-in-out')">▶ Replay</button>
+                    <div class="animation-code">animation: wiggle 0.5s</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Loading States -->
+        <section class="section">
+            <h2 class="section-title">Loading States</h2>
+            <p class="section-description">Animations for loading indicators and skeleton screens.</p>
+
+            <div class="animation-grid">
+                <div class="animation-card">
+                    <div class="animation-title">Skeleton Shimmer</div>
+                    <div class="animation-demo" style="padding: var(--spacing-md);">
+                        <div class="skeleton"></div>
+                        <div class="skeleton" style="margin-top: 8px; width: 80%;"></div>
+                        <div class="skeleton" style="margin-top: 8px; width: 60%;"></div>
+                    </div>
+                    <div class="animation-code">animation: skeleton-shimmer 1.5s</div>
+                </div>
+
+                <div class="animation-card">
+                    <div class="animation-title">Spinner</div>
+                    <div class="animation-demo">
+                        <div class="spinner"></div>
+                    </div>
+                    <div class="animation-code">animation: spin 0.8s linear infinite</div>
+                </div>
+
+                <div class="animation-card">
+                    <div class="animation-title">Progress Bar</div>
+                    <div class="animation-demo" style="padding: var(--spacing-md);">
+                        <div class="progress-bar">
+                            <div class="progress-fill"></div>
+                        </div>
+                    </div>
+                    <div class="animation-code">animation: progress 2s ease-out</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Animation Timing -->
+        <section class="section">
+            <h2 class="section-title">Animation Timing</h2>
+            <p class="section-description">Different duration options for animations.</p>
+
+            <div class="animation-grid">
+                <div class="animation-card">
+                    <div class="animation-title">Instant (100ms)</div>
+                    <div class="animation-demo">
+                        <div class="animation-target" id="instant-target">Fast</div>
+                    </div>
+                    <button class="replay-btn" onclick="replay('instant-target', 'fade-in-up 100ms ease-out forwards')">▶ Replay</button>
+                    <div class="animation-code">--duration-instant: 100ms</div>
+                </div>
+
+                <div class="animation-card">
+                    <div class="animation-title">Fast (150ms)</div>
+                    <div class="animation-demo">
+                        <div class="animation-target" id="fast-target">Quick</div>
+                    </div>
+                    <button class="replay-btn" onclick="replay('fast-target', 'fade-in-up 150ms ease-out forwards')">▶ Replay</button>
+                    <div class="animation-code">--duration-fast: 150ms</div>
+                </div>
+
+                <div class="animation-card">
+                    <div class="animation-title">Normal (250ms)</div>
+                    <div class="animation-demo">
+                        <div class="animation-target" id="normal-target">Default</div>
+                    </div>
+                    <button class="replay-btn" onclick="replay('normal-target', 'fade-in-up 250ms ease-out forwards')">▶ Replay</button>
+                    <div class="animation-code">--duration-normal: 250ms</div>
+                </div>
+
+                <div class="animation-card">
+                    <div class="animation-title">Slow (350ms)</div>
+                    <div class="animation-demo">
+                        <div class="animation-target" id="slow-target">Slower</div>
+                    </div>
+                    <button class="replay-btn" onclick="replay('slow-target', 'fade-in-up 350ms ease-out forwards')">▶ Replay</button>
+                    <div class="animation-code">--duration-slow: 350ms</div>
+                </div>
+
+                <div class="animation-card">
+                    <div class="animation-title">Slower (500ms)</div>
+                    <div class="animation-demo">
+                        <div class="animation-target" id="slower-target">Slowest</div>
+                    </div>
+                    <button class="replay-btn" onclick="replay('slower-target', 'fade-in-up 500ms ease-out forwards')">▶ Replay</button>
+                    <div class="animation-code">--duration-slower: 500ms</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Easing Functions -->
+        <section class="section">
+            <h2 class="section-title">Easing Functions</h2>
+            <p class="section-description">Different timing functions for smoother animations.</p>
+
+            <div class="animation-grid">
+                <div class="animation-card">
+                    <div class="animation-title">Default (Ease)</div>
+                    <div class="animation-demo">
+                        <div class="animation-target" id="ease-default-target">Ease</div>
+                    </div>
+                    <button class="replay-btn" onclick="replay('ease-default-target', 'fade-in-up 350ms cubic-bezier(0.4, 0, 0.2, 1) forwards')">▶ Replay</button>
+                    <div class="animation-code">cubic-bezier(0.4, 0, 0.2, 1)</div>
+                </div>
+
+                <div class="animation-card">
+                    <div class="animation-title">Ease In</div>
+                    <div class="animation-demo">
+                        <div class="animation-target" id="ease-in-target">In</div>
+                    </div>
+                    <button class="replay-btn" onclick="replay('ease-in-target', 'fade-in-up 350ms cubic-bezier(0.4, 0, 1, 1) forwards')">▶ Replay</button>
+                    <div class="animation-code">cubic-bezier(0.4, 0, 1, 1)</div>
+                </div>
+
+                <div class="animation-card">
+                    <div class="animation-title">Ease Out</div>
+                    <div class="animation-demo">
+                        <div class="animation-target" id="ease-out-target">Out</div>
+                    </div>
+                    <button class="replay-btn" onclick="replay('ease-out-target', 'fade-in-up 350ms cubic-bezier(0, 0, 0.2, 1) forwards')">▶ Replay</button>
+                    <div class="animation-code">cubic-bezier(0, 0, 0.2, 1)</div>
+                </div>
+
+                <div class="animation-card">
+                    <div class="animation-title">Bounce</div>
+                    <div class="animation-demo">
+                        <div class="animation-target" id="ease-bounce-target">Bounce</div>
+                    </div>
+                    <button class="replay-btn" onclick="replay('ease-bounce-target', 'fade-in-up 350ms cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards')">▶ Replay</button>
+                    <div class="animation-code">cubic-bezier(0.68, -0.55, 0.265, 1.55)</div>
+                </div>
+
+                <div class="animation-card">
+                    <div class="animation-title">Spring</div>
+                    <div class="animation-demo">
+                        <div class="animation-target" id="ease-spring-target">Spring</div>
+                    </div>
+                    <button class="replay-btn" onclick="replay('ease-spring-target', 'fade-in-up 350ms cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards')">▶ Replay</button>
+                    <div class="animation-code">cubic-bezier(0.175, 0.885, 0.32, 1.275)</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        function replay(targetId, animation) {
+            const element = document.getElementById(targetId);
+            element.style.animation = 'none';
+            element.offsetHeight; // Trigger reflow
+            element.style.animation = animation;
+        }
+
+        function toggleTheme() {
+            const root = document.documentElement;
+            const isDark = root.classList.contains('dark');
+            if (isDark) {
+                root.classList.remove('dark');
+                localStorage.setItem('ak-golf-theme', 'light');
+            } else {
+                root.classList.add('dark');
+                localStorage.setItem('ak-golf-theme', 'dark');
+            }
+        }
+
+        // Initialize theme
+        const savedTheme = localStorage.getItem('ak-golf-theme');
+        if (savedTheme === 'dark') {
+            document.documentElement.classList.add('dark');
+        }
+
+        // Auto-play animations on load
+        window.addEventListener('load', () => {
+            replay('fade-in-target', 'fade-in 250ms ease-out forwards');
+            replay('fade-in-up-target', 'fade-in-up 250ms ease-out forwards');
+            replay('fade-in-down-target', 'fade-in-down 250ms ease-out forwards');
+            replay('fade-in-left-target', 'fade-in-left 250ms ease-out forwards');
+            replay('fade-in-right-target', 'fade-in-right 250ms ease-out forwards');
+            replay('scale-in-target', 'scale-in 250ms cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards');
+            replay('pop-in-target', 'pop-in 350ms cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards');
+            replay('slide-in-right-target', 'slide-in-right 250ms ease-out forwards');
+            replay('slide-in-left-target', 'slide-in-left 250ms ease-out forwards');
+            replay('slide-in-up-target', 'slide-in-up 250ms ease-out forwards');
+            replay('slide-in-down-target', 'slide-in-down 250ms ease-out forwards');
+        });
+    </script>
+</body>
+</html>

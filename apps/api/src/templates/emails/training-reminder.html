@@ -1,0 +1,71 @@
+<h1>Training Session Reminder 🏌️</h1>
+
+<p>Hi {{firstName}},</p>
+
+<p>This is a reminder about your upcoming training session:</p>
+
+<div class="card">
+  <h2 style="margin-top: 0; color: #10b981;">{{sessionTitle}}</h2>
+  <p style="margin: 8px 0;"><strong>📅 Date:</strong> {{sessionDate}}</p>
+  <p style="margin: 8px 0;"><strong>⏰ Time:</strong> {{sessionTime}}</p>
+  <p style="margin: 8px 0;"><strong>📍 Location:</strong> {{location}}</p>
+  {{#if coach}}
+  <p style="margin: 8px 0;"><strong>👤 Coach:</strong> {{coach}}</p>
+  {{/if}}
+  <p style="margin: 16px 0 0 0; color: #6b7280;">{{sessionDescription}}</p>
+</div>
+
+<h2>Session Focus</h2>
+
+<ul>
+  {{#each focusAreas}}
+  <li>{{this}}</li>
+  {{/each}}
+</ul>
+
+{{#if equipment}}
+<h2>What to Bring</h2>
+
+<ul>
+  {{#each equipment}}
+  <li>{{this}}</li>
+  {{/each}}
+</ul>
+{{/if}}
+
+<center style="margin: 32px 0;">
+  <a href="{{sessionUrl}}" class="button">View Session Details</a>
+  {{#if cancelUrl}}
+  <a href="{{cancelUrl}}" class="button-secondary">Cancel/Reschedule</a>
+  {{/if}}
+</center>
+
+<hr class="divider">
+
+<h2>Prepare for Success</h2>
+
+<ul>
+  <li>Review your previous session notes</li>
+  <li>Warm up before arriving (10-15 minutes)</li>
+  <li>Bring water and stay hydrated</li>
+  <li>Come with specific questions or goals</li>
+</ul>
+
+{{#if previousSession}}
+<div class="highlight-box">
+  <p style="margin: 0;"><strong>📊 Last Session Performance:</strong></p>
+  <div class="stats">
+    <div class="stat-item">
+      <span class="stat-value">{{previousSession.score}}</span>
+      <span class="stat-label">Score</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-value">{{previousSession.improvement}}%</span>
+      <span class="stat-label">Improvement</span>
+    </div>
+  </div>
+</div>
+{{/if}}
+
+<p style="margin-top: 32px;">See you on the course!<br>
+<strong>Your IUP Golf Academy Team</strong></p>

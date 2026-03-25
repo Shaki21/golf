@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TIER Golf - Week Plan (iPhone)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Sans:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ak-ink: #02060D;
+            --ak-primary: #10456A;
+            --ak-primary-light: #2C5F7F;
+            --ak-snow: #EDF0F2;
+            --ak-surface: #EBE5DA;
+            --ak-gold: #C9A227;
+            --ak-white: #FFFFFF;
+            --gray-50: #F9FAFB;
+            --gray-100: #F2F4F7;
+            --gray-300: #D5D7DA;
+            --gray-500: #8E8E93;
+            --gray-600: #535862;
+            --ak-success: #4A7C59;
+            --ak-warning: #D4A84B;
+            --ak-error: #C45B4E;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mockup-container {
+            display: flex;
+            gap: 60px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .iphone-frame {
+            width: 390px;
+            height: 844px;
+            background: #1c1c1e;
+            border-radius: 55px;
+            padding: 12px;
+            box-shadow:
+                0 0 0 2px #2c2c2e,
+                0 0 0 12px #1c1c1e,
+                0 30px 60px rgba(0,0,0,0.5),
+                inset 0 0 6px rgba(255,255,255,0.1);
+            position: relative;
+        }
+
+        .side-button {
+            position: absolute;
+            background: #2c2c2e;
+            border-radius: 2px;
+        }
+
+        .volume-up { left: -3px; top: 150px; width: 3px; height: 60px; }
+        .volume-down { left: -3px; top: 230px; width: 3px; height: 60px; }
+        .power-button { right: -3px; top: 200px; width: 3px; height: 90px; }
+
+        .iphone-screen {
+            width: 100%;
+            height: 100%;
+            background: var(--gray-50);
+            border-radius: 47px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .dynamic-island {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 126px;
+            height: 37px;
+            background: #000000;
+            border-radius: 19px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .dynamic-island.expanded {
+            width: 350px;
+            height: 85px;
+            border-radius: 42px;
+        }
+
+        .island-content {
+            display: none;
+            width: 100%;
+            padding: 12px 20px;
+            color: white;
+        }
+
+        .island-content.active {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .island-day-badge {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--ak-primary) 0%, var(--ak-primary-light) 100%);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .island-day-name {
+            font-size: 10px;
+            opacity: 0.7;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .island-day-number {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .island-info {
+            flex: 1;
+        }
+
+        .island-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .island-meta {
+            font-size: 11px;
+            opacity: 0.7;
+        }
+
+        .status-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 54px;
+            padding: 0 33px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--ak-ink);
+            z-index: 999;
+            padding-top: 8px;
+        }
+
+        .status-right {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .app-content {
+            position: absolute;
+            top: 54px;
+            left: 0;
+            right: 0;
+            bottom: 88px;
+            overflow-y: auto;
+            background: var(--gray-50);
+        }
+
+        .app-header {
+            background: linear-gradient(135deg, var(--ak-primary) 0%, var(--ak-primary-light) 100%);
+            padding: 24px 20px 32px;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .app-title {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .week-selector {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .week-arrow {
+            font-size: 18px;
+            cursor: pointer;
+            opacity: 0.8;
+        }
+
+        .week-arrow:active {
+            opacity: 0.6;
+        }
+
+        .week-info {
+            text-align: center;
+        }
+
+        .week-number {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .week-dates {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .week-stats {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .week-stat {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 12px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .week-stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .week-stat-label {
+            font-size: 11px;
+            opacity: 0.8;
+        }
+
+        .days-scroll {
+            display: flex;
+            gap: 8px;
+            padding: 16px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            background: white;
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .days-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .day-chip {
+            flex-shrink: 0;
+            width: 60px;
+            padding: 12px 8px;
+            background: var(--gray-50);
+            border-radius: 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .day-chip.active {
+            background: var(--ak-primary);
+            color: white;
+            border-color: var(--ak-primary);
+        }
+
+        .day-chip.today {
+            border-color: var(--ak-gold);
+        }
+
+        .day-chip-name {
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            opacity: 0.7;
+            text-transform: uppercase;
+        }
+
+        .day-chip-number {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .day-chip-indicator {
+            font-size: 8px;
+            margin-top: 4px;
+        }
+
+        .session-list {
+            padding: 16px;
+        }
+
+        .session-card {
+            background: white;
+            margin-bottom: 16px;
+            padding: 16px;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border: 1px solid var(--gray-100);
+        }
+
+        .session-time {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            font-size: 13px;
+            color: var(--gray-600);
+        }
+
+        .time-badge {
+            background: rgba(16, 69, 106, 0.1);
+            color: var(--ak-primary);
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .session-main {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .session-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--ak-primary) 0%, var(--ak-primary-light) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .session-info {
+            flex: 1;
+        }
+
+        .session-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--ak-ink);
+            margin-bottom: 4px;
+        }
+
+        .session-location {
+            font-size: 13px;
+            color: var(--gray-600);
+        }
+
+        .session-tags {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+
+        .tag {
+            background: rgba(16, 69, 106, 0.1);
+            color: var(--ak-primary);
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .session-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .action-btn-primary {
+            background: var(--ak-primary);
+            color: white;
+        }
+
+        .action-btn-secondary {
+            background: var(--gray-100);
+            color: var(--ak-ink);
+        }
+
+        .rest-day {
+            background: linear-gradient(135deg, rgba(16, 69, 106, 0.05) 0%, rgba(16, 69, 106, 0.1) 100%);
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 16px;
+            margin: 20px 16px;
+        }
+
+        .rest-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .rest-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--ak-primary);
+            margin-bottom: 8px;
+        }
+
+        .rest-text {
+            font-size: 14px;
+            color: var(--gray-600);
+        }
+
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 88px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 0.5px solid var(--gray-300);
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-around;
+            padding: 8px 20px 34px;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+        }
+
+        .nav-item.active .nav-icon {
+            color: var(--ak-primary);
+        }
+
+        .nav-item.active .nav-label {
+            color: var(--ak-primary);
+        }
+
+        .nav-icon {
+            font-size: 24px;
+            color: var(--gray-500);
+        }
+
+        .nav-label {
+            font-size: 10px;
+            color: var(--gray-500);
+            font-weight: 500;
+        }
+
+        .info-panel {
+            background: white;
+            border-radius: 20px;
+            padding: 32px;
+            max-width: 400px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .info-title {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--ak-primary);
+            margin-bottom: 16px;
+        }
+
+        .info-description {
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--gray-600);
+            margin-bottom: 24px;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .pulse {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @media (max-width: 768px) {
+            .mockup-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="mockup-container">
+        <div class="iphone-frame">
+            <div class="side-button volume-up"></div>
+            <div class="side-button volume-down"></div>
+            <div class="side-button power-button"></div>
+
+            <div class="iphone-screen">
+                <div class="dynamic-island" id="dynamicIsland">
+                    <div class="island-content" id="islandContent">
+                        <div class="island-day-badge">
+                            <div class="island-day-name">Man</div>
+                            <div class="island-day-number">23</div>
+                        </div>
+                        <div class="island-info">
+                            <div class="island-title">Neste økt om 2 timer</div>
+                            <div class="island-meta">Driver Teknikk • 90 min</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="status-bar">
+                    <div class="status-left">9:41</div>
+                    <div class="status-right">
+                        <span>📶</span>
+                        <span>📡</span>
+                        <span>🔋</span>
+                    </div>
+                </div>
+
+                <div class="app-content">
+                    <div class="app-header">
+                        <div class="header-top">
+                            <div class="app-title">📅 Min Plan</div>
+                            <div>⋯</div>
+                        </div>
+                        <div class="week-selector">
+                            <div class="week-arrow">◀</div>
+                            <div class="week-info">
+                                <div class="week-number">Uke 47</div>
+                                <div class="week-dates">18-24 Des • Grunnperiode</div>
+                            </div>
+                            <div class="week-arrow">▶</div>
+                        </div>
+                        <div class="week-stats">
+                            <div class="week-stat">
+                                <div class="week-stat-value">15t</div>
+                                <div class="week-stat-label">Totalt</div>
+                            </div>
+                            <div class="week-stat">
+                                <div class="week-stat-value">6</div>
+                                <div class="week-stat-label">Økter</div>
+                            </div>
+                            <div class="week-stat">
+                                <div class="week-stat-value">3/6</div>
+                                <div class="week-stat-label">Fullført</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="days-scroll">
+                        <div class="day-chip">
+                            <div class="day-chip-name">Man</div>
+                            <div class="day-chip-number">18</div>
+                            <div class="day-chip-indicator">✓</div>
+                        </div>
+                        <div class="day-chip">
+                            <div class="day-chip-name">Tir</div>
+                            <div class="day-chip-number">19</div>
+                            <div class="day-chip-indicator">✓</div>
+                        </div>
+                        <div class="day-chip">
+                            <div class="day-chip-name">Ons</div>
+                            <div class="day-chip-number">20</div>
+                            <div class="day-chip-indicator">✓</div>
+                        </div>
+                        <div class="day-chip active today">
+                            <div class="day-chip-name">Tor</div>
+                            <div class="day-chip-number">21</div>
+                            <div class="day-chip-indicator">●●</div>
+                        </div>
+                        <div class="day-chip">
+                            <div class="day-chip-name">Fre</div>
+                            <div class="day-chip-number">22</div>
+                            <div class="day-chip-indicator">●</div>
+                        </div>
+                        <div class="day-chip">
+                            <div class="day-chip-name">Lør</div>
+                            <div class="day-chip-number">23</div>
+                            <div class="day-chip-indicator">●</div>
+                        </div>
+                        <div class="day-chip">
+                            <div class="day-chip-name">Søn</div>
+                            <div class="day-chip-number">24</div>
+                            <div class="day-chip-indicator">💤</div>
+                        </div>
+                    </div>
+
+                    <div class="session-list">
+                        <div class="session-card">
+                            <div class="session-time">
+                                <span class="time-badge">14:00-15:30</span>
+                                <span>• I dag</span>
+                            </div>
+                            <div class="session-main">
+                                <div class="session-icon">🎯</div>
+                                <div class="session-info">
+                                    <div class="session-title">Driver Teknikk</div>
+                                    <div class="session-location">📍 Range • Med coach</div>
+                                </div>
+                            </div>
+                            <div class="session-tags">
+                                <span class="tag">⏱ 90 min</span>
+                                <span class="tag">📚 L2</span>
+                                <span class="tag">🎯 S1-S2</span>
+                            </div>
+                            <div class="session-actions">
+                                <button class="action-btn action-btn-secondary">📝 Detaljer</button>
+                                <button class="action-btn action-btn-primary">▶️ Start økt</button>
+                            </div>
+                        </div>
+
+                        <div class="session-card">
+                            <div class="session-time">
+                                <span class="time-badge">17:00-18:00</span>
+                                <span>• I dag</span>
+                            </div>
+                            <div class="session-main">
+                                <div class="session-icon">💪</div>
+                                <div class="session-info">
+                                    <div class="session-title">Fysisk Styrke</div>
+                                    <div class="session-location">📍 Gym • Selvstendig</div>
+                                </div>
+                            </div>
+                            <div class="session-tags">
+                                <span class="tag">⏱ 60 min</span>
+                                <span class="tag">📚 L2</span>
+                                <span class="tag">🎯 S3</span>
+                            </div>
+                            <div class="session-actions">
+                                <button class="action-btn action-btn-secondary">📝 Detaljer</button>
+                                <button class="action-btn action-btn-primary">▶️ Start økt</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bottom-nav">
+                    <div class="nav-item">
+                        <div class="nav-icon">🏠</div>
+                        <div class="nav-label">Hjem</div>
+                    </div>
+                    <div class="nav-item active">
+                        <div class="nav-icon">📅</div>
+                        <div class="nav-label">Plan</div>
+                    </div>
+                    <div class="nav-item">
+                        <div class="nav-icon">📚</div>
+                        <div class="nav-label">Øvelser</div>
+                    </div>
+                    <div class="nav-item">
+                        <div class="nav-icon">📊</div>
+                        <div class="nav-label">Stats</div>
+                    </div>
+                    <div class="nav-item">
+                        <div class="nav-icon">👤</div>
+                        <div class="nav-label">Profil</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-panel">
+            <div class="info-title">Weekly Plan View</div>
+            <div class="info-description">
+                Ukeplan med daglig oversikt, økter og fremgang. Optimalisert for iOS med native patterns.
+            </div>
+
+            <div class="info-description">
+                <strong>Dynamic Island:</strong> Viser neste kommende økt med countdown og quick access.
+            </div>
+
+            <div class="info-description">
+                <strong>Features:</strong>
+                <br>• Gradient header med uke-statistikk
+                <br>• Horizontal scrolling day selector
+                <br>• Session cards med quick actions
+                <br>• Today indicator (gull border)
+                <br>• Completion indicators (●, ✓, 💤)
+                <br>• Week navigation (◀ ▶)
+            </div>
+
+            <div class="info-description">
+                <strong>Design Details:</strong>
+                <br>• Frosted glass effects (backdrop-filter)
+                <br>• Smooth transitions
+                <br>• Blue gradient header (#10456A → #2C5F7F)
+                <br>• Safe area aware
+                <br>• Native iOS feel
+            </div>
+
+            <div class="pulse" style="background: rgba(16, 69, 106, 0.05); padding: 16px; border-radius: 12px; font-size: 13px; color: var(--gray-600); text-align: center; margin-top: 20px;">
+                👆 Klikk Dynamic Island for interaksjon
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const island = document.getElementById('dynamicIsland');
+        const islandContent = document.getElementById('islandContent');
+        let isExpanded = false;
+
+        island.addEventListener('click', () => {
+            isExpanded = !isExpanded;
+            if (isExpanded) {
+                island.classList.add('expanded');
+                islandContent.classList.add('active');
+            } else {
+                island.classList.remove('expanded');
+                islandContent.classList.remove('active');
+            }
+        });
+
+        setTimeout(() => island.click(), 2000);
+
+        document.querySelectorAll('.day-chip').forEach(chip => {
+            chip.addEventListener('click', () => {
+                document.querySelectorAll('.day-chip').forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+            });
+        });
+
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', () => {
+                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

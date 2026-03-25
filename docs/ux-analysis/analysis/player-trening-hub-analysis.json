@@ -1,0 +1,220 @@
+{
+  "pageId": "player-trening-hub",
+  "path": "/trening",
+  "component": "TreningHub",
+  "analyzedAt": "2026-01-13T01:50:00Z",
+  "jtbdFramework": {
+    "1_pageIdentification": {
+      "name": "TreningHub (Training Landing Page)",
+      "role": "player",
+      "frequency": "daily",
+      "context": "training_navigation",
+      "clarityScore": 8
+    },
+    "2_primaryJTBD": {
+      "decision": "What training-related task should I do?",
+      "isObviousIn5Seconds": true,
+      "clarity": 8,
+      "competingAttention": [
+        "Quick Stats (informational)",
+        "Help text (guidance)",
+        "TodayHero (action)"
+      ],
+      "primaryCTA": {
+        "component": "Quick Log Button + TodayHero",
+        "label": "Log Session / Start Training",
+        "isProminent": true
+      }
+    },
+    "3_decisionVsInfoRatio": {
+      "decisionElements": {
+        "count": 3,
+        "items": [
+          "TodayHero action button",
+          "Quick Log button",
+          "Featured action: Log Session"
+        ]
+      },
+      "informationElements": {
+        "count": 6,
+        "items": [
+          "Page title + subtitle",
+          "Help text",
+          "Quick Stats (4× stats)",
+          "Area navigation cards"
+        ]
+      },
+      "ratio": 0.33,
+      "assessment": "MODERATE - Slightly info-heavy for action hub",
+      "dominantDecision": "Yes - Log Session is clear primary action"
+    },
+    "4_visualHierarchy": {
+      "eyeLandsOnFirst": "HubPage header with title",
+      "isCorrectFirstFocus": false,
+      "heroElement": "TodayHero (compact variant)",
+      "secondaryElements": [
+        "Quick Stats grid",
+        "Quick Log button",
+        "Navigation cards"
+      ],
+      "noiseElements": [
+        "Help text might be redundant with subtitle"
+      ],
+      "isFlatHierarchy": true,
+      "assessment": "MODERATE - TodayHero should be more prominent as primary action"
+    },
+    "5_kpiQuality": {
+      "kpis": [
+        {
+          "metric": "Sessions this month",
+          "type": "lagging",
+          "isActionable": false,
+          "hasContext": false,
+          "quality": "vanity",
+          "note": "Count-based, no target or context"
+        },
+        {
+          "metric": "Hours trained",
+          "type": "lagging",
+          "isActionable": false,
+          "hasContext": false,
+          "quality": "vanity",
+          "note": "Volume metric without quality context"
+        },
+        {
+          "metric": "Exercises completed",
+          "type": "lagging",
+          "isActionable": false,
+          "hasContext": false,
+          "quality": "vanity",
+          "note": "Count-based, no context"
+        },
+        {
+          "metric": "Tests completed",
+          "type": "lagging",
+          "isActionable": false,
+          "hasContext": false,
+          "quality": "vanity",
+          "note": "Count-based, no context"
+        }
+      ],
+      "leadingPercentage": 0.0,
+      "actionablePercentage": 0.0,
+      "assessment": "WEAK - All vanity metrics, no actionable insights"
+    },
+    "6_languageAndMentalModel": {
+      "style": "system_neutral",
+      "actionVerbs": [
+        "Log",
+        "View",
+        "Record"
+      ],
+      "systemNouns": [
+        "Training",
+        "Sessions",
+        "Exercise library",
+        "Tests",
+        "Activity"
+      ],
+      "coachActionPercentage": 0.43,
+      "assessment": "MODERATE - Mix of action and system language",
+      "phrasesToRewrite": [
+        "'Track all your training activity in one place' → 'Your training workspace'",
+        "'Exercise library' → 'Exercises' (simpler)"
+      ]
+    },
+    "7_flowAndNavigationCost": {
+      "clicksFromDashboard": 1,
+      "navigationDepth": 1,
+      "clicksToLog": 1,
+      "clicksToStartTraining": 1,
+      "clicksToViewSessions": 1,
+      "assessment": "EXCELLENT - All primary actions are 1 click",
+      "shouldBeInline": []
+    },
+    "8_stateCoverage": {
+      "hasEmptyState": false,
+      "hasLoadingState": true,
+      "hasErrorState": false,
+      "hasSuccessState": false,
+      "hasOverloadedState": false,
+      "hasAtRiskState": false,
+      "assessment": "WEAK - Only loading state implemented",
+      "gaps": [
+        "No empty state for new users with no training data",
+        "No error handling for data fetch failures",
+        "No celebration/success state after logging session",
+        "Hardcoded mock data in component (not production-ready)"
+      ]
+    },
+    "9_roleScalability": {
+      "hasRoleConditionals": false,
+      "beginnerFriendly": true,
+      "eliteFriendly": true,
+      "scalabilityIssues": [
+        "Mock data hardcoded - not fetching real stats",
+        "No personalization based on training frequency",
+        "Same view for beginner vs advanced player"
+      ],
+      "recommendation": "Replace mock stats with real data, add progressive complexity"
+    },
+    "10_strategicVerdict": {
+      "diagnosis": "Navigation hub with weak KPIs and hardcoded data",
+      "currentBehavior": "Static landing page",
+      "desiredBehavior": "Dynamic training workspace",
+      "topIssues": [
+        {
+          "rank": 1,
+          "issue": "Hardcoded mock data instead of real stats from API",
+          "severity": "high",
+          "impact": "Page shows fake data, not production-ready"
+        },
+        {
+          "rank": 2,
+          "issue": "All KPIs are vanity metrics with no actionable insights",
+          "severity": "medium",
+          "impact": "Users can't make decisions from stats shown"
+        },
+        {
+          "rank": 3,
+          "issue": "Missing empty/error states",
+          "severity": "medium",
+          "impact": "Poor experience for edge cases"
+        }
+      ],
+      "structuralFix": "Replace QuickStats with actionable insights + connect to real data API"
+    },
+    "11_crossPageConsistency": {
+      "note": "Uses HubPage layout (consistent with other hubs). TodayHero variant='compact' consistent with dashboard integration pattern."
+    }
+  },
+  "codeAnalysis": {
+    "componentCount": {
+      "interactive": 3,
+      "display": 6
+    },
+    "stateHandling": {
+      "loading": "useTodayData hook with isLoading",
+      "empty": "None",
+      "error": "None"
+    },
+    "dataSource": {
+      "isRealData": false,
+      "isMockData": true,
+      "note": "Hardcoded stats object in component - NOT fetching from API"
+    },
+    "accessibility": {
+      "hasAriaLabels": false,
+      "semanticHTML": true,
+      "keyboardNav": "Unknown - needs testing"
+    },
+    "responsiveDesign": {
+      "hasMobileLayout": true,
+      "breakpoints": ["inherited from HubPage"],
+      "mobileFirst": true
+    }
+  },
+  "priorityScore": 95,
+  "implementationStatus": "partial",
+  "overallAssessment": "MODERATE - Good structure but needs real data integration and better KPIs"
+}

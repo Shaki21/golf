@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ukeplan - TIER Golf</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Sans:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #F9FAFB;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border: 1px solid #F2F4F7;
+        }
+
+        .header h1 {
+            color: #10456A;
+            margin-bottom: 8px;
+        }
+
+        .header-meta {
+            color: #666;
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .week-nav {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .nav-btn {
+            background: white;
+            border: 2px solid #1a3d2e;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: #10456A;
+            color: white;
+        }
+
+        .nav-btn.active {
+            background: #10456A;
+            color: white;
+        }
+
+        .day-grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .day-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border: 1px solid #F2F4F7;
+            transition: all 0.3s;
+        }
+
+        .day-card:hover {
+            transform: translateX(4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+
+        .day-card.rest {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+        }
+
+        .day-card.active {
+            border: 3px solid #ffd700;
+            box-shadow: 0 8px 24px rgba(255, 215, 0, 0.3);
+        }
+
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .day-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #10456A;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .day-date {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .session-info {
+            background: #f5f5f5;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+
+        .session-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #10456A;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .session-meta {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .meta-badge {
+            background: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-weight: 500;
+        }
+
+        .exercises-section {
+            margin-top: 16px;
+        }
+
+        .exercises-title {
+            font-weight: bold;
+            color: #10456A;
+            margin-bottom: 12px;
+        }
+
+        .exercise-item {
+            background: white;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .exercise-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .exercise-name {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .exercise-duration {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .focus-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+
+        .focus-tag {
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 6px 12px;
+            border-radius: 16px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #10456A;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2C5F7F;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #10456A;
+            border: 2px solid #1a3d2e;
+        }
+
+        .btn-success {
+            background: #4caf50;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #45a049;
+        }
+
+        .distribution-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border: 1px solid #F2F4F7;
+            margin-top: 24px;
+        }
+
+        .distribution-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #10456A;
+            margin-bottom: 20px;
+        }
+
+        .distribution-item {
+            margin-bottom: 16px;
+        }
+
+        .distribution-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .distribution-label {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .distribution-value {
+            font-weight: bold;
+            color: #10456A;
+        }
+
+        .progress-bar {
+            background: #e0e0e0;
+            height: 12px;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4caf50 0%, #8bc34a 100%);
+            transition: width 1s ease;
+        }
+
+        .total-hours {
+            background: #F9FAFB;
+            color: white;
+            padding: 16px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .total-hours-value {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .rest-message {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .rest-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+
+        .rest-text {
+            font-size: 24px;
+            font-weight: bold;
+            color: #10456A;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .day-card {
+            animation: fadeIn 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>📅 UKEPLAN - UKE 47, 2025</h1>
+            <div class="header-meta">
+                <div class="meta-item">
+                    <span>📊</span>
+                    <span>Grunnperiode (G)</span>
+                </div>
+                <div class="meta-item">
+                    <span>🎯</span>
+                    <span>Kategori D</span>
+                </div>
+                <div class="meta-item">
+                    <span>⏱️</span>
+                    <span>Total: 15 timer</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Week Navigation -->
+        <div class="week-nav">
+            <button class="nav-btn">Mandag</button>
+            <button class="nav-btn">Tirsdag</button>
+            <button class="nav-btn">Onsdag</button>
+            <button class="nav-btn">Torsdag</button>
+            <button class="nav-btn">Fredag</button>
+            <button class="nav-btn">Lørdag</button>
+            <button class="nav-btn active">Søndag</button>
+        </div>
+
+        <!-- Day Cards -->
+        <div class="day-grid">
+            <!-- Monday -->
+            <div class="day-card">
+                <div class="day-header">
+                    <div>
+                        <div class="day-title">
+                            <span>📅</span>
+                            <span>MANDAG</span>
+                        </div>
+                        <div class="day-date">18. november 2025</div>
+                    </div>
+                </div>
+
+                <div class="session-info">
+                    <div class="session-title">
+                        <span>🎯</span>
+                        <span>TEKNIKK - DRIVER</span>
+                    </div>
+                    <div class="session-meta">
+                        <div class="meta-badge">📍 Range</div>
+                        <div class="meta-badge">👤 Med coach Erik</div>
+                        <div class="meta-badge">🕐 16:00 - 17:30</div>
+                    </div>
+
+                    <div class="exercises-section">
+                        <div class="exercises-title">Øvelser:</div>
+                        <div class="exercise-item">
+                            <div>
+                                <div class="exercise-name">1. Oppvarming & mobilitet</div>
+                            </div>
+                            <div class="exercise-duration">⏱️ 15 min</div>
+                        </div>
+                        <div class="exercise-item">
+                            <div>
+                                <div class="exercise-name">2. Driver swing fundamentals (L2)</div>
+                                <div style="font-size: 12px; color: #666; margin-top: 4px;">
+                                    • Grip & setup • Swing plane • Ball contact
+                                </div>
+                            </div>
+                            <div class="exercise-duration">⏱️ 60 min</div>
+                        </div>
+                        <div class="exercise-item">
+                            <div>
+                                <div class="exercise-name">3. Review & target practice</div>
+                            </div>
+                            <div class="exercise-duration">⏱️ 15 min</div>
+                        </div>
+                    </div>
+
+                    <div class="focus-tags">
+                        <div class="focus-tag">📚 L2 (Fundamentals)</div>
+                        <div class="focus-tag">🎯 S1-S2 (Kontrollert)</div>
+                        <div class="focus-tag">💨 CS50-CS55</div>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button class="btn btn-primary">✏️ Rediger</button>
+                    <button class="btn btn-success">✅ Fullfør</button>
+                    <button class="btn btn-secondary">💬 Notater</button>
+                </div>
+            </div>
+
+            <!-- Tuesday -->
+            <div class="day-card">
+                <div class="day-header">
+                    <div>
+                        <div class="day-title">
+                            <span>📅</span>
+                            <span>TIRSDAG</span>
+                        </div>
+                        <div class="day-date">19. november 2025</div>
+                    </div>
+                </div>
+
+                <div class="session-info">
+                    <div class="session-title">
+                        <span>💪</span>
+                        <span>FYSISK - STYRKE</span>
+                    </div>
+                    <div class="session-meta">
+                        <div class="meta-badge">📍 Gym</div>
+                        <div class="meta-badge">👤 Selvstendig</div>
+                        <div class="meta-badge">🕐 10:00 - 11:00</div>
+                    </div>
+
+                    <div class="exercises-section">
+                        <div class="exercises-title">Program:</div>
+                        <div class="exercise-item">
+                            <div class="exercise-name">1. Dynamic warmup</div>
+                            <div class="exercise-duration">⏱️ 10 min</div>
+                        </div>
+                        <div class="exercise-item">
+                            <div>
+                                <div class="exercise-name">2. Styrkeøvelser</div>
+                                <div style="font-size: 12px; color: #666; margin-top: 4px;">
+                                    • Squats: 3x10 • Deadlifts: 3x8<br>
+                                    • Rotational exercises: 3x12 • Core stability: 4x30s
+                                </div>
+                            </div>
+                            <div class="exercise-duration">⏱️ 40 min</div>
+                        </div>
+                        <div class="exercise-item">
+                            <div class="exercise-name">3. Cooldown & stretch</div>
+                            <div class="exercise-duration">⏱️ 10 min</div>
+                        </div>
+                    </div>
+
+                    <div class="focus-tags">
+                        <div class="focus-tag">📚 L2 (Basic Strength)</div>
+                        <div class="focus-tag">🎯 S3 (Gym)</div>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button class="btn btn-primary">✏️ Rediger</button>
+                    <button class="btn btn-success">✅ Fullfør</button>
+                    <button class="btn btn-secondary">💬 Notater</button>
+                </div>
+            </div>
+
+            <!-- Sunday (Rest Day) -->
+            <div class="day-card rest active">
+                <div class="day-header">
+                    <div>
+                        <div class="day-title">
+                            <span>📅</span>
+                            <span>SØNDAG</span>
+                        </div>
+                        <div class="day-date">23. november 2025 (I dag)</div>
+                    </div>
+                </div>
+
+                <div class="rest-message">
+                    <div class="rest-icon">😴</div>
+                    <div class="rest-text">HVILEDAG</div>
+                    <div style="color: #666; margin-top: 12px;">
+                        Aktiv restitusjon • Stretching • Mental recovery
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Week Distribution Summary -->
+        <div class="distribution-card">
+            <div class="distribution-title">📊 UKENS FORDELING</div>
+
+            <div class="distribution-item">
+                <div class="distribution-header">
+                    <div class="distribution-label">🎯 Teknikk</div>
+                    <div class="distribution-value">40% (6.0t)</div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 40%;"></div>
+                </div>
+            </div>
+
+            <div class="distribution-item">
+                <div class="distribution-header">
+                    <div class="distribution-label">💪 Fysisk</div>
+                    <div class="distribution-value">30% (4.5t)</div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 30%;"></div>
+                </div>
+            </div>
+
+            <div class="distribution-item">
+                <div class="distribution-header">
+                    <div class="distribution-label">⛳ Short Game</div>
+                    <div class="distribution-value">20% (3.0t)</div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 20%;"></div>
+                </div>
+            </div>
+
+            <div class="distribution-item">
+                <div class="distribution-header">
+                    <div class="distribution-label">🧠 Mental</div>
+                    <div class="distribution-value">10% (1.5t)</div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 10%;"></div>
+                </div>
+            </div>
+
+            <div class="total-hours">
+                <div class="total-hours-value">15.0 timer</div>
+                <div>Total treningstid (Mål: 15 timer) ✅</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Animate progress bars on load
+        window.addEventListener('load', () => {
+            document.querySelectorAll('.progress-fill').forEach(fill => {
+                const width = fill.style.width;
+                fill.style.width = '0';
+                setTimeout(() => {
+                    fill.style.width = width;
+                }, 100);
+            });
+        });
+
+        // Week nav functionality
+        document.querySelectorAll('.week-nav .nav-btn').forEach((btn, index) => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.week-nav .nav-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                console.log('Switched to day:', index);
+            });
+        });
+    </script>
+</body>
+</html>

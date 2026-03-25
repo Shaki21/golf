@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AK Golf - Icon Gallery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      /* Base palette */
+      --bg: #FAFAFA;
+      --card: #FFFFFF;
+      --border: #E5E5E5;
+      --text-1: #1A1A1A;
+      --text-2: #666666;
+      --text-3: #999999;
+      --accent: #10456A;
+      --accent-light: #2C5F7F;
+      --gold: #C9A227;
+
+      /* Semantic tokens */
+      --achievement: var(--gold);
+      --success: #4A7C59;
+      --warning: #D4A84B;
+      --error: #C45B4E;
+      --info: var(--accent);
+      --mental: #7C3AED;
+      --muted: #8A9BA8;
+    }
+
+    /* Tone utility classes - apply to icon-card or wrapper to color the icon */
+    .tone-accent { color: var(--accent); }
+    .tone-achievement { color: var(--achievement); }
+    .tone-success { color: var(--success); }
+    .tone-warning { color: var(--warning); }
+    .tone-error { color: var(--error); }
+    .tone-info { color: var(--info); }
+    .tone-mental { color: var(--mental); }
+    .tone-muted { color: var(--muted); }
+
+    /* Default icon color */
+    .icon-card svg { color: var(--accent); }
+
+    html { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-1); }
+    body { padding: 40px 24px; max-width: 1400px; margin: 0 auto; }
+
+    .header {
+      text-align: center;
+      margin-bottom: 48px;
+      padding-bottom: 32px;
+      border-bottom: 2px solid var(--border);
+    }
+    .header h1 {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .header p { color: var(--text-2); font-size: 14px; }
+    .header .stats {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      margin-top: 24px;
+    }
+    .header .stat {
+      text-align: center;
+    }
+    .header .stat-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .header .stat-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-3);
+    }
+
+    .section { margin-bottom: 48px; }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .section-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      white-space: nowrap;
+    }
+    .section-line { flex: 1; height: 1px; background: var(--border); }
+    .section-count {
+      font-size: 12px;
+      color: var(--text-3);
+      background: var(--bg);
+      padding: 4px 10px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .icon-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 16px;
+    }
+
+    .icon-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 12px;
+      text-align: center;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .icon-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 4px 12px rgba(16, 69, 106, 0.1);
+      transform: translateY(-2px);
+    }
+    .icon-card svg {
+      margin-bottom: 12px;
+    }
+    .icon-card .name {
+      font-size: 11px;
+      color: var(--text-2);
+      word-break: break-word;
+    }
+
+    .icon-large {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 20px;
+    }
+    .icon-large .icon-card {
+      padding: 24px 16px;
+    }
+    .icon-large .icon-card svg {
+      margin-bottom: 16px;
+    }
+    .icon-large .icon-card .name {
+      font-size: 12px;
+      font-weight: 500;
+    }
+    .icon-large .icon-card .desc {
+      font-size: 10px;
+      color: var(--text-3);
+      margin-top: 4px;
+    }
+
+    .color-switcher {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 32px;
+    }
+    .color-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      border: 2px solid var(--border);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .color-btn:hover, .color-btn.active {
+      border-color: var(--accent);
+      transform: scale(1.1);
+    }
+    .color-btn.light { background: #FAFAFA; }
+    .color-btn.dark { background: #1A1A1A; }
+    .color-btn.primary { background: #10456A; }
+    .color-btn.success { background: #4A7C59; }
+    .color-btn.gold { background: #C9A227; }
+
+    .spec-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 32px;
+    }
+    .spec-box h3 {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .spec-box code {
+      background: var(--bg);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-family: monospace;
+    }
+    .spec-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      font-size: 13px;
+      color: var(--text-2);
+    }
+    .spec-list li {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .spec-list li::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <h1>AK Golf Icon Library</h1>
+  <p>Custom SVG icons for the AK Golf Academy app</p>
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-value">80+</div>
+      <div class="stat-label">Ikoner</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">24px</div>
+      <div class="stat-label">ViewBox</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">1.5px</div>
+      <div class="stat-label">Stroke</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">12</div>
+      <div class="stat-label">Kategorier</div>
+    </div>
+  </div>
+</header>
+
+<div class="spec-box">
+  <h3>Icon Specifications</h3>
+  <ul class="spec-list">
+    <li>ViewBox: <code>0 0 24 24</code></li>
+    <li>Stroke Width: <code>1.5px</code></li>
+    <li>Stroke Caps: <code>round</code></li>
+    <li>Stroke Joins: <code>round</code></li>
+    <li>Fill: <code>none</code> (outline style)</li>
+    <li>Color: <code>currentColor</code></li>
+    <li style="color: var(--error);"><strong>ALDRI bruk hardcoded hex i SVG. Bruk stroke/fill: currentColor og sett farge via CSS tokens.</strong></li>
+  </ul>
+</div>
+
+<!-- GOLF ICONS -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-title">Golf Icons</span>
+    <span class="section-line"></span>
+    <span class="section-count">12 ikoner</span>
+  </div>
+  <div class="icon-large">
+
+    <div class="icon-card">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="9"/>
+        <circle cx="12" cy="5" r="0.8" fill="currentColor" stroke="none"/>
+        <circle cx="8" cy="7" r="0.8" fill="currentColor" stroke="none"/>
+        <circle cx="12" cy="7.5" r="0.8" fill="currentColor" stroke="none"/>
+        <circle cx="16" cy="7" r="0.8" fill="currentColor" stroke="none"/>
+        <circle cx="5.5" cy="10" r="0.8" fill="currentColor" stroke="none"/>
+        <circle cx="9" cy="10" r="0.8" fill="currentColor" stroke="none"/>
+        <circle cx="12" cy="10.5" r="0.8" fill="currentColor" stroke="none"/>
+        <circle cx="15" cy="10" r="0.8" fill="currentColor" stroke="none"/>
+        <circle cx="18.5" cy="10" r="0.8" fill="currentColor" stroke="none"/>
+        <circle cx="7" cy="16" r="0.8" fill="currentColor" stroke="none"/>
+        <circle cx="12" cy="16" r="0.8" fill="currentColor" stroke="none"/>
+        <circle cx="17" cy="16" r="0.8" fill="currentColor" stroke="none"/>
+      </svg>
+      <div class="name">GolfBall</div>
+      <div class="desc">Med dimple-monster</div>
+    </div>
+
+    <div class="icon-card">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="3" x2="12" y2="17"/>
+        <path d="M7 17 L12 17 L17 21 L7 21 Z"/>
+      </svg>
+      <div class="name">GolfClub</div>
+      <div class="desc">Driver/Iron</div>
+    </div>
+
+    <div class="icon-card">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="6" y1="3" x2="6" y2="21"/>
+        <path d="M6 3 L18 6.5 L6 10 Z" fill="currentColor"/>
+        <ellipse cx="12" cy="20" rx="6" ry="2"/>
+      </svg>
+      <div class="name">GolfFlag</div>
+      <div class="desc">Pin/Hole</div>
+    </div>
+
+    <div class="icon-card">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="8" x2="12" y2="20"/>
+        <line x1="9" y1="8" x2="15" y2="8"/>
+        <circle cx="12" cy="5" r="3"/>
+      </svg>
+      <div class="name">GolfTee</div>
+      <div class="desc">Ball on tee</div>
+    </div>
+
+    <div class="icon-card">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="9"/>
+        <circle cx="12" cy="12" r="5"/>
+        <circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/>
+      </svg>
+      <div class="name">GolfTarget</div>
+      <div class="desc">Precision aim</div>
+    </div>
+
+    <div class="icon-card">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="4" y1="12" x2="20" y2="12"/>
+        <polyline points="7 9 4 12 7 15"/>
+        <polyline points="17 9 20 12 17 15"/>
+      </svg>
+      <div class="name">GolfDistance</div>
+      <div class="desc">Carry/Total</div>
+    </div>
+
+    <div class="icon-card">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="10" cy="4" r="2.5"/>
+        <line x1="10" y1="6.5" x2="10" y2="13"/>
+        <line x1="10" y1="13" x2="7" y2="20"/>
+        <line x1="10" y1="13" x2="13" y2="20"/>
+        <path d="M10 8 Q 14 6 18 3"/>
+        <line x1="17" y1="3.5" x2="21" y2="2"/>
+        <line x1="20.5" y1="1.5" x2="22" y2="3" stroke-width="2"/>
+      </svg>
+      <div class="name">GolfSwing</div>
+      <div class="desc">Full swing</div>
+    </div>
+
+    <div class="icon-card">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+      </svg>
+      <div class="name">GolfSpeed</div>
+      <div class="desc">Clubhead speed</div>
+    </div>
+
+    <div class="icon-card">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="18" r="3"/>
+        <line x1="12" y1="3" x2="12" y2="15"/>
+        <line x1="8" y1="7" x2="16" y2="7"/>
+      </svg>
+      <div class="name">GolfPutt</div>
+      <div class="desc">Putting stroke</div>
+    </div>
+
+    <div class="icon-card">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="2" x2="12" y2="18"/>
+        <rect x="8" y="18" width="8" height="4" rx="1"/>
+        <circle cx="12" cy="6" r="2" fill="none"/>
+      </svg>
+      <div class="name">GolfPutter</div>
+      <div class="desc">Putter club</div>
+    </div>
+
+    <div class="icon-card">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <ellipse cx="12" cy="16" rx="9" ry="5"/>
+        <path d="M5 14c0-3 3-6 7-6s7 3 7 6"/>
+        <circle cx="12" cy="12" r="2"/>
+      </svg>
+      <div class="name">GolfBunker</div>
+      <div class="desc">Sand trap</div>
+    </div>
+
+    <div class="icon-card">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="18" height="18" rx="2"/>
+        <line x1="3" y1="9" x2="21" y2="9"/>
+        <line x1="9" y1="9" x2="9" y2="21"/>
+        <line x1="15" y1="9" x2="15" y2="21"/>
+      </svg>
+      <div class="name">GolfScorecard</div>
+      <div class="desc">Score tracking</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PYRAMIDEN CORE ICONS -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-title">Pyramiden Core</span>
+    <span class="section-line"></span>
+    <span class="section-count">3 ikoner</span>
+  </div>
+  <div class="icon-large">
+
+    <div class="icon-card">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2L2 22h20L12 2z"/>
+        <path d="M5 18h14"/>
+        <path d="M6.5 14.5h11"/>
+        <path d="M8 11h8"/>
+        <path d="M9.5 7.5h5"/>
+      </svg>
+      <div class="name">Pyramiden</div>
+      <div class="desc">5-level development model</div>
+    </div>
+
+    <div class="icon-card">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6.5 8v8"/>
+        <path d="M17.5 8v8"/>
+        <path d="M3 10v4"/>
+        <path d="M21 10v4"/>
+        <path d="M3 12h18"/>
+      </svg>
+      <div class="name">Fysisk</div>
+      <div class="desc">Strength foundation</div>
+    </div>
+
+    <div class="icon-card">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="14" cy="4" r="2"/>
+        <path d="M14 6v4"/>
+        <path d="M17 17l-3-7-2.5 5"/>
+        <path d="M17 17l1 4"/>
+        <path d="M11.5 15l-2 6"/>
+        <path d="M14 10l-6-5"/>
+        <path d="M8 5v-3"/>
+      </svg>
+      <div class="name">Teknikk</div>
+      <div class="desc">Golf swing technique</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PYRAMIDEN LEVELS ICONS -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-title">Pyramiden Levels</span>
+    <span class="section-line"></span>
+    <span class="section-count">3 ikoner</span>
+  </div>
+  <div class="icon-large">
+
+    <div class="icon-card">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <ellipse cx="12" cy="14" rx="9" ry="5"/>
+        <path d="M12 14v-11"/>
+        <path d="M12 3l5 3-5 3"/>
+        <circle cx="8" cy="13" r="1" fill="currentColor" stroke="none"/>
+        <circle cx="15" cy="15" r="1" fill="currentColor" stroke="none"/>
+        <circle cx="10" cy="16" r="1" fill="currentColor" stroke="none"/>
+        <circle cx="14" cy="12" r="1" fill="currentColor" stroke="none"/>
+        <circle cx="6" cy="15" r="1" fill="currentColor" stroke="none"/>
+      </svg>
+      <div class="name">Golfslag</div>
+      <div class="desc">Shot dispersion pattern</div>
+    </div>
+
+    <div class="icon-card">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <ellipse cx="12" cy="18" rx="9" ry="4"/>
+        <path d="M12 18v-14"/>
+        <path d="M12 4l6 3-6 3"/>
+        <circle cx="12" cy="18" r="1"/>
+      </svg>
+      <div class="name">Spill</div>
+      <div class="desc">On-course play</div>
+    </div>
+
+    <div class="icon-card tone-achievement">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 4h12v4a6 6 0 1 1-12 0V4z"/>
+        <path d="M6 6H3v2a3 3 0 0 0 3 3"/>
+        <path d="M18 6h3v2a3 3 0 0 1-3 3"/>
+        <path d="M12 14v3"/>
+        <path d="M8 21h8"/>
+        <path d="M8 21v-4h8v4"/>
+      </svg>
+      <div class="name">Turnering</div>
+      <div class="desc">Tournament / competition</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- TRENINGSOMRÅDER ICONS -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-title">Treningsområder</span>
+    <span class="section-line"></span>
+    <span class="section-count">4 ikoner</span>
+  </div>
+  <div class="icon-large">
+
+    <div class="icon-card">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="6" r="3"/>
+        <path d="M12 9v9"/>
+        <path d="M9 21h6"/>
+      </svg>
+      <div class="name">Tee Total</div>
+      <div class="desc">Tee shots & driving</div>
+    </div>
+
+    <div class="icon-card">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="3" cy="19" r="1.5" fill="currentColor" stroke="none"/>
+        <path d="M4 18Q12 2 19 14"/>
+        <path d="M19 6v12"/>
+        <path d="M19 6l4 2.5-4 2.5"/>
+      </svg>
+      <div class="name">Innspill</div>
+      <div class="desc">Approach shots (long arc)</div>
+    </div>
+
+    <div class="icon-card">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="6" cy="18" r="1.5" fill="currentColor" stroke="none"/>
+        <path d="M7.5 17q4-3 7.5 0"/>
+        <path d="M19 6v12"/>
+        <path d="M19 6l4 2.5-4 2.5"/>
+      </svg>
+      <div class="name">Nærspill</div>
+      <div class="desc">Short game (low arc)</div>
+    </div>
+
+    <div class="icon-card">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="4" cy="15" r="2"/>
+        <path d="M6 15h10" stroke-dasharray="2 2"/>
+        <circle cx="18" cy="15" r="2"/>
+        <path d="M18 13v-8"/>
+        <path d="M18 5l3 2-3 2"/>
+      </svg>
+      <div class="name">Putting</div>
+      <div class="desc">Ball roll to hole</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- TRAINING METRICS ICONS -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-title">Training Metrics</span>
+    <span class="section-line"></span>
+    <span class="section-count">2 ikoner</span>
+  </div>
+  <div class="icon-large">
+
+    <div class="icon-card">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 18h4v4H4z"/>
+        <path d="M10 12h4v10h-4z"/>
+        <path d="M16 6h4v16h-4z"/>
+        <path d="M12 2v6"/>
+        <path d="M9 5l3-3 3 3"/>
+      </svg>
+      <div class="name">Fase</div>
+      <div class="desc">Training phase / level</div>
+    </div>
+
+    <div class="icon-card">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M13 2L4 14h7l-2 8 11-12h-7l2-8z"/>
+      </svg>
+      <div class="name">Club Speed</div>
+      <div class="desc">Swing speed / power</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- STATUS & PLANNING ICONS -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-title">Status & Planning</span>
+    <span class="section-line"></span>
+    <span class="section-count">3 ikoner</span>
+  </div>
+  <div class="icon-large">
+
+    <div class="icon-card tone-mental">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M7 8c-2 0-3 2-3 4s1 4 3 4"/>
+        <path d="M17 8c2 0 3 2 3 4s-1 4-3 4"/>
+        <path d="M7 8c0-2 2-4 5-4s5 2 5 4"/>
+        <path d="M7 16c0 2 2 4 5 4s5-2 5-4"/>
+        <path d="M12 8v8"/>
+        <path d="M9 20v2"/>
+        <path d="M15 20v2"/>
+        <path d="M3 4h5v2H4v1H3z"/>
+      </svg>
+      <div class="name">Belastning (Mental)</div>
+      <div class="desc">Mental load / low battery</div>
+    </div>
+
+    <div class="icon-card tone-error">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 12h4l2-6 4 12 2-6h6"/>
+      </svg>
+      <div class="name">Belastning (Fysisk)</div>
+      <div class="desc">Physical load / heart rate</div>
+    </div>
+
+    <div class="icon-card">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3V6z"/>
+        <path d="M9 3v15"/>
+        <path d="M15 6v15"/>
+      </svg>
+      <div class="name">Strategi/Taktikk</div>
+      <div class="desc">Course strategy / map</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- TRAINING TYPE ICONS -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-title">Training Types</span>
+    <span class="section-line"></span>
+    <span class="section-count">7 ikoner</span>
+  </div>
+  <div class="icon-large">
+
+    <div class="icon-card tone-success">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="4" r="2.5"/>
+        <path d="M12 6.5 Q 10 10 8 14"/>
+        <line x1="8" y1="14" x2="6" y2="21"/>
+        <line x1="8" y1="14" x2="12" y2="21"/>
+        <path d="M10 9 L 16 15"/>
+        <ellipse cx="17" cy="16" rx="2" ry="1"/>
+        <circle cx="19" cy="18" r="1.5" fill="currentColor" stroke="none"/>
+      </svg>
+      <div class="name">TeknikIcon</div>
+      <div class="desc">Technique training</div>
+    </div>
+
+    <div class="icon-card tone-success">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="9"/>
+        <circle cx="12" cy="12" r="5"/>
+        <circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/>
+      </svg>
+      <div class="name">GolfslagIcon</div>
+      <div class="desc">Shot practice</div>
+    </div>
+
+    <div class="icon-card tone-success">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="8" y1="3" x2="8" y2="21"/>
+        <path d="M8 3 L18 7 L8 11 Z"/>
+        <ellipse cx="12" cy="21" rx="8" ry="2"/>
+      </svg>
+      <div class="name">SpillIcon</div>
+      <div class="desc">On-course play</div>
+    </div>
+
+    <div class="icon-card tone-achievement">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 9H4a2 2 0 0 0 0 4h2M18 9h2a2 2 0 0 1 0 4h-2"/>
+        <path d="M6 4h12v6a6 6 0 0 1-12 0V4z"/>
+        <path d="M12 16v4M8 20h8"/>
+      </svg>
+      <div class="name">KonkurranseIcon</div>
+      <div class="desc">Competition</div>
+    </div>
+
+    <div class="icon-card tone-error">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="8" width="3" height="8" rx="0.5"/>
+        <rect x="5" y="9.5" width="2" height="5" rx="0.3"/>
+        <line x1="7" y1="12" x2="17" y2="12" stroke-width="2"/>
+        <rect x="17" y="9.5" width="2" height="5" rx="0.3"/>
+        <rect x="19" y="8" width="3" height="8" rx="0.5"/>
+      </svg>
+      <div class="name">FysiskIcon</div>
+      <div class="desc">Gym/Strength</div>
+    </div>
+
+    <div class="icon-card tone-mental">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 4C6 4 4 6.5 4 9c0 1.5.5 2.5 1.5 3.5C4.5 13.5 4 15 4 16c0 2.5 2 4.5 4.5 4.5.5 0 1-.1 1.5-.2"/>
+        <path d="M15 4c3 0 5 2.5 5 5 0 1.5-.5 2.5-1.5 3.5 1 1 1.5 2.5 1.5 3.5 0 2.5-2 4.5-4.5 4.5-.5 0-1-.1-1.5-.2"/>
+        <path d="M12 4v16"/>
+        <path d="M9 8c-1 0-2 .5-2 1.5s1 1.5 2 1.5"/>
+        <path d="M9 14c-1.5 0-2.5.5-2.5 1.5s1 1.5 2.5 1.5"/>
+        <path d="M15 8c1 0 2 .5 2 1.5s-1 1.5-2 1.5"/>
+        <path d="M15 14c1.5 0 2.5.5 2.5 1.5s-1 1.5-2.5 1.5"/>
+      </svg>
+      <div class="name">MentalIcon</div>
+      <div class="desc">Mental training</div>
+    </div>
+
+    <div class="icon-card tone-muted">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2 18v-5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v5"/>
+        <path d="M2 18h16"/>
+        <line x1="4" y1="18" x2="4" y2="21"/>
+        <line x1="16" y1="18" x2="16" y2="21"/>
+        <rect x="3" y="10" width="5" height="3" rx="1"/>
+        <circle cx="5.5" cy="8" r="2"/>
+        <text x="18" y="8" font-size="5" fill="currentColor" stroke="none" font-weight="bold">Z</text>
+        <text x="20" y="5" font-size="4" fill="currentColor" stroke="none" font-weight="bold">z</text>
+      </svg>
+      <div class="name">RestIcon</div>
+      <div class="desc">Recovery/Sleep</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- STATUS ICONS -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-title">Status Icons</span>
+    <span class="section-line"></span>
+    <span class="section-count">8 ikoner</span>
+  </div>
+  <div class="icon-grid">
+
+    <div class="icon-card tone-success">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"/>
+      </svg>
+      <div class="name">CheckIcon</div>
+    </div>
+
+    <div class="icon-card">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="9"/>
+        <polyline points="12 6 12 12 16 14"/>
+      </svg>
+      <div class="name">ClockIcon</div>
+    </div>
+
+    <div class="icon-card tone-error">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+      <div class="name">XIcon</div>
+    </div>
+
+    <div class="icon-card tone-achievement">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 9H4a2 2 0 0 0 0 4h2M18 9h2a2 2 0 0 1 0 4h-2"/>
+        <path d="M6 4h12v6a6 6 0 0 1-12 0V4z"/>
+        <path d="M12 16v4M8 20h8"/>
+      </svg>
+      <div class="name">TrophyIcon</div>
+    </div>
+
+    <div class="icon-card tone-achievement">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+      </svg>
+      <div class="name">StarIcon</div>
+    </div>
+
+    <div class="icon-card tone-muted">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="5" y="11" width="14" height="10" rx="2"/>
+        <path d="M8 11V7a4 4 0 0 1 8 0v4"/>
+      </svg>
+      <div class="name">LockIcon</div>
+    </div>
+
+    <div class="icon-card tone-info">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="12" y1="16" x2="12" y2="12"/>
+        <line x1="12" y1="8" x2="12.01" y2="8"/>
+      </svg>
+      <div class="name">InfoIcon</div>
+    </div>
+
+    <div class="icon-card tone-warning">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
+      </svg>
+      <div class="name">FlameIcon</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ACTION ICONS -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-title">Action Icons</span>
+    <span class="section-line"></span>
+    <span class="section-count">9 ikoner</span>
+  </div>
+  <div class="icon-grid">
+
+    <div class="icon-card">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="5 3 19 12 5 21 5 3"/>
+      </svg>
+      <div class="name">PlayIcon</div>
+    </div>
+
+    <div class="icon-card">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="6" y="4" width="4" height="16" rx="1"/>
+        <rect x="14" y="4" width="4" height="16" rx="1"/>
+      </svg>
+      <div class="name">PauseIcon</div>
+    </div>
+
+    <div class="icon-card">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+        <path d="M3 3v5h5"/>
+      </svg>
+      <div class="name">ResetIcon</div>
+    </div>
+
+    <div class="icon-card">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="5" x2="12" y2="19"/>
+        <line x1="5" y1="12" x2="19" y2="12"/>
+      </svg>
+      <div class="name">PlusIcon</div>
+    </div>
+
+    <div class="icon-card">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+      </svg>
+      <div class="name">EditIcon</div>
+    </div>
+
+    <div class="icon-card">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="18" cy="5" r="3"/>
+        <circle cx="6" cy="12" r="3"/>
+        <circle cx="18" cy="19" r="3"/>
+        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+        <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+      </svg>
+      <div class="name">ShareIcon</div>
+    </div>
+
+    <div class="icon-card tone-error">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+      </svg>
+      <div class="name">DeleteIcon</div>
+    </div>
+
+    <div class="icon-card">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+        <polyline points="7 10 12 15 17 10"/>
+        <line x1="12" y1="15" x2="12" y2="3"/>
+      </svg>
+      <div class="name">DownloadIcon</div>
+    </div>
+
+    <div class="icon-card">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+        <polyline points="17 8 12 3 7 8"/>
+        <line x1="12" y1="3" x2="12" y2="15"/>
+      </svg>
+      <div class="name">UploadIcon</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- NAVIGATION ICONS -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-title">Navigation Icons</span>
+    <span class="section-line"></span>
+    <span class="section-count">8 ikoner</span>
+  </div>
+  <div class="icon-grid">
+
+    <div class="icon-card">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+        <polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+      <div class="name">HomeIcon</div>
+    </div>
+
+    <div class="icon-card">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="4" width="18" height="18" rx="2"/>
+        <line x1="16" y1="2" x2="16" y2="6"/>
+        <line x1="8" y1="2" x2="8" y2="6"/>
+        <line x1="3" y1="10" x2="21" y2="10"/>
+      </svg>
+      <div class="name">CalendarIcon</div>
+    </div>
+
+    <div class="icon-card">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+        <circle cx="12" cy="7" r="4"/>
+      </svg>
+      <div class="name">UserIcon</div>
+    </div>
+
+    <div class="icon-card">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="3"/>
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+      </svg>
+      <div class="name">SettingsIcon</div>
+    </div>
+
+    <div class="icon-card">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+        <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+      </svg>
+      <div class="name">BellIcon</div>
+    </div>
+
+    <div class="icon-card">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+      <div class="name">MenuIcon</div>
+    </div>
+
+    <div class="icon-card">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+        <circle cx="9" cy="7" r="4"/>
+        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+      </svg>
+      <div class="name">TeamIcon</div>
+    </div>
+
+    <div class="icon-card">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="20" x2="18" y2="10"/>
+        <line x1="12" y1="20" x2="12" y2="4"/>
+        <line x1="6" y1="20" x2="6" y2="14"/>
+      </svg>
+      <div class="name">ChartIcon</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- MOOD ICONS -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-title">Mood Icons</span>
+    <span class="section-line"></span>
+    <span class="section-count">5 ikoner</span>
+  </div>
+  <div class="icon-grid">
+
+    <div class="icon-card">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="8" y1="15" x2="16" y2="15"/>
+        <path d="M8 9V8"/>
+        <path d="M16 9V8"/>
+        <path d="M9 18c.5-1 1.5-2 3-2s2.5 1 3 2"/>
+      </svg>
+      <div class="name">Mood 1</div>
+    </div>
+
+    <div class="icon-card">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="8" y1="9" x2="8.01" y2="9"/>
+        <line x1="16" y1="9" x2="16.01" y2="9"/>
+        <path d="M10 16c.5-.5 1-1 2-1s1.5.5 2 1"/>
+      </svg>
+      <div class="name">Mood 2</div>
+    </div>
+
+    <div class="icon-card">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="8" y1="9" x2="8.01" y2="9"/>
+        <line x1="16" y1="9" x2="16.01" y2="9"/>
+        <line x1="9" y1="15" x2="15" y2="15"/>
+      </svg>
+      <div class="name">Mood 3</div>
+    </div>
+
+    <div class="icon-card">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="8" y1="9" x2="8.01" y2="9"/>
+        <line x1="16" y1="9" x2="16.01" y2="9"/>
+        <path d="M9 14c.5.5 1.5 1 3 1s2.5-.5 3-1"/>
+      </svg>
+      <div class="name">Mood 4</div>
+    </div>
+
+    <div class="icon-card">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M8 9h.01"/>
+        <path d="M16 9h.01"/>
+        <path d="M8 14c1 1.5 2.5 2 4 2s3-.5 4-2"/>
+      </svg>
+      <div class="name">Mood 5</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- MISC ICONS -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-title">Misc Icons</span>
+    <span class="section-line"></span>
+    <span class="section-count">6 ikoner</span>
+  </div>
+  <div class="icon-grid">
+
+    <div class="icon-card">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+      </svg>
+      <div class="name">BookIcon</div>
+    </div>
+
+    <div class="icon-card">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+        <line x1="16" y1="13" x2="8" y2="13"/>
+        <line x1="16" y1="17" x2="8" y2="17"/>
+      </svg>
+      <div class="name">NoteIcon</div>
+    </div>
+
+    <div class="icon-card">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 20h9"/>
+        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+      </svg>
+      <div class="name">NotesIcon</div>
+    </div>
+
+    <div class="icon-card">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+      </svg>
+      <div class="name">DocumentIcon</div>
+    </div>
+
+    <div class="icon-card">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+      </svg>
+      <div class="name">FolderIcon</div>
+    </div>
+
+    <div class="icon-card">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="21 8 21 21 3 21 3 8"/>
+        <rect x="1" y="3" width="22" height="5"/>
+        <line x1="10" y1="12" x2="14" y2="12"/>
+      </svg>
+      <div class="name">ArchiveIcon</div>
+    </div>
+
+  </div>
+</section>
+
+<div style="text-align: center; padding: 32px; color: var(--text-3); font-size: 13px;">
+  <p>AK Golf Icon Library - 80+ custom SVG icons</p>
+  <p style="margin-top: 8px;">Source: <code>packages/design-system/AK_Golf_Design_Variants/icons.jsx</code></p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,80 @@
+<h1>Test Results Available 📊</h1>
+
+<p>Hi {{firstName}},</p>
+
+<p>Your results for the <strong>{{testName}}</strong> completed on {{testDate}} are now available!</p>
+
+<div class="card" style="background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border: 2px solid #10b981;">
+  <center>
+    <div style="font-size: 64px; font-weight: 800; color: #10b981; margin: 16px 0;">
+      {{score}}
+    </div>
+    <p style="font-size: 20px; font-weight: 600; color: #065f46; margin: 0;">
+      {{performanceLevel}}
+    </p>
+  </center>
+</div>
+
+<div class="stats">
+  <div class="stat-item">
+    <span class="stat-value">{{percentile}}</span>
+    <span class="stat-label">Percentile Rank</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-value" style="color: {{improvementColor}};">{{improvement}}</span>
+    <span class="stat-label">vs. Last Test</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-value">{{categoryProgress}}%</span>
+    <span class="stat-label">Category Progress</span>
+  </div>
+</div>
+
+<h2>Performance Breakdown</h2>
+
+{{#each metrics}}
+<div style="margin: 16px 0;">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+    <span style="font-weight: 600; color: #1f2937;">{{name}}</span>
+    <span style="font-weight: 700; color: #10b981;">{{value}}</span>
+  </div>
+  <div style="background: #e5e7eb; height: 8px; border-radius: 4px; overflow: hidden;">
+    <div style="background: #10b981; height: 100%; width: {{percentage}}%;"></div>
+  </div>
+</div>
+{{/each}}
+
+<center style="margin: 32px 0;">
+  <a href="{{resultsUrl}}" class="button">View Detailed Results</a>
+</center>
+
+<hr class="divider">
+
+<h2>Coach's Feedback</h2>
+
+<div class="highlight-box">
+  <p style="margin: 0; font-style: italic; color: #4a5568;">
+    "{{coachFeedback}}"
+  </p>
+  <p style="margin: 12px 0 0 0; font-weight: 600; color: #1f2937;">
+    — {{coachName}}
+  </p>
+</div>
+
+<h2>Recommended Next Steps</h2>
+
+<ul>
+  {{#each recommendations}}
+  <li>{{this}}</li>
+  {{/each}}
+</ul>
+
+{{#if nextTest}}
+<div class="card">
+  <p style="margin: 0;"><strong>📅 Next Test Scheduled:</strong></p>
+  <p style="margin: 8px 0 0 0;">{{nextTest.name}} on {{nextTest.date}}</p>
+</div>
+{{/if}}
+
+<p style="margin-top: 32px;">Keep up the great work!<br>
+<strong>Your IUP Golf Academy Team</strong></p>

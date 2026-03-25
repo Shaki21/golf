@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" fill="none">
+  <!-- Background -->
+  <rect width="1024" height="1024" rx="224" fill="#115e59"/>
+
+  <!-- Golf ball -->
+  <circle cx="512" cy="512" r="320" fill="#ffffff"/>
+
+  <!-- Dimples pattern -->
+  <circle cx="400" cy="380" r="40" fill="#e5e7eb"/>
+  <circle cx="520" cy="340" r="35" fill="#e5e7eb"/>
+  <circle cx="640" cy="400" r="38" fill="#e5e7eb"/>
+  <circle cx="680" cy="520" r="36" fill="#e5e7eb"/>
+  <circle cx="620" cy="640" r="40" fill="#e5e7eb"/>
+  <circle cx="480" cy="680" r="38" fill="#e5e7eb"/>
+  <circle cx="360" cy="600" r="35" fill="#e5e7eb"/>
+  <circle cx="340" cy="480" r="36" fill="#e5e7eb"/>
+  <circle cx="512" cy="512" r="32" fill="#e5e7eb"/>
+  <circle cx="440" cy="540" r="30" fill="#e5e7eb"/>
+  <circle cx="580" cy="480" r="28" fill="#e5e7eb"/>
+  <circle cx="460" cy="420" r="26" fill="#e5e7eb"/>
+  <circle cx="560" cy="580" r="30" fill="#e5e7eb"/>
+
+  <!-- Golf flag accent -->
+  <path d="M700 200 L780 280 L700 360 Z" fill="#f59e0b"/>
+  <rect x="690" y="280" width="20" height="200" rx="4" fill="#f59e0b"/>
+</svg>

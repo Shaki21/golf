@@ -1,0 +1,239 @@
+{
+  "pageId": "coach-stats-overview",
+  "path": "/coach/analyse/oversikt",
+  "component": "CoachStatsOverview",
+  "analyzedAt": "2026-01-13T02:46:00Z",
+  "jtbdFramework": {
+    "1_pageIdentification": {
+      "name": "CoachStatsOverview (Player Performance Overview)",
+      "role": "coach",
+      "frequency": "weekly",
+      "context": "analysis",
+      "clarityScore": 7
+    },
+    "2_primaryJTBD": {
+      "decision": "Which players need my attention based on their performance trends?",
+      "isObviousIn5Seconds": false,
+      "clarity": 7,
+      "competingAttention": [
+        "Category tabs (All/A/B/C)",
+        "Trend indicators (improving/declining/stable)",
+        "Sort/filter dropdowns",
+        "Player cards with multiple metrics",
+        "View detail buttons"
+      ],
+      "primaryCTA": {
+        "component": "Se detaljer buttons on player cards",
+        "label": "View player details",
+        "isProminent": false
+      }
+    },
+    "3_decisionVsInfoRatio": {
+      "decisionElements": {
+        "count": 6,
+        "items": [
+          "4 category filter buttons",
+          "Sort dropdown",
+          "Trend filter",
+          "Se detaljer buttons (per player)",
+          "Player card clicks"
+        ]
+      },
+      "informationElements": {
+        "count": 8,
+        "items": [
+          "Category counts (A/B/C/Total)",
+          "Player handicap",
+          "Sessions count",
+          "Average score",
+          "Improvement percentage",
+          "Trend icons",
+          "Last session date",
+          "Player names/avatars"
+        ]
+      },
+      "ratio": 0.43,
+      "assessment": "MODERATE - Slightly info-heavy for analysis page",
+      "dominantDecision": "Unclear - filtering vs drilling down both prominent"
+    },
+    "4_visualHierarchy": {
+      "eyeLandsOnFirst": "Category tabs (All/A/B/C)",
+      "isCorrectFirstFocus": true,
+      "heroElement": "Player grid with trend indicators",
+      "secondaryElements": [
+        "Sort/filter controls",
+        "Page header"
+      ],
+      "noiseElements": [
+        "Multiple metrics per card may overwhelm"
+      ],
+      "isFlatHierarchy": false,
+      "assessment": "GOOD - Category-first design but cards are dense"
+    },
+    "5_kpiQuality": {
+      "kpis": [
+        {
+          "metric": "Handicap",
+          "type": "lagging",
+          "isActionable": false,
+          "hasContext": true,
+          "quality": "neutral",
+          "note": "Status indicator, not directly actionable"
+        },
+        {
+          "metric": "Sessions count (last 30 days)",
+          "type": "leading",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "high",
+          "note": "Low session count signals need for outreach"
+        },
+        {
+          "metric": "Average score",
+          "type": "lagging",
+          "isActionable": false,
+          "hasContext": false,
+          "quality": "vanity",
+          "note": "Without target or trend context"
+        },
+        {
+          "metric": "Improvement percentage",
+          "type": "leading",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "high",
+          "note": "Shows who is progressing vs stagnating"
+        },
+        {
+          "metric": "Trend indicator (improving/declining/stable)",
+          "type": "leading",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "high",
+          "note": "Direct triage: focus on declining players"
+        }
+      ],
+      "leadingPercentage": 0.6,
+      "actionablePercentage": 0.6,
+      "assessment": "GOOD - Mix of actionable trends and status indicators"
+    },
+    "6_languageAndMentalModel": {
+      "style": "mixed",
+      "actionVerbs": [
+        "Se detaljer",
+        "Sorter",
+        "Filtrer"
+      ],
+      "systemNouns": [
+        "Kategori",
+        "Handicap",
+        "Økter",
+        "Score",
+        "Trend"
+      ],
+      "coachActionPercentage": 0.4,
+      "assessment": "MODERATE - Leans toward system/data language",
+      "phrasesToRewrite": [
+        "'Se detaljer' → 'Review progress' (more coach-oriented)",
+        "'Økter' → 'Sessions with [name]' (personalized)"
+      ]
+    },
+    "7_flowAndNavigationCost": {
+      "clicksFromDashboard": 2,
+      "navigationDepth": 2,
+      "clicksToFilterCategory": 1,
+      "clicksToSortPlayers": 1,
+      "clicksToViewDetails": 1,
+      "assessment": "GOOD - Inline filtering, but drill-down required for action",
+      "shouldBeInline": [
+        "Quick actions on player card (message, schedule session) without leaving page"
+      ]
+    },
+    "8_stateCoverage": {
+      "hasEmptyState": true,
+      "hasLoadingState": true,
+      "hasErrorState": false,
+      "hasSuccessState": false,
+      "hasOverloadedState": false,
+      "hasAtRiskState": true,
+      "assessment": "GOOD - Has loading and empty, implicitly shows 'at risk' via declining trend",
+      "gaps": [
+        "No explicit error handling visible in code",
+        "No success state for actions taken"
+      ]
+    },
+    "9_roleScalability": {
+      "hasRoleConditionals": false,
+      "beginnerFriendly": false,
+      "eliteFriendly": true,
+      "scalabilityIssues": [
+        "Lots of metrics may confuse new coaches",
+        "No explanation of what trends mean or how to act on them"
+      ],
+      "recommendation": "Add beginner mode with simplified metrics + trend explanations"
+    },
+    "10_strategicVerdict": {
+      "diagnosis": "Data-rich overview with good categorization but unclear next actions",
+      "currentBehavior": "Category-filtered player list with trend indicators",
+      "desiredBehavior": "Triage dashboard with clear actions per player state",
+      "topIssues": [
+        {
+          "rank": 1,
+          "issue": "Mock data fallback when API fails (shows hardcoded stats)",
+          "severity": "high",
+          "impact": "Coach sees fake data instead of real player progress"
+        },
+        {
+          "rank": 2,
+          "issue": "No inline actions - must click through to take action",
+          "severity": "medium",
+          "impact": "Extra navigation friction to message/schedule players"
+        },
+        {
+          "rank": 3,
+          "issue": "Trend calculation logic not visible (black box)",
+          "severity": "low",
+          "impact": "Coach doesn't understand why player is marked 'declining'"
+        }
+      ],
+      "structuralFix": "Remove mock data fallback + add inline quick actions (message, schedule) + add trend explanation tooltips"
+    },
+    "11_crossPageConsistency": {
+      "note": "Uses PageHeader + PageContainer pattern. Similar card-grid layout to other coach pages. Has mock data fallback (anti-pattern unique to this page)."
+    }
+  },
+  "codeAnalysis": {
+    "componentCount": {
+      "interactive": 6,
+      "display": 10
+    },
+    "stateHandling": {
+      "loading": "loading state with 'Laster spillerstatistikk...' message",
+      "empty": "No players found message when filtered list empty",
+      "error": "Falls back to mock data instead of showing error (anti-pattern)"
+    },
+    "dataSource": {
+      "isRealData": true,
+      "isMockData": true,
+      "hasMixedSources": true,
+      "note": "Uses apiClient.get('/coach/players/stats') but falls back to MOCK_PLAYER_STATS on error"
+    },
+    "accessibility": {
+      "hasAriaLabels": false,
+      "semanticHTML": true,
+      "keyboardNav": "Good - uses button elements"
+    },
+    "responsiveDesign": {
+      "hasMobileLayout": true,
+      "breakpoints": ["grid-cols-1 md:grid-cols-2 lg:grid-cols-3"],
+      "mobileFirst": true
+    },
+    "integrations": {
+      "api": "apiClient.get('/coach/players/stats')",
+      "mockFallback": "MOCK_PLAYER_STATS constant (400 lines)"
+    }
+  },
+  "priorityScore": 75,
+  "implementationStatus": "partial",
+  "overallAssessment": "MODERATE - Good categorization and trend indicators, but mock data fallback and lack of inline actions hurt UX"
+}

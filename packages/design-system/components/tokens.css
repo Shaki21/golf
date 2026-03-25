@@ -1,0 +1,76 @@
+/* AK Design Tokens — Premium Light
+   Stone × Midnight Blue × Emerald × Soft Gold
+   NOTE: values are stored as RGB triplets to enable Tailwind opacity modifiers (e.g., /10).
+*/
+
+:root {
+  --stone-50: 250 250 248; /* #FAFAF8 */
+  --stone-100: 244 243 239; /* #F4F3EF */
+  --stone-200: 233 231 226; /* #E9E7E2 */
+  --stone-300: 218 216 210; /* #DAD8D2 */
+  --stone-500: 107 110 116; /* #6B6E74 */
+  --stone-700: 68 70 75; /* #44464B */
+  --stone-800: 44 46 51; /* #2C2E33 */
+  --blue-500: 36 90 133; /* #245A85 */
+  --blue-600: 26 90 138; /* #1A5A8A */
+  --blue-700: 16 69 106; /* #10456A */
+  --emerald-500: 47 163 122; /* #2FA37A */
+  --emerald-600: 31 122 92; /* #1F7A5C */
+  --gold-500: 198 162 77; /* #C6A24D */
+  --gold-600: 158 124 47; /* #9E7C2F */
+  --status-success: 5 150 105; /* #059669 */
+  --status-warning: 217 119 6; /* #D97706 */
+  --status-error: 220 38 38; /* #DC2626 */
+  --status-info: 2 132 199; /* #0284C7 */
+  --cat-teknikk: 36 90 133; /* #245A85 */
+  --cat-fysisk: 31 122 92; /* #1F7A5C */
+  --cat-mental: 79 70 229; /* #4F46E5 */
+  --cat-spill: 14 116 144; /* #0E7490 */
+  --cat-test: 68 70 75; /* #44464B */
+  --cat-teknikk-muted: 230 238 246; /* #E6EEF6 */
+  --cat-fysisk-muted: 229 244 238; /* #E5F4EE */
+  --cat-mental-muted: 238 242 255; /* #EEF2FF */
+  --cat-spill-muted: 230 246 250; /* #E6F6FA */
+  --cat-test-muted: 238 241 244; /* #EEF1F4 */
+
+  /* Semantic aliases (preferred in code) */
+  --ak-bg-app: var(--stone-50);
+  --ak-surface-card: var(--stone-200);
+  --ak-surface-elevated: var(--stone-100);
+  --ak-border: var(--stone-300);
+
+  --ak-text-primary: var(--stone-800);
+  --ak-text-body: var(--stone-700);
+  --ak-text-muted: var(--stone-500);
+
+  --ak-action-primary: var(--blue-700);
+  --ak-action-hover: var(--blue-600);
+  --ak-action-active: var(--blue-500);
+
+  --ak-progress: var(--emerald-600);
+  --ak-progress-soft: var(--emerald-500);
+
+  --ak-prestige: var(--gold-500);
+  --ak-prestige-strong: var(--gold-600);
+
+  --ak-status-success: var(--status-success);
+  --ak-status-warning: var(--status-warning);
+  --ak-status-error: var(--status-error);
+  --ak-status-info: var(--status-info);
+
+  --ak-category-teknikk: var(--cat-teknikk);
+  --ak-category-fysisk: var(--cat-fysisk);
+  --ak-category-mental: var(--cat-mental);
+  --ak-category-spill: var(--cat-spill);
+  --ak-category-test: var(--cat-test);
+
+  --ak-category-teknikk-muted: var(--cat-teknikk-muted);
+  --ak-category-fysisk-muted: var(--cat-fysisk-muted);
+  --ak-category-mental-muted: var(--cat-mental-muted);
+  --ak-category-spill-muted: var(--cat-spill-muted);
+  --ak-category-test-muted: var(--cat-test-muted);
+}
+
+/* Recommended base application (optional)
+html, body { background: rgb(var(--ak-bg-app)); color: rgb(var(--ak-text-body)); }
+*/

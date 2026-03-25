@@ -1,0 +1,2 @@
+/Users/anderskristiansen/Developer/IUP_Master_V1/apps/web/src/domain/tests/mappers.ts:636:export function approximateSkillLevelFromPlayerCategory(
+/Users/anderskristiansen/Developer/IUP_Master_V1/apps/web/src/domain/tests/index.ts:43:  approximateSkillLevelFromPlayerCategory,

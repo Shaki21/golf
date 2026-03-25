@@ -1,0 +1,16 @@
+import 'dotenv/config';
+import { defineConfig, env } from 'prisma/config';
+
+/**
+ * Prisma 7 Configuration
+ * Connection URLs are now configured here instead of schema.prisma
+ */
+export default defineConfig({
+  schema: 'prisma/schema.prisma',
+  migrations: {
+    path: 'prisma/migrations',
+  },
+  datasource: {
+    url: env('DATABASE_URL'),
+  },
+});

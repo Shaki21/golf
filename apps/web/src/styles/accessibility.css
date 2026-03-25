@@ -1,0 +1,469 @@
+/**
+ * TIER Golf - Accessibility Styles
+ * WCAG 2.1 AA Compliant
+ * Design System v3.0 - Forest Green (Premium Light)
+ *
+ * All colors reference CSS variables from index.css
+ */
+
+/* Screen reader only content */
+.sr-only,
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Skip to main content link */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--tier-ink);
+  color: var(--tier-white);
+  padding: var(--spacing-3) var(--spacing-6);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: var(--font-size-body);
+  z-index: 1000;
+  border-radius: 0 0 var(--radius-sm) 0;
+  transition: top 0.3s ease;
+}
+
+.skip-link:focus {
+  top: 0;
+  outline: 3px solid var(--tier-gold);
+  outline-offset: 2px;
+}
+
+/* Focus visible styles for keyboard navigation */
+body.using-keyboard *:focus {
+  outline: 3px solid var(--tier-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Enhanced focus styles */
+.focus-visible:focus,
+[data-focus-visible]:focus,
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid var(--tier-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Remove outline for mouse users */
+body:not(.using-keyboard) *:focus {
+  outline: none;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  * {
+    border-color: currentColor !important;
+  }
+
+  button,
+  .btn,
+  a.button {
+    border: 2px solid currentColor !important;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Focus indicators for interactive elements */
+button:focus-visible,
+[role="button"]:focus-visible {
+  outline: 3px solid var(--tier-primary);
+  outline-offset: 2px;
+}
+
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 3px solid var(--tier-primary);
+  outline-offset: 2px;
+  border-color: var(--tier-primary);
+}
+
+/* Link focus styles */
+a:focus-visible {
+  outline: 3px solid var(--tier-primary);
+  outline-offset: 2px;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+
+/* Ensure sufficient touch target sizes (44x44px minimum) */
+button,
+a,
+input[type="checkbox"],
+input[type="radio"],
+[role="button"] {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Compact mode for smaller touch targets (use sparingly) */
+.touch-target-compact {
+  min-height: 32px;
+  min-width: 32px;
+}
+
+/* Improve text readability */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Ensure text remains visible during webfont load */
+@font-face {
+  font-display: swap;
+}
+
+/* High visibility for disabled states */
+button:disabled,
+input:disabled,
+select:disabled,
+textarea:disabled,
+[aria-disabled="true"] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Clear indication of current page in navigation */
+[aria-current="page"],
+.current-page {
+  font-weight: 700;
+  border-bottom: 3px solid var(--tier-primary);
+}
+
+/* Live region styles */
+[aria-live="polite"],
+[aria-live="assertive"],
+[role="status"],
+[role="alert"] {
+  position: relative;
+}
+
+/* Error states with sufficient contrast */
+.error,
+[aria-invalid="true"] {
+  border-color: var(--tier-error) !important;
+  outline-color: var(--tier-error) !important;
+}
+
+.error-message {
+  color: var(--tier-error);
+  font-weight: 600;
+  margin-top: var(--spacing-2);
+}
+
+/* Success states */
+.success,
+[aria-valid="true"] {
+  border-color: var(--tier-success) !important;
+}
+
+/* Required field indicator */
+.required::after,
+[aria-required="true"] label::after {
+  content: " *";
+  color: var(--tier-error);
+  font-weight: 700;
+}
+
+/* Loading states */
+.loading,
+[aria-busy="true"] {
+  position: relative;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* Keyboard navigation helpers */
+.keyboard-only-focus:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Improve table accessibility */
+table {
+  border-collapse: collapse;
+}
+
+th {
+  text-align: left;
+  font-weight: 700;
+}
+
+/* Caption should be visible by default */
+caption {
+  padding: var(--spacing-3);
+  font-weight: 700;
+  text-align: left;
+}
+
+/* Dialog/Modal accessibility */
+[role="dialog"],
+[role="alertdialog"] {
+  position: fixed;
+  z-index: 1000;
+}
+
+/* Overlay for modals */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay-backdrop);
+  z-index: 999;
+}
+
+/* Tooltip accessibility */
+[role="tooltip"] {
+  position: absolute;
+  z-index: 100;
+  padding: var(--spacing-2) var(--spacing-3);
+  background: var(--tier-ink);
+  color: var(--tier-white);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-footnote);
+  max-width: 250px;
+}
+
+/* Progress indicators */
+[role="progressbar"] {
+  position: relative;
+  overflow: hidden;
+  background: var(--gray-300);
+  border-radius: var(--radius-sm);
+  height: 8px;
+}
+
+/* Combobox/Autocomplete styles */
+[role="combobox"] {
+  position: relative;
+}
+
+[role="listbox"] {
+  position: absolute;
+  max-height: 300px;
+  overflow-y: auto;
+  background: var(--background-white);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-elevated);
+  z-index: 100;
+}
+
+[role="option"] {
+  padding: var(--spacing-3) var(--spacing-4);
+  cursor: pointer;
+}
+
+[role="option"][aria-selected="true"] {
+  background: var(--tier-primary);
+  color: var(--text-inverse);
+}
+
+/* Accordion accessibility */
+[role="region"][aria-labelledby] {
+  padding: var(--spacing-4);
+}
+
+/* Tab accessibility */
+[role="tablist"] {
+  display: flex;
+  gap: var(--spacing-1);
+  border-bottom: 2px solid var(--border-default);
+}
+
+[role="tab"] {
+  padding: var(--spacing-3) var(--spacing-6);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+}
+
+[role="tab"][aria-selected="true"] {
+  font-weight: 700;
+  border-bottom: 3px solid var(--tier-primary);
+}
+
+[role="tabpanel"] {
+  padding: var(--spacing-6) 0;
+}
+
+[role="tabpanel"][hidden] {
+  display: none;
+}
+
+/* Menu/Menubar accessibility */
+[role="menu"],
+[role="menubar"] {
+  list-style: none;
+  padding: var(--spacing-2) 0;
+  margin: 0;
+  background: var(--background-white);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-elevated);
+}
+
+[role="menuitem"],
+[role="menuitemcheckbox"],
+[role="menuitemradio"] {
+  padding: var(--spacing-3) var(--spacing-4);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+}
+
+[role="menuitem"]:hover,
+[role="menuitem"]:focus {
+  background: var(--background-surface);
+}
+
+/* Breadcrumb accessibility */
+[aria-label="Breadcrumb"] ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
+}
+
+/* Alert/Status messages */
+[role="alert"],
+[role="status"] {
+  padding: var(--spacing-4);
+  border-radius: var(--radius-sm);
+  margin: var(--spacing-4) 0;
+}
+
+[role="alert"] {
+  background: var(--error-muted);
+  border: 1px solid var(--tier-error);
+  color: var(--tier-error);
+}
+
+[role="status"] {
+  background: var(--success-muted);
+  border: 1px solid var(--tier-success);
+  color: var(--tier-success);
+}
+
+/* Print styles for accessibility */
+@media print {
+  .no-print,
+  [aria-hidden="true"] {
+    display: none !important;
+  }
+
+  a[href]::after {
+    content: " (" attr(href) ")";
+  }
+
+  abbr[title]::after {
+    content: " (" attr(title) ")";
+  }
+}
+
+/* ========================================
+   Dashboard-specific accessibility styles
+   ======================================== */
+
+/* Dashboard interactive items with role="checkbox" or role="button" */
+[role="checkbox"]:focus-visible,
+[role="button"]:focus-visible {
+  outline: 3px solid var(--tier-primary);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* Ensure focus is visible on items with tabIndex */
+[tabindex="0"]:focus-visible {
+  outline: 3px solid var(--tier-primary);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* Card-like interactive elements */
+.goalItem:focus-visible,
+.messageItem:focus-visible,
+.sessionItem:focus-visible,
+.taskItem:focus-visible {
+  outline: 3px solid var(--tier-primary);
+  outline-offset: -2px;
+  border-radius: 8px;
+  background-color: var(--accent-muted);
+}
+
+/* Quick action buttons */
+.quickActionBtn:focus-visible {
+  outline: 3px solid var(--tier-primary);
+  outline-offset: 2px;
+  transform: scale(1.02);
+}
+
+/* Profile action buttons */
+.profileActionButton:focus-visible {
+  outline: 3px solid var(--tier-primary);
+  outline-offset: -2px;
+  background-color: var(--bg-secondary);
+}
+
+/* KPI cards when interactive */
+[role="region"]:focus-visible {
+  outline: 3px solid var(--tier-primary);
+  outline-offset: 2px;
+  border-radius: 12px;
+}
+
+/* Dark mode support - inherits from index.css :root.dark */
+@media (prefers-color-scheme: dark) {
+  /* Dark mode tokens are handled by index.css */
+  /* This section ensures accessibility features work in dark mode */
+
+  .skip-link:focus {
+    outline-color: var(--tier-gold);
+  }
+
+  [role="alert"] {
+    background: var(--error-muted);
+    border-color: var(--tier-error);
+  }
+
+  [role="status"] {
+    background: var(--success-muted);
+    border-color: var(--tier-success);
+  }
+}

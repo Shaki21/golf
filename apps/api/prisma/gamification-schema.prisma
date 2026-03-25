@@ -1,0 +1,381 @@
+// ============================================================================
+// GAMIFICATION SYSTEM
+// Add these models to your main schema.prisma file
+// ============================================================================
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PLAYER METRICS - Aggregated stats for gamification
+// ─────────────────────────────────────────────────────────────────────────────
+
+model PlayerMetrics {
+  id                      String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  playerId                String   @unique @map("player_id") @db.Uuid
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // VOLUME METRICS
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  // Total hours
+  totalHours              Decimal  @default(0) @map("total_hours") @db.Decimal(10, 2)
+  hoursTeknikk            Decimal  @default(0) @map("hours_teknikk") @db.Decimal(10, 2)
+  hoursGolfslag           Decimal  @default(0) @map("hours_golfslag") @db.Decimal(10, 2)
+  hoursSpill              Decimal  @default(0) @map("hours_spill") @db.Decimal(10, 2)
+  hoursKonkurranse        Decimal  @default(0) @map("hours_konkurranse") @db.Decimal(10, 2)
+  hoursFysisk             Decimal  @default(0) @map("hours_fysisk") @db.Decimal(10, 2)
+  hoursMental             Decimal  @default(0) @map("hours_mental") @db.Decimal(10, 2)
+
+  // Session counts
+  totalSessions           Int      @default(0) @map("total_sessions")
+  sessionsThisWeek        Int      @default(0) @map("sessions_this_week")
+  sessionsThisMonth       Int      @default(0) @map("sessions_this_month")
+  sessionsThisYear        Int      @default(0) @map("sessions_this_year")
+  completionRate          Decimal  @default(0) @map("completion_rate") @db.Decimal(5, 2)
+
+  // Swings / repetitions
+  totalSwings             Int      @default(0) @map("total_swings")
+  swingsDriver            Int      @default(0) @map("swings_driver")
+  swingsIrons             Int      @default(0) @map("swings_irons")
+  swingsWedges            Int      @default(0) @map("swings_wedges")
+  swingsPutter            Int      @default(0) @map("swings_putter")
+
+  // Weekly/monthly tracking
+  weeklyHours             Decimal  @default(0) @map("weekly_hours") @db.Decimal(6, 2)
+  monthlyHours            Decimal  @default(0) @map("monthly_hours") @db.Decimal(7, 2)
+  yearlyHours             Decimal  @default(0) @map("yearly_hours") @db.Decimal(8, 2)
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // STRENGTH METRICS
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  // Total volume
+  totalTonnage            Decimal  @default(0) @map("total_tonnage") @db.Decimal(12, 2)
+  weeklyTonnage           Decimal  @default(0) @map("weekly_tonnage") @db.Decimal(10, 2)
+  monthlyTonnage          Decimal  @default(0) @map("monthly_tonnage") @db.Decimal(10, 2)
+
+  // Bodyweight for relative calculations
+  bodyweight              Decimal  @default(70) @db.Decimal(5, 2)
+
+  // PR counts
+  prCount                 Int      @default(0) @map("pr_count")
+  prCountThisMonth        Int      @default(0) @map("pr_count_this_month")
+
+  // Gym consistency
+  gymSessionsThisWeek     Int      @default(0) @map("gym_sessions_this_week")
+  gymSessionsThisMonth    Int      @default(0) @map("gym_sessions_this_month")
+  gymStreak               Int      @default(0) @map("gym_streak")
+
+  // Golf fitness tests
+  medBallThrow            Decimal? @map("med_ball_throw") @db.Decimal(4, 2)
+  verticalJump            Decimal? @map("vertical_jump") @db.Decimal(5, 2)
+  hipRotationLeft         Decimal? @map("hip_rotation_left") @db.Decimal(4, 1)
+  hipRotationRight        Decimal? @map("hip_rotation_right") @db.Decimal(4, 1)
+  thoracicRotation        Decimal? @map("thoracic_rotation") @db.Decimal(4, 1)
+  plankHold               Int?     @map("plank_hold") // seconds
+  lastFitnessAssessment   DateTime? @map("last_fitness_assessment") @db.Timestamptz(6)
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // PERFORMANCE METRICS
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  // Speed metrics
+  driverSpeed             Decimal? @map("driver_speed") @db.Decimal(5, 1)
+  driverSpeedBaseline     Decimal? @map("driver_speed_baseline") @db.Decimal(5, 1)
+  speedBaselineDate       DateTime? @map("speed_baseline_date") @db.Timestamptz(6)
+  speedImprovement        Decimal? @map("speed_improvement") @db.Decimal(4, 1)
+  sevenIronSpeed          Decimal? @map("seven_iron_speed") @db.Decimal(5, 1)
+
+  // Ball data
+  driverBallSpeed         Decimal? @map("driver_ball_speed") @db.Decimal(5, 1)
+  smashFactor             Decimal? @map("smash_factor") @db.Decimal(4, 3)
+  launchAngle             Decimal? @map("launch_angle") @db.Decimal(4, 1)
+  spinRate                Int?     @map("spin_rate")
+
+  // Accuracy metrics
+  fairwayHitPct           Decimal? @map("fairway_hit_pct") @db.Decimal(5, 2)
+  girPct                  Decimal? @map("gir_pct") @db.Decimal(5, 2)
+  avgProximity            Decimal? @map("avg_proximity") @db.Decimal(5, 2)
+  avgDrivingDistance      Decimal? @map("avg_driving_distance") @db.Decimal(5, 1)
+
+  // Putting metrics
+  avgPuttsPerRound        Decimal? @map("avg_putts_per_round") @db.Decimal(4, 2)
+  onePuttPct              Decimal? @map("one_putt_pct") @db.Decimal(5, 2)
+  threePuttPct            Decimal? @map("three_putt_pct") @db.Decimal(5, 2)
+  totalPuttingDrills      Int      @default(0) @map("total_putting_drills")
+
+  // Short game
+  upAndDownPct            Decimal? @map("up_and_down_pct") @db.Decimal(5, 2)
+  sandSavePct             Decimal? @map("sand_save_pct") @db.Decimal(5, 2)
+  totalShortGameDrills    Int      @default(0) @map("total_short_game_drills")
+
+  // Scoring
+  bestScore18             Int?     @map("best_score_18")
+  avgScore18              Decimal? @map("avg_score_18") @db.Decimal(4, 1)
+  avgScoreLast10          Decimal? @map("avg_score_last_10") @db.Decimal(4, 1)
+  roundsUnder80           Int      @default(0) @map("rounds_under_80")
+  roundsUnder75           Int      @default(0) @map("rounds_under_75")
+  roundsUnderPar          Int      @default(0) @map("rounds_under_par")
+  totalRoundsPlayed       Int      @default(0) @map("total_rounds_played")
+
+  // Handicap
+  currentHandicap         Decimal? @map("current_handicap") @db.Decimal(4, 1)
+  lowHandicap             Decimal? @map("low_handicap") @db.Decimal(4, 1)
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // STREAK METRICS
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  currentStreak           Int      @default(0) @map("current_streak")
+  longestStreak           Int      @default(0) @map("longest_streak")
+  perfectWeeks            Int      @default(0) @map("perfect_weeks")
+  consecutivePerfectWeeks Int      @default(0) @map("consecutive_perfect_weeks")
+  earlyMorningSessions    Int      @default(0) @map("early_morning_sessions")
+  eveningSessions         Int      @default(0) @map("evening_sessions")
+  lastActiveDate          DateTime? @map("last_active_date") @db.Date
+  daysActive              Int      @default(0) @map("days_active")
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // PHASE METRICS
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  currentPhase            String?  @map("current_phase") @db.VarChar(20) // grunnlag, oppbygging, konkurranse, overgang
+  phaseStartDate          DateTime? @map("phase_start_date") @db.Date
+  phaseCompliance         Decimal? @map("phase_compliance") @db.Decimal(5, 2)
+  phasesCompleted         Int      @default(0) @map("phases_completed")
+  annualPlanCompliance    Decimal? @map("annual_plan_compliance") @db.Decimal(5, 2)
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // XP AND LEVEL
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  totalXP                 Int      @default(0) @map("total_xp")
+  currentLevel            Int      @default(1) @map("current_level")
+
+  // Timestamps
+  createdAt               DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt               DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  lastCalculated          DateTime @default(now()) @map("last_calculated") @db.Timestamptz(6)
+
+  // Relations
+  player                  Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  prs                     PersonalRecord[]
+  badgeProgress           BadgeProgress[]
+
+  @@index([playerId])
+  @@map("player_metrics")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PERSONAL RECORDS
+// ─────────────────────────────────────────────────────────────────────────────
+
+model PersonalRecord {
+  id                String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  playerMetricsId   String   @map("player_metrics_id") @db.Uuid
+  exercise          String   @db.VarChar(50) // squat, deadlift, bench_press, etc.
+  weight            Decimal  @db.Decimal(6, 2)
+  reps              Int
+  estimated1RM      Decimal  @map("estimated_1rm") @db.Decimal(6, 2)
+  previousWeight    Decimal? @map("previous_weight") @db.Decimal(6, 2)
+  improvement       Decimal? @db.Decimal(5, 2)
+  achievedAt        DateTime @default(now()) @map("achieved_at") @db.Timestamptz(6)
+
+  // Relations
+  playerMetrics     PlayerMetrics @relation(fields: [playerMetricsId], references: [id], onDelete: Cascade)
+
+  @@index([playerMetricsId])
+  @@index([exercise])
+  @@map("personal_records")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// BADGE DEFINITIONS (Static data, seed this)
+// ─────────────────────────────────────────────────────────────────────────────
+
+model BadgeDefinition {
+  id                String   @id @db.VarChar(100)
+  name              String   @db.VarChar(100)
+  description       String   @db.VarChar(500)
+  category          String   @db.VarChar(50) // volume, streak, strength, speed, accuracy, etc.
+  symbol            String   @db.VarChar(50) // flame, trophy, star, target, etc.
+  tier              String   @db.VarChar(20) // standard, bronze, silver, gold, platinum
+  xp                Int
+
+  // For tiered badges
+  level             Int?
+  maxLevel          Int?     @map("max_level")
+
+  // Requirements stored as JSON
+  requirements      Json     @db.JsonB
+
+  // Seasonal/limited
+  isLimited         Boolean  @default(false) @map("is_limited")
+  availableFrom     DateTime? @map("available_from") @db.Timestamptz(6)
+  availableUntil    DateTime? @map("available_until") @db.Timestamptz(6)
+
+  // Display
+  rarity            String   @default("common") @db.VarChar(20) // common, uncommon, rare, epic, legendary
+  sortOrder         Int      @default(0) @map("sort_order")
+
+  createdAt         DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  // Relations
+  progress          BadgeProgress[]
+  unlockEvents      BadgeUnlockEvent[]
+
+  @@index([category])
+  @@index([tier])
+  @@map("badge_definitions")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// BADGE PROGRESS
+// ─────────────────────────────────────────────────────────────────────────────
+
+model BadgeProgress {
+  id                String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  playerMetricsId   String   @map("player_metrics_id") @db.Uuid
+  badgeId           String   @map("badge_id") @db.VarChar(100)
+
+  // Progress
+  earned            Boolean  @default(false)
+  earnedAt          DateTime? @map("earned_at") @db.Timestamptz(6)
+  progress          Decimal  @default(0) @db.Decimal(5, 2) // 0-100
+
+  // Individual requirement progress (JSON array)
+  requirementProgress Json?  @map("requirement_progress") @db.JsonB
+
+  // Display state
+  isNew             Boolean  @default(false) @map("is_new")
+  viewedAt          DateTime? @map("viewed_at") @db.Timestamptz(6)
+
+  createdAt         DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt         DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  // Relations
+  playerMetrics     PlayerMetrics   @relation(fields: [playerMetricsId], references: [id], onDelete: Cascade)
+  badge             BadgeDefinition @relation(fields: [badgeId], references: [id], onDelete: Cascade)
+
+  @@unique([playerMetricsId, badgeId])
+  @@index([playerMetricsId])
+  @@index([badgeId])
+  @@index([earned])
+  @@map("badge_progress")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// BADGE UNLOCK EVENTS (History/Activity Feed)
+// ─────────────────────────────────────────────────────────────────────────────
+
+model BadgeUnlockEvent {
+  id                String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  playerId          String   @map("player_id") @db.Uuid
+  badgeId           String   @map("badge_id") @db.VarChar(100)
+  xpAwarded         Int      @map("xp_awarded")
+
+  // What triggered the unlock
+  triggerMetric     String?  @map("trigger_metric") @db.VarChar(100)
+  triggerValue      Decimal? @map("trigger_value") @db.Decimal(10, 2)
+
+  unlockedAt        DateTime @default(now()) @map("unlocked_at") @db.Timestamptz(6)
+
+  // Relations
+  badge             BadgeDefinition @relation(fields: [badgeId], references: [id], onDelete: Cascade)
+
+  @@index([playerId])
+  @@index([badgeId])
+  @@index([unlockedAt])
+  @@map("badge_unlock_events")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// STRENGTH TRAINING SESSIONS (For detailed gym tracking)
+// ─────────────────────────────────────────────────────────────────────────────
+
+model StrengthSession {
+  id                String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  playerId          String   @map("player_id") @db.Uuid
+
+  sessionDate       DateTime @map("session_date") @db.Date
+  duration          Int      // minutes
+  totalTonnage      Decimal  @map("total_tonnage") @db.Decimal(10, 2)
+  totalSets         Int      @map("total_sets")
+  totalReps         Int      @map("total_reps")
+
+  notes             String?  @db.Text
+  rating            Int?     // 1-5
+
+  createdAt         DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  // Relations
+  exercises         StrengthExerciseLog[]
+
+  @@index([playerId])
+  @@index([sessionDate])
+  @@map("strength_sessions")
+}
+
+model StrengthExerciseLog {
+  id                String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  sessionId         String   @map("session_id") @db.Uuid
+  exercise          String   @db.VarChar(50)
+
+  // Aggregated data for the exercise
+  totalSets         Int      @map("total_sets")
+  totalReps         Int      @map("total_reps")
+  totalVolume       Decimal  @map("total_volume") @db.Decimal(8, 2) // kg
+  maxWeight         Decimal  @map("max_weight") @db.Decimal(6, 2)
+
+  // Individual sets stored as JSON array
+  sets              Json     @db.JsonB // [{reps: 8, weight: 80, rpe: 7}, ...]
+
+  // Was this a PR?
+  isPR              Boolean  @default(false) @map("is_pr")
+
+  // Relations
+  session           StrengthSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@index([sessionId])
+  @@index([exercise])
+  @@map("strength_exercise_logs")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// LEADERBOARDS (Optional, for social features)
+// ─────────────────────────────────────────────────────────────────────────────
+
+model Leaderboard {
+  id                String   @id @db.VarChar(50)
+  name              String   @db.VarChar(100)
+  metric            String   @db.VarChar(100) // path to metric in PlayerMetrics
+  period            String   @db.VarChar(20)  // weekly, monthly, yearly, all_time
+  category          String?  @db.VarChar(50)  // optional category filter
+  minSessions       Int      @default(0) @map("min_sessions") // minimum to qualify
+  isActive          Boolean  @default(true) @map("is_active")
+
+  entries           LeaderboardEntry[]
+
+  @@map("leaderboards")
+}
+
+model LeaderboardEntry {
+  id                String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  leaderboardId     String   @map("leaderboard_id") @db.VarChar(50)
+  playerId          String   @map("player_id") @db.Uuid
+
+  rank              Int
+  value             Decimal  @db.Decimal(12, 2)
+  previousRank      Int?     @map("previous_rank")
+
+  periodStart       DateTime @map("period_start") @db.Date
+  periodEnd         DateTime @map("period_end") @db.Date
+
+  calculatedAt      DateTime @default(now()) @map("calculated_at") @db.Timestamptz(6)
+
+  // Relations
+  leaderboard       Leaderboard @relation(fields: [leaderboardId], references: [id], onDelete: Cascade)
+
+  @@unique([leaderboardId, playerId, periodStart])
+  @@index([leaderboardId])
+  @@index([playerId])
+  @@map("leaderboard_entries")
+}

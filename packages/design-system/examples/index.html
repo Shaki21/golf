@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AK Golf Academy - Design System v3.0</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Brand Colors */
+            --ak-primary: #10456A;
+            --ak-primary-light: #2C5F7F;
+            --ak-gold: #C9A227;
+            --ak-snow: #EDF0F2;
+            --ak-surface: #EBE5DA;
+            --ak-cloud: #D8D8D8;
+            --ak-mist: #E8E8E8;
+            --ak-success: #4A7C59;
+            --ak-warning: #D4A84B;
+            --ak-error: #C45B4E;
+            --ak-charcoal: #1C1C1E;
+            --ak-steel: #8E8E93;
+            --ak-text: #1C1C1E;
+            --ak-text-secondary: #6E6E73;
+            --ak-background: #FFFFFF;
+            --ak-border: #D1D1D6;
+
+            /* Spacing */
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+            --spacing-3xl: 64px;
+
+            /* Border Radius */
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --radius-full: 9999px;
+
+            /* Shadows */
+            --shadow-card: 0 2px 4px rgba(0, 0, 0, 0.06);
+            --shadow-elevated: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+            /* Typography */
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-size-xs: 12px;
+            --font-size-sm: 14px;
+            --font-size-base: 16px;
+            --font-size-lg: 18px;
+            --font-size-xl: 20px;
+            --font-size-2xl: 24px;
+            --font-size-3xl: 32px;
+            --font-size-4xl: 40px;
+            --font-size-5xl: 48px;
+        }
+
+        :root.dark {
+            --ak-primary: #2C5F7F;
+            --ak-primary-light: #3D7FA0;
+            --ak-gold: #D4B84E;
+            --ak-snow: #1C1C1E;
+            --ak-surface: #2C2C2E;
+            --ak-cloud: #3A3A3C;
+            --ak-mist: #48484A;
+            --ak-success: #6B9D7A;
+            --ak-warning: #E5C07A;
+            --ak-error: #D8867C;
+            --ak-charcoal: #F2F2F7;
+            --ak-steel: #98989D;
+            --ak-text: #F2F2F7;
+            --ak-text-secondary: #98989D;
+            --ak-background: #000000;
+            --ak-border: #38383A;
+            --shadow-card: 0 2px 4px rgba(0, 0, 0, 0.3);
+            --shadow-elevated: 0 4px 12px rgba(0, 0, 0, 0.4);
+            --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.5);
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: var(--ak-background);
+            color: var(--ak-text);
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--ak-primary) 0%, var(--ak-primary-light) 100%);
+            color: white;
+            padding: var(--spacing-3xl) var(--spacing-lg);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '⛳';
+            position: absolute;
+            font-size: 200px;
+            opacity: 0.1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-logo {
+            font-size: 80px;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .hero-title {
+            font-size: var(--font-size-5xl);
+            font-weight: 700;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .hero-subtitle {
+            font-size: var(--font-size-xl);
+            opacity: 0.9;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-xl);
+            flex-wrap: wrap;
+            margin-top: var(--spacing-2xl);
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat-number {
+            font-size: var(--font-size-3xl);
+            font-weight: 700;
+            display: block;
+        }
+
+        .hero-stat-label {
+            font-size: var(--font-size-sm);
+            opacity: 0.9;
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: var(--spacing-lg);
+            right: var(--spacing-lg);
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-size: var(--font-size-lg);
+            transition: all 0.2s;
+            backdrop-filter: blur(10px);
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--spacing-3xl) var(--spacing-lg);
+        }
+
+        .section {
+            margin-bottom: var(--spacing-3xl);
+        }
+
+        .section-title {
+            font-size: var(--font-size-3xl);
+            font-weight: 700;
+            color: var(--ak-text);
+            margin-bottom: var(--spacing-md);
+            text-align: center;
+        }
+
+        .section-description {
+            font-size: var(--font-size-lg);
+            color: var(--ak-text-secondary);
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto var(--spacing-2xl);
+        }
+
+        /* Showcase Grid */
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .showcase-card {
+            background: var(--ak-surface);
+            border: 1px solid var(--ak-border);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            transition: all 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+        }
+
+        .showcase-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .showcase-icon {
+            font-size: var(--font-size-4xl);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .showcase-card-title {
+            font-size: var(--font-size-xl);
+            font-weight: 600;
+            color: var(--ak-text);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .showcase-card-description {
+            font-size: var(--font-size-sm);
+            color: var(--ak-text-secondary);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .showcase-badge {
+            display: inline-block;
+            background: var(--ak-primary);
+            color: white;
+            padding: 4px var(--spacing-sm);
+            border-radius: var(--radius-sm);
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+        }
+
+        .showcase-arrow {
+            float: right;
+            font-size: var(--font-size-lg);
+            color: var(--ak-primary);
+        }
+
+        /* Design Tokens */
+        .tokens-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .token-category {
+            background: var(--ak-surface);
+            border: 1px solid var(--ak-border);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+        }
+
+        .token-category-title {
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .token-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+
+        .token-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            font-size: var(--font-size-sm);
+        }
+
+        .color-swatch {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--ak-border);
+            flex-shrink: 0;
+        }
+
+        .token-name {
+            font-family: 'Monaco', 'Courier New', monospace;
+            color: var(--ak-primary);
+            font-size: var(--font-size-xs);
+        }
+
+        /* Getting Started */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .step {
+            background: var(--ak-surface);
+            border: 1px solid var(--ak-border);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            text-align: center;
+        }
+
+        .step-number {
+            background: var(--ak-primary);
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-size-xl);
+            font-weight: 700;
+            margin: 0 auto var(--spacing-md);
+        }
+
+        .step-title {
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .step-description {
+            font-size: var(--font-size-sm);
+            color: var(--ak-text-secondary);
+        }
+
+        .code-block {
+            background: var(--ak-cloud);
+            border: 1px solid var(--ak-border);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: var(--font-size-xs);
+            color: var(--ak-primary);
+            margin-top: var(--spacing-md);
+            text-align: left;
+            overflow-x: auto;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--ak-surface);
+            border-top: 1px solid var(--ak-border);
+            padding: var(--spacing-2xl) var(--spacing-lg);
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-text {
+            font-size: var(--font-size-sm);
+            color: var(--ak-text-secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: var(--font-size-3xl);
+            }
+
+            .hero-logo {
+                font-size: 60px;
+            }
+
+            .showcase-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-stats {
+                gap: var(--spacing-md);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+
+        <div class="hero-content">
+            <div class="hero-logo">⛳</div>
+            <h1 class="hero-title">AK Golf Academy</h1>
+            <p class="hero-subtitle">Design System v3.0 - Blue Palette 01</p>
+
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <span class="hero-stat-number">6</span>
+                    <span class="hero-stat-label">Components</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="hero-stat-number">75+</span>
+                    <span class="hero-stat-label">Variants</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="hero-stat-number">21+</span>
+                    <span class="hero-stat-label">Animations</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="hero-stat-number">100%</span>
+                    <span class="hero-stat-label">Dark Mode</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Showcase Navigation -->
+        <section class="section">
+            <h2 class="section-title">Design System Showcases</h2>
+            <p class="section-description">Explore interactive examples of components, patterns, and features.</p>
+
+            <div class="showcase-grid">
+                <a href="component-gallery.html" class="showcase-card">
+                    <div class="showcase-icon">🎨</div>
+                    <h3 class="showcase-card-title">Component Gallery</h3>
+                    <p class="showcase-card-description">Comprehensive catalog of all component variants and sizes.</p>
+                    <span class="showcase-badge">75+ Variants</span>
+                    <span class="showcase-arrow">→</span>
+                </a>
+
+                <a href="interaction-states.html" class="showcase-card">
+                    <div class="showcase-icon">✨</div>
+                    <h3 class="showcase-card-title">Interaction States</h3>
+                    <p class="showcase-card-description">Interactive demonstrations of hover, focus, active, and loading states.</p>
+                    <span class="showcase-badge">8 States</span>
+                    <span class="showcase-arrow">→</span>
+                </a>
+
+                <a href="form-layouts.html" class="showcase-card">
+                    <div class="showcase-icon">📝</div>
+                    <h3 class="showcase-card-title">Form Layouts</h3>
+                    <p class="showcase-card-description">Complete form examples with validation patterns and wizards.</p>
+                    <span class="showcase-badge">6 Layouts</span>
+                    <span class="showcase-arrow">→</span>
+                </a>
+
+                <a href="list-layouts.html" class="showcase-card">
+                    <div class="showcase-icon">📋</div>
+                    <h3 class="showcase-card-title">List Layouts</h3>
+                    <p class="showcase-card-description">Various list and data display patterns including timelines and grids.</p>
+                    <span class="showcase-badge">8 Patterns</span>
+                    <span class="showcase-arrow">→</span>
+                </a>
+
+                <a href="theme-variations.html" class="showcase-card">
+                    <div class="showcase-icon">🌓</div>
+                    <h3 class="showcase-card-title">Theme Variations</h3>
+                    <p class="showcase-card-description">Complete dark mode with system preference detection and WCAG compliance.</p>
+                    <span class="showcase-badge">Light/Dark</span>
+                    <span class="showcase-arrow">→</span>
+                </a>
+
+                <a href="animation-showcase.html" class="showcase-card">
+                    <div class="showcase-icon">🎬</div>
+                    <h3 class="showcase-card-title">Animations</h3>
+                    <p class="showcase-card-description">21+ CSS keyframe animations with timing functions and easing options.</p>
+                    <span class="showcase-badge">21+ Animations</span>
+                    <span class="showcase-arrow">→</span>
+                </a>
+
+                <a href="responsive-showcase.html" class="showcase-card">
+                    <div class="showcase-icon">📱</div>
+                    <h3 class="showcase-card-title">Responsive Design</h3>
+                    <p class="showcase-card-description">Mobile-first responsive patterns across all breakpoints.</p>
+                    <span class="showcase-badge">3 Breakpoints</span>
+                    <span class="showcase-arrow">→</span>
+                </a>
+
+                <a href="dashboard-showcase.html" class="showcase-card">
+                    <div class="showcase-icon">📊</div>
+                    <h3 class="showcase-card-title">Dashboard Examples</h3>
+                    <p class="showcase-card-description">Four complete dashboard layouts for different use cases.</p>
+                    <span class="showcase-badge">4 Dashboards</span>
+                    <span class="showcase-arrow">→</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Design Tokens -->
+        <section class="section">
+            <h2 class="section-title">Design Tokens</h2>
+            <p class="section-description">Foundation of colors, spacing, and typography that power the design system.</p>
+
+            <div class="tokens-grid">
+                <!-- Colors -->
+                <div class="token-category">
+                    <div class="token-category-title">Brand Colors</div>
+                    <div class="token-list">
+                        <div class="token-item">
+                            <div class="color-swatch" style="background: #10456A;"></div>
+                            <span class="token-name">--ak-primary</span>
+                        </div>
+                        <div class="token-item">
+                            <div class="color-swatch" style="background: #C9A227;"></div>
+                            <span class="token-name">--ak-gold</span>
+                        </div>
+                        <div class="token-item">
+                            <div class="color-swatch" style="background: #4A7C59;"></div>
+                            <span class="token-name">--ak-success</span>
+                        </div>
+                        <div class="token-item">
+                            <div class="color-swatch" style="background: #D4A84B;"></div>
+                            <span class="token-name">--ak-warning</span>
+                        </div>
+                        <div class="token-item">
+                            <div class="color-swatch" style="background: #C45B4E;"></div>
+                            <span class="token-name">--ak-error</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Spacing -->
+                <div class="token-category">
+                    <div class="token-category-title">Spacing Scale</div>
+                    <div class="token-list">
+                        <div class="token-item">
+                            <div style="width: 4px; height: 16px; background: var(--ak-primary); border-radius: 2px;"></div>
+                            <span class="token-name">--spacing-xs: 4px</span>
+                        </div>
+                        <div class="token-item">
+                            <div style="width: 8px; height: 16px; background: var(--ak-primary); border-radius: 2px;"></div>
+                            <span class="token-name">--spacing-sm: 8px</span>
+                        </div>
+                        <div class="token-item">
+                            <div style="width: 16px; height: 16px; background: var(--ak-primary); border-radius: 2px;"></div>
+                            <span class="token-name">--spacing-md: 16px</span>
+                        </div>
+                        <div class="token-item">
+                            <div style="width: 24px; height: 16px; background: var(--ak-primary); border-radius: 2px;"></div>
+                            <span class="token-name">--spacing-lg: 24px</span>
+                        </div>
+                        <div class="token-item">
+                            <div style="width: 32px; height: 16px; background: var(--ak-primary); border-radius: 2px;"></div>
+                            <span class="token-name">--spacing-xl: 32px</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Typography -->
+                <div class="token-category">
+                    <div class="token-category-title">Typography Scale</div>
+                    <div class="token-list">
+                        <div class="token-item">
+                            <span style="font-size: 12px; font-weight: 600;">Aa</span>
+                            <span class="token-name">xs: 12px</span>
+                        </div>
+                        <div class="token-item">
+                            <span style="font-size: 14px; font-weight: 600;">Aa</span>
+                            <span class="token-name">sm: 14px</span>
+                        </div>
+                        <div class="token-item">
+                            <span style="font-size: 16px; font-weight: 600;">Aa</span>
+                            <span class="token-name">base: 16px</span>
+                        </div>
+                        <div class="token-item">
+                            <span style="font-size: 20px; font-weight: 600;">Aa</span>
+                            <span class="token-name">xl: 20px</span>
+                        </div>
+                        <div class="token-item">
+                            <span style="font-size: 24px; font-weight: 600;">Aa</span>
+                            <span class="token-name">2xl: 24px</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Radius -->
+                <div class="token-category">
+                    <div class="token-category-title">Border Radius</div>
+                    <div class="token-list">
+                        <div class="token-item">
+                            <div style="width: 32px; height: 32px; background: var(--ak-primary); border-radius: 8px;"></div>
+                            <span class="token-name">--radius-sm: 8px</span>
+                        </div>
+                        <div class="token-item">
+                            <div style="width: 32px; height: 32px; background: var(--ak-primary); border-radius: 12px;"></div>
+                            <span class="token-name">--radius-md: 12px</span>
+                        </div>
+                        <div class="token-item">
+                            <div style="width: 32px; height: 32px; background: var(--ak-primary); border-radius: 16px;"></div>
+                            <span class="token-name">--radius-lg: 16px</span>
+                        </div>
+                        <div class="token-item">
+                            <div style="width: 32px; height: 32px; background: var(--ak-primary); border-radius: 9999px;"></div>
+                            <span class="token-name">--radius-full: 9999px</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Getting Started -->
+        <section class="section">
+            <h2 class="section-title">Getting Started</h2>
+            <p class="section-description">Three simple steps to start using the AK Golf Design System.</p>
+
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Import CSS Variables</h3>
+                    <p class="step-description">Add the design system CSS to your project</p>
+                    <div class="code-block">@import 'design-system/tokens.css';</div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">Use Components</h3>
+                    <p class="step-description">Reference components from the gallery</p>
+                    <div class="code-block">import { Button } from '@ak/components';</div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Enable Dark Mode</h3>
+                    <p class="step-description">Add dark class to html element</p>
+                    <div class="code-block">document.documentElement.classList.add('dark');</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="footer-text">
+                AK Golf Academy Design System v3.0 - Blue Palette 01<br>
+                Built with Inter font, CSS Variables, and Apple HIG principles
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleTheme() {
+            const root = document.documentElement;
+            const isDark = root.classList.contains('dark');
+            if (isDark) {
+                root.classList.remove('dark');
+                localStorage.setItem('ak-golf-theme', 'light');
+            } else {
+                root.classList.add('dark');
+                localStorage.setItem('ak-golf-theme', 'dark');
+            }
+        }
+
+        // Initialize theme
+        const savedTheme = localStorage.getItem('ak-golf-theme');
+        if (savedTheme === 'dark') {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+</body>
+</html>

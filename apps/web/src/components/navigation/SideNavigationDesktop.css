@@ -1,0 +1,21 @@
+/**
+ * SideNavigationDesktop Styles
+ *
+ * Container for desktop navigation (rail + flyout).
+ * Only visible on desktop breakpoint (>= 1024px).
+ */
+
+.side-navigation-desktop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 100;
+}
+
+/* Hide on mobile and tablet */
+@media (max-width: 1023px) {
+  .side-navigation-desktop {
+    display: none;
+  }
+}

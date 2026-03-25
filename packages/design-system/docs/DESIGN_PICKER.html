@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AK Golf - Velg Design</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #FAFAFA;
+      --card: #FFFFFF;
+      --border: #E5E5E5;
+      --text-1: #1A1A1A;
+      --text-2: #666666;
+      --text-3: #999999;
+      --accent: #10456A;
+      --accent-light: #2C5F7F;
+      --gold: #C9A227;
+      --success: #4A7C59;
+    }
+
+    html { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-1); }
+    body { padding: 40px 24px; max-width: 1600px; margin: 0 auto; }
+
+    .header {
+      text-align: center;
+      margin-bottom: 48px;
+      padding-bottom: 32px;
+      border-bottom: 2px solid var(--border);
+    }
+    .header h1 {
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+      color: var(--accent);
+    }
+    .header p { font-size: 16px; color: var(--text-2); line-height: 1.6; max-width: 600px; margin: 0 auto; }
+
+    .current-design {
+      background: linear-gradient(135deg, var(--accent), var(--accent-light));
+      color: white;
+      padding: 32px;
+      border-radius: 16px;
+      margin-bottom: 48px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .current-design .badge {
+      background: var(--gold);
+      color: #000;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .current-design h2 { font-size: 24px; font-weight: 700; margin: 8px 0 4px; }
+    .current-design p { opacity: 0.9; font-size: 14px; }
+    .current-colors { display: flex; gap: 8px; margin-top: 16px; }
+    .current-colors .dot {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      border: 2px solid rgba(255,255,255,0.3);
+    }
+
+    .section { margin-bottom: 48px; }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .section-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      white-space: nowrap;
+    }
+    .section-line { flex: 1; height: 1px; background: var(--border); }
+    .section-count {
+      font-size: 12px;
+      color: var(--text-3);
+      background: var(--bg);
+      padding: 4px 10px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .variants-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .variant-card {
+      background: var(--card);
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .variant-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 8px 24px rgba(16, 69, 106, 0.12);
+      transform: translateY(-4px);
+    }
+    .variant-card.recommended {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 1px var(--gold);
+    }
+    .variant-card.recommended:hover {
+      border-color: var(--gold);
+      box-shadow: 0 8px 24px rgba(201, 162, 39, 0.2);
+    }
+
+    .variant-preview {
+      height: 160px;
+      position: relative;
+      overflow: hidden;
+    }
+    .variant-preview iframe {
+      width: 200%;
+      height: 200%;
+      transform: scale(0.5);
+      transform-origin: top left;
+      border: none;
+      pointer-events: none;
+    }
+    .variant-preview-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.4));
+    }
+    .variant-mode-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .variant-mode-badge.dark { background: #1a1a2e; color: #a0a0b0; }
+    .variant-mode-badge.light { background: #f0f0f5; color: #404050; }
+
+    .recommended-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: var(--gold);
+      color: #000;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .variant-info { padding: 16px; }
+    .variant-number {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .variant-name {
+      font-size: 18px;
+      font-weight: 700;
+      margin: 4px 0 8px;
+      color: var(--text-1);
+    }
+    .variant-description {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
+    .variant-colors { display: flex; gap: 6px; margin-bottom: 12px; }
+    .color-dot {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      border: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .variant-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+    .tag {
+      font-size: 10px;
+      padding: 4px 8px;
+      background: var(--bg);
+      border-radius: 4px;
+      color: var(--text-2);
+      border: 1px solid var(--border);
+    }
+
+    .variant-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    .variant-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .variant-link:hover { text-decoration: underline; }
+
+    .comparison-section {
+      background: var(--card);
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      margin-bottom: 48px;
+    }
+    .comparison-section h3 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      color: var(--text-1);
+    }
+
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th {
+      text-align: left;
+      padding: 12px 16px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      font-weight: 600;
+      color: var(--text-2);
+    }
+    td {
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      color: var(--text-2);
+    }
+    tr:hover td { background: rgba(16, 69, 106, 0.02); }
+
+    .action-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      margin-top: 48px;
+      padding-top: 32px;
+      border-top: 2px solid var(--border);
+    }
+    .btn {
+      padding: 16px 32px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+      border: none;
+    }
+    .btn-primary:hover {
+      background: var(--accent-light);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(16, 69, 106, 0.3);
+    }
+    .btn-secondary {
+      background: white;
+      color: var(--text-1);
+      border: 2px solid var(--border);
+    }
+    .btn-secondary:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .note {
+      background: #FFF9E6;
+      border: 1px solid #F0E0A0;
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-top: 32px;
+      font-size: 13px;
+      color: #806000;
+    }
+    .note strong { color: #604000; }
+
+    @media (max-width: 768px) {
+      body { padding: 24px 16px; }
+      .header h1 { font-size: 28px; }
+      .variants-grid { grid-template-columns: 1fr; }
+      .current-design { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <h1>Velg Design for AK Golf</h1>
+  <p>Gjennomga alle 16 design-varianter og velg den som passer best for appen. Klikk pa et kort for a apne full mockup i ny fane.</p>
+</header>
+
+<!-- CURRENT PRODUCTION DESIGN -->
+<div class="current-design">
+  <div style="flex-shrink:0">
+    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path d="M9 12l2 2 4-4"/>
+      <circle cx="12" cy="12" r="10"/>
+    </svg>
+  </div>
+  <div style="flex:1">
+    <span class="badge">Aktiv i Produksjon</span>
+    <h2>Blue Palette 01</h2>
+    <p>Dagens design i appen - Navy blue (#10456A) med gull-accent, Inter font, Apple HIG-inspirert typografi</p>
+    <div class="current-colors">
+      <div class="dot" style="background:#10456A" title="Primary"></div>
+      <div class="dot" style="background:#2C5F7F" title="Primary Light"></div>
+      <div class="dot" style="background:#02060D" title="Ink"></div>
+      <div class="dot" style="background:#EDF0F2" title="Snow"></div>
+      <div class="dot" style="background:#C9A227" title="Gold"></div>
+    </div>
+  </div>
+</div>
+
+<!-- TOP RECOMMENDATIONS -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-title">Anbefalte Valg</span>
+    <span class="section-line"></span>
+    <span class="section-count">3 varianter</span>
+  </div>
+
+  <div class="variants-grid">
+
+    <div class="variant-card recommended" onclick="window.open('../AK_Golf_Design_Variants/ak_variant_10_aurora.html', '_blank')">
+      <div class="variant-preview" style="background: linear-gradient(135deg, #050508 0%, #0a1628 100%)">
+        <span class="recommended-badge">Anbefalt</span>
+        <span class="variant-mode-badge dark">Dark</span>
+      </div>
+      <div class="variant-info">
+        <div class="variant-number">Variant 10</div>
+        <div class="variant-name">Aurora</div>
+        <p class="variant-description">Eterisk nordlys med animerte aurora-blobs, glassmorfisme og sofistikert dybde. World-class kvalitet.</p>
+        <div class="variant-colors">
+          <div class="color-dot" style="background:#050508"></div>
+          <div class="color-dot" style="background:#00FF88"></div>
+          <div class="color-dot" style="background:#00D4FF"></div>
+          <div class="color-dot" style="background:#8B5CF6"></div>
+        </div>
+        <div class="variant-tags">
+          <span class="tag">Premium</span>
+          <span class="tag">Animated</span>
+          <span class="tag">Glass</span>
+        </div>
+        <div class="variant-meta">
+          <span>Best for: Premium posisjonering</span>
+          <a href="../AK_Golf_Design_Variants/ak_variant_10_aurora.html" class="variant-link" onclick="event.stopPropagation()">Apne mockup &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="variant-card recommended" onclick="window.open('../AK_Golf_Design_Variants/ak_variant_11_obsidian_gold.html', '_blank')">
+      <div class="variant-preview" style="background: linear-gradient(135deg, #08080A 0%, #1a1a1f 100%)">
+        <span class="recommended-badge">Anbefalt</span>
+        <span class="variant-mode-badge dark">Dark</span>
+      </div>
+      <div class="variant-info">
+        <div class="variant-number">Variant 11</div>
+        <div class="variant-name">Obsidian Gold</div>
+        <p class="variant-description">Ultra-premium med gull-accenter pa dyp obsidian. Eksklusivt, sofistikert og tidlost.</p>
+        <div class="variant-colors">
+          <div class="color-dot" style="background:#08080A"></div>
+          <div class="color-dot" style="background:#D4A84B"></div>
+          <div class="color-dot" style="background:#F5D77E"></div>
+          <div class="color-dot" style="background:#B8922F"></div>
+        </div>
+        <div class="variant-tags">
+          <span class="tag">Luxury</span>
+          <span class="tag">Gold</span>
+          <span class="tag">Exclusive</span>
+        </div>
+        <div class="variant-meta">
+          <span>Best for: Luxury segment</span>
+          <a href="../AK_Golf_Design_Variants/ak_variant_11_obsidian_gold.html" class="variant-link" onclick="event.stopPropagation()">Apne mockup &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="variant-card recommended" onclick="window.open('../AK_Golf_Design_Variants/ak_variant_1_nordic_light.html', '_blank')">
+      <div class="variant-preview" style="background: linear-gradient(135deg, #F5F7F4 0%, #E8EBE5 100%)">
+        <span class="recommended-badge">Anbefalt</span>
+        <span class="variant-mode-badge light">Light</span>
+      </div>
+      <div class="variant-info">
+        <div class="variant-number">Variant 01</div>
+        <div class="variant-name">Nordic Light</div>
+        <p class="variant-description">Skandinavisk minimalisme med forest green, naturlige toner og luftig layout. Lys og ren.</p>
+        <div class="variant-colors">
+          <div class="color-dot" style="background:#2D5A45"></div>
+          <div class="color-dot" style="background:#F5F7F4"></div>
+          <div class="color-dot" style="background:#8BA888"></div>
+          <div class="color-dot" style="background:#1A2F23"></div>
+        </div>
+        <div class="variant-tags">
+          <span class="tag">Scandinavian</span>
+          <span class="tag">Minimal</span>
+          <span class="tag">Natural</span>
+        </div>
+        <div class="variant-meta">
+          <span>Best for: Bred appell</span>
+          <a href="../AK_Golf_Design_Variants/ak_variant_1_nordic_light.html" class="variant-link" onclick="event.stopPropagation()">Apne mockup &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- DARK MODE VARIANTS -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-title">Dark Mode Varianter</span>
+    <span class="section-line"></span>
+    <span class="section-count">7 varianter</span>
+  </div>
+
+  <div class="variants-grid">
+
+    <div class="variant-card" onclick="window.open('../AK_Golf_Design_Variants/ak_variant_2_gradient_glow.html', '_blank')">
+      <div class="variant-preview" style="background: linear-gradient(135deg, #0F0F1A 0%, #1a1a2e 100%)">
+        <span class="variant-mode-badge dark">Dark</span>
+      </div>
+      <div class="variant-info">
+        <div class="variant-number">Variant 02</div>
+        <div class="variant-name">Gradient Glow</div>
+        <p class="variant-description">Mork glassmorfisme med vibrant gradienter, blur-effekter og moderne dybde.</p>
+        <div class="variant-colors">
+          <div class="color-dot" style="background:#0F0F1A"></div>
+          <div class="color-dot" style="background:#00D4AA"></div>
+          <div class="color-dot" style="background:#7C3AED"></div>
+          <div class="color-dot" style="background:#FF6B6B"></div>
+        </div>
+        <div class="variant-tags">
+          <span class="tag">Glassmorphism</span>
+          <span class="tag">Gradients</span>
+          <span class="tag">Modern</span>
+        </div>
+        <div class="variant-meta">
+          <span>Best for: Tech-forward brukere</span>
+          <a href="../AK_Golf_Design_Variants/ak_variant_2_gradient_glow.html" class="variant-link" onclick="event.stopPropagation()">Apne &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="variant-card" onclick="window.open('../AK_Golf_Design_Variants/ak_variant_5_midnight_ocean.html', '_blank')">
+      <div class="variant-preview" style="background: linear-gradient(135deg, #0A1628 0%, #1E3A5F 100%)">
+        <span class="variant-mode-badge dark">Dark</span>
+      </div>
+      <div class="variant-info">
+        <div class="variant-number">Variant 05</div>
+        <div class="variant-name">Midnight Ocean</div>
+        <p class="variant-description">Dyp navy med cyan glow. Bolge-design og nordlys-inspirert ro.</p>
+        <div class="variant-colors">
+          <div class="color-dot" style="background:#0A1628"></div>
+          <div class="color-dot" style="background:#1E3A5F"></div>
+          <div class="color-dot" style="background:#00E5CC"></div>
+          <div class="color-dot" style="background:#FF6B6B"></div>
+        </div>
+        <div class="variant-tags">
+          <span class="tag">Ocean</span>
+          <span class="tag">Calm</span>
+          <span class="tag">Premium</span>
+        </div>
+        <div class="variant-meta">
+          <span>Best for: Seriose spillere</span>
+          <a href="../AK_Golf_Design_Variants/ak_variant_5_midnight_ocean.html" class="variant-link" onclick="event.stopPropagation()">Apne &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="variant-card" onclick="window.open('../AK_Golf_Design_Variants/ak_variant_7_carbon_pro.html', '_blank')">
+      <div class="variant-preview" style="background: linear-gradient(135deg, #0D0D0D 0%, #1a1a1a 100%)">
+        <span class="variant-mode-badge dark">Dark</span>
+      </div>
+      <div class="variant-info">
+        <div class="variant-number">Variant 07</div>
+        <div class="variant-name">Carbon Pro</div>
+        <p class="variant-description">Racing-inspirert med rod og lime. Tekniske paneler og gauge-displays.</p>
+        <div class="variant-colors">
+          <div class="color-dot" style="background:#0D0D0D"></div>
+          <div class="color-dot" style="background:#E31937"></div>
+          <div class="color-dot" style="background:#AAFF00"></div>
+          <div class="color-dot" style="background:#FF6B00"></div>
+        </div>
+        <div class="variant-tags">
+          <span class="tag">Motorsport</span>
+          <span class="tag">Technical</span>
+          <span class="tag">Aggressive</span>
+        </div>
+        <div class="variant-meta">
+          <span>Best for: Performance-fokuserte</span>
+          <a href="../AK_Golf_Design_Variants/ak_variant_7_carbon_pro.html" class="variant-link" onclick="event.stopPropagation()">Apne &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="variant-card" onclick="window.open('../AK_Golf_Design_Variants/ak_variant_9_sunset.html', '_blank')">
+      <div class="variant-preview" style="background: linear-gradient(135deg, #1A1625 0%, #2d2035 100%)">
+        <span class="variant-mode-badge dark">Dark</span>
+      </div>
+      <div class="variant-info">
+        <div class="variant-number">Variant 09</div>
+        <div class="variant-name">Sunset Vibrant</div>
+        <p class="variant-description">Varme solnedgang-gradienter fra oransje til lilla. Energisk og motiverende.</p>
+        <div class="variant-colors">
+          <div class="color-dot" style="background:#1A1625"></div>
+          <div class="color-dot" style="background:#FF7A45"></div>
+          <div class="color-dot" style="background:#FF6B9D"></div>
+          <div class="color-dot" style="background:#C471ED"></div>
+        </div>
+        <div class="variant-tags">
+          <span class="tag">Warm</span>
+          <span class="tag">Energetic</span>
+          <span class="tag">Motivating</span>
+        </div>
+        <div class="variant-meta">
+          <span>Best for: Unge, aktive spillere</span>
+          <a href="../AK_Golf_Design_Variants/ak_variant_9_sunset.html" class="variant-link" onclick="event.stopPropagation()">Apne &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="variant-card" onclick="window.open('../AK_Golf_Design_Variants/ak_variant_15_cyber_neon.html', '_blank')">
+      <div class="variant-preview" style="background: linear-gradient(135deg, #0A0A0C 0%, #151518 100%)">
+        <span class="variant-mode-badge dark">Dark</span>
+      </div>
+      <div class="variant-info">
+        <div class="variant-number">Variant 15</div>
+        <div class="variant-name">Cyber Neon</div>
+        <p class="variant-description">Cyberpunk-inspirert med elektriske neonfarger, glitch-effekter og futuristisk estetikk.</p>
+        <div class="variant-colors">
+          <div class="color-dot" style="background:#0A0A0C"></div>
+          <div class="color-dot" style="background:#FF00FF"></div>
+          <div class="color-dot" style="background:#00FFFF"></div>
+          <div class="color-dot" style="background:#FFFF00"></div>
+        </div>
+        <div class="variant-tags">
+          <span class="tag">Cyberpunk</span>
+          <span class="tag">Neon</span>
+          <span class="tag">Futuristic</span>
+        </div>
+        <div class="variant-meta">
+          <span>Best for: Tech-entusiaster</span>
+          <a href="../AK_Golf_Design_Variants/ak_variant_15_cyber_neon.html" class="variant-link" onclick="event.stopPropagation()">Apne &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- LIGHT MODE VARIANTS -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-title">Light Mode Varianter</span>
+    <span class="section-line"></span>
+    <span class="section-count">8 varianter</span>
+  </div>
+
+  <div class="variants-grid">
+
+    <div class="variant-card" onclick="window.open('../AK_Golf_Design_Variants/ak_variant_3_warm_earth.html', '_blank')">
+      <div class="variant-preview" style="background: linear-gradient(135deg, #FAF6F1 0%, #F0E8DD 100%)">
+        <span class="variant-mode-badge light">Light</span>
+      </div>
+      <div class="variant-info">
+        <div class="variant-number">Variant 03</div>
+        <div class="variant-name">Warm Earth</div>
+        <p class="variant-description">Terracotta og varme jordtoner. Tradisjonell golf-folelse med moderne touch.</p>
+        <div class="variant-colors">
+          <div class="color-dot" style="background:#C4785A"></div>
+          <div class="color-dot" style="background:#FAF6F1"></div>
+          <div class="color-dot" style="background:#2D4A3E"></div>
+          <div class="color-dot" style="background:#8B7355"></div>
+        </div>
+        <div class="variant-tags">
+          <span class="tag">Traditional</span>
+          <span class="tag">Warm</span>
+          <span class="tag">Earthy</span>
+        </div>
+        <div class="variant-meta">
+          <span>Best for: Klassisk golf-segment</span>
+          <a href="../AK_Golf_Design_Variants/ak_variant_3_warm_earth.html" class="variant-link" onclick="event.stopPropagation()">Apne &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="variant-card" onclick="window.open('../AK_Golf_Design_Variants/ak_variant_4_brutalist.html', '_blank')">
+      <div class="variant-preview" style="background: linear-gradient(135deg, #FFFFFF 0%, #F5F5F5 100%)">
+        <span class="variant-mode-badge light">Light</span>
+      </div>
+      <div class="variant-info">
+        <div class="variant-number">Variant 04</div>
+        <div class="variant-name">Brutalist Bold</div>
+        <p class="variant-description">Hoy kontrast sort/hvit med gul accent. Geometrisk og ufiltrert.</p>
+        <div class="variant-colors">
+          <div class="color-dot" style="background:#000000"></div>
+          <div class="color-dot" style="background:#FFFFFF"></div>
+          <div class="color-dot" style="background:#FFE500"></div>
+        </div>
+        <div class="variant-tags">
+          <span class="tag">Brutalist</span>
+          <span class="tag">High Contrast</span>
+          <span class="tag">Bold</span>
+        </div>
+        <div class="variant-meta">
+          <span>Best for: Design-bevisste</span>
+          <a href="../AK_Golf_Design_Variants/ak_variant_4_brutalist.html" class="variant-link" onclick="event.stopPropagation()">Apne &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="variant-card" onclick="window.open('../AK_Golf_Design_Variants/ak_variant_6_soft_pastel.html', '_blank')">
+      <div class="variant-preview" style="background: linear-gradient(135deg, #FEFCFA 0%, #FDF5F5 100%)">
+        <span class="variant-mode-badge light">Light</span>
+      </div>
+      <div class="variant-info">
+        <div class="variant-number">Variant 06</div>
+        <div class="variant-name">Soft Pastel</div>
+        <p class="variant-description">Myk og vennlig med pastell-rosa, mint og lavendel. Blob-former og avrundede elementer.</p>
+        <div class="variant-colors">
+          <div class="color-dot" style="background:#E8A0A0"></div>
+          <div class="color-dot" style="background:#7DD3B8"></div>
+          <div class="color-dot" style="background:#B8A0E8"></div>
+          <div class="color-dot" style="background:#FEFCFA"></div>
+        </div>
+        <div class="variant-tags">
+          <span class="tag">Friendly</span>
+          <span class="tag">Soft</span>
+          <span class="tag">Approachable</span>
+        </div>
+        <div class="variant-meta">
+          <span>Best for: Nybegynnere</span>
+          <a href="../AK_Golf_Design_Variants/ak_variant_6_soft_pastel.html" class="variant-link" onclick="event.stopPropagation()">Apne &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="variant-card" onclick="window.open('../AK_Golf_Design_Variants/ak_variant_8_monochrome.html', '_blank')">
+      <div class="variant-preview" style="background: linear-gradient(135deg, #FAFAFA 0%, #F0F0F0 100%)">
+        <span class="variant-mode-badge light">Light</span>
+      </div>
+      <div class="variant-info">
+        <div class="variant-number">Variant 08</div>
+        <div class="variant-name">Monochrome Minimal</div>
+        <p class="variant-description">Kun sort og hvit. Ultra-minimalt med fokus pa typografi og innhold.</p>
+        <div class="variant-colors">
+          <div class="color-dot" style="background:#000000"></div>
+          <div class="color-dot" style="background:#FFFFFF"></div>
+          <div class="color-dot" style="background:#FAFAFA"></div>
+          <div class="color-dot" style="background:#171717"></div>
+        </div>
+        <div class="variant-tags">
+          <span class="tag">Pure</span>
+          <span class="tag">Clean</span>
+          <span class="tag">Typography</span>
+        </div>
+        <div class="variant-meta">
+          <span>Best for: Minimalister</span>
+          <a href="../AK_Golf_Design_Variants/ak_variant_8_monochrome.html" class="variant-link" onclick="event.stopPropagation()">Apne &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="variant-card" onclick="window.open('../AK_Golf_Design_Variants/ak_variant_16_paper_ink.html', '_blank')">
+      <div class="variant-preview" style="background: linear-gradient(135deg, #FDFBF7 0%, #F5F0E8 100%)">
+        <span class="variant-mode-badge light">Light</span>
+      </div>
+      <div class="variant-info">
+        <div class="variant-number">Variant 16</div>
+        <div class="variant-name">Paper & Ink</div>
+        <p class="variant-description">Redaksjonelt design inspirert av klassiske aviser og magasiner. Tidlos typografi.</p>
+        <div class="variant-colors">
+          <div class="color-dot" style="background:#FDFBF7"></div>
+          <div class="color-dot" style="background:#1A1A1A"></div>
+          <div class="color-dot" style="background:#C41E3A"></div>
+          <div class="color-dot" style="background:#8A8A8A"></div>
+        </div>
+        <div class="variant-tags">
+          <span class="tag">Editorial</span>
+          <span class="tag">Typography</span>
+          <span class="tag">Classic</span>
+        </div>
+        <div class="variant-meta">
+          <span>Best for: Tradisjonalister</span>
+          <a href="../AK_Golf_Design_Variants/ak_variant_16_paper_ink.html" class="variant-link" onclick="event.stopPropagation()">Apne &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="variant-card" onclick="window.open('../AK_Golf_Design_Variants/ak_variant_17_retro_sport.html', '_blank')">
+      <div class="variant-preview" style="background: linear-gradient(135deg, #FFF8E7 0%, #FFF0D0 100%)">
+        <span class="variant-mode-badge light">Light</span>
+      </div>
+      <div class="variant-info">
+        <div class="variant-number">Variant 17</div>
+        <div class="variant-name">Retro Sport</div>
+        <p class="variant-description">70/80-talls atletisk estetikk med dristige farger, vintage typografi.</p>
+        <div class="variant-colors">
+          <div class="color-dot" style="background:#FFF8E7"></div>
+          <div class="color-dot" style="background:#1B365D"></div>
+          <div class="color-dot" style="background:#FF6B35"></div>
+          <div class="color-dot" style="background:#FFD93D"></div>
+        </div>
+        <div class="variant-tags">
+          <span class="tag">Vintage</span>
+          <span class="tag">Athletic</span>
+          <span class="tag">Bold</span>
+        </div>
+        <div class="variant-meta">
+          <span>Best for: Nostalgikere</span>
+          <a href="../AK_Golf_Design_Variants/ak_variant_17_retro_sport.html" class="variant-link" onclick="event.stopPropagation()">Apne &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="variant-card" onclick="window.open('../AK_Golf_Design_Variants/ak_variant_18_zen_garden.html', '_blank')">
+      <div class="variant-preview" style="background: linear-gradient(135deg, #FAF8F5 0%, #F2EFE8 100%)">
+        <span class="variant-mode-badge light">Light</span>
+      </div>
+      <div class="variant-info">
+        <div class="variant-number">Variant 18</div>
+        <div class="variant-name">Zen Garden</div>
+        <p class="variant-description">Japansk-inspirert minimalisme med naturlige farger, ro og balanse.</p>
+        <div class="variant-colors">
+          <div class="color-dot" style="background:#FAF8F5"></div>
+          <div class="color-dot" style="background:#6B8E4E"></div>
+          <div class="color-dot" style="background:#E8B4B8"></div>
+          <div class="color-dot" style="background:#2C2C2C"></div>
+        </div>
+        <div class="variant-tags">
+          <span class="tag">Japanese</span>
+          <span class="tag">Minimal</span>
+          <span class="tag">Calm</span>
+        </div>
+        <div class="variant-meta">
+          <span>Best for: Mindfulness-fokuserte</span>
+          <a href="../AK_Golf_Design_Variants/ak_variant_18_zen_garden.html" class="variant-link" onclick="event.stopPropagation()">Apne &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="variant-card" onclick="window.open('../AK_Golf_Design_Variants/ak_variant_19_swiss_precision.html', '_blank')">
+      <div class="variant-preview" style="background: linear-gradient(135deg, #FFFFFF 0%, #F8F8F8 100%)">
+        <span class="variant-mode-badge light">Light</span>
+      </div>
+      <div class="variant-info">
+        <div class="variant-number">Variant 19</div>
+        <div class="variant-name">Swiss Precision</div>
+        <p class="variant-description">Sveitsisk design med streng grid, Helvetica-estetikk og funksjonell presisjon.</p>
+        <div class="variant-colors">
+          <div class="color-dot" style="background:#FFFFFF"></div>
+          <div class="color-dot" style="background:#000000"></div>
+          <div class="color-dot" style="background:#F3F4F6"></div>
+          <div class="color-dot" style="background:#9CA3AF"></div>
+        </div>
+        <div class="variant-tags">
+          <span class="tag">Swiss</span>
+          <span class="tag">Grid</span>
+          <span class="tag">Functional</span>
+        </div>
+        <div class="variant-meta">
+          <span>Best for: Data-orienterte</span>
+          <a href="../AK_Golf_Design_Variants/ak_variant_19_swiss_precision.html" class="variant-link" onclick="event.stopPropagation()">Apne &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- COMPARISON TABLE -->
+<div class="comparison-section">
+  <h3>Sammenligning av alle varianter</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Navn</th>
+        <th>Mode</th>
+        <th>Primaerfarger</th>
+        <th>Stil</th>
+        <th>Malgruppe</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="background:#f0f7ff"><td><strong>00</strong></td><td><strong>Blue Palette 01 (Aktiv)</strong></td><td>Light+Dark</td><td>Navy #10456A, Gold</td><td>Professional, Clean</td><td>Alle brukere</td></tr>
+      <tr><td>01</td><td>Nordic Light</td><td>Light</td><td>Forest Green, Cream</td><td>Scandinavian Minimal</td><td>Bred appell</td></tr>
+      <tr><td>02</td><td>Gradient Glow</td><td>Dark</td><td>Teal, Purple, Dark</td><td>Glassmorphism</td><td>Tech-forward</td></tr>
+      <tr><td>03</td><td>Warm Earth</td><td>Light</td><td>Terracotta, Green</td><td>Traditional Golf</td><td>Klassisk segment</td></tr>
+      <tr><td>04</td><td>Brutalist Bold</td><td>Light</td><td>Black, White, Yellow</td><td>Brutalist</td><td>Design-bevisste</td></tr>
+      <tr><td>05</td><td>Midnight Ocean</td><td>Dark</td><td>Navy, Cyan</td><td>Ocean/Calm</td><td>Seriose spillere</td></tr>
+      <tr><td>06</td><td>Soft Pastel</td><td>Light</td><td>Rose, Mint, Lavender</td><td>Friendly/Soft</td><td>Nybegynnere</td></tr>
+      <tr><td>07</td><td>Carbon Pro</td><td>Dark</td><td>Red, Lime, Black</td><td>Racing/Technical</td><td>Performance</td></tr>
+      <tr><td>08</td><td>Monochrome Minimal</td><td>Light</td><td>Black, White</td><td>Pure Minimal</td><td>Minimalister</td></tr>
+      <tr><td>09</td><td>Sunset Vibrant</td><td>Dark</td><td>Orange&rarr;Purple</td><td>Warm Gradient</td><td>Unge spillere</td></tr>
+      <tr style="background:#fff9e6"><td><strong>10</strong></td><td><strong>Aurora</strong></td><td>Dark</td><td>Green, Cyan, Purple</td><td>Premium Glass</td><td>Premium segment</td></tr>
+      <tr style="background:#fff9e6"><td><strong>11</strong></td><td><strong>Obsidian Gold</strong></td><td>Dark</td><td>Black, Gold</td><td>Ultra Luxury</td><td>Luxury segment</td></tr>
+      <tr><td>15</td><td>Cyber Neon</td><td>Dark</td><td>Pink, Cyan, Yellow</td><td>Cyberpunk</td><td>Tech-entusiaster</td></tr>
+      <tr><td>16</td><td>Paper & Ink</td><td>Light</td><td>Paper, Black, Red</td><td>Editorial</td><td>Tradisjonalister</td></tr>
+      <tr><td>17</td><td>Retro Sport</td><td>Light</td><td>Navy, Orange, Gold</td><td>70s/80s Athletic</td><td>Nostalgikere</td></tr>
+      <tr><td>18</td><td>Zen Garden</td><td>Light</td><td>Bamboo, Stone, Sand</td><td>Japanese Minimal</td><td>Mindfulness</td></tr>
+      <tr><td>19</td><td>Swiss Precision</td><td>Light</td><td>Black, White, Gray</td><td>Swiss Design</td><td>Data-orienterte</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- GAMIFICATION & BADGES SECTION -->
+<section class="section" style="margin-top: 64px;">
+  <div class="section-header">
+    <span class="section-title">Gamification: Ikoner & Badges</span>
+    <span class="section-line"></span>
+    <span class="section-count">3 systemer</span>
+  </div>
+
+  <div class="variants-grid">
+
+    <!-- Icon Library -->
+    <div class="variant-card" style="cursor:default">
+      <div class="variant-preview" style="background: linear-gradient(135deg, #10456A 0%, #2C5F7F 100%); display: flex; align-items: center; justify-content: center; gap: 16px; padding: 20px;">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"/>
+          <circle cx="12" cy="5" r="0.8" fill="white" stroke="none"/>
+          <circle cx="8" cy="7" r="0.8" fill="white" stroke="none"/>
+          <circle cx="16" cy="7" r="0.8" fill="white" stroke="none"/>
+          <circle cx="12" cy="10" r="0.8" fill="white" stroke="none"/>
+        </svg>
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
+        </svg>
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+        </svg>
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 9H4a2 2 0 0 0 0 4h2M18 9h2a2 2 0 0 1 0 4h-2"/>
+          <path d="M6 4h12v6a6 6 0 0 1-12 0V4z"/>
+          <path d="M12 16v4M8 20h8"/>
+        </svg>
+      </div>
+      <div class="variant-info">
+        <div class="variant-number">Custom Icon Library</div>
+        <div class="variant-name">65+ Custom SVG Icons</div>
+        <p class="variant-description">Golf-spesifikke ikoner: GolfBall, GolfSwing, GolfFlag + Treningstyper + Status + Navigation. 24x24px, 1.5px stroke.</p>
+        <div class="variant-tags">
+          <span class="tag">Golf Icons</span>
+          <span class="tag">Training Types</span>
+          <span class="tag">Status</span>
+          <span class="tag">Navigation</span>
+          <span class="tag">Mood Icons</span>
+        </div>
+        <div class="variant-meta">
+          <span>Fil: icons.jsx</span>
+          <a href="../AK_Golf_Design_Variants/icons.jsx" class="variant-link" target="_blank">Se kode &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Badge System -->
+    <div class="variant-card" style="cursor:default">
+      <div class="variant-preview" style="background: linear-gradient(135deg, #02060D 0%, #1C1C1E 100%); display: flex; align-items: center; justify-content: center; gap: 12px; padding: 20px;">
+        <!-- Standard badge -->
+        <div style="width: 48px; height: 48px; border-radius: 50%; border: 2px solid #8A8A8A; display: flex; align-items: center; justify-content: center;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#EDF0F2" stroke-width="1.5"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <!-- Bronze badge -->
+        <div style="width: 48px; height: 48px; border-radius: 50%; border: 2px dashed #B08D57; display: flex; align-items: center; justify-content: center;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#EDF0F2" stroke-width="1.5"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+        </div>
+        <!-- Silver badge -->
+        <div style="width: 48px; height: 48px; border-radius: 50%; border: 2px solid #8A9BA8; display: flex; align-items: center; justify-content: center;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#EDF0F2" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <!-- Gold badge -->
+        <div style="width: 48px; height: 48px; border-radius: 50%; border: 2px solid #C9A227; background: rgba(201,162,39,0.15); display: flex; align-items: center; justify-content: center;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#02060D" stroke-width="1.5"><path d="M6 9H4a2 2 0 0 0 0 4h2M18 9h2a2 2 0 0 1 0 4h-2"/><path d="M6 4h12v6a6 6 0 0 1-12 0V4z"/><path d="M12 16v4M8 20h8"/></svg>
+        </div>
+        <!-- Platinum badge -->
+        <div style="width: 48px; height: 48px; border-radius: 50%; border: 2px solid #E5E4E2; background: rgba(229,228,226,0.2); box-shadow: inset 0 0 8px rgba(229,228,226,0.3); display: flex; align-items: center; justify-content: center;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#02060D" stroke-width="1.5"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+        </div>
+      </div>
+      <div class="variant-info">
+        <div class="variant-number">Badge System Spec</div>
+        <div class="variant-name">5-Tier Achievement Badges</div>
+        <p class="variant-description">Komplett badge-system med Standard, Bronze, Silver, Gold og Platinum tiers. Monochrome-first design, premium rim-behandling.</p>
+        <div class="variant-tags">
+          <span class="tag">Achievement</span>
+          <span class="tag">Skill Badges</span>
+          <span class="tag">Streak</span>
+          <span class="tag">Tier System</span>
+        </div>
+        <div class="variant-meta">
+          <span>Spec: 1458 linjer</span>
+          <a href="../AK_Golf_Design_Variants/AK_ICON_BADGE_SYSTEM_SPEC.md" class="variant-link" target="_blank">Les spec &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gamification Metrics -->
+    <div class="variant-card" style="cursor:default">
+      <div class="variant-preview" style="background: linear-gradient(135deg, #4A7C59 0%, #2D5A45 100%); display: flex; align-items: center; justify-content: center; gap: 16px; padding: 20px; color: white;">
+        <div style="text-align: center;">
+          <div style="font-size: 28px; font-weight: 700;">247</div>
+          <div style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.8;">Timer</div>
+        </div>
+        <div style="width: 1px; height: 40px; background: rgba(255,255,255,0.3);"></div>
+        <div style="text-align: center;">
+          <div style="font-size: 28px; font-weight: 700;">14</div>
+          <div style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.8;">Streak</div>
+        </div>
+        <div style="width: 1px; height: 40px; background: rgba(255,255,255,0.3);"></div>
+        <div style="text-align: center;">
+          <div style="font-size: 28px; font-weight: 700;">107</div>
+          <div style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.8;">MPH</div>
+        </div>
+      </div>
+      <div class="variant-info">
+        <div class="variant-number">Gamification Metrics</div>
+        <div class="variant-name">Komplett Metrikk-System</div>
+        <p class="variant-description">Volume (timer, slag), Styrke (tonnage, PRs), Speed (clubhead), Presisjon (GIR, putts), Fase-compliance. TypeScript datamodell inkludert.</p>
+        <div class="variant-tags">
+          <span class="tag">Volume Badges</span>
+          <span class="tag">Strength PRs</span>
+          <span class="tag">Speed Club</span>
+          <span class="tag">Skill Trees</span>
+        </div>
+        <div class="variant-meta">
+          <span>Spec: 813 linjer</span>
+          <a href="../AK_Golf_Design_Variants/GAMIFICATION_METRICS_SPEC.md" class="variant-link" target="_blank">Les spec &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Badge Tier Examples -->
+  <div class="comparison-section" style="margin-top: 32px;">
+    <h3>Badge Tier System</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Tier</th>
+          <th>Navn</th>
+          <th>Rim</th>
+          <th>Farge</th>
+          <th>Rarity</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>Standard</td><td>Ingen</td><td>-</td><td>60% (Common)</td></tr>
+        <tr><td>2</td><td>Bronze</td><td>1px dashed</td><td style="color:#B08D57">#B08D57</td><td>25% (Uncommon)</td></tr>
+        <tr><td>3</td><td>Silver</td><td>2px solid</td><td style="color:#8A9BA8">#8A9BA8</td><td>10% (Rare)</td></tr>
+        <tr style="background:#fff9e6"><td><strong>4</strong></td><td><strong>Gold</strong></td><td>2px solid + tint</td><td style="color:#C9A227"><strong>#C9A227</strong></td><td>4% (Epic)</td></tr>
+        <tr style="background:#f5f5f5"><td><strong>5</strong></td><td><strong>Platinum</strong></td><td>2px + inner glow</td><td style="color:#666"><strong>#E5E4E2</strong></td><td>1% (Legendary)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Hierarkisk Badge System -->
+  <div class="comparison-section" style="margin-top: 24px;">
+    <h3>Hierarkisk Skalering (A-K Kategorier)</h3>
+    <p style="color: var(--text-2); margin-bottom: 16px; font-size: 14px;">
+      Badges skaleres basert pa spillerkategori. K-spiller (nybegynner) nar "100 timer"-badge ved 30 timer.
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>Badge</th>
+          <th>A-krav (Elite)</th>
+          <th>E-krav (Klubb)</th>
+          <th>K-krav (Ny)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Marathoner</td><td>500 timer</td><td>400 timer</td><td>150 timer</td></tr>
+        <tr><td>Maneds-streak</td><td>30 dager</td><td>24 dager</td><td>15 dager</td></tr>
+        <tr><td>Tonnage Gold</td><td>100,000 kg</td><td>80,000 kg</td><td>30,000 kg</td></tr>
+        <tr><td>Speed 100+</td><td>100 mph</td><td>88 mph</td><td>70 mph</td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top: 16px;">
+      <a href="../AK_Golf_Design_Variants/PLAN-Hierarkisk-Badge-System.md" class="variant-link" target="_blank">Les full hierarki-spec &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<div class="note">
+  <strong>Tips:</strong> Klikk pa et design-kort for a apne den fulle HTML-mockupen i en ny fane.
+  Der kan du se alle komponenter, farger og typografi i kontekst. Etter du har valgt,
+  gi meg beskjed sa implementerer jeg designet i appen.
+</div>
+
+<div class="action-buttons">
+  <a href="../AK_Golf_Design_Variants/00_KATALOG_OVERSIKT.html" class="btn btn-secondary" target="_blank">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+    Apne original katalog
+  </a>
+  <a href="../AK_Golf_Design_Variants/ak_golf_components.html" class="btn btn-primary" target="_blank">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+    Se komponent-bibliotek
+  </a>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,244 @@
+/**
+ * TIER Golf - Pro Dashboard Design Tokens
+ *
+ * Enterprise/performance intelligence styling:
+ * - Harder information hierarchy
+ * - More precise number presentation
+ * - Reduced visual fluff (radius, shadows)
+ * - Semantic color usage
+ * - Higher contrast typography
+ */
+
+:root {
+  /* ═══════════════════════════════════════════════════════════
+     PRO DASHBOARD SPACING
+     More whitespace between sections, less inside cards
+     ═══════════════════════════════════════════════════════════ */
+
+  --pro-section-gap: var(--space-8);      /* 32px between sections */
+  --pro-card-gap: var(--space-4);         /* 16px between cards */
+  --pro-card-padding: var(--space-5);     /* 20px inside cards */
+  --pro-card-padding-sm: var(--space-4);  /* 16px for compact cards */
+
+  /* ═══════════════════════════════════════════════════════════
+     PRO DASHBOARD BORDERS & RADIUS
+     Reduced roundness for sharper, more professional look
+     ═══════════════════════════════════════════════════════════ */
+
+  --pro-radius-sm: 4px;    /* Reduced from 6px */
+  --pro-radius-md: 6px;    /* Reduced from 8px */
+  --pro-radius-lg: 8px;    /* Reduced from 12px */
+
+  /* Sharper borders */
+  --pro-border-width: 1px;
+  --pro-border-color: rgb(var(--gray-200));
+  --pro-border-subtle: rgb(var(--gray-100));
+  --pro-border-strong: rgb(var(--gray-300));
+
+  /* ═══════════════════════════════════════════════════════════
+     PRO DASHBOARD SHADOWS
+     Subtler shadows, more reliance on borders
+     ═══════════════════════════════════════════════════════════ */
+
+  --pro-shadow-card: 0 1px 2px 0 rgb(0 0 0 / 0.04);
+  --pro-shadow-card-hover: 0 2px 4px 0 rgb(0 0 0 / 0.06);
+  --pro-shadow-elevated: 0 2px 8px 0 rgb(0 0 0 / 0.08);
+
+  /* ═══════════════════════════════════════════════════════════
+     KPI HIERARCHY TOKENS
+     Primary > Secondary > Tertiary visual importance
+     ═══════════════════════════════════════════════════════════ */
+
+  /* Primary KPI (Hero) - Total Strokes Gained */
+  --kpi-primary-value-size: 3.5rem;       /* 56px */
+  --kpi-primary-value-weight: 700;
+  --kpi-primary-label-size: 0.875rem;     /* 14px */
+  --kpi-primary-label-weight: 500;
+  --kpi-primary-bg: rgb(var(--surface-primary));
+  --kpi-primary-border: var(--pro-border-color);
+
+  /* Secondary KPI - Delta, Percentile, Benchmark */
+  --kpi-secondary-value-size: 1.75rem;    /* 28px */
+  --kpi-secondary-value-weight: 600;
+  --kpi-secondary-label-size: 0.75rem;    /* 12px */
+  --kpi-secondary-label-weight: 500;
+  --kpi-secondary-bg: rgb(var(--surface-secondary));
+  --kpi-secondary-border: var(--pro-border-subtle);
+
+  /* Tertiary/Diagnostic - Category breakdown */
+  --kpi-tertiary-value-size: 1.5rem;      /* 24px */
+  --kpi-tertiary-value-weight: 600;
+  --kpi-tertiary-label-size: 0.6875rem;   /* 11px */
+  --kpi-tertiary-label-weight: 500;
+  --kpi-tertiary-bg: rgb(var(--surface-primary));
+  --kpi-tertiary-border: var(--pro-border-subtle);
+
+  /* ═══════════════════════════════════════════════════════════
+     SEMANTIC STATUS COLORS FOR KPIs
+     Clear positive/negative/neutral indication
+     ═══════════════════════════════════════════════════════════ */
+
+  /* Positive (above benchmark, gaining strokes) */
+  --semantic-positive: rgb(var(--status-success));
+  --semantic-positive-bg: rgb(var(--status-success-light));
+  --semantic-positive-text: rgb(4, 120, 87);  /* Darker green for text */
+
+  /* Negative (below benchmark, losing strokes) */
+  --semantic-negative: rgb(var(--status-error));
+  --semantic-negative-bg: rgb(var(--status-error-light));
+  --semantic-negative-text: rgb(185, 28, 28);  /* Darker red for text */
+
+  /* Neutral (no significant change) */
+  --semantic-neutral: rgb(var(--gray-500));
+  --semantic-neutral-bg: rgb(var(--gray-100));
+  --semantic-neutral-text: rgb(var(--gray-600));
+
+  /* Warning/Amber for attention items */
+  --semantic-warning: rgb(var(--status-warning));
+  --semantic-warning-bg: rgb(var(--status-warning-light));
+  --semantic-warning-text: rgb(180, 83, 9);  /* Darker amber for text */
+
+  /* ═══════════════════════════════════════════════════════════
+     TYPOGRAPHY FOR KPI VALUES
+     Tabular numbers for alignment, high contrast
+     ═══════════════════════════════════════════════════════════ */
+
+  --font-kpi: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-kpi-mono: 'JetBrains Mono', 'SF Mono', 'Roboto Mono', monospace;
+
+  /* Tabular number feature */
+  --font-feature-tabular: "tnum" 1;
+
+  /* KPI value styles */
+  --kpi-value-tracking: -0.02em;  /* Tighter letter-spacing for numbers */
+  --kpi-label-tracking: 0.02em;   /* Wider for labels */
+
+  /* ═══════════════════════════════════════════════════════════
+     CARD TYPE VARIANTS
+     Different visual treatments for card hierarchy
+     ═══════════════════════════════════════════════════════════ */
+
+  /* Primary Card (Hero KPI) */
+  --card-primary-bg: rgb(var(--surface-primary));
+  --card-primary-border: var(--pro-border-color);
+  --card-primary-shadow: var(--pro-shadow-elevated);
+  --card-primary-radius: var(--pro-radius-lg);
+  --card-primary-padding: var(--space-6);
+
+  /* Insight Card (Secondary metrics) */
+  --card-insight-bg: rgb(var(--surface-primary));
+  --card-insight-border: var(--pro-border-subtle);
+  --card-insight-shadow: var(--pro-shadow-card);
+  --card-insight-radius: var(--pro-radius-md);
+  --card-insight-padding: var(--space-5);
+
+  /* Diagnostic Card (Tertiary/breakdown) */
+  --card-diagnostic-bg: rgb(var(--surface-secondary));
+  --card-diagnostic-border: var(--pro-border-subtle);
+  --card-diagnostic-shadow: none;
+  --card-diagnostic-radius: var(--pro-radius-sm);
+  --card-diagnostic-padding: var(--space-4);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   UTILITY CLASSES FOR PRO DASHBOARD
+   ═══════════════════════════════════════════════════════════ */
+
+/* KPI Value base styles */
+.kpi-value {
+  font-family: var(--font-kpi);
+  font-feature-settings: var(--font-feature-tabular);
+  letter-spacing: var(--kpi-value-tracking);
+  line-height: 1;
+}
+
+/* KPI Value with monospace for precise alignment */
+.kpi-value-mono {
+  font-family: var(--font-kpi-mono);
+  font-feature-settings: var(--font-feature-tabular);
+  letter-spacing: var(--kpi-value-tracking);
+  line-height: 1;
+}
+
+/* KPI Label styles */
+.kpi-label {
+  font-family: var(--font-kpi);
+  letter-spacing: var(--kpi-label-tracking);
+  text-transform: uppercase;
+  color: rgb(var(--text-secondary));
+}
+
+/* Semantic color classes */
+.sg-positive {
+  color: var(--semantic-positive-text);
+}
+
+.sg-negative {
+  color: var(--semantic-negative-text);
+}
+
+.sg-neutral {
+  color: var(--semantic-neutral-text);
+}
+
+.sg-positive-bg {
+  background-color: var(--semantic-positive-bg);
+}
+
+.sg-negative-bg {
+  background-color: var(--semantic-negative-bg);
+}
+
+.sg-neutral-bg {
+  background-color: var(--semantic-neutral-bg);
+}
+
+/* Pro card base */
+.pro-card {
+  border-radius: var(--pro-radius-md);
+  border: var(--pro-border-width) solid var(--pro-border-color);
+  box-shadow: var(--pro-shadow-card);
+  transition: box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.pro-card:hover {
+  box-shadow: var(--pro-shadow-card-hover);
+}
+
+/* Pro section spacing */
+.pro-section {
+  margin-bottom: var(--pro-section-gap);
+}
+
+.pro-section:last-child {
+  margin-bottom: 0;
+}
+
+/* Pro grid layouts */
+.pro-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--pro-card-gap);
+}
+
+.pro-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--pro-card-gap);
+}
+
+@media (max-width: 768px) {
+  .pro-grid-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .pro-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .pro-grid-4 {
+    grid-template-columns: 1fr;
+  }
+}

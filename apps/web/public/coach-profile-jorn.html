@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jørn Johnsen - Coach Profil | TIER Golf</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --tier-navy: #0A2540;
+      --tier-gold: #C9A227;
+      --tier-white: #FFFFFF;
+      --text-secondary: #6B7280;
+      --text-tertiary: #9CA3AF;
+      --border-color: #E5E7EB;
+      --status-success: #10B981;
+      --status-info: #3B82F6;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+      background: #F9FAFB;
+      padding: 2rem;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+
+    .header {
+      background: linear-gradient(135deg, var(--tier-navy) 0%, #0d3252 100%);
+      color: white;
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    .avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: var(--tier-gold);
+      margin: 0 auto 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      font-weight: bold;
+      color: var(--tier-navy);
+      border: 4px solid white;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .role {
+      color: var(--tier-gold);
+      font-size: 1.1rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+
+    .credentials {
+      display: inline-block;
+      background: rgba(255,255,255,0.1);
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      backdrop-filter: blur(10px);
+      margin-top: 1rem;
+    }
+
+    .credentials p {
+      margin: 0.25rem 0;
+      font-size: 0.9rem;
+    }
+
+    .section {
+      padding: 2rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .section:last-child {
+      border-bottom: none;
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+      color: var(--tier-navy);
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+
+    .icon {
+      width: 40px;
+      height: 40px;
+      background: rgba(10, 37, 64, 0.1);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .info-content {
+      flex: 1;
+    }
+
+    .info-label {
+      font-size: 0.85rem;
+      color: var(--text-tertiary);
+      margin-bottom: 0.25rem;
+    }
+
+    .info-value {
+      color: var(--tier-navy);
+      font-weight: 500;
+    }
+
+    .badge-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+
+    .badge {
+      padding: 0.5rem 1rem;
+      background: rgba(201, 162, 39, 0.1);
+      color: var(--tier-gold);
+      border: 1px solid var(--tier-gold);
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .bio {
+      line-height: 1.6;
+      color: var(--text-secondary);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .stat-card {
+      text-align: center;
+      padding: 1.5rem;
+      background: #F9FAFB;
+      border-radius: 8px;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--tier-navy);
+      margin-bottom: 0.25rem;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .working-hours {
+      display: grid;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .day-hours {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.75rem 1rem;
+      background: #F9FAFB;
+      border-radius: 6px;
+    }
+
+    .day {
+      font-weight: 500;
+      color: var(--tier-navy);
+    }
+
+    .hours {
+      color: var(--text-secondary);
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 1rem;
+      }
+
+      .header {
+        padding: 2rem 1rem;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="avatar">JJ</div>
+      <h1>Jørn Johnsen</h1>
+      <p class="role">💼 Head Coach - TIER Golf</p>
+
+      <div class="credentials">
+        <p><strong>📧 coach@demo.com</strong></p>
+        <p>🔑 Passord: coach123</p>
+      </div>
+    </div>
+
+    <!-- Bio Section -->
+    <div class="section">
+      <h2 class="section-title">📖 Om</h2>
+      <p class="bio">
+        Erfaren golf-trener med over 15 års erfaring fra toppidrett. Spesialiserer seg på
+        teknisk trening, mental coaching og turnerings-forberedelse for unge talenter.
+        Har jobbet med spillere fra nybegynner til Tour-nivå og brenner for å utvikle
+        det komplette golftarentet gjennom systematisk og datadrevet trening.
+      </p>
+    </div>
+
+    <!-- Contact Info -->
+    <div class="section">
+      <h2 class="section-title">📞 Kontaktinformasjon</h2>
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="icon">📧</div>
+          <div class="info-content">
+            <div class="info-label">E-post</div>
+            <div class="info-value">coach@demo.com</div>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="icon">📱</div>
+          <div class="info-content">
+            <div class="info-label">Telefon</div>
+            <div class="info-value">+47 900 12 345</div>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="icon">🏌️</div>
+          <div class="info-content">
+            <div class="info-label">Klubb</div>
+            <div class="info-value">Oslo Golf Klubb</div>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="icon">🎯</div>
+          <div class="info-content">
+            <div class="info-label">Rolle</div>
+            <div class="info-value">Head Coach</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Specializations -->
+    <div class="section">
+      <h2 class="section-title">⚡ Spesialiseringer</h2>
+      <div class="badge-list">
+        <span class="badge">Driver Teknikk</span>
+        <span class="badge">Kort Spill</span>
+        <span class="badge">Mental Trening</span>
+        <span class="badge">Turnerings-forberedelse</span>
+        <span class="badge">Fysisk Trening</span>
+        <span class="badge">Video Analyse</span>
+      </div>
+    </div>
+
+    <!-- Certifications -->
+    <div class="section">
+      <h2 class="section-title">🏆 Sertifiseringer</h2>
+      <div class="badge-list">
+        <span class="badge">PGA Professional</span>
+        <span class="badge">Team Norway Coach</span>
+        <span class="badge">Level 3 Golf Coach</span>
+        <span class="badge">Sports Psychology</span>
+      </div>
+    </div>
+
+    <!-- Statistics -->
+    <div class="section">
+      <h2 class="section-title">📊 Statistikk</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value">15+</div>
+          <div class="stat-label">År Erfaring</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">50+</div>
+          <div class="stat-label">Spillere Trent</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">12</div>
+          <div class="stat-label">Aktive Spillere</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">4.8</div>
+          <div class="stat-label">Gj.snitt Rating</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Working Hours -->
+    <div class="section">
+      <h2 class="section-title">⏰ Arbeidstider</h2>
+      <div class="working-hours">
+        <div class="day-hours">
+          <span class="day">Mandag</span>
+          <span class="hours">08:00 - 17:00</span>
+        </div>
+        <div class="day-hours">
+          <span class="day">Tirsdag</span>
+          <span class="hours">08:00 - 17:00</span>
+        </div>
+        <div class="day-hours">
+          <span class="day">Onsdag</span>
+          <span class="hours">08:00 - 17:00</span>
+        </div>
+        <div class="day-hours">
+          <span class="day">Torsdag</span>
+          <span class="hours">08:00 - 17:00</span>
+        </div>
+        <div class="day-hours">
+          <span class="day">Fredag</span>
+          <span class="hours">08:00 - 17:00</span>
+        </div>
+        <div class="day-hours">
+          <span class="day">Lørdag/Søndag</span>
+          <span class="hours">Stengt</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Login Instructions -->
+    <div class="section" style="background: rgba(201, 162, 39, 0.05);">
+      <h2 class="section-title">🔐 Logg Inn Som Coach</h2>
+      <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+        For å teste coach-funksjoner, bruk følgende innloggingsdetaljer:
+      </p>
+      <div style="background: white; padding: 1.5rem; border-radius: 8px; border: 2px dashed var(--tier-gold);">
+        <p style="margin-bottom: 0.5rem;"><strong>📧 E-post:</strong> <code style="background: #F3F4F6; padding: 0.25rem 0.5rem; border-radius: 4px;">coach@demo.com</code></p>
+        <p><strong>🔑 Passord:</strong> <code style="background: #F3F4F6; padding: 0.25rem 0.5rem; border-radius: 4px;">coach123</code></p>
+      </div>
+      <p style="color: var(--text-tertiary); font-size: 0.85rem; margin-top: 1rem;">
+        ⚠️ Merk: Dette er en demo-bruker kun for testing. Ikke bruk ekte personopplysninger.
+      </p>
+    </div>
+  </div>
+</body>
+</html>

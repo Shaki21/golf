@@ -1,0 +1,356 @@
+/**
+ * TIER Golf Design System - Animations
+ * Version: 1.0.0
+ *
+ * Custom animations for TIER Golf gamification elements.
+ */
+
+/* ═══════════════════════════════════════════════════════════
+   GAMIFICATION ANIMATIONS
+   ═══════════════════════════════════════════════════════════ */
+
+/* Fire Flicker - For streak indicators */
+@keyframes fire-flicker {
+  0%, 100% {
+    transform: scale(1) rotate(-2deg);
+    filter: brightness(1);
+  }
+  25% {
+    transform: scale(1.05) rotate(1deg);
+    filter: brightness(1.1);
+  }
+  50% {
+    transform: scale(0.98) rotate(-1deg);
+    filter: brightness(0.95);
+  }
+  75% {
+    transform: scale(1.02) rotate(2deg);
+    filter: brightness(1.05);
+  }
+}
+
+.animate-fire-flicker {
+  animation: fire-flicker 1s ease-in-out infinite;
+}
+
+/* Badge Unlock - For achievement badges */
+@keyframes badge-unlock {
+  0% {
+    transform: scale(0) rotate(-180deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2) rotate(10deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+.animate-badge-unlock {
+  animation: badge-unlock 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Tier Up - Category level up celebration */
+@keyframes tier-up {
+  0% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  25% {
+    transform: scale(1.1);
+    filter: brightness(1.2) drop-shadow(0 0 20px rgb(var(--tier-gold)));
+  }
+  50% {
+    transform: scale(1.05);
+    filter: brightness(1.3) drop-shadow(0 0 30px rgb(var(--tier-gold)));
+  }
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}
+
+.animate-tier-up {
+  animation: tier-up 1.5s ease-out;
+}
+
+/* Progress Fill - For progress bars and rings */
+@keyframes progress-fill {
+  from {
+    stroke-dashoffset: var(--circumference, 283);
+  }
+  to {
+    stroke-dashoffset: var(--progress-offset, 0);
+  }
+}
+
+.animate-progress-fill {
+  animation: progress-fill 1s ease-out forwards;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   UI ANIMATIONS
+   ═══════════════════════════════════════════════════════════ */
+
+/* Fade In */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.2s ease-out;
+}
+
+/* Slide Up */
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out;
+}
+
+/* Slide Down */
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-down {
+  animation: slide-down 0.3s ease-out;
+}
+
+/* Scale In */
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-scale-in {
+  animation: scale-in 0.2s ease-out;
+}
+
+/* Pulse */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Spin */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Bounce */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(-5%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+.animate-bounce {
+  animation: bounce 1s infinite;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CATEGORY RING ANIMATIONS
+   ═══════════════════════════════════════════════════════════ */
+
+/* Category Ring Progress - For SVG stroke animation */
+.category-ring-progress {
+  transition: stroke-dashoffset 700ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+/* Category Ring Glow - Hover effect */
+@keyframes ring-glow {
+  0%, 100% {
+    filter: drop-shadow(0 0 4px currentColor);
+  }
+  50% {
+    filter: drop-shadow(0 0 8px currentColor);
+  }
+}
+
+.category-ring:hover .category-ring-progress {
+  animation: ring-glow 1.5s ease-in-out infinite;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   XP BAR ANIMATIONS
+   ═══════════════════════════════════════════════════════════ */
+
+/* XP Gain - For level up */
+@keyframes xp-gain {
+  0% {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  100% {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+.animate-xp-gain {
+  animation: xp-gain 1s cubic-bezier(0, 0, 0.2, 1) forwards;
+}
+
+/* Level Up Shimmer */
+@keyframes level-up-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.level-up-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.5) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: level-up-shimmer 2s infinite;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TOAST/NOTIFICATION ANIMATIONS
+   ═══════════════════════════════════════════════════════════ */
+
+/* Toast Slide In from Bottom */
+@keyframes toast-slide-in {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-toast-slide-in {
+  animation: toast-slide-in 0.3s cubic-bezier(0, 0, 0.2, 1);
+}
+
+/* Toast Slide Out to Bottom */
+@keyframes toast-slide-out {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
+.animate-toast-slide-out {
+  animation: toast-slide-out 0.2s cubic-bezier(0.4, 0, 1, 1);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ACCESSIBILITY - REDUCED MOTION
+   ═══════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   UTILITY CLASSES
+   ═══════════════════════════════════════════════════════════ */
+
+/* Smooth transitions */
+.transition-base {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow;
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.transition-transform {
+  transition-property: transform;
+  transition-duration: 200ms;
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+}
+
+/* Focus states */
+.focus-tier {
+  @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-tier-navy focus-visible:outline-offset-2;
+}
+
+/* Hover lift */
+.hover-lift {
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+}
+
+/* Hover scale */
+.hover-scale {
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}

@@ -1,0 +1,450 @@
+/**
+ * FocusSession Component Styles
+ * iOS-specific focus mode integration styling
+ * Design System v3.0 - Forest Green (Premium Light)
+ *
+ * All colors use CSS variables from index.css
+ */
+
+.focus-session-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: var(--spacing-5);
+}
+
+/* Session Controls (Idle State) */
+.focus-session-controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  align-items: center;
+}
+
+.btn-start-session {
+  width: 100%;
+  max-width: 320px;
+  padding: var(--spacing-4) var(--spacing-8);
+  font-size: var(--font-size-headline);
+  font-weight: 600;
+  color: var(--text-inverse);
+  background: linear-gradient(135deg, rgb(var(--tier-navy)) 0%, rgb(var(--tier-navy-light)) 100%);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(27, 77, 62, 0.3);
+}
+
+.btn-start-session:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(27, 77, 62, 0.4);
+}
+
+.btn-start-session:active {
+  transform: translateY(0);
+}
+
+.btn-setup-shortcut {
+  width: 100%;
+  max-width: 320px;
+  padding: var(--spacing-3) var(--spacing-6);
+  font-size: var(--font-size-body);
+  font-weight: 500;
+  color: rgb(var(--tier-navy));
+  background: var(--accent-muted);
+  border: 2px solid rgb(var(--tier-navy));
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-setup-shortcut:hover {
+  background: var(--accent-soft);
+}
+
+/* Active Session */
+.focus-session-active,
+.focus-session-paused {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-6);
+  padding: var(--spacing-8);
+  background: var(--background-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+.session-timer {
+  text-align: center;
+}
+
+.session-timer h2 {
+  font-size: 48px;
+  font-weight: 700;
+  color: rgb(var(--tier-navy));
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.session-timer p {
+  font-size: var(--font-size-body);
+  color: var(--text-secondary);
+  margin: var(--spacing-2) 0 0 0;
+}
+
+.session-actions {
+  display: flex;
+  gap: var(--spacing-3);
+  width: 100%;
+  max-width: 400px;
+}
+
+.btn-pause,
+.btn-resume,
+.btn-complete {
+  flex: 1;
+  padding: var(--spacing-3) var(--spacing-6);
+  font-size: var(--font-size-body);
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-pause,
+.btn-resume {
+  color: var(--text-primary);
+  background: var(--gray-300);
+}
+
+.btn-pause:hover,
+.btn-resume:hover {
+  background: var(--gray-400);
+}
+
+.btn-complete {
+  color: var(--text-inverse);
+  background: rgb(var(--tier-navy));
+}
+
+.btn-complete:hover {
+  background: rgb(var(--tier-navy-light));
+}
+
+/* Paused State */
+.focus-session-paused {
+  background: var(--warning-muted);
+  border: 2px solid rgb(var(--status-warning));
+}
+
+.focus-session-paused .session-timer h2 {
+  color: rgb(var(--status-warning));
+}
+
+/* Completed State */
+.focus-session-completed {
+  text-align: center;
+  padding: var(--spacing-8);
+  background: var(--success-muted);
+  border-radius: var(--radius-lg);
+  border: 2px solid rgb(var(--status-success));
+}
+
+.focus-session-completed h3 {
+  font-size: var(--font-size-title2);
+  font-weight: 700;
+  color: rgb(var(--status-success));
+  margin: 0 0 var(--spacing-2) 0;
+}
+
+.focus-session-completed p {
+  font-size: var(--font-size-headline);
+  color: var(--text-secondary);
+  margin: 0 0 var(--spacing-6) 0;
+}
+
+.btn-new-session {
+  padding: var(--spacing-3) var(--spacing-8);
+  font-size: var(--font-size-body);
+  font-weight: 600;
+  color: var(--text-inverse);
+  background: rgb(var(--tier-navy));
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-new-session:hover {
+  background: rgb(var(--tier-navy-light));
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay-backdrop);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: var(--spacing-5);
+  backdrop-filter: blur(4px);
+}
+
+.modal-content {
+  background: var(--background-white);
+  border-radius: var(--radius-lg);
+  max-width: 560px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: var(--spacing-8);
+  box-shadow: var(--shadow-float);
+}
+
+.modal-content h2 {
+  font-size: var(--font-size-title2);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 var(--spacing-6) 0;
+}
+
+/* Setup Instructions */
+.setup-instructions {
+  color: var(--text-secondary);
+}
+
+.setup-instructions p {
+  margin: 0 0 var(--spacing-4) 0;
+  line-height: 1.6;
+}
+
+.setup-instructions ol {
+  list-style: decimal;
+  padding-left: var(--spacing-6);
+  margin: 0 0 var(--spacing-6) 0;
+}
+
+.setup-instructions ol li {
+  margin-bottom: var(--spacing-5);
+}
+
+.setup-instructions ol li strong {
+  display: block;
+  font-size: var(--font-size-body);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-2);
+}
+
+.setup-instructions ol li p {
+  margin: var(--spacing-2) 0;
+  color: var(--text-secondary);
+}
+
+.setup-instructions ul {
+  list-style: disc;
+  padding-left: var(--spacing-6);
+  margin: var(--spacing-2) 0;
+}
+
+.setup-instructions ul li {
+  margin: var(--spacing-1) 0;
+  color: var(--text-secondary);
+}
+
+/* Setup Actions */
+.setup-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+  margin-top: var(--spacing-6);
+}
+
+.btn-install-shortcut {
+  display: block;
+  width: 100%;
+  padding: 14px var(--spacing-6);
+  font-size: var(--font-size-body);
+  font-weight: 600;
+  color: var(--text-inverse);
+  background: linear-gradient(135deg, rgb(var(--tier-navy)) 0%, rgb(var(--tier-navy-light)) 100%);
+  border: none;
+  border-radius: var(--radius-sm);
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(27, 77, 62, 0.3);
+}
+
+.btn-install-shortcut:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(27, 77, 62, 0.4);
+}
+
+.btn-done {
+  width: 100%;
+  padding: var(--spacing-3) var(--spacing-6);
+  font-size: var(--font-size-body);
+  font-weight: 600;
+  color: var(--text-inverse);
+  background: rgb(var(--tier-navy));
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-done:hover {
+  background: rgb(var(--tier-navy-light));
+}
+
+.btn-skip {
+  width: 100%;
+  padding: var(--spacing-3) var(--spacing-6);
+  font-size: var(--font-size-body);
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 2px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-skip:hover {
+  background: var(--background-default);
+}
+
+/* Setup Note */
+.setup-note {
+  margin-top: var(--spacing-6);
+  padding: var(--spacing-4);
+  background: var(--background-surface);
+  border-left: 4px solid rgb(var(--tier-navy));
+  border-radius: var(--radius-sm);
+}
+
+.setup-note p {
+  margin: 0;
+  font-size: var(--font-size-footnote);
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.setup-note strong {
+  color: var(--text-primary);
+}
+
+/* Debug Info */
+.debug-info {
+  margin-top: var(--spacing-8);
+  padding: var(--spacing-4);
+  background: var(--background-default);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  font-family: 'Monaco', 'Courier New', monospace;
+  font-size: var(--font-size-caption1);
+}
+
+.debug-info details {
+  cursor: pointer;
+}
+
+.debug-info summary {
+  font-weight: 600;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.debug-info pre {
+  margin: var(--spacing-3) 0 0 0;
+  padding: var(--spacing-3);
+  background: var(--background-white);
+  border: 1px solid var(--border-default);
+  border-radius: 6px;
+  overflow-x: auto;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .focus-session-container {
+    padding: var(--spacing-4);
+  }
+
+  .modal-content {
+    padding: var(--spacing-6);
+  }
+
+  .session-timer h2 {
+    font-size: 40px;
+  }
+
+  .focus-session-active,
+  .focus-session-paused {
+    padding: var(--spacing-6);
+  }
+
+  .session-actions {
+    flex-direction: column;
+  }
+
+  .btn-pause,
+  .btn-resume,
+  .btn-complete {
+    width: 100%;
+  }
+}
+
+/* iOS-specific adjustments */
+@supports (-webkit-touch-callout: none) {
+  .btn-start-session,
+  .btn-install-shortcut {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .modal-content {
+    padding-bottom: var(--safe-area-inset-bottom, 32px);
+  }
+}
+
+/* Fullscreen mode adjustments */
+.focus-session-container:fullscreen {
+  background: var(--background-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.focus-session-container:-webkit-full-screen {
+  background: var(--background-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.focus-session-container:fullscreen .focus-session-active,
+.focus-session-container:-webkit-full-screen .focus-session-active {
+  width: 100%;
+  max-width: 600px;
+}
+
+/* Animation for session start - uses index.css keyframes if available */
+.session-timer h2 {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.focus-session-paused .session-timer h2 {
+  animation: none;
+}

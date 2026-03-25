@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interaction States - AK Golf Academy Design System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --ak-primary: #10456A;
+            --ak-primary-light: #2C5F7F;
+            --ak-primary-50: #E8F1F5;
+            --ak-gold: #C9A227;
+            --ak-white: #FFFFFF;
+            --ak-snow: #EDF0F2;
+            --ak-surface: #EBE5DA;
+            --ak-success: #4A7C59;
+            --ak-warning: #D4A84B;
+            --ak-error: #C45B4E;
+            --ak-charcoal: #1C1C1E;
+            --ak-steel: #8E8E93;
+            --ak-mist: #E5E5EA;
+            --ak-cloud: #F2F2F7;
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 12px;
+            --spacing-lg: 16px;
+            --spacing-xl: 24px;
+            --spacing-xxl: 32px;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --shadow-card: 0 2px 4px rgba(0, 0, 0, 0.06);
+            --shadow-elevated: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 6px 16px rgba(0, 0, 0, 0.12);
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        :root.dark {
+            --ak-primary: #2C5F7F;
+            --ak-white: #1C1C1E;
+            --ak-snow: #1C1C1E;
+            --ak-surface: #2C2C2E;
+            --ak-charcoal: #F2F2F7;
+            --ak-steel: #AEAEB2;
+            --ak-mist: #3A3A3C;
+            --ak-cloud: #2C2C2E;
+            --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.3);
+            --shadow-elevated: 0 4px 16px rgba(0, 0, 0, 0.4);
+            --shadow-hover: 0 6px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: linear-gradient(135deg, var(--ak-surface) 0%, var(--ak-snow) 100%);
+            color: var(--ak-charcoal);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        .showcase-nav {
+            background: var(--ak-white);
+            box-shadow: var(--shadow-card);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--spacing-lg) var(--spacing-xl);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--spacing-xl);
+            flex-wrap: wrap;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .nav-logo {
+            width: 40px;
+            height: 40px;
+            background: var(--ak-primary);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+        }
+
+        .nav-title {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--ak-charcoal);
+        }
+
+        .nav-subtitle {
+            font-size: 13px;
+            color: var(--ak-steel);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: var(--spacing-sm);
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border-radius: var(--radius-md);
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--ak-steel);
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .nav-link:hover {
+            background: var(--ak-primary-50);
+            color: var(--ak-primary);
+        }
+
+        .nav-link.active {
+            background: var(--ak-primary);
+            color: white;
+        }
+
+        .theme-toggle {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border-radius: var(--radius-md);
+            background: var(--ak-cloud);
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .theme-toggle:hover {
+            background: var(--ak-mist);
+        }
+
+        /* Main Layout */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--spacing-xxl) var(--spacing-xl);
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: var(--spacing-xxl);
+        }
+
+        .page-title {
+            font-size: 34px;
+            font-weight: 700;
+            color: var(--ak-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .page-description {
+            font-size: 17px;
+            color: var(--ak-steel);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .state-section {
+            background: var(--ak-white);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xxl);
+            margin-bottom: var(--spacing-xxl);
+            box-shadow: var(--shadow-card);
+        }
+
+        .section-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--ak-primary);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .section-subtitle {
+            font-size: 15px;
+            color: var(--ak-steel);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .state-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--spacing-xl);
+        }
+
+        .state-demo {
+            background: var(--ak-cloud);
+            padding: var(--spacing-xl);
+            border-radius: var(--radius-md);
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-lg);
+        }
+
+        .state-label {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--ak-charcoal);
+        }
+
+        .state-description {
+            font-size: 13px;
+            color: var(--ak-steel);
+            line-height: 1.5;
+        }
+
+        .demo-area {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100px;
+        }
+
+        .code-note {
+            font-family: 'SF Mono', Monaco, monospace;
+            font-size: 12px;
+            background: var(--ak-mist);
+            padding: var(--spacing-sm);
+            border-radius: var(--radius-sm);
+            color: var(--ak-charcoal);
+        }
+
+        /* Button Styles */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-md) var(--spacing-xl);
+            border-radius: var(--radius-md);
+            font-family: var(--font-family);
+            font-size: 15px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: var(--ak-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--ak-primary-light);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-elevated);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        .btn-secondary {
+            background: var(--ak-snow);
+            color: var(--ak-primary);
+        }
+
+        .btn-sm {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            font-size: 13px;
+        }
+
+        /* Card Styles */
+        .card {
+            background: var(--ak-white);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-card);
+            transition: all 0.2s ease;
+        }
+
+        .card.hover-lift:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+            cursor: pointer;
+        }
+
+        .card.hover-scale:hover {
+            transform: scale(1.02);
+            cursor: pointer;
+        }
+
+        .card.hover-glow:hover {
+            box-shadow: 0 4px 20px rgba(16, 69, 106, 0.25);
+            cursor: pointer;
+        }
+
+        /* Input Styles */
+        input[type="text"],
+        input[type="email"] {
+            width: 100%;
+            padding: var(--spacing-md);
+            border: 2px solid var(--ak-mist);
+            border-radius: var(--radius-md);
+            font-family: var(--font-family);
+            font-size: 15px;
+            color: var(--ak-charcoal);
+            background: var(--ak-white);
+            transition: all 0.2s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--ak-primary);
+            box-shadow: 0 0 0 3px rgba(16, 69, 106, 0.15);
+        }
+
+        input.error {
+            border-color: var(--ak-error);
+        }
+
+        input.success {
+            border-color: var(--ak-success);
+        }
+
+        input:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Skeleton Loader */
+        .skeleton {
+            background: linear-gradient(90deg, var(--ak-mist) 25%, var(--ak-cloud) 50%, var(--ak-mist) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: var(--radius-sm);
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        /* Shake Animation */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-8px); }
+            20%, 40%, 60%, 80% { transform: translateX(8px); }
+        }
+
+        .shake {
+            animation: shake 0.5s;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: var(--spacing-xxl);
+        }
+
+        .empty-icon {
+            font-size: 64px;
+            margin-bottom: var(--spacing-lg);
+            opacity: 0.5;
+        }
+
+        .empty-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--ak-charcoal);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .empty-text {
+            font-size: 15px;
+            color: var(--ak-steel);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        /* Progress Indicator */
+        .progress-indicator {
+            width: 100%;
+            height: 4px;
+            background: var(--ak-mist);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-bar-animated {
+            height: 100%;
+            background: var(--ak-primary);
+            border-radius: 2px;
+            animation: progress 2s ease-in-out infinite;
+        }
+
+        @keyframes progress {
+            0% { width: 0%; }
+            50% { width: 100%; }
+            100% { width: 0%; }
+        }
+
+        /* Focus Ring */
+        .focus-ring {
+            outline: 2px solid var(--ak-primary);
+            outline-offset: 2px;
+            box-shadow: 0 0 0 4px rgba(16, 69, 106, 0.1);
+        }
+
+        /* Pulse Animation */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .pulse {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @media (max-width: 768px) {
+            .state-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-title {
+                font-size: 28px;
+            }
+
+            .section-title {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="showcase-nav">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <div class="nav-logo">⛳</div>
+                <div>
+                    <div class="nav-title">AK Golf Academy</div>
+                    <div class="nav-subtitle">Design System v3.0</div>
+                </div>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="component-gallery.html" class="nav-link">Components</a>
+                <a href="interaction-states.html" class="nav-link active">States</a>
+                <a href="form-layouts.html" class="nav-link">Forms</a>
+                <a href="list-layouts.html" class="nav-link">Lists</a>
+                <a href="theme-variations.html" class="nav-link">Themes</a>
+                <a href="animation-showcase.html" class="nav-link">Animations</a>
+                <a href="responsive-showcase.html" class="nav-link">Responsive</a>
+            </div>
+            <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+        </div>
+    </nav>
+
+    <main class="container">
+        <header class="page-header">
+            <h1 class="page-title">Interaction States</h1>
+            <p class="page-description">
+                Interactive demonstrasjoner av alle komponenttilstander. Hover, klikk og interact med elementene for å se effektene.
+            </p>
+        </header>
+
+        <!-- HOVER EFFECTS -->
+        <section class="state-section">
+            <h2 class="section-title">✨ Hover Effects</h2>
+            <p class="section-subtitle">Subtile visuele tilbakemeldinger når brukeren holder musepekeren over elementer</p>
+
+            <div class="state-grid">
+                <div class="state-demo">
+                    <h3 class="state-label">Lift Effect</h3>
+                    <div class="demo-area">
+                        <div class="card hover-lift">
+                            <strong>Hover over me</strong>
+                            <p style="margin-top: 8px; font-size: 14px; color: var(--ak-steel);">Card lifts up with shadow</p>
+                        </div>
+                    </div>
+                    <p class="state-description">Kort løftes opp med translateY(-4px) og sterkere skygge</p>
+                    <code class="code-note">transform: translateY(-4px)<br>box-shadow: var(--shadow-hover)</code>
+                </div>
+
+                <div class="state-demo">
+                    <h3 class="state-label">Scale Effect</h3>
+                    <div class="demo-area">
+                        <div class="card hover-scale">
+                            <strong>Hover over me</strong>
+                            <p style="margin-top: 8px; font-size: 14px; color: var(--ak-steel);">Card scales slightly</p>
+                        </div>
+                    </div>
+                    <p class="state-description">Kort skaleres opp til 102% av original størrelse</p>
+                    <code class="code-note">transform: scale(1.02)</code>
+                </div>
+
+                <div class="state-demo">
+                    <h3 class="state-label">Glow Effect</h3>
+                    <div class="demo-area">
+                        <div class="card hover-glow">
+                            <strong>Hover over me</strong>
+                            <p style="margin-top: 8px; font-size: 14px; color: var(--ak-steel);">Card gets a glow</p>
+                        </div>
+                    </div>
+                    <p class="state-description">Kort får en lysende skygge i brand-fargen</p>
+                    <code class="code-note">box-shadow: 0 4px 20px rgba(16, 69, 106, 0.25)</code>
+                </div>
+
+                <div class="state-demo">
+                    <h3 class="state-label">Button Hover</h3>
+                    <div class="demo-area">
+                        <button class="btn btn-primary">Hover Me</button>
+                    </div>
+                    <p class="state-description">Knapp endrer farge, løftes og får skygge</p>
+                    <code class="code-note">background: lighter shade<br>transform: translateY(-1px)<br>box-shadow: elevated</code>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOCUS STATES -->
+        <section class="state-section">
+            <h2 class="section-title">🎯 Focus States</h2>
+            <p class="section-subtitle">Tydelige fokusindikatorer for tastaturnavigasjon (Accessibility)</p>
+
+            <div class="state-grid">
+                <div class="state-demo">
+                    <h3 class="state-label">Input Focus Ring</h3>
+                    <div class="demo-area" style="width: 100%;">
+                        <input type="text" placeholder="Klikk eller tab til meg">
+                    </div>
+                    <p class="state-description">Input får blå border og subtil glow ring ved fokus</p>
+                    <code class="code-note">border-color: var(--ak-primary)<br>box-shadow: 0 0 0 3px rgba(16, 69, 106, 0.15)</code>
+                </div>
+
+                <div class="state-demo">
+                    <h3 class="state-label">Button Focus</h3>
+                    <div class="demo-area">
+                        <button class="btn btn-primary">Tab til meg</button>
+                    </div>
+                    <p class="state-description">Knapper får samme fokusring for tastaturbrukere</p>
+                    <code class="code-note">outline: 2px solid primary<br>outline-offset: 2px</code>
+                </div>
+
+                <div class="state-demo">
+                    <h3 class="state-label">Card Focus</h3>
+                    <div class="demo-area">
+                        <div class="card focus-ring" tabindex="0">
+                            <strong>Fokusert kort</strong>
+                            <p style="margin-top: 8px; font-size: 14px; color: var(--ak-steel);">Tab-navigerbart</p>
+                        </div>
+                    </div>
+                    <p class="state-description">Interaktive kort kan også fokuseres</p>
+                    <code class="code-note">tabindex="0" for keyboard access</code>
+                </div>
+            </div>
+        </section>
+
+        <!-- ACTIVE/PRESSED STATES -->
+        <section class="state-section">
+            <h2 class="section-title">👆 Active & Pressed States</h2>
+            <p class="section-subtitle">Visuell feedback når brukeren klikker eller trykker på elementer</p>
+
+            <div class="state-grid">
+                <div class="state-demo">
+                    <h3 class="state-label">Button Press</h3>
+                    <div class="demo-area">
+                        <button class="btn btn-primary">Klikk meg</button>
+                    </div>
+                    <p class="state-description">Knappen skaleres ned til 98% når den klikkes</p>
+                    <code class="code-note">:active { transform: scale(0.98) }</code>
+                </div>
+
+                <div class="state-demo">
+                    <h3 class="state-label">Card Press</h3>
+                    <div class="demo-area">
+                        <div class="card hover-scale" style="cursor: pointer;" onclick="this.style.transform='scale(0.98)'; setTimeout(() => this.style.transform='', 150)">
+                            <strong>Klikk meg</strong>
+                            <p style="margin-top: 8px; font-size: 14px; color: var(--ak-steel);">Klikk for press-effekt</p>
+                        </div>
+                    </div>
+                    <p class="state-description">Kort gir også taktil feedback ved klikk</p>
+                    <code class="code-note">Scale down slightly on press</code>
+                </div>
+
+                <div class="state-demo">
+                    <h3 class="state-label">Toggle State</h3>
+                    <div class="demo-area">
+                        <button class="btn btn-secondary" onclick="this.classList.toggle('btn-primary'); this.classList.toggle('btn-secondary')">
+                            Toggle Me
+                        </button>
+                    </div>
+                    <p class="state-description">Toggle mellom active/inactive states</p>
+                    <code class="code-note">State change on click</code>
+                </div>
+            </div>
+        </section>
+
+        <!-- DISABLED STATES -->
+        <section class="state-section">
+            <h2 class="section-title">🚫 Disabled States</h2>
+            <p class="section-subtitle">Deaktiverte elementer som ikke kan interageres med</p>
+
+            <div class="state-grid">
+                <div class="state-demo">
+                    <h3 class="state-label">Disabled Button</h3>
+                    <div class="demo-area">
+                        <button class="btn btn-primary" disabled>Disabled Button</button>
+                    </div>
+                    <p class="state-description">Redusert opacity og cursor: not-allowed</p>
+                    <code class="code-note">opacity: 0.5<br>cursor: not-allowed<br>pointer-events: none</code>
+                </div>
+
+                <div class="state-demo">
+                    <h3 class="state-label">Disabled Input</h3>
+                    <div class="demo-area" style="width: 100%;">
+                        <input type="text" disabled value="Cannot edit this">
+                    </div>
+                    <p class="state-description">Input felt som ikke kan redigeres</p>
+                    <code class="code-note">disabled attribute<br>opacity: 0.5</code>
+                </div>
+
+                <div class="state-demo">
+                    <h3 class="state-label">Multiple States</h3>
+                    <div class="demo-area" style="flex-direction: column; gap: 12px; width: 100%;">
+                        <button class="btn btn-primary">Normal</button>
+                        <button class="btn btn-primary" disabled>Disabled</button>
+                    </div>
+                    <p class="state-description">Sammenligning av normal vs disabled</p>
+                    <code class="code-note">Visual contrast for clarity</code>
+                </div>
+            </div>
+        </section>
+
+        <!-- LOADING STATES -->
+        <section class="state-section">
+            <h2 class="section-title">⏳ Loading States</h2>
+            <p class="section-subtitle">Indikatorer som viser at noe laster eller prosesseres</p>
+
+            <div class="state-grid">
+                <div class="state-demo">
+                    <h3 class="state-label">Button Loading</h3>
+                    <div class="demo-area">
+                        <button class="btn btn-primary">
+                            <span class="spinner"></span>
+                            Laster...
+                        </button>
+                    </div>
+                    <p class="state-description">Spinner med tekst for lasting-tilstand</p>
+                    <code class="code-note">Spinner animation + disabled state</code>
+                </div>
+
+                <div class="state-demo">
+                    <h3 class="state-label">Skeleton Loader</h3>
+                    <div class="demo-area" style="flex-direction: column; gap: 8px; width: 100%; align-items: stretch;">
+                        <div class="skeleton" style="height: 20px; width: 100%;"></div>
+                        <div class="skeleton" style="height: 20px; width: 80%;"></div>
+                        <div class="skeleton" style="height: 20px; width: 60%;"></div>
+                    </div>
+                    <p class="state-description">Shimmer animation for innholdslasting</p>
+                    <code class="code-note">Gradient animation (shimmer effect)</code>
+                </div>
+
+                <div class="state-demo">
+                    <h3 class="state-label">Progress Indicator</h3>
+                    <div class="demo-area" style="width: 100%;">
+                        <div class="progress-indicator">
+                            <div class="progress-bar-animated"></div>
+                        </div>
+                    </div>
+                    <p class="state-description">Animert progress bar for ongoing prosesser</p>
+                    <code class="code-note">Infinite width animation</code>
+                </div>
+
+                <div class="state-demo">
+                    <h3 class="state-label">Pulsing Placeholder</h3>
+                    <div class="demo-area">
+                        <div class="card pulse">
+                            <strong>Loading content...</strong>
+                            <p style="margin-top: 8px; font-size: 14px; color: var(--ak-steel);">Pulsing animation</p>
+                        </div>
+                    </div>
+                    <p class="state-description">Pulse-effekt for lasting</p>
+                    <code class="code-note">Opacity animation (pulse)</code>
+                </div>
+            </div>
+        </section>
+
+        <!-- ERROR STATES -->
+        <section class="state-section">
+            <h2 class="section-title">⚠️ Error States</h2>
+            <p class="section-subtitle">Visuell feedback for feil og validering</p>
+
+            <div class="state-grid">
+                <div class="state-demo">
+                    <h3 class="state-label">Input Error</h3>
+                    <div class="demo-area" style="flex-direction: column; gap: 8px; width: 100%;">
+                        <input type="email" class="error" value="invalid-email">
+                        <span style="font-size: 13px; color: var(--ak-error);">
+                            ✕ Vennligst skriv inn en gyldig e-postadresse
+                        </span>
+                    </div>
+                    <p class="state-description">Rød border og feilmelding</p>
+                    <code class="code-note">border-color: var(--ak-error)</code>
+                </div>
+
+                <div class="state-demo">
+                    <h3 class="state-label">Shake Animation</h3>
+                    <div class="demo-area">
+                        <button class="btn btn-primary" onclick="triggerShake(this)">
+                            Klikk for feil
+                        </button>
+                    </div>
+                    <p class="state-description">Shake-animasjon for å indikere feil</p>
+                    <code class="code-note">@keyframes shake animation</code>
+                </div>
+
+                <div class="state-demo">
+                    <h3 class="state-label">Error Card</h3>
+                    <div class="demo-area">
+                        <div class="card" style="border: 2px solid var(--ak-error);">
+                            <strong style="color: var(--ak-error);">❌ Error</strong>
+                            <p style="margin-top: 8px; font-size: 14px; color: var(--ak-steel);">Noe gikk galt</p>
+                        </div>
+                    </div>
+                    <p class="state-description">Feilmelding i kort-format</p>
+                    <code class="code-note">border: 2px solid error color</code>
+                </div>
+            </div>
+        </section>
+
+        <!-- SUCCESS STATES -->
+        <section class="state-section">
+            <h2 class="section-title">✅ Success States</h2>
+            <p class="section-subtitle">Positive tilbakemeldinger for vellykkede handlinger</p>
+
+            <div class="state-grid">
+                <div class="state-demo">
+                    <h3 class="state-label">Input Success</h3>
+                    <div class="demo-area" style="flex-direction: column; gap: 8px; width: 100%;">
+                        <input type="text" class="success" value="magnus@akgolf.no">
+                        <span style="font-size: 13px; color: var(--ak-success);">
+                            ✓ E-postadressen er gyldig
+                        </span>
+                    </div>
+                    <p class="state-description">Grønn border og suksessmelding</p>
+                    <code class="code-note">border-color: var(--ak-success)</code>
+                </div>
+
+                <div class="state-demo">
+                    <h3 class="state-label">Success Message</h3>
+                    <div class="demo-area">
+                        <div class="card" style="border: 2px solid var(--ak-success);">
+                            <strong style="color: var(--ak-success);">✓ Success</strong>
+                            <p style="margin-top: 8px; font-size: 14px; color: var(--ak-steel);">Handlingen var vellykket!</p>
+                        </div>
+                    </div>
+                    <p class="state-description">Suksessmelding i kort-format</p>
+                    <code class="code-note">Green border and icon</code>
+                </div>
+
+                <div class="state-demo">
+                    <h3 class="state-label">Completed State</h3>
+                    <div class="demo-area">
+                        <button class="btn" style="background: var(--ak-success); color: white;">
+                            <span>✓</span> Fullført
+                        </button>
+                    </div>
+                    <p class="state-description">Knapp med fullført-tilstand</p>
+                    <code class="code-note">Success color with checkmark</code>
+                </div>
+            </div>
+        </section>
+
+        <!-- EMPTY STATES -->
+        <section class="state-section">
+            <h2 class="section-title">📭 Empty States</h2>
+            <p class="section-subtitle">Hjelpsom visning når det ikke er noe innhold</p>
+
+            <div class="state-grid">
+                <div class="state-demo">
+                    <div class="empty-state">
+                        <div class="empty-icon">📭</div>
+                        <h3 class="empty-title">Ingen meldinger</h3>
+                        <p class="empty-text">Du har ingen nye meldinger akkurat nå.</p>
+                        <button class="btn btn-primary">Refresh</button>
+                    </div>
+                    <code class="code-note">Icon + Title + Description + CTA</code>
+                </div>
+
+                <div class="state-demo">
+                    <div class="empty-state">
+                        <div class="empty-icon">🏌️</div>
+                        <h3 class="empty-title">Ingen økter planlagt</h3>
+                        <p class="empty-text">Book din første treningsøkt for å komme i gang!</p>
+                        <button class="btn btn-primary">Book økt</button>
+                    </div>
+                    <code class="code-note">Contextual empty state</code>
+                </div>
+
+                <div class="state-demo">
+                    <div class="empty-state">
+                        <div class="empty-icon">🔍</div>
+                        <h3 class="empty-title">Ingen resultater</h3>
+                        <p class="empty-text">Prøv et annet søkeord eller filtrer annerledes.</p>
+                        <button class="btn btn-secondary btn-sm">Nullstill filter</button>
+                    </div>
+                    <code class="code-note">Search empty state</code>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function toggleTheme() {
+            const root = document.documentElement;
+            const isDark = root.classList.contains('dark');
+
+            if (isDark) {
+                root.classList.remove('dark');
+                localStorage.setItem('ak-golf-theme', 'light');
+            } else {
+                root.classList.add('dark');
+                localStorage.setItem('ak-golf-theme', 'dark');
+            }
+        }
+
+        const savedTheme = localStorage.getItem('ak-golf-theme');
+        if (savedTheme === 'dark') {
+            document.documentElement.classList.add('dark');
+        }
+
+        function triggerShake(element) {
+            element.classList.add('shake');
+            setTimeout(() => {
+                element.classList.remove('shake');
+            }, 500);
+        }
+
+        document.documentElement.style.scrollBehavior = 'smooth';
+    </script>
+</body>
+</html>

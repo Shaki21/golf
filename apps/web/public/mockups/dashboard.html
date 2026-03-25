@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TIER Golf - Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Sans:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ak-ink: #02060D;
+            --ak-primary: #10456A;
+            --ak-primary-light: #2C5F7F;
+            --ak-snow: #EDF0F2;
+            --ak-surface: #EBE5DA;
+            --ak-gold: #C9A227;
+            --ak-white: #FFFFFF;
+            --gray-50: #F9FAFB;
+            --gray-100: #F2F4F7;
+            --gray-300: #D5D7DA;
+            --gray-500: #8E8E93;
+            --gray-600: #535862;
+            --ak-success: #4A7C59;
+            --ak-warning: #D4A84B;
+            --ak-error: #C45B4E;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--gray-50);
+            color: var(--ak-ink);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border: 1px solid var(--gray-100);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            color: var(--ak-primary);
+            font-size: 28px;
+            font-weight: 700;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .user-info {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            font-size: 15px;
+            color: var(--gray-600);
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #FFD700 0%, var(--ak-gold) 100%);
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--ak-ink);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border: 1px solid var(--gray-100);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .card-title {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--ak-primary);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .progress-ring {
+            width: 200px;
+            height: 200px;
+            margin: 20px auto;
+            position: relative;
+        }
+
+        .progress-ring svg {
+            transform: rotate(-90deg);
+        }
+
+        .progress-ring-circle {
+            stroke: var(--gray-100);
+            fill: none;
+            stroke-width: 12;
+        }
+
+        .progress-ring-progress {
+            stroke: var(--ak-primary);
+            fill: none;
+            stroke-width: 12;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 1s ease;
+        }
+
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--ak-primary);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 12px;
+            background: var(--gray-50);
+            border-radius: 12px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--gray-600);
+            margin-bottom: 4px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--ak-ink);
+        }
+
+        .breaking-point {
+            background: rgba(212, 168, 75, 0.05);
+            border-left: 4px solid var(--ak-warning);
+            padding: 16px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .breaking-point:hover {
+            background: rgba(212, 168, 75, 0.1);
+            transform: translateX(4px);
+        }
+
+        .breaking-point.high {
+            background: rgba(196, 91, 78, 0.05);
+            border-left-color: var(--ak-error);
+        }
+
+        .breaking-point.high:hover {
+            background: rgba(196, 91, 78, 0.1);
+        }
+
+        .breaking-point-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 15px;
+        }
+
+        .breaking-point-gap {
+            color: var(--gray-600);
+            font-size: 13px;
+        }
+
+        .btn {
+            background: var(--ak-primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            margin-top: 8px;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn:hover {
+            background: var(--ak-primary-light);
+            transform: translateY(-1px);
+        }
+
+        .week-schedule {
+            margin-top: 16px;
+        }
+
+        .day {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px;
+            margin-bottom: 8px;
+            background: var(--gray-50);
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .day:hover {
+            background: rgba(74, 124, 89, 0.1);
+            transform: translateX(4px);
+        }
+
+        .day.rest {
+            background: rgba(16, 69, 106, 0.05);
+        }
+
+        .day-name {
+            font-weight: 600;
+            color: var(--ak-primary);
+            min-width: 60px;
+            font-size: 14px;
+        }
+
+        .day-content {
+            flex: 1;
+            color: var(--gray-600);
+            font-size: 14px;
+        }
+
+        .day-duration {
+            color: var(--gray-500);
+            font-size: 13px;
+        }
+
+        .test-result {
+            background: var(--gray-50);
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .test-result.passed {
+            background: rgba(74, 124, 89, 0.1);
+            border-left: 4px solid var(--ak-success);
+        }
+
+        .test-result.failed {
+            background: rgba(196, 91, 78, 0.05);
+            border-left: 4px solid var(--ak-error);
+        }
+
+        .test-name {
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        .progress-bar {
+            background: var(--gray-100);
+            height: 8px;
+            border-radius: 999px;
+            overflow: hidden;
+            margin: 8px 0;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--ak-primary) 0%, var(--ak-primary-light) 100%);
+            transition: width 1s ease;
+        }
+
+        .upcoming-session {
+            padding: 16px;
+            background: rgba(16, 69, 106, 0.05);
+            border-radius: 8px;
+            margin-bottom: 12px;
+            border-left: 4px solid var(--ak-primary);
+        }
+
+        .session-time {
+            font-weight: 600;
+            color: var(--ak-primary);
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .icon {
+            font-size: 20px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            animation: fadeIn 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>⛳ TIER Golf</h1>
+            <div class="user-info">
+                <span>👤 Anders Kristiansen</span>
+                <span>📅 Uke 47, 2025</span>
+                <span class="badge">Kategori D</span>
+            </div>
+        </div>
+
+        <!-- Main Grid -->
+        <div class="grid">
+            <!-- Category Status Card -->
+            <div class="card">
+                <div class="card-title">
+                    <span class="icon">🎯</span>
+                    KATEGORI STATUS
+                </div>
+                <div class="progress-ring">
+                    <svg width="200" height="200">
+                        <circle class="progress-ring-circle" cx="100" cy="100" r="90"></circle>
+                        <circle class="progress-ring-progress" cx="100" cy="100" r="90"
+                                stroke-dasharray="565.48" stroke-dashoffset="141.37"></circle>
+                    </svg>
+                    <div class="progress-text">75%</div>
+                </div>
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-label">Handicap</div>
+                        <div class="stat-value">5.4</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">Tester</div>
+                        <div class="stat-value">15/20</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">Fremgang</div>
+                        <div class="stat-value">+2 📈</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">Periode</div>
+                        <div class="stat-value">Grunn (G)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Breaking Points Card -->
+            <div class="card">
+                <div class="card-title">
+                    <span class="icon">⚠️</span>
+                    BREAKING POINTS (2)
+                </div>
+
+                <div class="breaking-point high">
+                    <div class="breaking-point-title">
+                        🔴 HØYT PRIORITET
+                    </div>
+                    <div>Wedge PEI: 0.085</div>
+                    <div class="breaking-point-gap">Krav: 0.07 • Gap: -21%</div>
+                    <div class="progress-bar">
+                        <div class="progress-bar-fill" style="width: 70%; background: var(--ak-error);"></div>
+                    </div>
+                    <button class="btn">📋 Se treningsplan</button>
+                </div>
+
+                <div class="breaking-point">
+                    <div class="breaking-point-title">
+                        🟡 MEDIUM PRIORITET
+                    </div>
+                    <div>Bunker: 55%</div>
+                    <div class="breaking-point-gap">Krav: 60% • Gap: -8%</div>
+                    <div class="progress-bar">
+                        <div class="progress-bar-fill" style="width: 92%; background: var(--ak-warning);"></div>
+                    </div>
+                    <button class="btn">📋 Se treningsplan</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Week Plan and Results -->
+        <div class="grid">
+            <!-- Week Plan -->
+            <div class="card" style="grid-column: span 2;">
+                <div class="card-title">
+                    <span class="icon">📅</span>
+                    UKENS TRENINGSPLAN - UKE 47 (Grunnperiode • 15 timer)
+                </div>
+                <div class="week-schedule">
+                    <div class="day">
+                        <div class="day-name">MAN</div>
+                        <div class="day-content">🎯 Teknikk - Driver</div>
+                        <div class="day-duration">90 min • S1-S2 • L2</div>
+                    </div>
+                    <div class="day">
+                        <div class="day-name">TIR</div>
+                        <div class="day-content">💪 Fysisk - Styrke</div>
+                        <div class="day-duration">60 min • S3 • L2</div>
+                    </div>
+                    <div class="day">
+                        <div class="day-name">ONS</div>
+                        <div class="day-content">⛳ Short Game - Wedge</div>
+                        <div class="day-duration">90 min • S2-S3 • L3</div>
+                    </div>
+                    <div class="day">
+                        <div class="day-name">TOR</div>
+                        <div class="day-content">💪 Fysisk - Funksjonell</div>
+                        <div class="day-duration">45 min • S3 • L2</div>
+                    </div>
+                    <div class="day">
+                        <div class="day-name">FRE</div>
+                        <div class="day-content">🎯 Teknikk - Jern</div>
+                        <div class="day-duration">90 min • S2 • L2</div>
+                    </div>
+                    <div class="day">
+                        <div class="day-name">LØR</div>
+                        <div class="day-content">🏌️ Spill - 9 hull</div>
+                        <div class="day-duration">180 min • S4 • L3</div>
+                    </div>
+                    <div class="day rest">
+                        <div class="day-name">SØN</div>
+                        <div class="day-content">😴 Hvile</div>
+                        <div class="day-duration">-</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test Results and Upcoming -->
+        <div class="grid">
+            <!-- Recent Test Results -->
+            <div class="card">
+                <div class="card-title">
+                    <span class="icon">📊</span>
+                    SISTE TESTRESULTATER
+                </div>
+
+                <div class="test-result passed">
+                    <div class="test-name">Test 1: Driver Distanse</div>
+                    <div>245m ✅</div>
+                    <div class="progress-bar">
+                        <div class="progress-bar-fill" style="width: 85%; background: var(--ak-success);"></div>
+                    </div>
+                    <div style="font-size: 12px; color: var(--gray-600); margin-top: 4px;">
+                        85/100 • +5m over krav
+                    </div>
+                    <button class="btn">Se detaljer →</button>
+                </div>
+
+                <div class="test-result failed">
+                    <div class="test-name">Test 15: Wedge PEI</div>
+                    <div>0.085 ❌</div>
+                    <div class="progress-bar">
+                        <div class="progress-bar-fill" style="width: 70%; background: var(--ak-error);"></div>
+                    </div>
+                    <div style="font-size: 12px; color: var(--gray-600); margin-top: 4px;">
+                        70/100 • -21% under krav
+                    </div>
+                    <button class="btn">Se treningsplan →</button>
+                </div>
+            </div>
+
+            <!-- Upcoming Sessions -->
+            <div class="card">
+                <div class="card-title">
+                    <span class="icon">⏰</span>
+                    KOMMENDE ØKTER
+                </div>
+
+                <div class="upcoming-session">
+                    <div class="session-time">🕐 I dag, 16:00</div>
+                    <div>📍 Range</div>
+                    <div>🎯 Driver Teknikk (90 min)</div>
+                    <div style="font-size: 13px; color: var(--gray-600); margin-top: 4px;">
+                        👤 Med coach: Erik Hansen
+                    </div>
+                    <button class="btn">Start økt →</button>
+                </div>
+
+                <div class="upcoming-session">
+                    <div class="session-time">🕐 I morgen, 10:00</div>
+                    <div>📍 Gym</div>
+                    <div>💪 Fysisk Styrke (60 min)</div>
+                    <div style="font-size: 13px; color: var(--gray-600); margin-top: 4px;">
+                        Selvstendig trening
+                    </div>
+                    <button class="btn">Planlegg →</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Animate progress ring on load
+        window.addEventListener('load', () => {
+            const circle = document.querySelector('.progress-ring-progress');
+            const radius = circle.r.baseVal.value;
+            const circumference = radius * 2 * Math.PI;
+            const percent = 75;
+            const offset = circumference - (percent / 100 * circumference);
+            circle.style.strokeDashoffset = offset;
+        });
+    </script>
+</body>
+</html>

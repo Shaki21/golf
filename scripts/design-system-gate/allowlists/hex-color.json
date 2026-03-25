@@ -1,0 +1,29 @@
+{
+  "files": {
+    "apps/web/src/analytics/AnalyticsDebug.tsx": 9,
+    "apps/web/src/components/BuildInfo.tsx": 1,
+    "apps/web/src/components/insights/SGJourneyWidget.jsx": 4,
+    "apps/web/src/components/ui/AKGolfAppDesignSystem.jsx": 47,
+    "apps/web/src/components/ui/AKGolfLogo_Showcase.jsx": 10,
+    "apps/web/src/components/ui/AK_Golf_Design_Examples.jsx": 23,
+    "apps/web/src/components/ui/ExportButton.jsx": 2,
+    "apps/web/src/components/ui/aarsplan_eksempel.jsx": 36,
+    "apps/web/src/components/ui/ak-benchmark-dashboard.jsx": 13,
+    "apps/web/src/components/ui/kategori_system_oversikt.jsx": 5,
+    "apps/web/src/components/ui/utviklingsplan_b_nivaa.jsx": 54,
+    "apps/web/src/features/annual-plan/AarsplanGenerator.jsx": 7,
+    "apps/web/src/features/dashboard/AKGolfDashboard.jsx": 1,
+    "apps/web/src/features/dashboard/AKGolfDashboardV4.tsx": 17,
+    "apps/web/src/features/player-stats/BenchmarkContent.tsx": 8,
+    "apps/web/src/features/player-stats/BenchmarkPage.tsx": 8,
+    "apps/web/src/features/player-stats/CategoryProgressionWidget.tsx": 11,
+    "apps/web/src/features/player-stats/TestComparisonWidget.tsx": 2,
+    "apps/web/src/features/profile/ak_golf_brukerprofil_onboarding.jsx": 15,
+    "apps/web/src/features/stats/StatsPage.jsx": 1,
+    "apps/web/src/features/stats/StatsPage.tsx": 1,
+    "apps/web/src/features/tests/config/testDefinitions.ts": 28,
+    "apps/web/src/features/trening-plan/UkensTreningsplanContainer.jsx": 99,
+    "apps/web/src/hooks/useAnnotationCanvas.js": 8
+  },
+  "generatedAt": "2026-01-01T14:59:39.284Z"
+}

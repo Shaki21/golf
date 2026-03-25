@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Showcase - AK Golf Academy Design System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Brand Colors */
+            --ak-primary: #10456A;
+            --ak-primary-light: #2C5F7F;
+            --ak-gold: #C9A227;
+            --ak-snow: #EDF0F2;
+            --ak-surface: #EBE5DA;
+            --ak-cloud: #D8D8D8;
+            --ak-mist: #E8E8E8;
+            --ak-success: #4A7C59;
+            --ak-warning: #D4A84B;
+            --ak-error: #C45B4E;
+            --ak-charcoal: #1C1C1E;
+            --ak-steel: #8E8E93;
+            --ak-text: #1C1C1E;
+            --ak-text-secondary: #6E6E73;
+            --ak-background: #FFFFFF;
+            --ak-border: #D1D1D6;
+
+            /* Spacing */
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+
+            /* Border Radius */
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-full: 9999px;
+
+            /* Shadows */
+            --shadow-card: 0 2px 4px rgba(0, 0, 0, 0.06);
+            --shadow-elevated: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+            /* Typography */
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-size-xs: 12px;
+            --font-size-sm: 14px;
+            --font-size-base: 16px;
+            --font-size-lg: 18px;
+            --font-size-xl: 20px;
+            --font-size-2xl: 24px;
+            --font-size-3xl: 32px;
+            --font-size-4xl: 40px;
+
+            /* Breakpoints */
+            --breakpoint-sm: 640px;
+            --breakpoint-md: 768px;
+            --breakpoint-lg: 1024px;
+            --breakpoint-xl: 1280px;
+        }
+
+        :root.dark {
+            --ak-primary: #2C5F7F;
+            --ak-primary-light: #3D7FA0;
+            --ak-gold: #D4B84E;
+            --ak-snow: #1C1C1E;
+            --ak-surface: #2C2C2E;
+            --ak-cloud: #3A3A3C;
+            --ak-mist: #48484A;
+            --ak-success: #6B9D7A;
+            --ak-warning: #E5C07A;
+            --ak-error: #D8867C;
+            --ak-charcoal: #F2F2F7;
+            --ak-steel: #98989D;
+            --ak-text: #F2F2F7;
+            --ak-text-secondary: #98989D;
+            --ak-background: #000000;
+            --ak-border: #38383A;
+            --shadow-card: 0 2px 4px rgba(0, 0, 0, 0.3);
+            --shadow-elevated: 0 4px 12px rgba(0, 0, 0, 0.4);
+            --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.5);
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: var(--ak-background);
+            color: var(--ak-text);
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Navigation */
+        .showcase-nav {
+            background: var(--ak-surface);
+            border-bottom: 1px solid var(--ak-border);
+            padding: var(--spacing-md) 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--spacing-lg);
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .nav-logo {
+            font-size: var(--font-size-2xl);
+        }
+
+        .nav-title {
+            font-size: var(--font-size-lg);
+            font-weight: 700;
+            color: var(--ak-text);
+        }
+
+        .nav-subtitle {
+            font-size: var(--font-size-sm);
+            color: var(--ak-text-secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: var(--spacing-md);
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            color: var(--ak-text-secondary);
+            text-decoration: none;
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-sm);
+            transition: all 0.2s;
+        }
+
+        .nav-link:hover {
+            color: var(--ak-primary);
+            background: var(--ak-cloud);
+        }
+
+        .nav-link.active {
+            color: var(--ak-primary);
+            background: rgba(16, 69, 106, 0.1);
+        }
+
+        .theme-toggle {
+            background: var(--ak-cloud);
+            border: 1px solid var(--ak-border);
+            color: var(--ak-text);
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-size: var(--font-size-lg);
+            transition: all 0.2s;
+        }
+
+        .theme-toggle:hover {
+            background: var(--ak-mist);
+            transform: scale(1.05);
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--spacing-2xl) var(--spacing-lg);
+        }
+
+        .page-header {
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .page-title {
+            font-size: var(--font-size-4xl);
+            font-weight: 700;
+            color: var(--ak-text);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .page-description {
+            font-size: var(--font-size-lg);
+            color: var(--ak-text-secondary);
+        }
+
+        /* Viewport Indicator */
+        .viewport-indicator {
+            position: fixed;
+            bottom: var(--spacing-lg);
+            right: var(--spacing-lg);
+            background: var(--ak-primary);
+            color: white;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-md);
+            font-size: var(--font-size-sm);
+            font-weight: 600;
+            box-shadow: var(--shadow-elevated);
+            z-index: 1000;
+        }
+
+        /* Section */
+        .section {
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .section-title {
+            font-size: var(--font-size-2xl);
+            font-weight: 600;
+            color: var(--ak-text);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .section-description {
+            font-size: var(--font-size-base);
+            color: var(--ak-text-secondary);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        /* Breakpoint Table */
+        .breakpoint-table {
+            background: var(--ak-surface);
+            border: 1px solid var(--ak-border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .breakpoint-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .breakpoint-table th,
+        .breakpoint-table td {
+            padding: var(--spacing-md);
+            text-align: left;
+            border-bottom: 1px solid var(--ak-border);
+        }
+
+        .breakpoint-table th {
+            background: var(--ak-cloud);
+            font-weight: 600;
+            font-size: var(--font-size-sm);
+        }
+
+        .breakpoint-table td {
+            font-size: var(--font-size-sm);
+        }
+
+        .breakpoint-badge {
+            display: inline-block;
+            padding: 4px var(--spacing-sm);
+            border-radius: var(--radius-sm);
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+        }
+
+        .bp-mobile {
+            background: var(--ak-success);
+            color: white;
+        }
+
+        .bp-tablet {
+            background: var(--ak-warning);
+            color: var(--ak-charcoal);
+        }
+
+        .bp-desktop {
+            background: var(--ak-primary);
+            color: white;
+        }
+
+        /* Responsive Grid Demo */
+        .responsive-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        @media (min-width: 640px) {
+            .responsive-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .responsive-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (min-width: 1280px) {
+            .responsive-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .grid-item {
+            background: var(--ak-surface);
+            border: 1px solid var(--ak-border);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            text-align: center;
+        }
+
+        .grid-item-number {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            color: var(--ak-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .grid-item-label {
+            font-size: var(--font-size-sm);
+            color: var(--ak-text-secondary);
+        }
+
+        /* Navigation Demo */
+        .nav-demo {
+            background: var(--ak-surface);
+            border: 1px solid var(--ak-border);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .demo-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .demo-nav-links {
+            display: none;
+            gap: var(--spacing-md);
+        }
+
+        @media (min-width: 768px) {
+            .demo-nav-links {
+                display: flex;
+            }
+
+            .hamburger {
+                display: none;
+            }
+        }
+
+        .demo-nav-link {
+            color: var(--ak-text-secondary);
+            text-decoration: none;
+            font-size: var(--font-size-sm);
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-sm);
+        }
+
+        .demo-nav-link:hover {
+            background: var(--ak-cloud);
+        }
+
+        .hamburger {
+            background: var(--ak-cloud);
+            border: none;
+            padding: var(--spacing-sm);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: var(--font-size-lg);
+        }
+
+        /* Typography Scale Demo */
+        .typography-demo {
+            background: var(--ak-surface);
+            border: 1px solid var(--ak-border);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .typography-sample {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .typography-sample h1 {
+            font-size: var(--font-size-4xl);
+            font-weight: 700;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .typography-sample h2 {
+            font-size: var(--font-size-3xl);
+            font-weight: 700;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .typography-sample h3 {
+            font-size: var(--font-size-2xl);
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .typography-sample p {
+            font-size: var(--font-size-base);
+            color: var(--ak-text-secondary);
+        }
+
+        /* Layout Reflow Demo */
+        .reflow-demo {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+
+        @media (min-width: 768px) {
+            .reflow-demo {
+                flex-direction: row;
+            }
+
+            .reflow-sidebar {
+                flex: 0 0 240px;
+            }
+
+            .reflow-main {
+                flex: 1;
+            }
+        }
+
+        .reflow-sidebar {
+            background: var(--ak-surface);
+            border: 1px solid var(--ak-border);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+        }
+
+        .reflow-main {
+            background: var(--ak-surface);
+            border: 1px solid var(--ak-border);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+        }
+
+        /* Visibility Demo */
+        .visibility-demo {
+            background: var(--ak-surface);
+            border: 1px solid var(--ak-border);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            text-align: center;
+        }
+
+        .show-mobile {
+            display: block;
+        }
+
+        .show-desktop {
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .show-mobile {
+                display: none;
+            }
+
+            .show-desktop {
+                display: block;
+            }
+        }
+
+        /* Touch Target Demo */
+        .touch-demo {
+            background: var(--ak-surface);
+            border: 1px solid var(--ak-border);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .touch-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+        }
+
+        .touch-btn {
+            background: var(--ak-primary);
+            color: white;
+            border: none;
+            padding: var(--spacing-md) var(--spacing-lg);
+            border-radius: var(--radius-md);
+            font-size: var(--font-size-base);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        @media (max-width: 767px) {
+            .touch-btn {
+                min-height: 44px;
+                min-width: 44px;
+            }
+        }
+
+        .touch-btn:hover {
+            background: var(--ak-primary-light);
+        }
+
+        /* Viewport Frames */
+        .viewport-frames {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .viewport-frame {
+            border: 2px solid var(--ak-border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+
+        .frame-label {
+            background: var(--ak-cloud);
+            padding: var(--spacing-sm) var(--spacing-md);
+            font-size: var(--font-size-sm);
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .frame-content {
+            background: var(--ak-background);
+            padding: var(--spacing-md);
+            min-height: 200px;
+        }
+
+        .mobile-frame {
+            max-width: 375px;
+            margin: 0 auto;
+        }
+
+        .desktop-frame {
+            width: 100%;
+        }
+
+        /* Stack on Mobile */
+        .stack-demo {
+            display: flex;
+            gap: var(--spacing-md);
+        }
+
+        @media (max-width: 767px) {
+            .stack-demo {
+                flex-direction: column;
+            }
+        }
+
+        .stack-item {
+            flex: 1;
+            background: var(--ak-surface);
+            border: 1px solid var(--ak-border);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            text-align: center;
+        }
+
+        /* Responsive Typography */
+        @media (max-width: 767px) {
+            :root {
+                --font-size-4xl: 32px;
+                --font-size-3xl: 28px;
+                --font-size-2xl: 22px;
+                --font-size-xl: 18px;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .nav-links {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: var(--font-size-3xl);
+            }
+
+            .breakpoint-table {
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="showcase-nav">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <div class="nav-logo">⛳</div>
+                <div>
+                    <div class="nav-title">AK Golf Academy</div>
+                    <div class="nav-subtitle">Design System v3.0</div>
+                </div>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="component-gallery.html" class="nav-link">Components</a>
+                <a href="interaction-states.html" class="nav-link">States</a>
+                <a href="form-layouts.html" class="nav-link">Forms</a>
+                <a href="list-layouts.html" class="nav-link">Lists</a>
+                <a href="theme-variations.html" class="nav-link">Themes</a>
+                <a href="animation-showcase.html" class="nav-link">Animations</a>
+                <a href="responsive-showcase.html" class="nav-link active">Responsive</a>
+                <a href="dashboard-showcase.html" class="nav-link">Dashboard</a>
+            </div>
+            <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+        </div>
+    </nav>
+
+    <!-- Viewport Indicator -->
+    <div class="viewport-indicator" id="viewport-indicator">
+        📱 Mobile
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <div class="page-header">
+            <h1 class="page-title">Responsive Showcase</h1>
+            <p class="page-description">Mobile-first responsive design with adaptive layouts across all breakpoints.</p>
+        </div>
+
+        <!-- Breakpoint Documentation -->
+        <section class="section">
+            <h2 class="section-title">Breakpoint System</h2>
+            <p class="section-description">Mobile-first approach with three main breakpoints for optimal layouts.</p>
+
+            <div class="breakpoint-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Breakpoint</th>
+                            <th>Size Range</th>
+                            <th>Columns</th>
+                            <th>Touch Targets</th>
+                            <th>Font Size</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="breakpoint-badge bp-mobile">Mobile</span></td>
+                            <td>< 640px</td>
+                            <td>1 column</td>
+                            <td>Min 44×44px</td>
+                            <td>Base (16px+)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="breakpoint-badge bp-tablet">Tablet</span></td>
+                            <td>640px - 1024px</td>
+                            <td>2 columns</td>
+                            <td>Min 40×40px</td>
+                            <td>Base (16px+)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="breakpoint-badge bp-desktop">Desktop</span></td>
+                            <td>> 1024px</td>
+                            <td>3-4 columns</td>
+                            <td>Standard</td>
+                            <td>Scaled up</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Responsive Grid -->
+        <section class="section">
+            <h2 class="section-title">Auto-Responsive Grid</h2>
+            <p class="section-description">Grid automatically adapts: 1 column (mobile) → 2 columns (tablet) → 3 columns (desktop) → 4 columns (wide).</p>
+
+            <div class="responsive-grid">
+                <div class="grid-item">
+                    <div class="grid-item-number">1</div>
+                    <div class="grid-item-label">Item One</div>
+                </div>
+                <div class="grid-item">
+                    <div class="grid-item-number">2</div>
+                    <div class="grid-item-label">Item Two</div>
+                </div>
+                <div class="grid-item">
+                    <div class="grid-item-number">3</div>
+                    <div class="grid-item-label">Item Three</div>
+                </div>
+                <div class="grid-item">
+                    <div class="grid-item-number">4</div>
+                    <div class="grid-item-label">Item Four</div>
+                </div>
+                <div class="grid-item">
+                    <div class="grid-item-number">5</div>
+                    <div class="grid-item-label">Item Five</div>
+                </div>
+                <div class="grid-item">
+                    <div class="grid-item-number">6</div>
+                    <div class="grid-item-label">Item Six</div>
+                </div>
+                <div class="grid-item">
+                    <div class="grid-item-number">7</div>
+                    <div class="grid-item-label">Item Seven</div>
+                </div>
+                <div class="grid-item">
+                    <div class="grid-item-number">8</div>
+                    <div class="grid-item-label">Item Eight</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation Transformation -->
+        <section class="section">
+            <h2 class="section-title">Navigation Transformation</h2>
+            <p class="section-description">Navigation adapts from hamburger menu on mobile to horizontal links on desktop.</p>
+
+            <div class="nav-demo">
+                <div class="demo-nav">
+                    <div style="font-weight: 600;">Logo</div>
+                    <div class="demo-nav-links">
+                        <a href="#" class="demo-nav-link">Home</a>
+                        <a href="#" class="demo-nav-link">About</a>
+                        <a href="#" class="demo-nav-link">Services</a>
+                        <a href="#" class="demo-nav-link">Contact</a>
+                    </div>
+                    <button class="hamburger">☰</button>
+                </div>
+            </div>
+
+            <p style="font-size: var(--font-size-sm); color: var(--ak-text-secondary); margin-top: var(--spacing-md);">
+                <strong>Mobile (< 768px):</strong> Hamburger menu visible<br>
+                <strong>Desktop (≥ 768px):</strong> Horizontal navigation links visible
+            </p>
+        </section>
+
+        <!-- Typography Scaling -->
+        <section class="section">
+            <h2 class="section-title">Typography Scaling</h2>
+            <p class="section-description">Font sizes automatically scale down on mobile for better readability.</p>
+
+            <div class="typography-demo">
+                <div class="typography-sample">
+                    <h1>Large Title (40px → 32px)</h1>
+                    <h2>Title 1 (32px → 28px)</h2>
+                    <h3>Title 2 (24px → 22px)</h3>
+                    <p>Body text maintains 16px across all breakpoints for readability.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Touch Targets -->
+        <section class="section">
+            <h2 class="section-title">Touch-Friendly Targets</h2>
+            <p class="section-description">Interactive elements automatically expand to minimum 44×44px on mobile (Apple HIG standard).</p>
+
+            <div class="touch-demo">
+                <div class="touch-buttons">
+                    <button class="touch-btn">Button 1</button>
+                    <button class="touch-btn">Button 2</button>
+                    <button class="touch-btn">Button 3</button>
+                    <button class="touch-btn">Button 4</button>
+                </div>
+
+                <p style="font-size: var(--font-size-sm); color: var(--ak-text-secondary); margin-top: var(--spacing-lg);">
+                    <strong>Mobile:</strong> Buttons expand to min 44×44px touch targets<br>
+                    <strong>Desktop:</strong> Standard button sizing
+                </p>
+            </div>
+        </section>
+
+        <!-- Layout Reflow -->
+        <section class="section">
+            <h2 class="section-title">Layout Reflow</h2>
+            <p class="section-description">Complex layouts stack vertically on mobile and expand horizontally on desktop.</p>
+
+            <div class="reflow-demo">
+                <div class="reflow-sidebar">
+                    <h3 style="font-size: var(--font-size-lg); font-weight: 600; margin-bottom: var(--spacing-md);">Sidebar</h3>
+                    <p style="font-size: var(--font-size-sm); color: var(--ak-text-secondary);">
+                        On mobile: Full width, stacked above main content<br><br>
+                        On desktop: Fixed 240px width, left side
+                    </p>
+                </div>
+                <div class="reflow-main">
+                    <h3 style="font-size: var(--font-size-lg); font-weight: 600; margin-bottom: var(--spacing-md);">Main Content</h3>
+                    <p style="font-size: var(--font-size-sm); color: var(--ak-text-secondary);">
+                        This is the main content area. On mobile devices, it appears below the sidebar. On desktop, it takes up the remaining space to the right of the sidebar.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stack on Mobile -->
+        <section class="section">
+            <h2 class="section-title">Horizontal to Vertical Stacking</h2>
+            <p class="section-description">Elements arranged horizontally on desktop stack vertically on mobile.</p>
+
+            <div class="stack-demo">
+                <div class="stack-item">
+                    <h4 style="font-size: var(--font-size-base); font-weight: 600; margin-bottom: var(--spacing-sm);">Card 1</h4>
+                    <p style="font-size: var(--font-size-sm); color: var(--ak-text-secondary);">Stacks vertically on mobile</p>
+                </div>
+                <div class="stack-item">
+                    <h4 style="font-size: var(--font-size-base); font-weight: 600; margin-bottom: var(--spacing-sm);">Card 2</h4>
+                    <p style="font-size: var(--font-size-sm); color: var(--ak-text-secondary);">Horizontal on desktop</p>
+                </div>
+                <div class="stack-item">
+                    <h4 style="font-size: var(--font-size-base); font-weight: 600; margin-bottom: var(--spacing-sm);">Card 3</h4>
+                    <p style="font-size: var(--font-size-sm); color: var(--ak-text-secondary);">Adapts automatically</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Visibility Control -->
+        <section class="section">
+            <h2 class="section-title">Responsive Visibility</h2>
+            <p class="section-description">Show or hide elements based on viewport size.</p>
+
+            <div class="visibility-demo">
+                <div class="show-mobile">
+                    <div style="font-size: var(--font-size-2xl); margin-bottom: var(--spacing-sm);">📱</div>
+                    <h3 style="font-size: var(--font-size-lg); font-weight: 600; margin-bottom: var(--spacing-sm);">Mobile View</h3>
+                    <p style="font-size: var(--font-size-sm); color: var(--ak-text-secondary);">This content is only visible on mobile devices (< 768px)</p>
+                </div>
+                <div class="show-desktop">
+                    <div style="font-size: var(--font-size-2xl); margin-bottom: var(--spacing-sm);">💻</div>
+                    <h3 style="font-size: var(--font-size-lg); font-weight: 600; margin-bottom: var(--spacing-sm);">Desktop View</h3>
+                    <p style="font-size: var(--font-size-sm); color: var(--ak-text-secondary);">This content is only visible on desktop devices (≥ 768px)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Viewport Frames -->
+        <section class="section">
+            <h2 class="section-title">Viewport Frame Examples</h2>
+            <p class="section-description">See how content looks at different viewport sizes.</p>
+
+            <div class="viewport-frames">
+                <!-- Mobile Frame -->
+                <div class="viewport-frame mobile-frame">
+                    <div class="frame-label">📱 Mobile (375px)</div>
+                    <div class="frame-content">
+                        <h4 style="font-size: var(--font-size-base); font-weight: 600; margin-bottom: var(--spacing-sm);">Mobile Layout</h4>
+                        <p style="font-size: var(--font-size-sm); color: var(--ak-text-secondary); margin-bottom: var(--spacing-md);">
+                            Optimized for portrait orientation with single-column layout.
+                        </p>
+                        <button style="background: var(--ak-primary); color: white; border: none; padding: var(--spacing-md) var(--spacing-lg); border-radius: var(--radius-md); width: 100%; min-height: 44px; cursor: pointer;">
+                            Full Width Button
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Desktop Frame -->
+                <div class="viewport-frame desktop-frame">
+                    <div class="frame-label">💻 Desktop (1280px+)</div>
+                    <div class="frame-content">
+                        <div style="display: flex; gap: var(--spacing-md);">
+                            <div style="flex: 1;">
+                                <h4 style="font-size: var(--font-size-base); font-weight: 600; margin-bottom: var(--spacing-sm);">Desktop Layout</h4>
+                                <p style="font-size: var(--font-size-sm); color: var(--ak-text-secondary);">
+                                    Optimized for landscape orientation with multi-column layout and more horizontal space.
+                                </p>
+                            </div>
+                            <div style="flex: 1;">
+                                <button style="background: var(--ak-primary); color: white; border: none; padding: var(--spacing-md) var(--spacing-lg); border-radius: var(--radius-md); cursor: pointer;">
+                                    Standard Button
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            const root = document.documentElement;
+            const isDark = root.classList.contains('dark');
+            if (isDark) {
+                root.classList.remove('dark');
+                localStorage.setItem('ak-golf-theme', 'light');
+            } else {
+                root.classList.add('dark');
+                localStorage.setItem('ak-golf-theme', 'dark');
+            }
+        }
+
+        // Initialize theme
+        const savedTheme = localStorage.getItem('ak-golf-theme');
+        if (savedTheme === 'dark') {
+            document.documentElement.classList.add('dark');
+        }
+
+        // Update viewport indicator
+        function updateViewportIndicator() {
+            const width = window.innerWidth;
+            const indicator = document.getElementById('viewport-indicator');
+
+            if (width < 640) {
+                indicator.innerHTML = '📱 Mobile (' + width + 'px)';
+            } else if (width < 768) {
+                indicator.innerHTML = '📱 Mobile-L (' + width + 'px)';
+            } else if (width < 1024) {
+                indicator.innerHTML = '📱 Tablet (' + width + 'px)';
+            } else if (width < 1280) {
+                indicator.innerHTML = '💻 Desktop (' + width + 'px)';
+            } else {
+                indicator.innerHTML = '🖥️ Desktop-XL (' + width + 'px)';
+            }
+        }
+
+        // Update on load and resize
+        updateViewportIndicator();
+        window.addEventListener('resize', updateViewportIndicator);
+    </script>
+</body>
+</html>

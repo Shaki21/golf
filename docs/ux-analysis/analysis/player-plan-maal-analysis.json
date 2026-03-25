@@ -1,0 +1,205 @@
+{
+  "pageId": "player-plan-maal",
+  "path": "/plan/maal",
+  "component": "GoalsPage",
+  "analyzedAt": "2026-01-13T02:32:00Z",
+  "jtbdFramework": {
+    "1_pageIdentification": {
+      "name": "GoalsPage (Goals Management)",
+      "role": "player",
+      "frequency": "weekly",
+      "context": "planning",
+      "clarityScore": 9
+    },
+    "2_primaryJTBD": {
+      "decision": "What goals should I work on this week and how am I progressing?",
+      "isObviousIn5Seconds": true,
+      "clarity": 9,
+      "competingAttention": [
+        "Nytt mål button (primary CTA)",
+        "Active goals list",
+        "Long-term goals list",
+        "Stats overview"
+      ],
+      "primaryCTA": {
+        "component": "Nytt mål button",
+        "label": "Create new goal",
+        "isProminent": true
+      }
+    },
+    "3_decisionVsInfoRatio": {
+      "decisionElements": {
+        "count": 6,
+        "items": [
+          "Nytt mål button (header)",
+          "Nytt mål button (empty state x2)",
+          "Se alle links (x2)",
+          "Goal cards (implicit: mark as complete)"
+        ]
+      },
+      "informationElements": {
+        "count": 4,
+        "items": [
+          "Stats grid (3 metrics)",
+          "Active goals list",
+          "Long-term goals list",
+          "Progress bars"
+        ]
+      },
+      "ratio": 0.60,
+      "assessment": "EXCELLENT - Strong decision focus with clear primary action",
+      "dominantDecision": "Yes - Create goal is clear dominant action"
+    },
+    "4_visualHierarchy": {
+      "eyeLandsOnFirst": "Page header + Nytt mål button",
+      "isCorrectFirstFocus": true,
+      "heroElement": "Active goals section",
+      "secondaryElements": [
+        "Stats overview",
+        "Long-term goals",
+        "AI Coach guide"
+      ],
+      "noiseElements": [],
+      "isFlatHierarchy": false,
+      "assessment": "EXCELLENT - Clear visual hierarchy with prominent CTA"
+    },
+    "5_kpiQuality": {
+      "kpis": [
+        {
+          "metric": "Goal progress (current/target with %)",
+          "type": "leading",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "high",
+          "note": "Shows clear progress with visual bar"
+        },
+        {
+          "metric": "Trend indicators (optional)",
+          "type": "leading",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "high",
+          "note": "Shows whether improving or declining"
+        },
+        {
+          "metric": "Stats grid values",
+          "type": "mixed",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "good",
+          "note": "Depends on what stats are shown"
+        }
+      ],
+      "leadingPercentage": 1.0,
+      "actionablePercentage": 1.0,
+      "assessment": "EXCELLENT - All metrics are actionable and contextual"
+    },
+    "6_languageAndMentalModel": {
+      "style": "action_oriented",
+      "actionVerbs": [
+        "Nytt",
+        "Opprett",
+        "Se alle",
+        "Fullført"
+      ],
+      "systemNouns": [
+        "Mål",
+        "Goals",
+        "Fremgang"
+      ],
+      "coachActionPercentage": 0.6,
+      "assessment": "GOOD - Action-oriented language focused on user tasks",
+      "phrasesToRewrite": []
+    },
+    "7_flowAndNavigationCost": {
+      "clicksFromDashboard": 2,
+      "navigationDepth": 2,
+      "clicksToCreateGoal": 1,
+      "clicksToViewAllGoals": 1,
+      "assessment": "EXCELLENT - Inline actions minimize navigation",
+      "shouldBeInline": []
+    },
+    "8_stateCoverage": {
+      "hasEmptyState": true,
+      "hasLoadingState": true,
+      "hasErrorState": true,
+      "hasSuccessState": false,
+      "hasOverloadedState": false,
+      "hasAtRiskState": false,
+      "assessment": "EXCELLENT - Comprehensive state handling with retry option",
+      "gaps": [
+        "No success state after creating goal"
+      ]
+    },
+    "9_roleScalability": {
+      "hasRoleConditionals": false,
+      "beginnerFriendly": true,
+      "eliteFriendly": true,
+      "scalabilityIssues": [],
+      "recommendation": "Well-designed for all levels - clear goal progression"
+    },
+    "10_strategicVerdict": {
+      "diagnosis": "Well-implemented goals management with strong UX",
+      "currentBehavior": "Goals list with short-term and long-term separation",
+      "desiredBehavior": "Goals list with short-term and long-term separation",
+      "topIssues": [
+        {
+          "rank": 1,
+          "issue": "Relies on useGoals hook - need to verify API integration works",
+          "severity": "medium",
+          "impact": "May not fetch real data in production"
+        },
+        {
+          "rank": 2,
+          "issue": "No success celebration after goal creation",
+          "severity": "low",
+          "impact": "Missing positive feedback loop"
+        },
+        {
+          "rank": 3,
+          "issue": "AI Coach guide may add noise if not relevant",
+          "severity": "low",
+          "impact": "Competes for attention with goals"
+        }
+      ],
+      "structuralFix": "Verify API integration + add success toast after goal creation + make AI guide collapsible"
+    },
+    "11_crossPageConsistency": {
+      "note": "Uses Page component architecture (latest pattern). Follows design system with StateCard for empty/error states. Integrates AI Coach guide similar to other pages."
+    }
+  },
+  "codeAnalysis": {
+    "componentCount": {
+      "interactive": 6,
+      "display": 8
+    },
+    "stateHandling": {
+      "loading": "Page component with state='loading'",
+      "empty": "StateCard with variant='empty' + action button",
+      "error": "StateCard with variant='error' + retry button"
+    },
+    "dataSource": {
+      "isRealData": true,
+      "isMockData": false,
+      "note": "Uses useGoals hook - fetches from API with simState override for dev"
+    },
+    "accessibility": {
+      "hasAriaLabels": false,
+      "semanticHTML": true,
+      "keyboardNav": "Good - uses Button primitives"
+    },
+    "responsiveDesign": {
+      "hasMobileLayout": true,
+      "breakpoints": ["grid-cols-3 for stats"],
+      "mobileFirst": true
+    },
+    "migrationStatus": {
+      "note": "MIGRATED TO PAGE ARCHITECTURE - Zero inline styles",
+      "usesPageComponent": true,
+      "usesPrimitives": true
+    }
+  },
+  "priorityScore": 85,
+  "implementationStatus": "implemented",
+  "overallAssessment": "EXCELLENT - Well-implemented goals page following latest architecture patterns, needs minor UX enhancements"
+}

@@ -1,0 +1,17 @@
+# Railway configuration for IUP Golf Web (Frontend)
+# Uses nginx:alpine - NO npm/node needed at runtime
+
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "apps/web/Dockerfile"
+dockerContext = "apps/web"
+# Watch patterns to ensure Railway detects all relevant changes
+watchPatterns = ["apps/web/src/**", "apps/web/public/**", "apps/web/package.json", "apps/web/Dockerfile", "apps/web/nginx.conf"]
+
+[deploy]
+# nginx:alpine starts automatically via CMD in base image
+# Do NOT specify startCommand - nginx handles this
+healthcheckPath = "/health"
+healthcheckTimeout = 30
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 3

@@ -1,0 +1,233 @@
+{
+  "pageId": "player-trening-okter",
+  "path": "/trening/okter",
+  "component": "SessionsListView",
+  "analyzedAt": "2026-01-13T02:51:00Z",
+  "jtbdFramework": {
+    "1_pageIdentification": {
+      "name": "SessionsListView (Training Sessions List)",
+      "role": "player",
+      "frequency": "daily",
+      "context": "training",
+      "clarityScore": 9
+    },
+    "2_primaryJTBD": {
+      "decision": "Which session should I review or continue?",
+      "isObviousIn5Seconds": true,
+      "clarity": 9,
+      "competingAttention": [
+        "Search bar",
+        "Filter button",
+        "Session cards list",
+        "Session status badges",
+        "Pagination"
+      ],
+      "primaryCTA": {
+        "component": "Session card click",
+        "label": "View session details or continue in-progress session",
+        "isProminent": true
+      }
+    },
+    "3_decisionVsInfoRatio": {
+      "decisionElements": {
+        "count": 8,
+        "items": [
+          "Search input",
+          "Filter button",
+          "Collapsible filter drawer (5 filters)",
+          "Session card clicks",
+          "Pagination navigation",
+          "Clear filters button",
+          "Create new session button (empty state)"
+        ]
+      },
+      "informationElements": {
+        "count": 7,
+        "items": [
+          "Session cards (type, date, duration, status)",
+          "Focus area per session",
+          "Evaluation scores (if completed)",
+          "Active filters indicator",
+          "Results count via pagination",
+          "Training category badges"
+        ]
+      },
+      "ratio": 0.53,
+      "assessment": "GOOD - Strong decision focus for list page",
+      "dominantDecision": "Yes - Session selection is clear primary action"
+    },
+    "4_visualHierarchy": {
+      "eyeLandsOnFirst": "Search and filter controls",
+      "isCorrectFirstFocus": true,
+      "heroElement": "Session cards list",
+      "secondaryElements": [
+        "AI Coach guide",
+        "Pagination"
+      ],
+      "noiseElements": [],
+      "isFlatHierarchy": false,
+      "assessment": "EXCELLENT - Filter-first design with scannable card list"
+    },
+    "5_kpiQuality": {
+      "kpis": [
+        {
+          "metric": "Session status (in_progress/completed/auto_completed/abandoned)",
+          "type": "leading",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "high",
+          "note": "Shows which sessions need completion"
+        },
+        {
+          "metric": "Session date",
+          "type": "neutral",
+          "isActionable": false,
+          "hasContext": true,
+          "quality": "neutral",
+          "note": "Temporal context only"
+        },
+        {
+          "metric": "Duration (minutes)",
+          "type": "neutral",
+          "isActionable": false,
+          "hasContext": true,
+          "quality": "neutral",
+          "note": "Informational, not directly actionable"
+        },
+        {
+          "metric": "Focus area",
+          "type": "leading",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "high",
+          "note": "Shows training priorities"
+        },
+        {
+          "metric": "Evaluation scores (focus/technical out of 10)",
+          "type": "lagging",
+          "isActionable": false,
+          "hasContext": true,
+          "quality": "neutral",
+          "note": "Retrospective quality, not forward-looking"
+        }
+      ],
+      "leadingPercentage": 0.4,
+      "actionablePercentage": 0.4,
+      "assessment": "MODERATE - Mix of actionable status and neutral info"
+    },
+    "6_languageAndMentalModel": {
+      "style": "action_oriented",
+      "actionVerbs": [
+        "Søk",
+        "Filtrer",
+        "Se",
+        "Opprett"
+      ],
+      "systemNouns": [
+        "Økt",
+        "Fokusområde",
+        "Evaluering",
+        "Type"
+      ],
+      "coachActionPercentage": 0.6,
+      "assessment": "GOOD - Player-centric action language",
+      "phrasesToRewrite": []
+    },
+    "7_flowAndNavigationCost": {
+      "clicksFromDashboard": 2,
+      "navigationDepth": 2,
+      "clicksToFilterSessions": 1,
+      "clicksToSearchSessions": 0,
+      "clicksToViewSession": 1,
+      "clicksToCreateNew": 1,
+      "assessment": "EXCELLENT - Inline filtering and search, minimal navigation",
+      "shouldBeInline": []
+    },
+    "8_stateCoverage": {
+      "hasEmptyState": true,
+      "hasLoadingState": true,
+      "hasErrorState": false,
+      "hasSuccessState": false,
+      "hasOverloadedState": false,
+      "hasAtRiskState": false,
+      "assessment": "GOOD - Has loading and empty states with CTA",
+      "gaps": [
+        "No visible error handling for API failures",
+        "No 'at risk' indicator for incomplete sessions from >7 days ago"
+      ]
+    },
+    "9_roleScalability": {
+      "hasRoleConditionals": false,
+      "beginnerFriendly": true,
+      "eliteFriendly": true,
+      "scalabilityIssues": [],
+      "recommendation": "Well-designed for all levels - clear list with filtering"
+    },
+    "10_strategicVerdict": {
+      "diagnosis": "Professional session list with excellent filtering and pagination",
+      "currentBehavior": "Searchable/filterable list with pagination and smart routing (in_progress → evaluate, completed → view)",
+      "desiredBehavior": "Searchable/filterable list with pagination and smart routing",
+      "topIssues": [
+        {
+          "rank": 1,
+          "issue": "No error handling visible in component (may be handled in container)",
+          "severity": "medium",
+          "impact": "Silent failures if API fails"
+        },
+        {
+          "rank": 2,
+          "issue": "No 'at risk' indicator for incomplete sessions from long ago",
+          "severity": "low",
+          "impact": "Old in_progress sessions may be forgotten"
+        },
+        {
+          "rank": 3,
+          "issue": "Evaluation scores shown without context (is 7/10 good or bad?)",
+          "severity": "low",
+          "impact": "Numbers don't guide improvement"
+        }
+      ],
+      "structuralFix": "Add error boundary + add 'stale session' indicator for old in_progress + add score context (vs personal average)"
+    },
+    "11_crossPageConsistency": {
+      "note": "Uses shadcn/ui components (modern pattern). Collapsible filter pattern similar to TournamentCalendarPage. Pagination component reusable. AI Coach guide integration (good pattern)."
+    }
+  },
+  "codeAnalysis": {
+    "componentCount": {
+      "interactive": 8,
+      "display": 10
+    },
+    "stateHandling": {
+      "loading": "Skeleton components (SessionCardSkeleton × 5)",
+      "empty": "EmptyState component with CTA to create new session",
+      "error": "Not visible in this view component (may be in container)"
+    },
+    "dataSource": {
+      "isRealData": true,
+      "isMockData": false,
+      "note": "Receives data via props from container component (SessionsListContainer)"
+    },
+    "accessibility": {
+      "hasAriaLabels": true,
+      "semanticHTML": true,
+      "keyboardNav": "Good - uses button elements with aria-label for pagination"
+    },
+    "responsiveDesign": {
+      "hasMobileLayout": true,
+      "breakpoints": ["grid-cols-2 md:grid-cols-3 lg:grid-cols-5"],
+      "mobileFirst": true
+    },
+    "advancedFeatures": {
+      "collapsibleFilters": "Collapsible component for filter drawer",
+      "pagination": "Custom SessionPagination component with ellipsis for many pages",
+      "smartRouting": "Routes in_progress sessions to /evaluate, completed to /view",
+      "activeFilterIndicator": "White dot on filter button when filters active",
+      "aiCoachIntegration": "AICoachGuide component with GUIDE_PRESETS.sessions",
+      "categoryBadges": "TrainingCategoryBadge component for visual categorization"
+    }
+  },
+  "priorityScore": 85,
+  "implementationStatus": "implemented",
+  "overallAssessment": "EXCELLENT - Professional session list with advanced filtering, pagination, and smart routing"
+}

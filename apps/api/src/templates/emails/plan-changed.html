@@ -1,0 +1,55 @@
+<h1>Plan Changed Successfully</h1>
+
+<p>Hi {{userName}},</p>
+
+<p>Your subscription plan has been updated successfully!</p>
+
+<div class="highlight-box">
+  <p style="margin: 0;"><strong>Plan Change Details:</strong></p>
+  <p style="margin: 8px 0 0 0;">
+    Previous Plan: <strong>{{oldPlan}}</strong><br>
+    New Plan: <strong>{{newPlan}}</strong><br>
+    Effective Date: <strong>{{formattedEffectiveDate}}</strong>
+    {{#if formattedProrated}}
+    <br>Prorated Charge: <strong>{{formattedProrated}} {{currency}}</strong>
+    {{/if}}
+  </p>
+</div>
+
+<h2>What's Changing?</h2>
+
+<p>Your new plan includes all the features you need to continue your golf development:</p>
+
+<ul>
+  <li><strong>Plan Access:</strong> Your new plan features are now active</li>
+  <li><strong>Billing:</strong> Your next billing cycle will reflect the new plan pricing</li>
+  {{#if formattedProrated}}
+  <li><strong>Prorated Charge:</strong> You've been charged a prorated amount for the current billing period</li>
+  {{/if}}
+  <li><strong>No Interruption:</strong> All your data and progress has been preserved</li>
+</ul>
+
+<center style="margin: 32px 0;">
+  <a href="{{billingUrl}}" class="button">View Billing Details</a>
+</center>
+
+<hr class="divider">
+
+<h2>Explore Your Plan</h2>
+
+<p>Make the most of your subscription:</p>
+
+<ul>
+  <li>Review all available features in your new plan</li>
+  <li>Update your training goals if needed</li>
+  <li>Connect with your coach about the plan changes</li>
+</ul>
+
+<center style="margin: 24px 0;">
+  <a href="{{plansUrl}}" class="button button-secondary">View All Plans</a>
+</center>
+
+<p>If you have any questions about your plan change or need assistance, our support team is ready to help.</p>
+
+<p style="margin-top: 32px;">Thank you for being a valued member!<br>
+<strong>The IUP Golf Academy Team</strong></p>

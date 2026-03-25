@@ -1,0 +1,57 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
+  "env": {
+    "node": true,
+    "es2022": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2022,
+    "sourceType": "module"
+  },
+  "rules": {
+    "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+    "@typescript-eslint/no-explicit-any": "warn"
+  },
+  "overrides": [
+    {
+      "files": [
+        "apps/web/src/components/**/*.{js,jsx,ts,tsx}",
+        "apps/web/src/features/**/*.{js,jsx,ts,tsx}",
+        "apps/web/src/ui/**/*.{js,jsx,ts,tsx}",
+        "packages/design-system/components/**/*.{js,jsx,ts,tsx}"
+      ],
+      "rules": {
+        "no-restricted-syntax": [
+          "warn",
+          {
+            "selector": "Literal[value=/^#[0-9A-Fa-f]{3,8}$/]",
+            "message": "Hardcoded hex colors are forbidden in components. Use semantic tokens like var(--accent), var(--text-primary), etc. See docs/Color-Icon-Contract-v1.md"
+          },
+          {
+            "selector": "Literal[value=/var\\(--ak-/]",
+            "message": "Raw palette tokens (--ak-*) are forbidden in components. Use semantic tokens like var(--accent), var(--text-primary), etc. See docs/Color-Icon-Contract-v1.md"
+          },
+          {
+            "selector": "Literal[value=/var\\(--gray-/]",
+            "message": "Raw gray tokens (--gray-*) are forbidden in components. Use semantic tokens like var(--text-tertiary), var(--border), etc. See docs/Color-Icon-Contract-v1.md"
+          },
+          {
+            "selector": "TemplateLiteral[quasis.0.value.raw=/var\\(--ak-/]",
+            "message": "Raw palette tokens (--ak-*) are forbidden in components. Use semantic tokens. See docs/Color-Icon-Contract-v1.md"
+          },
+          {
+            "selector": "TemplateLiteral[quasis.0.value.raw=/var\\(--gray-/]",
+            "message": "Raw gray tokens (--gray-*) are forbidden in components. Use semantic tokens. See docs/Color-Icon-Contract-v1.md"
+          }
+        ]
+      }
+    }
+  ]
+}

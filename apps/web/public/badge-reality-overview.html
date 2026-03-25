@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TIER Golf - Badge System Reality Overview</title>
+  <style>
+    :root {
+      /* TIER Golf Design System v3.0 - Blue Palette 01 */
+      --ak-ink: #02060D;
+      --ak-primary: #10456A;
+      --ak-primary-light: #2C5F7F;
+      --ak-snow: #EDF0F2;
+      --ak-surface: #EBE5DA;
+      --ak-gold: #C9A227;
+      --ak-success: #4A7C59;
+      --ak-warning: #D4A84B;
+      --ak-error: #C45B4E;
+      --ak-steel: #8A9BA8;
+
+      /* Tier Colors */
+      --tier-bronze: #B08D57;
+      --tier-silver: #8A9BA8;
+      --tier-gold: #C9A227;
+      --tier-platinum: #E5E4E2;
+
+      /* Legacy aliases for backwards compatibility */
+      --primary: var(--ak-primary);
+      --primary-light: var(--ak-primary-light);
+      --surface: var(--ak-surface);
+      --snow: var(--ak-snow);
+      --charcoal: var(--ak-ink);
+      --steel: var(--ak-steel);
+      --gold: var(--ak-gold);
+      --success: var(--ak-success);
+      --error: var(--ak-error);
+      --warning: var(--ak-warning);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--snow);
+      color: var(--charcoal);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      color: white;
+      padding: 3rem 2rem;
+      margin-bottom: 2rem;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      opacity: 0.9;
+      font-size: 1.1rem;
+    }
+
+    .one-liner {
+      background: white;
+      border-left: 4px solid var(--gold);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      border-radius: 0 8px 8px 0;
+      font-size: 1.1rem;
+      font-style: italic;
+    }
+
+    h2 {
+      color: var(--primary);
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    h2::before {
+      content: '';
+      width: 4px;
+      height: 24px;
+      background: var(--gold);
+      border-radius: 2px;
+    }
+
+    .section {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    /* Gap Analysis */
+    .gap-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+
+    .gap-card {
+      padding: 1.5rem;
+      border-radius: 8px;
+    }
+
+    .gap-card.implemented {
+      background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+      border: 2px solid var(--success);
+    }
+
+    .gap-card.designed {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      border: 2px solid var(--warning);
+    }
+
+    .gap-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .gap-card .stat {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .gap-card.implemented .stat { color: var(--success); }
+    .gap-card.designed .stat { color: var(--warning); }
+
+    .gap-card ul {
+      list-style: none;
+      margin-top: 1rem;
+    }
+
+    .gap-card li {
+      padding: 0.3rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* 3-Layer Model */
+    .layer-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .layer {
+      padding: 1.5rem;
+      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .layer::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 6px;
+    }
+
+    .layer.behavior {
+      background: linear-gradient(90deg, #dbeafe 0%, #eff6ff 100%);
+    }
+    .layer.behavior::before { background: #3B82F6; }
+
+    .layer.capacity {
+      background: linear-gradient(90deg, #f3e8ff 0%, #faf5ff 100%);
+    }
+    .layer.capacity::before { background: #8B5CF6; }
+
+    .layer.outcome {
+      background: linear-gradient(90deg, #fef3c7 0%, #fffbeb 100%);
+    }
+    .layer.outcome::before { background: #F59E0B; }
+
+    .layer h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .layer .subtitle {
+      color: var(--steel);
+      font-size: 0.9rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .layer .reliability {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .reliability.high { background: #dcfce7; color: #166534; }
+    .reliability.medium { background: #fef3c7; color: #92400e; }
+    .reliability.low { background: #fee2e2; color: #991b1b; }
+
+    /* Data Availability Matrix */
+    .data-matrix {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 1px;
+      background: #e5e7eb;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 1rem;
+    }
+
+    .data-matrix > div {
+      background: white;
+      padding: 0.75rem 1rem;
+    }
+
+    .data-matrix .header {
+      background: var(--primary);
+      color: white;
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+
+    .data-matrix .metric-name {
+      font-weight: 500;
+    }
+
+    .data-matrix .status {
+      text-align: center;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .status-badge.available { background: #dcfce7; color: #166534; }
+    .status-badge.partial { background: #fef3c7; color: #92400e; }
+    .status-badge.missing { background: #fee2e2; color: #991b1b; }
+
+    /* MVP Badge Grid */
+    .badge-category {
+      margin-top: 1.5rem;
+    }
+
+    .badge-category h3 {
+      font-size: 1rem;
+      color: var(--steel);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .badge-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+
+    .badge-card {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 1rem;
+      display: flex;
+      gap: 1rem;
+      transition: all 0.2s;
+    }
+
+    .badge-card:hover {
+      border-color: var(--primary-light);
+      box-shadow: 0 4px 12px rgba(16, 69, 106, 0.1);
+    }
+
+    .badge-icon {
+      font-size: 2rem;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: white;
+      border-radius: 8px;
+      border: 1px solid #e5e7eb;
+    }
+
+    .badge-info {
+      flex: 1;
+    }
+
+    .badge-info h4 {
+      font-size: 0.95rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .badge-info p {
+      font-size: 0.8rem;
+      color: var(--steel);
+      margin-bottom: 0.5rem;
+    }
+
+    .badge-levels {
+      display: flex;
+      gap: 0.25rem;
+    }
+
+    .level-dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      background: #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: white;
+    }
+
+    .level-dot.l1 { background: #fbbf24; }
+    .level-dot.l2 { background: #f59e0b; }
+    .level-dot.l3 { background: #ea580c; }
+    .level-dot.l4 { background: #dc2626; }
+    .level-dot.l5 { background: #991b1b; }
+
+    /* Roadmap */
+    .roadmap {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+      overflow-x: auto;
+      padding-bottom: 1rem;
+    }
+
+    .roadmap-phase {
+      flex: 1;
+      min-width: 250px;
+      background: #f9fafb;
+      border-radius: 8px;
+      padding: 1.25rem;
+      position: relative;
+    }
+
+    .roadmap-phase::after {
+      content: '→';
+      position: absolute;
+      right: -1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.5rem;
+      color: var(--steel);
+    }
+
+    .roadmap-phase:last-child::after {
+      display: none;
+    }
+
+    .phase-number {
+      width: 28px;
+      height: 28px;
+      background: var(--primary);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 0.85rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .roadmap-phase h4 {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .roadmap-phase p {
+      font-size: 0.85rem;
+      color: var(--steel);
+      margin-bottom: 0.75rem;
+    }
+
+    .roadmap-phase ul {
+      list-style: none;
+      font-size: 0.85rem;
+    }
+
+    .roadmap-phase li {
+      padding: 0.25rem 0;
+      padding-left: 1.25rem;
+      position: relative;
+    }
+
+    .roadmap-phase li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: var(--primary);
+    }
+
+    /* Anti-gaming */
+    .rules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .rule-card {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      border-radius: 8px;
+      padding: 1rem;
+    }
+
+    .rule-card h4 {
+      font-size: 0.9rem;
+      color: #991b1b;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .rule-card p {
+      font-size: 0.85rem;
+      color: #7f1d1d;
+    }
+
+    /* XP System */
+    .xp-visual {
+      display: flex;
+      align-items: flex-end;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      height: 150px;
+      padding: 1rem;
+      background: #f9fafb;
+      border-radius: 8px;
+    }
+
+    .xp-bar {
+      flex: 1;
+      background: linear-gradient(to top, var(--primary) 0%, var(--primary-light) 100%);
+      border-radius: 4px 4px 0 0;
+      position: relative;
+      min-width: 40px;
+    }
+
+    .xp-bar::after {
+      content: attr(data-level);
+      position: absolute;
+      bottom: -25px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .xp-bar::before {
+      content: attr(data-xp);
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.7rem;
+      color: var(--steel);
+      white-space: nowrap;
+    }
+
+    /* Comparison table */
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .comparison-table th {
+      background: var(--primary);
+      color: white;
+      font-weight: 600;
+    }
+
+    .comparison-table tr:nth-child(even) {
+      background: #f9fafb;
+    }
+
+    .comparison-table .emoji {
+      font-size: 1.25rem;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--steel);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      .gap-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .data-matrix {
+        font-size: 0.85rem;
+      }
+
+      .roadmap {
+        flex-direction: column;
+      }
+
+      .roadmap-phase::after {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Badge System Reality Overview</h1>
+      <p>TIER Golf - Analyse av nåværende vs. designet system</p>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- One-liner -->
+    <div class="one-liner">
+      "Appen er en <strong>treningsplanleggings- og utviklingsplattform</strong> for junior/elitegolfspillere
+      som måler <strong>treningsvolum, tekniske tester og periodisert progresjon</strong>,
+      og driver motivasjon via <strong>XP/badge-system</strong>."
+    </div>
+
+    <!-- Gap Analysis -->
+    <section class="section">
+      <h2>Gap-analyse: Implementert vs. Designet</h2>
+      <div class="gap-grid">
+        <div class="gap-card implemented">
+          <h3>✅ Implementert (Aktivt)</h3>
+          <div class="stat">10</div>
+          <div>badges i produksjon</div>
+          <ul>
+            <li>🔥 Streak Master</li>
+            <li>⚡ Training Warrior</li>
+            <li>⏱️ Time Champion</li>
+            <li>✅ Reliable</li>
+            <li>🌅 Early Bird</li>
+            <li>🎯 Weakness Crusher</li>
+            <li>🏆 Perfect Week</li>
+            <li>⛳ Tournament Ready</li>
+            <li>💨 Speed Demon</li>
+            <li>🦉 Night Owl</li>
+          </ul>
+        </div>
+        <div class="gap-card designed">
+          <h3>📐 Designet (Ikke integrert)</h3>
+          <div class="stat">85+</div>
+          <div>badges i spesifikasjon</div>
+          <ul>
+            <li>📊 Volume: 16 badges</li>
+            <li>🔥 Streak: 9 badges</li>
+            <li>💪 Strength: 15 badges</li>
+            <li>⚡ Speed: 12 badges</li>
+            <li>🎯 Accuracy: 9 badges</li>
+            <li>🏌️ Putting: 10 badges</li>
+            <li>⛳ Short Game: 6 badges</li>
+            <li>🏆 Scoring: 11 badges</li>
+            <li>📅 Phase: 5 badges</li>
+            <li>🧠 Mental: 3 badges</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3-Layer Model -->
+    <section class="section">
+      <h2>Anbefalt 3-lags Struktur</h2>
+      <div class="layer-stack">
+        <div class="layer behavior">
+          <h3>BEHAVIOR (Atferd)</h3>
+          <div class="subtitle">"Hva du gjør" - Konsistens, vaner, rutiner</div>
+          <span class="reliability high">Høy pålitelighet - Automatisk logget</span>
+          <div style="margin-top: 0.75rem; font-size: 0.9rem;">
+            <strong>Badges:</strong> Streak, Completion Rate, Perfect Week, Early Bird, Night Owl
+          </div>
+        </div>
+        <div class="layer capacity">
+          <h3>CAPACITY (Kapasitet)</h3>
+          <div class="subtitle">"Hva du bygger" - Volum, akkumulering over tid</div>
+          <span class="reliability high">Høy pålitelighet - Timer, økter, dager</span>
+          <div style="margin-top: 0.75rem; font-size: 0.9rem;">
+            <strong>Badges:</strong> Total Sessions, Total Hours, Teknikk Hours, Spill Hours, Tests Completed
+          </div>
+        </div>
+        <div class="layer outcome">
+          <h3>OUTCOME (Resultat)</h3>
+          <div class="subtitle">"Hva du oppnår" - Milepæler, målbare forbedringer</div>
+          <span class="reliability medium">Middels pålitelighet - Test-resultater, manuell input</span>
+          <div style="margin-top: 0.75rem; font-size: 0.9rem;">
+            <strong>Badges:</strong> Breaking Points, Speed Boost, Tournament Ready, Category Up
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Data Availability -->
+    <section class="section">
+      <h2>Data-tilgjengelighet</h2>
+      <div class="data-matrix">
+        <div class="header">Metric</div>
+        <div class="header">Status</div>
+        <div class="header">Kilde</div>
+        <div class="header">Trigger-klar</div>
+
+        <div class="metric-name">Økter fullført</div>
+        <div class="status"><span class="status-badge available">Tilgjengelig</span></div>
+        <div>DailyTrainingAssignment</div>
+        <div class="status">✅</div>
+
+        <div class="metric-name">Timer trent</div>
+        <div class="status"><span class="status-badge available">Tilgjengelig</span></div>
+        <div>Assignment.duration</div>
+        <div class="status">✅</div>
+
+        <div class="metric-name">Streak (dager)</div>
+        <div class="status"><span class="status-badge available">Tilgjengelig</span></div>
+        <div>Kalkulert runtime</div>
+        <div class="status">✅</div>
+
+        <div class="metric-name">Completion rate</div>
+        <div class="status"><span class="status-badge available">Tilgjengelig</span></div>
+        <div>Kalkulert runtime</div>
+        <div class="status">✅</div>
+
+        <div class="metric-name">Driver speed</div>
+        <div class="status"><span class="status-badge partial">Delvis</span></div>
+        <div>ClubSpeedCalibration</div>
+        <div class="status">⚠️</div>
+
+        <div class="metric-name">Test-resultater</div>
+        <div class="status"><span class="status-badge available">Tilgjengelig</span></div>
+        <div>TestResult (20 tester)</div>
+        <div class="status">✅</div>
+
+        <div class="metric-name">Styrke/Tonnasje</div>
+        <div class="status"><span class="status-badge missing">Mangler</span></div>
+        <div>Modell finnes, ingen UI</div>
+        <div class="status">❌</div>
+
+        <div class="metric-name">GIR%, Fairway%</div>
+        <div class="status"><span class="status-badge missing">Mangler</span></div>
+        <div>Ingen runde-logging</div>
+        <div class="status">❌</div>
+
+        <div class="metric-name">Putting stats</div>
+        <div class="status"><span class="status-badge missing">Mangler</span></div>
+        <div>Ingen runde-logging</div>
+        <div class="status">❌</div>
+
+        <div class="metric-name">Strokes Gained</div>
+        <div class="status"><span class="status-badge partial">Demo</span></div>
+        <div>DataGolf mock-data</div>
+        <div class="status">⚠️</div>
+      </div>
+    </section>
+
+    <!-- MVP Badge Set -->
+    <section class="section">
+      <h2>MVP Badge Set (15 badges)</h2>
+      <p style="color: var(--steel); margin-bottom: 1rem;">Basert på data som faktisk finnes i appen</p>
+
+      <div class="badge-category">
+        <h3>Behavior - Atferd (5)</h3>
+        <div class="badge-grid">
+          <div class="badge-card">
+            <div class="badge-icon">🔥</div>
+            <div class="badge-info">
+              <h4>Streak Master</h4>
+              <p>Tren X dager på rad</p>
+              <div class="badge-levels">
+                <div class="level-dot l1">3</div>
+                <div class="level-dot l2">7</div>
+                <div class="level-dot l3">14</div>
+                <div class="level-dot l4">30</div>
+                <div class="level-dot l5">60</div>
+              </div>
+            </div>
+          </div>
+          <div class="badge-card">
+            <div class="badge-icon">✅</div>
+            <div class="badge-info">
+              <h4>Pålitelig</h4>
+              <p>Hold X% completion rate</p>
+              <div class="badge-levels">
+                <div class="level-dot l1">70</div>
+                <div class="level-dot l2">80</div>
+                <div class="level-dot l3">90</div>
+                <div class="level-dot l4">95</div>
+              </div>
+            </div>
+          </div>
+          <div class="badge-card">
+            <div class="badge-icon">🏆</div>
+            <div class="badge-info">
+              <h4>Perfekt Uke</h4>
+              <p>Fullfør alle økter i X uker</p>
+              <div class="badge-levels">
+                <div class="level-dot l1">1</div>
+                <div class="level-dot l2">4</div>
+                <div class="level-dot l3">12</div>
+                <div class="level-dot l4">26</div>
+              </div>
+            </div>
+          </div>
+          <div class="badge-card">
+            <div class="badge-icon">🌅</div>
+            <div class="badge-info">
+              <h4>Morgenfugl</h4>
+              <p>Tren før 09:00 X ganger</p>
+              <div class="badge-levels">
+                <div class="level-dot l1">5</div>
+                <div class="level-dot l2">20</div>
+                <div class="level-dot l3">50</div>
+              </div>
+            </div>
+          </div>
+          <div class="badge-card">
+            <div class="badge-icon">🦉</div>
+            <div class="badge-info">
+              <h4>Kveldstrener</h4>
+              <p>Tren etter 19:00 X ganger</p>
+              <div class="badge-levels">
+                <div class="level-dot l1">10</div>
+                <div class="level-dot l2">25</div>
+                <div class="level-dot l3">50</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="badge-category">
+        <h3>Capacity - Volum (5)</h3>
+        <div class="badge-grid">
+          <div class="badge-card">
+            <div class="badge-icon">⚡</div>
+            <div class="badge-info">
+              <h4>Trenings-kriger</h4>
+              <p>Fullfør X økter totalt</p>
+              <div class="badge-levels">
+                <div class="level-dot l1">10</div>
+                <div class="level-dot l2">25</div>
+                <div class="level-dot l3">50</div>
+                <div class="level-dot l4">100</div>
+                <div class="level-dot l5">250</div>
+              </div>
+            </div>
+          </div>
+          <div class="badge-card">
+            <div class="badge-icon">⏱️</div>
+            <div class="badge-info">
+              <h4>Tids-mester</h4>
+              <p>Tren X timer totalt</p>
+              <div class="badge-levels">
+                <div class="level-dot l1">10</div>
+                <div class="level-dot l2">25</div>
+                <div class="level-dot l3">50</div>
+                <div class="level-dot l4">100</div>
+                <div class="level-dot l5">250</div>
+              </div>
+            </div>
+          </div>
+          <div class="badge-card">
+            <div class="badge-icon">🎯</div>
+            <div class="badge-info">
+              <h4>Teknikk-fokus</h4>
+              <p>X timer teknikk-trening</p>
+              <div class="badge-levels">
+                <div class="level-dot l1">5</div>
+                <div class="level-dot l2">15</div>
+                <div class="level-dot l3">30</div>
+                <div class="level-dot l4">60</div>
+              </div>
+            </div>
+          </div>
+          <div class="badge-card">
+            <div class="badge-icon">⛳</div>
+            <div class="badge-info">
+              <h4>Spilltid</h4>
+              <p>X timer spill på bane</p>
+              <div class="badge-levels">
+                <div class="level-dot l1">10</div>
+                <div class="level-dot l2">25</div>
+                <div class="level-dot l3">50</div>
+                <div class="level-dot l4">100</div>
+              </div>
+            </div>
+          </div>
+          <div class="badge-card">
+            <div class="badge-icon">📊</div>
+            <div class="badge-info">
+              <h4>Test-taker</h4>
+              <p>Fullfør X tester</p>
+              <div class="badge-levels">
+                <div class="level-dot l1">5</div>
+                <div class="level-dot l2">15</div>
+                <div class="level-dot l3">30</div>
+                <div class="level-dot l4">60</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="badge-category">
+        <h3>Outcome - Resultat (5)</h3>
+        <div class="badge-grid">
+          <div class="badge-card">
+            <div class="badge-icon">🎯</div>
+            <div class="badge-info">
+              <h4>Svakhets-knuser</h4>
+              <p>Løs X breaking points</p>
+              <div class="badge-levels">
+                <div class="level-dot l1">1</div>
+                <div class="level-dot l2">3</div>
+                <div class="level-dot l3">5</div>
+                <div class="level-dot l4">10</div>
+              </div>
+            </div>
+          </div>
+          <div class="badge-card">
+            <div class="badge-icon">💨</div>
+            <div class="badge-info">
+              <h4>Speed Demon</h4>
+              <p>Øk driver speed +X mph</p>
+              <div class="badge-levels">
+                <div class="level-dot l1">5</div>
+                <div class="level-dot l2">10</div>
+                <div class="level-dot l3">15</div>
+              </div>
+            </div>
+          </div>
+          <div class="badge-card">
+            <div class="badge-icon">🏌️</div>
+            <div class="badge-info">
+              <h4>Turnerings-klar</h4>
+              <p>100% før X turneringer</p>
+              <div class="badge-levels">
+                <div class="level-dot l1">1</div>
+                <div class="level-dot l2">3</div>
+                <div class="level-dot l3">5</div>
+              </div>
+            </div>
+          </div>
+          <div class="badge-card">
+            <div class="badge-icon">⬆️</div>
+            <div class="badge-info">
+              <h4>Kategori-klatrer</h4>
+              <p>Gå opp X kategorier</p>
+              <div class="badge-levels">
+                <div class="level-dot l1">1</div>
+                <div class="level-dot l2">2</div>
+                <div class="level-dot l3">3</div>
+              </div>
+            </div>
+          </div>
+          <div class="badge-card">
+            <div class="badge-icon">🌟</div>
+            <div class="badge-info">
+              <h4>Første Milepæl</h4>
+              <p>Onboarding + første uke</p>
+              <div class="badge-levels">
+                <div class="level-dot l1">1</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Anti-gaming Rules -->
+    <section class="section">
+      <h2>Anti-Gaming Regler</h2>
+      <div class="rules-grid">
+        <div class="rule-card">
+          <h4>⏱️ Min. varighet</h4>
+          <p>Økt må være ≥15 min for å telle</p>
+        </div>
+        <div class="rule-card">
+          <h4>🚫 Rate limiting</h4>
+          <p>Maks 3 økter/dag teller mot streak</p>
+        </div>
+        <div class="rule-card">
+          <h4>⏳ Grace period</h4>
+          <p>36 timer før streak brytes</p>
+        </div>
+        <div class="rule-card">
+          <h4>📊 Quality gate</h4>
+          <p>Completion badges krever 30+ økter</p>
+        </div>
+        <div class="rule-card">
+          <h4>🔒 Server-side</h4>
+          <p>Badges kalkuleres på server</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- XP System -->
+    <section class="section">
+      <h2>XP & Level System</h2>
+      <div class="xp-visual">
+        <div class="xp-bar" style="height: 10%;" data-level="L1" data-xp="0"></div>
+        <div class="xp-bar" style="height: 15%;" data-level="L2" data-xp="100"></div>
+        <div class="xp-bar" style="height: 25%;" data-level="L3" data-xp="300"></div>
+        <div class="xp-bar" style="height: 40%;" data-level="L4" data-xp="600"></div>
+        <div class="xp-bar" style="height: 55%;" data-level="L5" data-xp="1000"></div>
+        <div class="xp-bar" style="height: 70%;" data-level="L6" data-xp="1500"></div>
+        <div class="xp-bar" style="height: 85%;" data-level="L7" data-xp="2100"></div>
+        <div class="xp-bar" style="height: 100%;" data-level="L8" data-xp="2800"></div>
+      </div>
+      <p style="text-align: center; color: var(--steel); margin-top: 2rem; font-size: 0.9rem;">
+        Formel: Level N krever N*(N-1)*50 XP kumulativt
+        <br>
+        <strong>Total XP fra MVP (15 badges, alle levels): ~15,000 XP</strong>
+      </p>
+    </section>
+
+    <!-- Roadmap -->
+    <section class="section">
+      <h2>Implementerings-veikart</h2>
+      <div class="roadmap">
+        <div class="roadmap-phase">
+          <div class="phase-number">1</div>
+          <h4>Fiks eksisterende</h4>
+          <p>Stabiliser nåværende system</p>
+          <ul>
+            <li>Persistér earned badges</li>
+            <li>Legg til unlock-notifikasjon</li>
+            <li>Synkroniser kategorier</li>
+          </ul>
+        </div>
+        <div class="roadmap-phase">
+          <div class="phase-number">2</div>
+          <h4>Utvid med data</h4>
+          <p>Bruk eksisterende data bedre</p>
+          <ul>
+            <li>teknikk_hours badge</li>
+            <li>spill_hours badge</li>
+            <li>tests_completed badge</li>
+            <li>category_up badge</li>
+          </ul>
+        </div>
+        <div class="roadmap-phase">
+          <div class="phase-number">3</div>
+          <h4>Gym-integrasjon</h4>
+          <p>Ny data-kilde</p>
+          <ul>
+            <li>Gym-logging UI</li>
+            <li>StrengthSession API</li>
+            <li>Tonnasje-badges</li>
+            <li>PR-tracking</li>
+          </ul>
+        </div>
+        <div class="roadmap-phase">
+          <div class="phase-number">4</div>
+          <h4>Runde-logging</h4>
+          <p>Golf-spesifikk data</p>
+          <ul>
+            <li>Score-logging UI</li>
+            <li>GIR/Fairway tracking</li>
+            <li>Handicap-badges</li>
+            <li>Under-par milestones</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Current vs Active Badges -->
+    <section class="section">
+      <h2>Aktive Badges (Detaljert)</h2>
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Icon</th>
+            <th>Badge</th>
+            <th>Kategori</th>
+            <th>Levels</th>
+            <th>Krav</th>
+            <th>XP Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="emoji">🔥</td>
+            <td>Streak Master</td>
+            <td>consistency</td>
+            <td>5</td>
+            <td>3→7→14→30→60 dager</td>
+            <td>1,850</td>
+          </tr>
+          <tr>
+            <td class="emoji">⚡</td>
+            <td>Training Warrior</td>
+            <td>volume</td>
+            <td>5</td>
+            <td>10→25→50→100→250 økter</td>
+            <td>3,500</td>
+          </tr>
+          <tr>
+            <td class="emoji">⏱️</td>
+            <td>Time Champion</td>
+            <td>volume</td>
+            <td>5</td>
+            <td>10→25→50→100→250 timer</td>
+            <td>3,500</td>
+          </tr>
+          <tr>
+            <td class="emoji">✅</td>
+            <td>Reliable</td>
+            <td>consistency</td>
+            <td>4</td>
+            <td>70→80→90→95% completion</td>
+            <td>2,250</td>
+          </tr>
+          <tr>
+            <td class="emoji">🌅</td>
+            <td>Early Bird</td>
+            <td>special</td>
+            <td>3</td>
+            <td>5→20→50 morgenøkter</td>
+            <td>1,000</td>
+          </tr>
+          <tr>
+            <td class="emoji">🎯</td>
+            <td>Weakness Crusher</td>
+            <td>improvement</td>
+            <td>4</td>
+            <td>1→3→5→10 breaking points</td>
+            <td>3,000</td>
+          </tr>
+          <tr>
+            <td class="emoji">🏆</td>
+            <td>Perfect Week</td>
+            <td>consistency</td>
+            <td>3</td>
+            <td>1→4→12 perfekte uker</td>
+            <td>1,050</td>
+          </tr>
+          <tr>
+            <td class="emoji">⛳</td>
+            <td>Tournament Ready</td>
+            <td>milestone</td>
+            <td>3</td>
+            <td>1→3→5 turneringer</td>
+            <td>1,400</td>
+          </tr>
+          <tr>
+            <td class="emoji">💨</td>
+            <td>Speed Demon</td>
+            <td>improvement</td>
+            <td>3</td>
+            <td>+5→+10→+15 mph</td>
+            <td>2,100</td>
+          </tr>
+          <tr>
+            <td class="emoji">🦉</td>
+            <td>Night Owl</td>
+            <td>special</td>
+            <td>2</td>
+            <td>10→25 kveldsøkter</td>
+            <td>600</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="text-align: right; color: var(--steel); margin-top: 1rem; font-size: 0.9rem;">
+        <strong>Total tilgjengelig XP: 20,250</strong>
+      </p>
+    </section>
+
+  </div>
+
+  <footer>
+    <p>TIER Golf - Badge System Reality Overview</p>
+    <p style="font-size: 0.8rem; margin-top: 0.5rem;">Blue Palette 01 Design System v3.0 | Generert basert på kodebase-analyse</p>
+  </footer>
+</body>
+</html>

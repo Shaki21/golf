@@ -1,0 +1,56 @@
+<h1>Subscription Renewed Successfully</h1>
+
+<p>Hi {{userName}},</p>
+
+<p>Great news! Your subscription to IUP Golf Academy has been renewed successfully.</p>
+
+<div class="highlight-box">
+  <p style="margin: 0;"><strong>Renewal Details:</strong></p>
+  <p style="margin: 8px 0 0 0;">
+    Plan: <strong>{{planType}}</strong><br>
+    Amount Charged: <strong>{{formattedAmount}} {{currency}}</strong><br>
+    Next Billing Date: <strong>{{formattedNextBilling}}</strong><br>
+    Status: <span style="color: #10b981;"><strong>✓ Active</strong></span>
+  </p>
+</div>
+
+{{#if invoiceUrl}}
+<h2>Your Invoice</h2>
+
+<p>Your latest invoice is ready:</p>
+
+<center style="margin: 24px 0;">
+  <a href="{{invoiceUrl}}" class="button">Download Invoice</a>
+</center>
+{{/if}}
+
+<h2>Your Benefits Continue</h2>
+
+<p>You have uninterrupted access to all premium features:</p>
+
+<ul>
+  <li><strong>Personalized Training Plans:</strong> Custom-tailored to your goals</li>
+  <li><strong>Expert Coaching:</strong> One-on-one guidance from professionals</li>
+  <li><strong>Performance Analytics:</strong> Track your improvement over time</li>
+  <li><strong>Video Analysis:</strong> Detailed swing breakdowns and feedback</li>
+  <li><strong>Priority Support:</strong> Get help whenever you need it</li>
+</ul>
+
+<center style="margin: 32px 0;">
+  <a href="{{billingUrl}}" class="button">Manage Subscription</a>
+</center>
+
+<hr class="divider">
+
+<h2>Questions About Your Renewal?</h2>
+
+<p>If you have any questions about your subscription or billing, you can:</p>
+
+<ul>
+  <li>View your <a href="{{billingUrl}}">billing details and payment history</a></li>
+  <li>Update your payment method or subscription plan</li>
+  <li>Contact our support team anytime</li>
+</ul>
+
+<p style="margin-top: 32px;">Thank you for continuing your journey with us!<br>
+<strong>The IUP Golf Academy Team</strong></p>

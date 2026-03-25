@@ -1,0 +1,222 @@
+{
+  "pageId": "player-analyse-prestasjoner",
+  "path": "/analyse/prestasjoner",
+  "component": "AnalysePrestasjoner",
+  "analyzedAt": "2026-01-13T02:30:00Z",
+  "jtbdFramework": {
+    "1_pageIdentification": {
+      "name": "AnalysePrestasjoner (Achievements Hub with 2 Tabs)",
+      "role": "player",
+      "frequency": "weekly",
+      "context": "review",
+      "clarityScore": 9
+    },
+    "2_primaryJTBD": {
+      "decision": "Which badges and achievements should I work towards next?",
+      "isObviousIn5Seconds": true,
+      "clarity": 9,
+      "competingAttention": [
+        "2 tabs (Merker vs Achievements)",
+        "Badge progress bars",
+        "Recently unlocked section"
+      ],
+      "primaryCTA": {
+        "component": "Tab navigation + progress cards",
+        "label": "Navigate between Merker and Achievements",
+        "isProminent": true
+      }
+    },
+    "3_decisionVsInfoRatio": {
+      "decisionElements": {
+        "count": 3,
+        "items": [
+          "2 tab buttons",
+          "Implicit: Work on tests for badges near completion"
+        ]
+      },
+      "informationElements": {
+        "count": 12,
+        "items": [
+          "Badge summary (4 metrics)",
+          "Achievement summary (3 metrics)",
+          "Badge categories grid",
+          "Achievement categories grid",
+          "Progress bars for near-complete badges",
+          "Recently unlocked sections"
+        ]
+      },
+      "ratio": 0.20,
+      "assessment": "MODERATE - Information-heavy as expected for achievements/badges page, but lacks clear actionable next steps",
+      "dominantDecision": "No - Primarily informational with implicit next actions"
+    },
+    "4_visualHierarchy": {
+      "eyeLandsOnFirst": "Tab navigation bar",
+      "isCorrectFirstFocus": true,
+      "heroElement": "Active tab content area with summary cards",
+      "secondaryElements": [
+        "Badge/Achievement grids",
+        "Progress sections"
+      ],
+      "noiseElements": [],
+      "isFlatHierarchy": false,
+      "assessment": "EXCELLENT - Clear tab-based hierarchy with visual separation"
+    },
+    "5_kpiQuality": {
+      "kpis": [
+        {
+          "metric": "Opptjente merker (24/50)",
+          "type": "lagging",
+          "isActionable": false,
+          "hasContext": true,
+          "quality": "vanity",
+          "note": "Count without context on what to do next"
+        },
+        {
+          "metric": "Nesten oppnådd (8 badges)",
+          "type": "leading",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "high",
+          "note": "Shows badges close to completion"
+        },
+        {
+          "metric": "Ferdigstillelse (48%)",
+          "type": "lagging",
+          "isActionable": false,
+          "hasContext": false,
+          "quality": "vanity",
+          "note": "Percentage without next action"
+        },
+        {
+          "metric": "Progress bars (2/3, 1/2)",
+          "type": "leading",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "high",
+          "note": "Shows specific test gaps to fill"
+        },
+        {
+          "metric": "Achievement points (1250)",
+          "type": "lagging",
+          "isActionable": false,
+          "hasContext": false,
+          "quality": "vanity",
+          "note": "Total points without purpose"
+        }
+      ],
+      "leadingPercentage": 0.40,
+      "actionablePercentage": 0.40,
+      "assessment": "MODERATE - Mix of actionable (progress bars) and vanity metrics (counts, percentages)"
+    },
+    "6_languageAndMentalModel": {
+      "style": "achievement_oriented",
+      "actionVerbs": [
+        "Oppnå",
+        "Lås opp",
+        "Bestå"
+      ],
+      "systemNouns": [
+        "Merker",
+        "Achievements",
+        "Poeng",
+        "Milepæler"
+      ],
+      "coachActionPercentage": 0.3,
+      "assessment": "MODERATE - Achievement-focused language but lacks action verbs for what user should do",
+      "phrasesToRewrite": [
+        "'Nesten oppnådd' → 'Complete 1 more test to unlock' (be specific)",
+        "'Fremgang mot neste merker' → 'Your next badge unlock opportunities'"
+      ]
+    },
+    "7_flowAndNavigationCost": {
+      "clicksFromDashboard": 2,
+      "navigationDepth": 2,
+      "clicksToSeeProgress": 1,
+      "clicksToActionableItem": 3,
+      "assessment": "MODERATE - Can see progress easily, but no direct action links to tests or tasks",
+      "shouldBeInline": [
+        "Direct links from progress bars to relevant tests/tasks"
+      ]
+    },
+    "8_stateCoverage": {
+      "hasEmptyState": false,
+      "hasLoadingState": false,
+      "hasErrorState": false,
+      "hasSuccessState": false,
+      "hasOverloadedState": false,
+      "hasAtRiskState": false,
+      "assessment": "WEAK - No state handling, hardcoded mock data",
+      "gaps": [
+        "No loading state for badge/achievement data",
+        "No empty state for new users with no achievements",
+        "No error handling for data fetch failures",
+        "No success celebration when badge is unlocked"
+      ]
+    },
+    "9_roleScalability": {
+      "hasRoleConditionals": false,
+      "beginnerFriendly": true,
+      "eliteFriendly": true,
+      "scalabilityIssues": [],
+      "recommendation": "Well-designed for all levels - clear progression visible"
+    },
+    "10_strategicVerdict": {
+      "diagnosis": "Gamification hub with good visual design but weak actionability",
+      "currentBehavior": "2-tab achievements showcase (Merker + Achievements)",
+      "desiredBehavior": "Actionable progression hub with clear next steps",
+      "topIssues": [
+        {
+          "rank": 1,
+          "issue": "No API integration - all data is hardcoded mock",
+          "severity": "high",
+          "impact": "Not production-ready, shows fake progress"
+        },
+        {
+          "rank": 2,
+          "issue": "Progress cards don't link to actionable tasks or tests",
+          "severity": "medium",
+          "impact": "User sees they need '1 more test' but can't click to do it"
+        },
+        {
+          "rank": 3,
+          "issue": "Mix of Norwegian (Merker) and English (Achievements) naming",
+          "severity": "low",
+          "impact": "Inconsistent language may confuse users"
+        }
+      ],
+      "structuralFix": "Add API integration + clickable progress cards linking to test pages + standardize language to English or Norwegian"
+    },
+    "11_crossPageConsistency": {
+      "note": "Uses PageHeader pattern (consistent). 2-tab structure similar to AnalyseStatistikkHub. Gamification patterns align with badge system referenced in other pages."
+    }
+  },
+  "codeAnalysis": {
+    "componentCount": {
+      "interactive": 2,
+      "display": 30
+    },
+    "stateHandling": {
+      "loading": "None",
+      "empty": "None",
+      "error": "None"
+    },
+    "dataSource": {
+      "isRealData": false,
+      "isMockData": true,
+      "note": "100% hardcoded mock data - no API calls"
+    },
+    "accessibility": {
+      "hasAriaLabels": false,
+      "semanticHTML": true,
+      "keyboardNav": "Good - uses button elements for tabs"
+    },
+    "responsiveDesign": {
+      "hasMobileLayout": true,
+      "breakpoints": ["md:grid-cols-2", "md:grid-cols-3", "md:grid-cols-4"],
+      "mobileFirst": true
+    }
+  },
+  "priorityScore": 75,
+  "implementationStatus": "placeholder",
+  "overallAssessment": "MODERATE - Good visual design for gamification, but needs API integration and actionable links to be production-ready"
+}

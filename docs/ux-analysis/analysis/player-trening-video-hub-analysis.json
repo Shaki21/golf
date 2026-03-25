@@ -1,0 +1,234 @@
+{
+  "pageId": "player-trening-video-hub",
+  "path": "/trening/video",
+  "component": "VideoHub",
+  "analyzedAt": "2026-01-13T02:36:00Z",
+  "jtbdFramework": {
+    "1_pageIdentification": {
+      "name": "VideoHub (4-Tab Video Interface)",
+      "role": "player",
+      "frequency": "weekly",
+      "context": "training",
+      "clarityScore": 8
+    },
+    "2_primaryJTBD": {
+      "decision": "Which video feature should I use now (watch, compare, or annotate)?",
+      "isObviousIn5Seconds": true,
+      "clarity": 8,
+      "competingAttention": [
+        "4 tab navigation",
+        "Quick actions on overview tab",
+        "Feature cards",
+        "Placeholder interfaces"
+      ],
+      "primaryCTA": {
+        "component": "Tab navigation + quick action buttons",
+        "label": "Navigate to video feature",
+        "isProminent": true
+      }
+    },
+    "3_decisionVsInfoRatio": {
+      "decisionElements": {
+        "count": 10,
+        "items": [
+          "4 tab buttons",
+          "Se videoer button",
+          "Sammenlign button",
+          "3 feature cards (clickable)",
+          "Upload buttons (3)",
+          "Video selection placeholders (4)",
+          "Annotation tool buttons (5)"
+        ]
+      },
+      "informationElements": {
+        "count": 5,
+        "items": [
+          "Quick stats (3 metrics)",
+          "Feature descriptions",
+          "Video grid placeholders",
+          "Tab content areas"
+        ]
+      },
+      "ratio": 0.67,
+      "assessment": "EXCELLENT - Strong decision focus for navigation hub",
+      "dominantDecision": "Yes - Clear navigation to video features"
+    },
+    "4_visualHierarchy": {
+      "eyeLandsOnFirst": "Quick stats section on overview tab",
+      "isCorrectFirstFocus": true,
+      "heroElement": "Active tab content with feature cards/tools",
+      "secondaryElements": [
+        "Tab navigation",
+        "Page header"
+      ],
+      "noiseElements": [],
+      "isFlatHierarchy": false,
+      "assessment": "GOOD - Clear hierarchy but overview tab may have too many competing elements"
+    },
+    "5_kpiQuality": {
+      "kpis": [
+        {
+          "metric": "Instruksjonsvideoer (45)",
+          "type": "lagging",
+          "isActionable": false,
+          "hasContext": false,
+          "quality": "vanity",
+          "note": "Count without context on what to watch"
+        },
+        {
+          "metric": "Mine videoer (12)",
+          "type": "lagging",
+          "isActionable": false,
+          "hasContext": false,
+          "quality": "vanity",
+          "note": "Count without action"
+        },
+        {
+          "metric": "Sammenligninger (8)",
+          "type": "lagging",
+          "isActionable": false,
+          "hasContext": false,
+          "quality": "vanity",
+          "note": "Count without context"
+        }
+      ],
+      "leadingPercentage": 0.0,
+      "actionablePercentage": 0.0,
+      "assessment": "WEAK - All metrics are vanity counts",
+      "note": "Stats should show recommended videos or recent uploads instead of counts"
+    },
+    "6_languageAndMentalModel": {
+      "style": "action_oriented",
+      "actionVerbs": [
+        "Se",
+        "Sammenlign",
+        "Annot",
+        "Last opp",
+        "Velg"
+      ],
+      "systemNouns": [
+        "Video",
+        "Sammenligning",
+        "Annotering",
+        "Bibliotek"
+      ],
+      "coachActionPercentage": 0.65,
+      "assessment": "GOOD - Action-oriented language for tools",
+      "phrasesToRewrite": []
+    },
+    "7_flowAndNavigationCost": {
+      "clicksFromDashboard": 2,
+      "navigationDepth": 2,
+      "clicksToWatchVideo": 3,
+      "clicksToStartComparison": 3,
+      "clicksToAnnotate": 2,
+      "assessment": "MODERATE - Requires 2-3 clicks to start using tools due to placeholder states",
+      "shouldBeInline": [
+        "Recent videos on overview tab",
+        "Quick-start comparison with latest upload"
+      ]
+    },
+    "8_stateCoverage": {
+      "hasEmptyState": false,
+      "hasLoadingState": false,
+      "hasErrorState": false,
+      "hasSuccessState": false,
+      "hasOverloadedState": false,
+      "hasAtRiskState": false,
+      "assessment": "WEAK - No state handling, all placeholders",
+      "gaps": [
+        "No loading state for video library fetch",
+        "No empty state for new users with no videos",
+        "No error handling for upload failures",
+        "No success confirmation after upload"
+      ]
+    },
+    "9_roleScalability": {
+      "hasRoleConditionals": false,
+      "beginnerFriendly": true,
+      "eliteFriendly": true,
+      "scalabilityIssues": [],
+      "recommendation": "Well-designed for all levels - clear tool separation"
+    },
+    "10_strategicVerdict": {
+      "diagnosis": "Video hub with good structure but incomplete implementation",
+      "currentBehavior": "4-tab navigation hub with placeholder interfaces",
+      "desiredBehavior": "Fully functional video tools (watch, compare, annotate)",
+      "topIssues": [
+        {
+          "rank": 1,
+          "issue": "No API integration - all data is hardcoded placeholders",
+          "severity": "high",
+          "impact": "Features are non-functional mockups"
+        },
+        {
+          "rank": 2,
+          "issue": "Vanity metrics in quick stats (counts without context)",
+          "severity": "medium",
+          "impact": "Stats don't help user decide what to do"
+        },
+        {
+          "rank": 3,
+          "issue": "Overview tab duplicates tab navigation with feature cards",
+          "severity": "low",
+          "impact": "Redundant navigation may confuse users"
+        }
+      ],
+      "structuralFix": "Complete API integration + replace count stats with recommended/recent videos + simplify overview tab to show recent activity"
+    },
+    "11_crossPageConsistency": {
+      "note": "Uses PageHeader + PageContainer pattern (consistent). 4-tab structure similar to other hubs but with more placeholders. Color scheme (green) consistent with trening area."
+    }
+  },
+  "codeAnalysis": {
+    "componentCount": {
+      "interactive": 10,
+      "display": 12
+    },
+    "stateHandling": {
+      "loading": "None",
+      "empty": "None",
+      "error": "None"
+    },
+    "dataSource": {
+      "isRealData": false,
+      "isMockData": true,
+      "note": "100% hardcoded mock data - no API calls, all placeholder UI"
+    },
+    "accessibility": {
+      "hasAriaLabels": false,
+      "semanticHTML": true,
+      "keyboardNav": "Good - uses Link and button elements"
+    },
+    "responsiveDesign": {
+      "hasMobileLayout": true,
+      "breakpoints": ["sm:grid-cols-2", "lg:grid-cols-3", "md:grid-cols-3"],
+      "mobileFirst": true
+    },
+    "tabs": [
+      {
+        "id": "oversikt",
+        "name": "Overview",
+        "purpose": "Landing page with quick stats and feature cards"
+      },
+      {
+        "id": "bibliotek",
+        "name": "Library",
+        "purpose": "Browse instructional videos"
+      },
+      {
+        "id": "sammenligning",
+        "name": "Comparison",
+        "purpose": "Side-by-side video comparison"
+      },
+      {
+        "id": "annotering",
+        "name": "Annotation",
+        "purpose": "Video annotation with drawing tools"
+      }
+    ]
+  },
+  "priorityScore": 70,
+  "implementationStatus": "placeholder",
+  "overallAssessment": "MODERATE - Good navigation structure but needs full implementation of video features and API integration"
+}

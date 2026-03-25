@@ -1,0 +1,201 @@
+{
+  "pageId": "player-plan-hub",
+  "path": "/plan",
+  "component": "PlanHub",
+  "analyzedAt": "2026-01-13T01:55:00Z",
+  "jtbdFramework": {
+    "1_pageIdentification": {
+      "name": "PlanHub (Decision-First Dashboard)",
+      "role": "player",
+      "frequency": "weekly",
+      "context": "planning",
+      "clarityScore": 10
+    },
+    "2_primaryJTBD": {
+      "decision": "What is the most important training decision/action I should take now to improve performance this week?",
+      "isObviousIn5Seconds": true,
+      "clarity": 10,
+      "competingAttention": [
+        "Hero decision card (primary)",
+        "Goals control panel (secondary)",
+        "Load & readiness (tertiary)"
+      ],
+      "primaryCTA": {
+        "component": "PlanHeroDecisionCard",
+        "label": "Next critical action",
+        "isProminent": true
+      }
+    },
+    "3_decisionVsInfoRatio": {
+      "decisionElements": {
+        "count": 4,
+        "items": [
+          "PlanHeroDecisionCard (primary CTA)",
+          "GoalsControlPanel actions",
+          "Quick Log button",
+          "Operations section actions"
+        ]
+      },
+      "informationElements": {
+        "count": 3,
+        "items": [
+          "LoadAndReadinessCard",
+          "Goals progress display",
+          "Attention items"
+        ]
+      },
+      "ratio": 0.57,
+      "assessment": "EXCELLENT - Strong decision focus (57% decision elements)",
+      "dominantDecision": "Yes - Single dominant CTA in hero card"
+    },
+    "4_visualHierarchy": {
+      "eyeLandsOnFirst": "PlanHeroDecisionCard (Layer 1 - Decision Layer)",
+      "isCorrectFirstFocus": true,
+      "heroElement": "PlanHeroDecisionCard",
+      "secondaryElements": [
+        "GoalsControlPanel",
+        "LoadAndReadinessCard"
+      ],
+      "noiseElements": [],
+      "isFlatHierarchy": false,
+      "assessment": "EXCELLENT - Intentional 3-layer architecture (30% decision, 40% control, 30% operations)"
+    },
+    "5_kpiQuality": {
+      "kpis": [
+        {
+          "metric": "Next critical action (Hero card)",
+          "type": "leading",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "high",
+          "note": "Decision-oriented, tells user what to do now"
+        },
+        {
+          "metric": "Goals progress",
+          "type": "leading",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "high",
+          "note": "At-risk goals surfaced first with recommended actions"
+        },
+        {
+          "metric": "Load stats",
+          "type": "leading",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "high",
+          "note": "Shows training load vs readiness with implications"
+        }
+      ],
+      "leadingPercentage": 1.0,
+      "actionablePercentage": 1.0,
+      "assessment": "EXCELLENT - All metrics are actionable leading indicators"
+    },
+    "6_languageAndMentalModel": {
+      "style": "coach_action",
+      "actionVerbs": [
+        "Decision",
+        "Action",
+        "Control",
+        "Improve performance"
+      ],
+      "systemNouns": [
+        "Dashboard",
+        "Operations"
+      ],
+      "coachActionPercentage": 0.85,
+      "assessment": "EXCELLENT - Strong coach-oriented action language",
+      "phrasesToRewrite": []
+    },
+    "7_flowAndNavigationCost": {
+      "clicksFromDashboard": 1,
+      "navigationDepth": 1,
+      "clicksToTakeAction": 1,
+      "clicksToViewGoals": 0,
+      "clicksToLogSession": 1,
+      "assessment": "EXCELLENT - Primary action visible inline, 1 click to execute",
+      "shouldBeInline": []
+    },
+    "8_stateCoverage": {
+      "hasEmptyState": false,
+      "hasLoadingState": true,
+      "hasErrorState": true,
+      "hasSuccessState": false,
+      "hasOverloadedState": false,
+      "hasAtRiskState": true,
+      "assessment": "EXCELLENT - Comprehensive state handling with custom skeletons and error recovery",
+      "gaps": [
+        "No explicit empty state for new users with no goals (may be handled by hero card)",
+        "No success state after completing action"
+      ]
+    },
+    "9_roleScalability": {
+      "hasRoleConditionals": false,
+      "beginnerFriendly": true,
+      "eliteFriendly": true,
+      "scalabilityIssues": [],
+      "recommendation": "Well-designed for scale with intentional progressive disclosure (3-layer model)"
+    },
+    "10_strategicVerdict": {
+      "diagnosis": "Best-in-class decision dashboard with McKinsey-grade architecture",
+      "currentBehavior": "Decision cockpit",
+      "desiredBehavior": "Decision cockpit",
+      "topIssues": [
+        {
+          "rank": 1,
+          "issue": "Missing success state after user completes action",
+          "severity": "low",
+          "impact": "No positive reinforcement loop"
+        },
+        {
+          "rank": 2,
+          "issue": "Unclear if empty state exists for new users",
+          "severity": "low",
+          "impact": "First-time user experience unknown"
+        },
+        {
+          "rank": 3,
+          "issue": "No visible documentation of decision logic",
+          "severity": "low",
+          "impact": "Users may not understand why this action was prioritized"
+        }
+      ],
+      "structuralFix": "Add celebration/success modal after completing hero action + explainer tooltip for decision logic"
+    },
+    "11_crossPageConsistency": {
+      "note": "Uses PageHeader + PageContainer pattern (consistent). Unique 3-layer architecture clearly documented in code comments. This is a model page for decision-first design."
+    }
+  },
+  "codeAnalysis": {
+    "componentCount": {
+      "interactive": 4,
+      "display": 6
+    },
+    "stateHandling": {
+      "loading": "Custom HeroSkeleton + CardSkeleton components",
+      "empty": "Unknown - needs component inspection",
+      "error": "Comprehensive ErrorState component with retry + non-blocking error banner"
+    },
+    "architecture": {
+      "pattern": "3-layer model",
+      "layer1": "Decision Layer (30%)",
+      "layer2": "Control & Progress (40%)",
+      "layer3": "Operations & Admin (30%)",
+      "note": "Intentional information architecture documented in code comments"
+    },
+    "accessibility": {
+      "hasAriaLabels": true,
+      "semanticHTML": true,
+      "keyboardNav": "Unknown - needs testing",
+      "note": "Uses aria-label on sections"
+    },
+    "responsiveDesign": {
+      "hasMobileLayout": true,
+      "breakpoints": ["lg:grid-cols-2"],
+      "mobileFirst": true
+    }
+  },
+  "priorityScore": 85,
+  "implementationStatus": "implemented",
+  "overallAssessment": "EXCELLENT - Gold standard decision-first dashboard with clear architecture and comprehensive state handling"
+}

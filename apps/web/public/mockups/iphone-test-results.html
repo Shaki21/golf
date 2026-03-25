@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TIER Golf - Test Results (iPhone)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Sans:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ak-ink: #02060D;
+            --ak-primary: #10456A;
+            --ak-primary-light: #2C5F7F;
+            --ak-snow: #EDF0F2;
+            --ak-surface: #EBE5DA;
+            --ak-gold: #C9A227;
+            --ak-white: #FFFFFF;
+            --gray-50: #F9FAFB;
+            --gray-100: #F2F4F7;
+            --gray-300: #D5D7DA;
+            --gray-500: #8E8E93;
+            --gray-600: #535862;
+            --ak-success: #4A7C59;
+            --ak-warning: #D4A84B;
+            --ak-error: #C45B4E;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mockup-container {
+            display: flex;
+            gap: 60px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .iphone-frame {
+            width: 390px;
+            height: 844px;
+            background: #1c1c1e;
+            border-radius: 55px;
+            padding: 12px;
+            box-shadow:
+                0 0 0 2px #2c2c2e,
+                0 0 0 12px #1c1c1e,
+                0 30px 60px rgba(0,0,0,0.5),
+                inset 0 0 6px rgba(255,255,255,0.1);
+            position: relative;
+        }
+
+        .side-button {
+            position: absolute;
+            background: #2c2c2e;
+            border-radius: 2px;
+        }
+
+        .volume-up { left: -3px; top: 150px; width: 3px; height: 60px; }
+        .volume-down { left: -3px; top: 230px; width: 3px; height: 60px; }
+        .power-button { right: -3px; top: 200px; width: 3px; height: 90px; }
+
+        .iphone-screen {
+            width: 100%;
+            height: 100%;
+            background: var(--gray-50);
+            border-radius: 47px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .dynamic-island {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 126px;
+            height: 37px;
+            background: #000000;
+            border-radius: 19px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .dynamic-island.expanded {
+            width: 350px;
+            height: 110px;
+            border-radius: 45px;
+        }
+
+        .island-content {
+            display: none;
+            width: 100%;
+            padding: 16px 20px;
+            color: white;
+        }
+
+        .island-content.active {
+            display: block;
+        }
+
+        .island-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .island-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--ak-success) 0%, #3D6A4B 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .island-title {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .island-subtitle {
+            font-size: 13px;
+            opacity: 0.7;
+            margin-top: 2px;
+        }
+
+        .island-progress {
+            background: rgba(255,255,255,0.15);
+            height: 6px;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .island-progress-fill {
+            background: var(--ak-success);
+            height: 100%;
+            width: 85%;
+            transition: width 1s ease;
+        }
+
+        .status-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 54px;
+            padding: 0 33px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--ak-ink);
+            z-index: 999;
+            padding-top: 8px;
+        }
+
+        .status-right {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .app-content {
+            position: absolute;
+            top: 54px;
+            left: 0;
+            right: 0;
+            bottom: 88px;
+            overflow-y: auto;
+            background: var(--gray-50);
+        }
+
+        .app-header {
+            background: white;
+            padding: 20px;
+            border-bottom: 1px solid var(--gray-100);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .back-btn {
+            font-size: 20px;
+            color: var(--ak-primary);
+            cursor: pointer;
+        }
+
+        .app-title {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--ak-primary);
+            flex: 1;
+        }
+
+        .filter-btn {
+            font-size: 20px;
+            color: var(--ak-primary);
+            cursor: pointer;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        .tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab {
+            padding: 8px 16px;
+            background: var(--gray-100);
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--gray-600);
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tab.active {
+            background: var(--ak-primary);
+            color: white;
+        }
+
+        .test-card {
+            background: white;
+            margin: 16px;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border: 1px solid var(--gray-100);
+        }
+
+        .test-card.passed {
+            border-left: 4px solid var(--ak-success);
+        }
+
+        .test-card.failed {
+            border-left: 4px solid var(--ak-error);
+        }
+
+        .test-card.warning {
+            border-left: 4px solid var(--ak-warning);
+        }
+
+        .test-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 12px;
+        }
+
+        .test-number {
+            font-size: 13px;
+            color: var(--gray-500);
+            font-weight: 500;
+        }
+
+        .test-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--ak-ink);
+            margin: 4px 0 8px;
+        }
+
+        .test-status {
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .test-status.passed {
+            background: rgba(74, 124, 89, 0.1);
+            color: var(--ak-success);
+        }
+
+        .test-status.failed {
+            background: rgba(196, 91, 78, 0.1);
+            color: var(--ak-error);
+        }
+
+        .test-status.warning {
+            background: rgba(212, 168, 75, 0.1);
+            color: var(--ak-warning);
+        }
+
+        .test-values {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+
+        .test-value {
+            flex: 1;
+        }
+
+        .test-value-label {
+            font-size: 11px;
+            color: var(--gray-600);
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .test-value-number {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--ak-ink);
+        }
+
+        .test-value-unit {
+            font-size: 14px;
+            color: var(--gray-600);
+            margin-left: 2px;
+        }
+
+        .progress-bar {
+            background: var(--gray-100);
+            height: 8px;
+            border-radius: 999px;
+            overflow: hidden;
+            margin: 12px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 999px;
+            transition: width 1s ease;
+        }
+
+        .progress-fill.passed {
+            background: linear-gradient(90deg, var(--ak-success) 0%, #3D6A4B 100%);
+        }
+
+        .progress-fill.failed {
+            background: linear-gradient(90deg, var(--ak-error) 0%, #A83D35 100%);
+        }
+
+        .progress-fill.warning {
+            background: linear-gradient(90deg, var(--ak-warning) 0%, #B08920 100%);
+        }
+
+        .test-meta {
+            display: flex;
+            gap: 12px;
+            font-size: 13px;
+            color: var(--gray-600);
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--gray-100);
+        }
+
+        .breaking-point-banner {
+            background: linear-gradient(135deg, rgba(196, 91, 78, 0.1) 0%, rgba(196, 91, 78, 0.05) 100%);
+            margin: 16px;
+            padding: 16px;
+            border-radius: 16px;
+            border: 1px solid rgba(196, 91, 78, 0.2);
+        }
+
+        .banner-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--ak-error);
+            margin-bottom: 8px;
+        }
+
+        .banner-text {
+            font-size: 13px;
+            color: var(--gray-600);
+            line-height: 1.5;
+        }
+
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 88px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 0.5px solid var(--gray-300);
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-around;
+            padding: 8px 20px 34px;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+        }
+
+        .nav-item.active .nav-icon {
+            color: var(--ak-primary);
+        }
+
+        .nav-item.active .nav-label {
+            color: var(--ak-primary);
+        }
+
+        .nav-icon {
+            font-size: 24px;
+            color: var(--gray-500);
+        }
+
+        .nav-label {
+            font-size: 10px;
+            color: var(--gray-500);
+            font-weight: 500;
+        }
+
+        .info-panel {
+            background: white;
+            border-radius: 20px;
+            padding: 32px;
+            max-width: 400px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .info-title {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--ak-primary);
+            margin-bottom: 16px;
+        }
+
+        .info-description {
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--gray-600);
+            margin-bottom: 24px;
+        }
+
+        .color-sample {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .color-box {
+            flex: 1;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .color-success { background: var(--ak-success); }
+        .color-warning { background: var(--ak-warning); }
+        .color-error { background: var(--ak-error); }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .pulse {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @media (max-width: 768px) {
+            .mockup-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="mockup-container">
+        <div class="iphone-frame">
+            <div class="side-button volume-up"></div>
+            <div class="side-button volume-down"></div>
+            <div class="side-button power-button"></div>
+
+            <div class="iphone-screen">
+                <div class="dynamic-island" id="dynamicIsland">
+                    <div class="island-content" id="islandContent">
+                        <div class="island-header">
+                            <div class="island-icon">✅</div>
+                            <div>
+                                <div class="island-title">Test Fullført!</div>
+                                <div class="island-subtitle">Driver Distance • 85/100</div>
+                            </div>
+                        </div>
+                        <div class="island-progress">
+                            <div class="island-progress-fill"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="status-bar">
+                    <div class="status-left">9:41</div>
+                    <div class="status-right">
+                        <span>📶</span>
+                        <span>📡</span>
+                        <span>🔋</span>
+                    </div>
+                </div>
+
+                <div class="app-content">
+                    <div class="app-header">
+                        <div class="header-top">
+                            <div class="back-btn">←</div>
+                            <div class="app-title">Testresultater</div>
+                            <div class="filter-btn">⚙️</div>
+                        </div>
+                        <div class="tabs">
+                            <div class="tab active">Alle (20)</div>
+                            <div class="tab">Bestått (15)</div>
+                            <div class="tab">Breaking Points (2)</div>
+                            <div class="tab">Kommende</div>
+                        </div>
+                    </div>
+
+                    <div class="breaking-point-banner">
+                        <div class="banner-title">
+                            <span>⚠️</span>
+                            <span>2 Breaking Points</span>
+                        </div>
+                        <div class="banner-text">
+                            Du har 2 tester som må forbedres for å nå Kategori C. Fokusområder er merket nedenfor.
+                        </div>
+                    </div>
+
+                    <div class="test-card passed">
+                        <div class="test-header">
+                            <div>
+                                <div class="test-number">TEST 1</div>
+                                <div class="test-name">Driver Distance</div>
+                            </div>
+                            <div class="test-status passed">✓ Bestått</div>
+                        </div>
+                        <div class="test-values">
+                            <div class="test-value">
+                                <div class="test-value-label">Resultat</div>
+                                <div class="test-value-number">245<span class="test-value-unit">m</span></div>
+                            </div>
+                            <div class="test-value">
+                                <div class="test-value-label">Krav</div>
+                                <div class="test-value-number">240<span class="test-value-unit">m</span></div>
+                            </div>
+                            <div class="test-value">
+                                <div class="test-value-label">Score</div>
+                                <div class="test-value-number">85<span class="test-value-unit">/100</span></div>
+                            </div>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill passed" style="width: 85%;"></div>
+                        </div>
+                        <div class="test-meta">
+                            <span>📅 23. des 2025</span>
+                            <span>📍 Range</span>
+                            <span>+5m over krav</span>
+                        </div>
+                    </div>
+
+                    <div class="test-card failed">
+                        <div class="test-header">
+                            <div>
+                                <div class="test-number">TEST 15 • BREAKING POINT</div>
+                                <div class="test-name">Wedge PEI</div>
+                            </div>
+                            <div class="test-status failed">✗ Ikke bestått</div>
+                        </div>
+                        <div class="test-values">
+                            <div class="test-value">
+                                <div class="test-value-label">Resultat</div>
+                                <div class="test-value-number">0.085</div>
+                            </div>
+                            <div class="test-value">
+                                <div class="test-value-label">Krav</div>
+                                <div class="test-value-number">0.070</div>
+                            </div>
+                            <div class="test-value">
+                                <div class="test-value-label">Score</div>
+                                <div class="test-value-number">70<span class="test-value-unit">/100</span></div>
+                            </div>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill failed" style="width: 70%;"></div>
+                        </div>
+                        <div class="test-meta">
+                            <span>📅 22. des 2025</span>
+                            <span>📍 Range</span>
+                            <span>-21% under krav</span>
+                        </div>
+                    </div>
+
+                    <div class="test-card warning">
+                        <div class="test-header">
+                            <div>
+                                <div class="test-number">TEST 12 • BREAKING POINT</div>
+                                <div class="test-name">Bunker - Up & Down</div>
+                            </div>
+                            <div class="test-status warning">⚠ Mangler</div>
+                        </div>
+                        <div class="test-values">
+                            <div class="test-value">
+                                <div class="test-value-label">Resultat</div>
+                                <div class="test-value-number">55<span class="test-value-unit">%</span></div>
+                            </div>
+                            <div class="test-value">
+                                <div class="test-value-label">Krav</div>
+                                <div class="test-value-number">60<span class="test-value-unit">%</span></div>
+                            </div>
+                            <div class="test-value">
+                                <div class="test-value-label">Score</div>
+                                <div class="test-value-number">92<span class="test-value-unit">/100</span></div>
+                            </div>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill warning" style="width: 92%;"></div>
+                        </div>
+                        <div class="test-meta">
+                            <span>📅 20. des 2025</span>
+                            <span>📍 Bane</span>
+                            <span>-8% under krav</span>
+                        </div>
+                    </div>
+
+                    <div style="height: 20px;"></div>
+                </div>
+
+                <div class="bottom-nav">
+                    <div class="nav-item">
+                        <div class="nav-icon">🏠</div>
+                        <div class="nav-label">Hjem</div>
+                    </div>
+                    <div class="nav-item">
+                        <div class="nav-icon">📅</div>
+                        <div class="nav-label">Plan</div>
+                    </div>
+                    <div class="nav-item">
+                        <div class="nav-icon">📚</div>
+                        <div class="nav-label">Øvelser</div>
+                    </div>
+                    <div class="nav-item active">
+                        <div class="nav-icon">📊</div>
+                        <div class="nav-label">Stats</div>
+                    </div>
+                    <div class="nav-item">
+                        <div class="nav-icon">👤</div>
+                        <div class="nav-label">Profil</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-panel">
+            <div class="info-title">Test Results View</div>
+            <div class="info-description">
+                Oversikt over alle testresultater med visual status indicators og breaking points.
+            </div>
+
+            <div class="color-sample">
+                <div class="color-box color-success">✓ Bestått</div>
+                <div class="color-box color-warning">⚠ Mangler</div>
+                <div class="color-box color-error">✗ Ikke bestått</div>
+            </div>
+
+            <div class="info-description">
+                <strong>Dynamic Island:</strong> Viser test completion status når en test er fullført.
+            </div>
+
+            <div class="info-description">
+                <strong>Features:</strong>
+                <br>• Filtrerbare tabs (Alle, Bestått, Breaking Points)
+                <br>• Breaking point banner med varsel
+                <br>• Color-coded test cards
+                <br>• Progress bars med gradienter
+                <br>• Detaljert metadata per test
+            </div>
+
+            <div class="interaction-note pulse" style="background: rgba(16, 69, 106, 0.05); padding: 16px; border-radius: 12px; font-size: 13px; color: var(--gray-600); text-align: center; margin-top: 20px;">
+                👆 Klikk Dynamic Island for interaksjon
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const island = document.getElementById('dynamicIsland');
+        const islandContent = document.getElementById('islandContent');
+        let isExpanded = false;
+
+        island.addEventListener('click', () => {
+            isExpanded = !isExpanded;
+            if (isExpanded) {
+                island.classList.add('expanded');
+                islandContent.classList.add('active');
+            } else {
+                island.classList.remove('expanded');
+                islandContent.classList.remove('active');
+            }
+        });
+
+        setTimeout(() => island.click(), 2000);
+
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+            });
+        });
+
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', () => {
+                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

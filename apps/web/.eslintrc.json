@@ -1,0 +1,49 @@
+{
+  "extends": ["react-app"],
+  "rules": {
+    "@typescript-eslint/no-unused-vars": "warn",
+    "@typescript-eslint/no-explicit-any": "warn",
+    "react/forbid-elements": ["error", {
+      "forbid": [
+        {
+          "element": "h1",
+          "message": "Bruk <PageTitle> fra 'components/typography' istedenfor <h1>"
+        },
+        {
+          "element": "h2",
+          "message": "Bruk <SectionTitle> fra 'components/typography' istedenfor <h2>"
+        },
+        {
+          "element": "h3",
+          "message": "Bruk <SubSectionTitle> fra 'components/typography' istedenfor <h3>"
+        },
+        {
+          "element": "h4",
+          "message": "Bruk <CardTitle> fra 'components/typography' istedenfor <h4>"
+        },
+        {
+          "element": "h5",
+          "message": "Bruk typografi-komponenter fra 'components/typography' istedenfor <h5>"
+        },
+        {
+          "element": "h6",
+          "message": "Bruk typografi-komponenter fra 'components/typography' istedenfor <h6>"
+        }
+      ]
+    }]
+  },
+  "overrides": [
+    {
+      "files": [
+        "src/components/typography/Headings.tsx",
+        "src/ui/components/typography.tsx"
+      ],
+      "rules": {
+        "react/forbid-elements": "off"
+      }
+    }
+  ],
+  "env": {
+    "browser": true
+  }
+}

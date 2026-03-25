@@ -1,0 +1,214 @@
+{
+  "pageId": "coach-spillere-hub",
+  "path": "/coach/spillere",
+  "component": "CoachSpillereHub",
+  "analyzedAt": "2026-01-13T01:59:00Z",
+  "jtbdFramework": {
+    "1_pageIdentification": {
+      "name": "CoachSpillereHub (Coach Players Hub)",
+      "role": "coach",
+      "frequency": "daily",
+      "context": "review",
+      "clarityScore": 8
+    },
+    "2_primaryJTBD": {
+      "decision": "What should I do with my players today?",
+      "isObviousIn5Seconds": true,
+      "clarity": 8,
+      "competingAttention": [
+        "Quick stats (4 metrics)",
+        "Featured action button",
+        "Navigation cards (likely below)"
+      ],
+      "primaryCTA": {
+        "component": "Featured action",
+        "label": "View All Players",
+        "isProminent": true
+      }
+    },
+    "3_decisionVsInfoRatio": {
+      "decisionElements": {
+        "count": 2,
+        "items": [
+          "Featured action: View All Players",
+          "Navigation cards (assumed from CoachHubPage)"
+        ]
+      },
+      "informationElements": {
+        "count": 6,
+        "items": [
+          "Page title + subtitle",
+          "Help text",
+          "Quick stats (4 metrics)"
+        ]
+      },
+      "ratio": 0.25,
+      "assessment": "WEAK - Very info-heavy for action hub (75% information)",
+      "dominantDecision": "Yes - 'View All Players' is clear primary action"
+    },
+    "4_visualHierarchy": {
+      "eyeLandsOnFirst": "CoachHubPage header with title",
+      "isCorrectFirstFocus": true,
+      "heroElement": "Featured action button",
+      "secondaryElements": [
+        "Quick stats",
+        "Navigation cards"
+      ],
+      "noiseElements": [],
+      "isFlatHierarchy": true,
+      "assessment": "MODERATE - Standard hub layout, no unique prioritization"
+    },
+    "5_kpiQuality": {
+      "kpis": [
+        {
+          "metric": "Total Players",
+          "type": "lagging",
+          "isActionable": false,
+          "hasContext": false,
+          "quality": "vanity",
+          "note": "Count-based, no context"
+        },
+        {
+          "metric": "Active This Month",
+          "type": "lagging",
+          "isActionable": false,
+          "hasContext": false,
+          "quality": "low",
+          "note": "Could be actionable if showed at-risk players, but just a count"
+        },
+        {
+          "metric": "Training Plans",
+          "type": "lagging",
+          "isActionable": false,
+          "hasContext": false,
+          "quality": "vanity",
+          "note": "Count-based, no indication of overdue/pending"
+        },
+        {
+          "metric": "Evaluations",
+          "type": "lagging",
+          "isActionable": false,
+          "hasContext": false,
+          "quality": "vanity",
+          "note": "Count-based, no context"
+        }
+      ],
+      "leadingPercentage": 0.0,
+      "actionablePercentage": 0.0,
+      "assessment": "WEAK - All vanity metrics, no actionable insights"
+    },
+    "6_languageAndMentalModel": {
+      "style": "system_neutral",
+      "actionVerbs": [
+        "View",
+        "Manage"
+      ],
+      "systemNouns": [
+        "Players",
+        "Athletes",
+        "Training plans",
+        "Evaluations",
+        "Overview"
+      ],
+      "coachActionPercentage": 0.3,
+      "assessment": "MODERATE - Mix of action and system language",
+      "phrasesToRewrite": [
+        "'Manage athletes, training plans, and evaluations' → 'Your players workspace'",
+        "'Overview of all your players' → simplify help text"
+      ]
+    },
+    "7_flowAndNavigationCost": {
+      "clicksFromDashboard": 1,
+      "navigationDepth": 1,
+      "clicksToViewAllPlayers": 1,
+      "clicksToSpecificPlayer": 2,
+      "assessment": "GOOD - 1-2 clicks to reach content",
+      "shouldBeInline": [
+        "Consider showing preview of at-risk players inline instead of generic stats"
+      ]
+    },
+    "8_stateCoverage": {
+      "hasEmptyState": false,
+      "hasLoadingState": false,
+      "hasErrorState": false,
+      "hasSuccessState": false,
+      "hasOverloadedState": false,
+      "hasAtRiskState": false,
+      "assessment": "CRITICAL - No state handling visible",
+      "gaps": [
+        "No empty state for new coaches with no players",
+        "No loading state",
+        "No error handling",
+        "Hardcoded mock stats"
+      ]
+    },
+    "9_roleScalability": {
+      "hasRoleConditionals": false,
+      "beginnerFriendly": true,
+      "eliteFriendly": true,
+      "scalabilityIssues": [
+        "Hardcoded mock stats - not fetching real data",
+        "Same view for coach with 5 players vs 50 players"
+      ],
+      "recommendation": "Replace mock stats with real data + add at-risk player preview"
+    },
+    "10_strategicVerdict": {
+      "diagnosis": "Minimal hub page with hardcoded data and weak KPIs",
+      "currentBehavior": "Static landing page",
+      "desiredBehavior": "Player management workspace",
+      "topIssues": [
+        {
+          "rank": 1,
+          "issue": "Hardcoded mock stats instead of real data",
+          "severity": "high",
+          "impact": "Not production-ready, shows fake data"
+        },
+        {
+          "rank": 2,
+          "issue": "All KPIs are vanity metrics with no actionable insights",
+          "severity": "high",
+          "impact": "Coach can't make decisions from stats"
+        },
+        {
+          "rank": 3,
+          "issue": "No state handling - missing loading/error/empty states",
+          "severity": "high",
+          "impact": "Fragile user experience"
+        }
+      ],
+      "structuralFix": "Replace QuickStats with actionable KPIs (at-risk players, overdue evaluations) + connect to real data API + add state handling"
+    },
+    "11_crossPageConsistency": {
+      "note": "Uses CoachHubPage layout (consistent with other coach hubs). Simple implementation similar to TreningHub but for coach role."
+    }
+  },
+  "codeAnalysis": {
+    "componentCount": {
+      "interactive": 1,
+      "display": 5
+    },
+    "stateHandling": {
+      "loading": "None",
+      "empty": "None",
+      "error": "None"
+    },
+    "dataSource": {
+      "isRealData": false,
+      "isMockData": true,
+      "note": "Hardcoded stats object in component - NOT fetching from API"
+    },
+    "accessibility": {
+      "hasAriaLabels": false,
+      "semanticHTML": true,
+      "keyboardNav": "Unknown - needs testing"
+    },
+    "responsiveDesign": {
+      "hasMobileLayout": true,
+      "breakpoints": ["inherited from CoachHubPage"],
+      "mobileFirst": true
+    }
+  },
+  "priorityScore": 90,
+  "implementationStatus": "placeholder",
+  "overallAssessment": "WEAK - Minimal placeholder with hardcoded data, needs real API integration and actionable KPIs"
+}

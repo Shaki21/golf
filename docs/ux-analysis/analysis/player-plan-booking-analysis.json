@@ -1,0 +1,221 @@
+{
+  "pageId": "player-plan-booking",
+  "path": "/plan/booking",
+  "component": "PlayerBookingPage",
+  "analyzedAt": "2026-01-13T02:34:00Z",
+  "jtbdFramework": {
+    "1_pageIdentification": {
+      "name": "PlayerBookingPage (Session Booking Interface)",
+      "role": "player",
+      "frequency": "weekly",
+      "context": "scheduling",
+      "clarityScore": 9
+    },
+    "2_primaryJTBD": {
+      "decision": "When should I book my next coaching session?",
+      "isObviousIn5Seconds": true,
+      "clarity": 9,
+      "competingAttention": [
+        "2 tabs (Availability vs My Bookings)",
+        "Coach selector",
+        "Availability calendar",
+        "Booking list"
+      ],
+      "primaryCTA": {
+        "component": "Available slot click → Booking modal",
+        "label": "Request booking for time slot",
+        "isProminent": true
+      }
+    },
+    "3_decisionVsInfoRatio": {
+      "decisionElements": {
+        "count": 8,
+        "items": [
+          "2 tab buttons",
+          "Coach selector dropdown",
+          "Available slot clicks",
+          "Date range navigation",
+          "Submit booking button",
+          "Cancel booking button (per booking)",
+          "Retry buttons (error states)"
+        ]
+      },
+      "informationElements": {
+        "count": 5,
+        "items": [
+          "Availability calendar",
+          "Bookings list",
+          "Coach details",
+          "Booking status badges",
+          "Pending count indicator"
+        ]
+      },
+      "ratio": 0.62,
+      "assessment": "EXCELLENT - Strong decision focus for booking tool",
+      "dominantDecision": "Yes - Book session is clear primary action"
+    },
+    "4_visualHierarchy": {
+      "eyeLandsOnFirst": "Tabs (Availability vs My Bookings)",
+      "isCorrectFirstFocus": true,
+      "heroElement": "Active tab content (calendar or bookings list)",
+      "secondaryElements": [
+        "Coach selector",
+        "Page header"
+      ],
+      "noiseElements": [],
+      "isFlatHierarchy": false,
+      "assessment": "EXCELLENT - Clear dual-mode interface with tab-based hierarchy"
+    },
+    "5_kpiQuality": {
+      "kpis": [
+        {
+          "metric": "Pending bookings count (badge)",
+          "type": "leading",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "high",
+          "note": "Shows number of requests awaiting coach approval"
+        },
+        {
+          "metric": "Available slots (visual calendar)",
+          "type": "leading",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "high",
+          "note": "Shows when user can book"
+        },
+        {
+          "metric": "Booking status (pending/approved/cancelled)",
+          "type": "leading",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "high",
+          "note": "Shows state of each booking"
+        }
+      ],
+      "leadingPercentage": 1.0,
+      "actionablePercentage": 1.0,
+      "assessment": "EXCELLENT - All metrics drive immediate decisions"
+    },
+    "6_languageAndMentalModel": {
+      "style": "action_oriented",
+      "actionVerbs": [
+        "Bestill",
+        "Velg",
+        "Avbestill",
+        "Send",
+        "Book"
+      ],
+      "systemNouns": [
+        "Time",
+        "Booking",
+        "Trener",
+        "Kapasitet"
+      ],
+      "coachActionPercentage": 0.7,
+      "assessment": "EXCELLENT - Player-centric action language",
+      "phrasesToRewrite": []
+    },
+    "7_flowAndNavigationCost": {
+      "clicksFromDashboard": 2,
+      "navigationDepth": 2,
+      "clicksToRequestBooking": 2,
+      "clicksToViewMyBookings": 1,
+      "clicksToCancelBooking": 1,
+      "assessment": "EXCELLENT - Minimal clicks to all actions",
+      "shouldBeInline": []
+    },
+    "8_stateCoverage": {
+      "hasEmptyState": true,
+      "hasLoadingState": true,
+      "hasErrorState": true,
+      "hasSuccessState": false,
+      "hasOverloadedState": false,
+      "hasAtRiskState": false,
+      "assessment": "EXCELLENT - Comprehensive state handling with retry",
+      "gaps": [
+        "No success toast after booking request sent",
+        "No success state after cancellation"
+      ]
+    },
+    "9_roleScalability": {
+      "hasRoleConditionals": false,
+      "beginnerFriendly": true,
+      "eliteFriendly": true,
+      "scalabilityIssues": [],
+      "recommendation": "Well-designed for all players - straightforward booking UX"
+    },
+    "10_strategicVerdict": {
+      "diagnosis": "Professional booking system with strong player UX",
+      "currentBehavior": "Dual-mode: view availability + manage bookings",
+      "desiredBehavior": "Dual-mode: view availability + manage bookings",
+      "topIssues": [
+        {
+          "rank": 1,
+          "issue": "No success feedback after booking request or cancellation",
+          "severity": "medium",
+          "impact": "User uncertain if action completed successfully"
+        },
+        {
+          "rank": 2,
+          "issue": "Modal confirmation for cancel uses browser confirm() instead of custom modal",
+          "severity": "low",
+          "impact": "Inconsistent UX with rest of app"
+        },
+        {
+          "rank": 3,
+          "issue": "No filtering/sorting of bookings list",
+          "severity": "low",
+          "impact": "Cannot filter by upcoming vs past bookings"
+        }
+      ],
+      "structuralFix": "Add success toasts + replace browser confirm with custom modal + add booking list filters"
+    },
+    "11_crossPageConsistency": {
+      "note": "Uses PageHeader pattern (consistent). Similar to CoachBookingCalendar but from player perspective. Integrates with useBookings hooks for real-time data."
+    }
+  },
+  "codeAnalysis": {
+    "componentCount": {
+      "interactive": 8,
+      "display": 7
+    },
+    "stateHandling": {
+      "loading": "LoadingSpinner for coaches, availability, bookings",
+      "empty": "Empty state for no coaches found",
+      "error": "ErrorState component with retry button"
+    },
+    "dataSource": {
+      "isRealData": true,
+      "isMockData": false,
+      "note": "Uses hooks: useCoachAvailability, useMyBookings, usePlayerCoaches, useCreateBooking, useCancelBooking"
+    },
+    "accessibility": {
+      "hasAriaLabels": false,
+      "semanticHTML": true,
+      "keyboardNav": "Good - uses button and select elements"
+    },
+    "responsiveDesign": {
+      "hasMobileLayout": true,
+      "breakpoints": ["standard responsive layout"],
+      "mobileFirst": true
+    },
+    "integrations": {
+      "hooks": [
+        "useCoachAvailability",
+        "useMyBookings",
+        "usePlayerCoaches",
+        "useCreateBooking",
+        "useCancelBooking"
+      ],
+      "components": [
+        "AvailabilityCalendar",
+        "BookingRequestModal",
+        "BookingsList"
+      ]
+    }
+  },
+  "priorityScore": 85,
+  "implementationStatus": "implemented",
+  "overallAssessment": "EXCELLENT - Professional booking interface with real API integration, needs success feedback"
+}

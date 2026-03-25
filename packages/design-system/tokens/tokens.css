@@ -1,0 +1,321 @@
+/* AK Golf Academy - Design Tokens v3.0 */
+/* Based on: AK Golf Premium Light (Forest Green) */
+/* Source: Design/AK_GOLF_PREMIUM_LIGHT_SPEC.html */
+/* Font: Inter (Open Source, Cross-Platform) */
+/* Import Inter from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  /* ==================== COLORS ==================== */
+
+  /* Brand Colors - Deep Forest Green (Premium Golf Brand) */
+  --ak-ink: #111827;
+  --ak-primary: #1B4D3E;
+  --ak-primary-light: #2A6B55;
+  --ak-primary-dark: #133629;
+  --ak-snow: #FAFBFC;
+  --ak-surface: #F5F7F9;
+  --ak-gold: #996F09;
+  --ak-gold-light: #DAA520;
+
+  /* Legacy aliases (backwards compatible) */
+  --ak-forest: #1B4D3E;
+  --ak-forest-light: #2A6B55;
+  --ak-foam: #FAFBFC;
+  --ak-ivory: #F5F7F9;
+
+  /* Semantic Colors (Per Premium Light Spec) */
+  --ak-success: #05875F;
+  --ak-success-light: #10B981;
+  --ak-warning: #B16105;
+  --ak-warning-light: #F59E0B;
+  --ak-error: #DC2626;
+  --ak-error-light: #EF4444;
+  --ak-info: #0284C7;
+  --ak-info-light: #0EA5E9;
+
+  /* Neutrals */
+  --ak-charcoal: #111827;
+  --ak-steel: #6B7280;
+  --ak-mist: #E5E7EB;
+  --ak-cloud: #F5F7F9;
+
+  /* Gray Scale (Per Premium Light Spec) */
+  --gray-50: #FAFBFC;
+  --gray-100: #F5F7F9;
+  --gray-200: #EEF1F4;
+  --gray-300: #E5E7EB;
+  --gray-400: #D1D5DB;
+  --gray-500: #9CA3AF;
+  --gray-600: #6B7280;
+  --gray-700: #374151;
+  --gray-900: #111827;
+
+  /* ==================== TYPOGRAPHY ==================== */
+
+  /* Font Family */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'system-ui', sans-serif;
+
+  /* Display Styles */
+  --text-large-title: 700 34px/41px var(--font-family);
+  --text-large-title-spacing: -0.4px;
+
+  --text-title-1: 700 28px/34px var(--font-family);
+  --text-title-1-spacing: 0.36px;
+
+  --text-title-2: 700 22px/28px var(--font-family);
+  --text-title-2-spacing: -0.26px;
+
+  --text-title-3: 600 20px/25px var(--font-family);
+  --text-title-3-spacing: -0.45px;
+
+  /* Text Styles */
+  --text-headline: 600 17px/22px var(--font-family);
+  --text-headline-spacing: -0.43px;
+
+  --text-body: 400 17px/22px var(--font-family);
+  --text-body-spacing: -0.43px;
+
+  --text-callout: 400 16px/21px var(--font-family);
+  --text-callout-spacing: -0.31px;
+
+  --text-subhead: 400 15px/20px var(--font-family);
+  --text-subhead-spacing: -0.23px;
+
+  --text-footnote: 400 13px/18px var(--font-family);
+  --text-footnote-spacing: -0.08px;
+
+  --text-caption-1: 400 12px/16px var(--font-family);
+  --text-caption-1-spacing: 0;
+
+  --text-caption-2: 400 11px/13px var(--font-family);
+  --text-caption-2-spacing: 0.06px;
+
+  /* Special Typography */
+  --text-stat-number: 700 48px/1 var(--font-family);
+  --text-stat-number-spacing: -0.5px;
+
+  --text-stat-label: 500 11px/13px var(--font-family);
+  --text-stat-label-spacing: 0.5px;
+
+  /* ==================== SPACING ==================== */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+
+  /* ==================== BORDER RADIUS ==================== */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+
+  /* ==================== SHADOWS ==================== */
+  --shadow-card: 0 2px 4px rgba(0, 0, 0, 0.06);
+  --shadow-elevated: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* ==================== UTILITY CLASSES ==================== */
+
+/* Typography Classes */
+.text-large-title {
+  font: var(--text-large-title);
+  letter-spacing: var(--text-large-title-spacing);
+}
+
+.text-title-1 {
+  font: var(--text-title-1);
+  letter-spacing: var(--text-title-1-spacing);
+}
+
+.text-title-2 {
+  font: var(--text-title-2);
+  letter-spacing: var(--text-title-2-spacing);
+}
+
+.text-title-3 {
+  font: var(--text-title-3);
+  letter-spacing: var(--text-title-3-spacing);
+}
+
+.text-headline {
+  font: var(--text-headline);
+  letter-spacing: var(--text-headline-spacing);
+}
+
+.text-body {
+  font: var(--text-body);
+  letter-spacing: var(--text-body-spacing);
+}
+
+.text-callout {
+  font: var(--text-callout);
+  letter-spacing: var(--text-callout-spacing);
+}
+
+.text-subhead {
+  font: var(--text-subhead);
+  letter-spacing: var(--text-subhead-spacing);
+}
+
+.text-footnote {
+  font: var(--text-footnote);
+  letter-spacing: var(--text-footnote-spacing);
+}
+
+.text-caption-1 {
+  font: var(--text-caption-1);
+  letter-spacing: var(--text-caption-1-spacing);
+}
+
+.text-caption-2 {
+  font: var(--text-caption-2);
+  letter-spacing: var(--text-caption-2-spacing);
+}
+
+.text-stat-number {
+  font: var(--text-stat-number);
+  letter-spacing: var(--text-stat-number-spacing);
+}
+
+.text-stat-label {
+  font: var(--text-stat-label);
+  letter-spacing: var(--text-stat-label-spacing);
+  text-transform: uppercase;
+}
+
+/* Color Classes - Premium Light (Forest Green) */
+.bg-primary { background-color: var(--ak-primary); }
+.bg-primary-light { background-color: var(--ak-primary-light); }
+.bg-snow { background-color: var(--ak-snow); }
+.bg-surface { background-color: var(--ak-surface); }
+.bg-ink { background-color: var(--ak-ink); }
+.bg-gold { background-color: var(--ak-gold); }
+.bg-success { background-color: var(--ak-success); }
+.bg-warning { background-color: var(--ak-warning); }
+.bg-error { background-color: var(--ak-error); }
+
+/* Legacy background classes (backwards compatible) */
+.bg-forest { background-color: var(--ak-forest); }
+.bg-forest-light { background-color: var(--ak-forest-light); }
+.bg-foam { background-color: var(--ak-foam); }
+.bg-ivory { background-color: var(--ak-ivory); }
+
+.text-primary { color: var(--ak-primary); }
+.text-primary-light { color: var(--ak-primary-light); }
+.text-ink { color: var(--ak-ink); }
+.text-gold { color: var(--ak-gold); }
+.text-success { color: var(--ak-success); }
+.text-warning { color: var(--ak-warning); }
+.text-error { color: var(--ak-error); }
+.text-charcoal { color: var(--ak-charcoal); }
+.text-steel { color: var(--ak-steel); }
+
+/* Legacy text classes (backwards compatible) */
+.text-forest { color: var(--ak-forest); }
+.text-forest-light { color: var(--ak-forest-light); }
+
+/* Card */
+.ak-card {
+  background-color: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+/* Shadow */
+.shadow-ak-card { box-shadow: var(--shadow-card); }
+.shadow-ak-elevated { box-shadow: var(--shadow-elevated); }
+
+/* ==================== SEMANTIC TOKEN LAYER ==================== */
+/* These are the ONLY tokens allowed in component code */
+/* Based on: AK Golf Premium Light Spec */
+
+:root {
+  /* Core surfaces (Per Premium Light Spec) */
+  --bg: #FAFBFC;
+  --bg-base: #FAFBFC;
+  --bg-elevated: #F5F7F9;
+  --bg-subtle: #EEF1F4;
+  --bg-muted: #E4E8EC;
+  --card: #FFFFFF;
+  --border: var(--gray-300);
+
+  /* Accent = Action (CTA, links, focus) - Forest Green */
+  --accent: var(--ak-primary);
+  --accent-hover: var(--ak-primary-light);
+  --accent-dark: var(--ak-primary-dark);
+  --accent-muted: rgba(27, 77, 62, 0.08);
+  --accent-soft: rgba(27, 77, 62, 0.12);
+
+  /* Achievement = Gold (badges/tiers ONLY) */
+  --achievement: var(--ak-gold);
+  --achievement-light: var(--ak-gold-light);
+  --achievement-muted: rgba(184, 134, 11, 0.1);
+
+  /* Text hierarchy (Per Premium Light Spec) */
+  --text-primary: #111827;
+  --text-secondary: #374151;
+  --text-tertiary: #6B7280;
+  --text-muted: #9CA3AF;
+  --text-faint: #D1D5DB;
+  --text-inverse: #FFFFFF;
+  --text-on-accent: #FFFFFF;
+  --text-brand: var(--ak-primary);
+  --text-accent: var(--accent);
+  --text-achievement: var(--achievement);
+
+  /* Status tokens (Per Premium Light Spec) */
+  --success: var(--ak-success);
+  --success-light: var(--ak-success-light);
+  --success-muted: rgba(5, 150, 105, 0.1);
+  --warning: var(--ak-warning);
+  --warning-light: var(--ak-warning-light);
+  --warning-muted: rgba(217, 119, 6, 0.1);
+  --error: var(--ak-error);
+  --error-light: var(--ak-error-light);
+  --error-muted: rgba(220, 38, 38, 0.08);
+  --info: var(--ak-info);
+  --info-light: var(--ak-info-light);
+  --info-muted: rgba(2, 132, 199, 0.1);
+
+  /* Background semantic */
+  --background-default: var(--bg);
+  --background-surface: var(--ak-surface);
+  --background-white: #FFFFFF;
+  --background-accent: var(--accent);
+  --background-inverse: var(--ak-ink);
+
+  /* Border semantic (Per Premium Light Spec) */
+  --border-default: #E5E7EB;
+  --border-strong: #D1D5DB;
+  --border-subtle: #EEF1F4;
+  --border-brand: var(--ak-primary);
+  --border-primary: rgba(27, 77, 62, 0.2);
+  --border-accent: var(--accent);
+  --border-achievement: var(--achievement);
+
+  /* Badge-only background tokens (subtle/10% opacity) */
+  --bg-neutral-subtle: var(--gray-100);
+  --bg-accent-subtle: var(--accent-muted);
+  --bg-success-subtle: var(--success-muted);
+  --bg-warning-subtle: var(--warning-muted);
+  --bg-error-subtle: var(--error-muted);
+  --bg-achievement-subtle: var(--achievement-muted);
+}
+
+/* ==================== ICON TONE CLASSES ==================== */
+/* Apply these to icon wrappers or directly to SVGs using currentColor */
+
+.tone-accent { color: var(--accent); }
+.tone-achievement { color: var(--achievement); }
+.tone-success { color: var(--success); }
+.tone-warning { color: var(--warning); }
+.tone-error { color: var(--error); }
+.tone-info { color: var(--info); }
+.tone-muted { color: var(--text-tertiary); }
+.tone-brand { color: var(--text-brand); }
+
+/* Icon default behavior - inherits color from parent */
+.icon, [class*="lucide-"], svg {
+  /* Icons should use currentColor - never hardcoded values */
+}

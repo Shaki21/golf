@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Du er invitert til AK Golf Academy Beta</title>
+  <style>
+    /* Reset */
+    body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+    table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+    img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+    
+    /* Base */
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100% !important;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: #F4F1EC;
+    }
+    
+    /* Container */
+    .email-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #FFFFFF;
+    }
+    
+    /* Header */
+    .header {
+      background: linear-gradient(180deg, #1a5a8a 0%, #0d3751 100%);
+      padding: 48px 32px;
+      text-align: center;
+    }
+    
+    .logo {
+      width: 80px;
+      height: auto;
+      margin-bottom: 24px;
+    }
+    
+    .header-title {
+      font-size: 28px;
+      font-weight: 600;
+      color: #FFFFFF;
+      margin: 0;
+      line-height: 1.3;
+    }
+    
+    /* Content */
+    .content {
+      padding: 48px 32px;
+    }
+    
+    .greeting {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1A1A1A;
+      margin: 0 0 24px 0;
+    }
+    
+    .body-text {
+      font-size: 16px;
+      line-height: 1.6;
+      color: #1A1A1A;
+      margin: 0 0 16px 0;
+    }
+    
+    .highlight {
+      background-color: #FFF9E6;
+      border-left: 4px solid #B68D40;
+      padding: 16px;
+      margin: 24px 0;
+    }
+    
+    .highlight-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #B68D40;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin: 0 0 8px 0;
+    }
+    
+    .highlight-text {
+      font-size: 16px;
+      line-height: 1.5;
+      color: #1A1A1A;
+      margin: 0;
+    }
+    
+    /* Benefits list */
+    .benefits {
+      margin: 32px 0;
+    }
+    
+    .benefit-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 16px;
+    }
+    
+    .checkmark {
+      color: #2F855A;
+      font-size: 20px;
+      margin-right: 12px;
+      flex-shrink: 0;
+    }
+    
+    .benefit-text {
+      font-size: 16px;
+      line-height: 1.5;
+      color: #1A1A1A;
+    }
+    
+    /* CTA Button */
+    .cta-container {
+      text-align: center;
+      margin: 40px 0;
+    }
+    
+    .cta-button {
+      display: inline-block;
+      background: linear-gradient(135deg, #D4A855 0%, #B68D40 100%);
+      color: #FFFFFF;
+      font-size: 18px;
+      font-weight: 600;
+      text-decoration: none;
+      padding: 16px 48px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    
+    .cta-button:hover {
+      box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+    }
+    
+    .cta-subtitle {
+      font-size: 14px;
+      color: #6B7280;
+      margin-top: 16px;
+    }
+    
+    /* Details */
+    .details {
+      background-color: #F4F1EC;
+      padding: 24px;
+      border-radius: 8px;
+      margin: 32px 0;
+    }
+    
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #E5E0D8;
+    }
+    
+    .detail-row:last-child {
+      border-bottom: none;
+    }
+    
+    .detail-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #6B7280;
+    }
+    
+    .detail-value {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1A1A1A;
+    }
+    
+    /* Footer */
+    .footer {
+      background-color: #F4F1EC;
+      padding: 32px;
+      text-align: center;
+    }
+    
+    .footer-text {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #6B7280;
+      margin: 0 0 16px 0;
+    }
+    
+    .footer-link {
+      color: #10456A;
+      text-decoration: none;
+    }
+    
+    /* Responsive */
+    @media only screen and (max-width: 600px) {
+      .content, .header, .footer {
+        padding: 32px 24px !important;
+      }
+      
+      .header-title {
+        font-size: 24px !important;
+      }
+      
+      .cta-button {
+        padding: 14px 32px !important;
+        font-size: 16px !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+    <tr>
+      <td style="padding: 24px 0;">
+        <table role="presentation" class="email-container" cellspacing="0" cellpadding="0" border="0">
+          
+          <!-- Header -->
+          <tr>
+            <td class="header">
+              <!-- Logo placeholder - replace with actual logo -->
+              <div style="width: 80px; height: 80px; margin: 0 auto 24px; background-color: rgba(255,255,255,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 32px; color: white; font-weight: bold;">AK</div>
+              <h1 class="header-title">Du er invitert til<br>AK Golf Academy Beta</h1>
+            </td>
+          </tr>
+          
+          <!-- Content -->
+          <tr>
+            <td class="content">
+              <p class="greeting">Hei [NAVN],</p>
+              
+              <p class="body-text">
+                Du er en av få utvalgte spillere som får muligheten til å være med på beta-testingen av AK Golf Academy – Nordens nye premium golf-performance-plattform.
+              </p>
+              
+              <p class="body-text">
+                Vi utvikler en app som kombinerer automatisk tracking, strokes gained-analyse, og personlig treningsplan basert på nordisk coaching-metodikk. Målet er enkelt: Hjelpe deg med systematisk utvikling, sesong for sesong.
+              </p>
+              
+              <div class="highlight">
+                <p class="highlight-title">Hvorfor deg?</p>
+                <p class="highlight-text">
+                  Vi søker committed golfers (handicap 5-25) som spiller regelmessig og ønsker å utvikle seg systematisk. Din erfaring og tilbakemelding vil forme produktet før lansering.
+                </p>
+              </div>
+              
+              <!-- Benefits -->
+              <div class="benefits">
+                <div class="benefit-item">
+                  <span class="checkmark">✓</span>
+                  <span class="benefit-text"><strong>Gratis tilgang</strong> til full versjon gjennom hele beta-perioden (januar–mars)</span>
+                </div>
+                <div class="benefit-item">
+                  <span class="checkmark">✓</span>
+                  <span class="benefit-text"><strong>50% rabatt</strong> ved lansering hvis du fortsetter som kunde</span>
+                </div>
+                <div class="benefit-item">
+                  <span class="checkmark">✓</span>
+                  <span class="benefit-text"><strong>Direkte kontakt</strong> med utviklingsteamet – din feedback teller</span>
+                </div>
+                <div class="benefit-item">
+                  <span class="checkmark">✓</span>
+                  <span class="benefit-text"><strong>Tidlig tilgang</strong> til nye features før alle andre</span>
+                </div>
+              </div>
+              
+              <!-- CTA -->
+              <div class="cta-container">
+                <a href="[BETA_SIGNUP_LINK]" class="cta-button">Bli med i beta</a>
+                <p class="cta-subtitle">Begrenset til 50 spillere · Starter 15. januar</p>
+              </div>
+              
+              <!-- Details -->
+              <div class="details">
+                <div class="detail-row">
+                  <span class="detail-label">Start:</span>
+                  <span class="detail-value">15. januar 2026</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Varighet:</span>
+                  <span class="detail-value">10 uker (januar–mars)</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Plattform:</span>
+                  <span class="detail-value">iOS + Android</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Forventet innsats:</span>
+                  <span class="detail-value">2–4 runder/mnd + feedback</span>
+                </div>
+              </div>
+              
+              <p class="body-text">
+                Du vil motta TestFlight-invitasjon (iOS) eller Play Store beta-link (Android) innen 10. januar. Installasjonen tar under 2 minutter, og du er klar til å logge din første runde.
+              </p>
+              
+              <p class="body-text">
+                Har du spørsmål? Svar på denne e-posten eller kontakt meg direkte på <a href="mailto:anders@akgolf.no" style="color: #10456A;">anders@akgolf.no</a>.
+              </p>
+              
+              <p class="body-text" style="margin-top: 32px;">
+                Takk for at du vil være med på denne reisen.<br>
+                Vi gleder oss til å utvikle fremtidens golf-trening sammen med deg.
+              </p>
+              
+              <p class="body-text" style="margin-top: 24px;">
+                <strong>Anders</strong><br>
+                CEO & Founder, AK Golf Academy
+              </p>
+            </td>
+          </tr>
+          
+          <!-- Footer -->
+          <tr>
+            <td class="footer">
+              <p class="footer-text">
+                AK Golf Academy<br>
+                Nordic Golf Excellence<br>
+                <a href="https://akgolf.no" class="footer-link">akgolf.no</a>
+              </p>
+              <p class="footer-text" style="font-size: 12px; color: #9CA3AF;">
+                Du mottar denne e-posten fordi du er invitert til AK Golf Academy beta.<br>
+                Ikke interessert? <a href="[UNSUBSCRIBE_LINK]" class="footer-link">Klikk her</a>.
+              </p>
+            </td>
+          </tr>
+          
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

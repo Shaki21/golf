@@ -1,0 +1,452 @@
+// ============================================================================
+// MANUAL STATS & STROKES GAINED MODULE
+// Event-sourced data model for shot tracking and SG calculation
+// ============================================================================
+
+// ────────────────────────────────────────────────────────────────────────────
+// ENUMS
+// ────────────────────────────────────────────────────────────────────────────
+
+enum LieCategory {
+  TEE
+  FAIRWAY
+  ROUGH
+  BUNKER
+  RECOVERY
+  GREEN
+  PENALTY
+  OTHER
+}
+
+enum ShotCategory {
+  TEE
+  APPROACH
+  SHORT_GAME
+  PUTTING
+}
+
+enum DistanceType {
+  TOTAL
+  CARRY
+}
+
+enum ExtractionStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+  REQUIRES_REVIEW
+}
+
+enum RoundStatus {
+  DRAFT
+  PENDING_EXTRACTION
+  PENDING_REVIEW
+  FINALIZED
+  ARCHIVED
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// GOLF ROUND - Top level entity for a played round
+// ────────────────────────────────────────────────────────────────────────────
+
+model GolfRound {
+  id        String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId  String      @map("tenant_id") @db.Uuid
+  playerId  String      @map("player_id") @db.Uuid
+
+  // Round metadata
+  roundDate   DateTime    @map("round_date") @db.Date
+  courseName  String?     @map("course_name") @db.VarChar(255)
+  courseId    String?     @map("course_id") @db.Uuid
+  teeBox      String?     @map("tee_box") @db.VarChar(50)
+
+  // Scoring
+  totalScore      Int?    @map("total_score")
+  totalPar        Int?    @map("total_par") @default(72)
+  holesPlayed     Int     @map("holes_played") @default(18)
+
+  // Data quality
+  dataQuality     Float?  @map("data_quality") @db.Real  // 0-1 coverage score
+  sgComputable    Boolean @default(false) @map("sg_computable")
+
+  // Status
+  status          RoundStatus @default(DRAFT)
+  inputMethod     String      @map("input_method") @db.VarChar(20) @default("manual") // 'manual', 'ai_extraction', 'import'
+
+  // Timestamps
+  createdAt       DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt       DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  finalizedAt     DateTime? @map("finalized_at") @db.Timestamptz(6)
+
+  // Relations
+  player          Player            @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  images          RoundImage[]
+  shots           ShotEvent[]
+  holeData        RoundHoleData[]
+  overrides       UserOverride[]
+  sgResult        SGRoundResult?
+
+  @@index([tenantId])
+  @@index([playerId])
+  @@index([roundDate])
+  @@index([status])
+  @@index([playerId, roundDate])
+  @@map("golf_rounds")
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// ROUND IMAGES - Uploaded images of paper notes
+// ────────────────────────────────────────────────────────────────────────────
+
+model RoundImage {
+  id        String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  roundId   String @map("round_id") @db.Uuid
+
+  // Storage
+  originalPath    String  @map("original_path") @db.VarChar(500)
+  thumbnailPath   String? @map("thumbnail_path") @db.VarChar(500)
+  mimeType        String  @map("mime_type") @db.VarChar(50)
+  fileSizeBytes   Int     @map("file_size_bytes")
+
+  // Metadata
+  imageOrder      Int     @map("image_order") @default(0)
+  holesOnImage    Int[]   @map("holes_on_image") // e.g., [1,2,3,4,5,6]
+
+  // Upload info
+  uploadedAt      DateTime @default(now()) @map("uploaded_at") @db.Timestamptz(6)
+
+  // Relations
+  round           GolfRound         @relation(fields: [roundId], references: [id], onDelete: Cascade)
+  extraction      ImageExtraction?
+
+  @@index([roundId])
+  @@map("round_images")
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// IMAGE EXTRACTION - AI extraction results
+// ────────────────────────────────────────────────────────────────────────────
+
+model ImageExtraction {
+  id        String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  imageId   String @unique @map("image_id") @db.Uuid
+
+  // Processing status
+  status          ExtractionStatus @default(PENDING)
+  attemptCount    Int              @default(0) @map("attempt_count")
+  lastAttemptAt   DateTime?        @map("last_attempt_at") @db.Timestamptz(6)
+  errorMessage    String?          @map("error_message") @db.Text
+
+  // Extraction results
+  rawExtraction   Json?   @map("raw_extraction") @db.JsonB  // Raw AI output
+  parsedData      Json?   @map("parsed_data") @db.JsonB     // Structured hole data
+
+  // Confidence
+  overallConfidence   Float?  @map("overall_confidence") @db.Real
+  fieldsRequiringReview Int   @default(0) @map("fields_requiring_review")
+
+  // AI model info (for reproducibility)
+  modelVersion    String? @map("model_version") @db.VarChar(50)
+  promptVersion   String? @map("prompt_version") @db.VarChar(50)
+
+  // Timestamps
+  createdAt       DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  completedAt     DateTime? @map("completed_at") @db.Timestamptz(6)
+
+  // Relations
+  image           RoundImage          @relation(fields: [imageId], references: [id], onDelete: Cascade)
+  holeExtractions ExtractionHoleData[]
+
+  @@index([status])
+  @@map("image_extractions")
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// EXTRACTION HOLE DATA - Parsed hole data from AI extraction
+// ────────────────────────────────────────────────────────────────────────────
+
+model ExtractionHoleData {
+  id            String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  extractionId  String @map("extraction_id") @db.Uuid
+
+  // Hole info
+  holeNumber    Int     @map("hole_number")
+  holeLengthM   Int?    @map("hole_length_m")
+  holePar       Int?    @map("hole_par")
+
+  // Tee shot
+  teeClub           String?       @map("tee_club") @db.VarChar(20)
+  teeDistanceM      Int?          @map("tee_distance_m")
+  teeDistanceType   DistanceType? @map("tee_distance_type")
+  teeConfidence     Float?        @map("tee_confidence") @db.Real
+
+  // Approach shot
+  approachStartDistanceM  Int?          @map("approach_start_distance_m")
+  approachLie             LieCategory?  @map("approach_lie")
+  approachClub            String?       @map("approach_club") @db.VarChar(20)
+  approachEndDistanceM    Int?          @map("approach_end_distance_m")
+  approachEndLie          LieCategory?  @map("approach_end_lie")
+  approachConfidence      Float?        @map("approach_confidence") @db.Real
+
+  // Short game (if miss green)
+  shortGameStartDistanceM Int?          @map("short_game_start_distance_m")
+  shortGameLie            LieCategory?  @map("short_game_lie")
+  shortGameClub           String?       @map("short_game_club") @db.VarChar(20)
+  shortGameEndDistanceM   Int?          @map("short_game_end_distance_m")
+  shortGameConfidence     Float?        @map("short_game_confidence") @db.Real
+
+  // Putting
+  firstPuttLengthM    Int?    @map("first_putt_length_m")
+  puttsCount          Int?    @map("putts_count")
+  puttingConfidence   Float?  @map("putting_confidence") @db.Real
+
+  // Overall
+  holeScore       Int?    @map("hole_score")
+  overallConfidence Float? @map("overall_confidence") @db.Real
+  isPartial       Boolean @default(false) @map("is_partial")
+  notes           String? @db.Text
+
+  // Flags for review
+  requiresReview      Boolean @default(false) @map("requires_review")
+  reviewFields        String[] @map("review_fields") @default([])
+
+  // Relations
+  extraction      ImageExtraction @relation(fields: [extractionId], references: [id], onDelete: Cascade)
+
+  @@unique([extractionId, holeNumber])
+  @@index([extractionId])
+  @@map("extraction_hole_data")
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// ROUND HOLE DATA - Finalized hole data (after user review)
+// ────────────────────────────────────────────────────────────────────────────
+
+model RoundHoleData {
+  id        String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  roundId   String @map("round_id") @db.Uuid
+
+  // Hole info
+  holeNumber    Int  @map("hole_number")
+  holeLengthM   Int? @map("hole_length_m")
+  holePar       Int? @map("hole_par")
+  holeScore     Int? @map("hole_score")
+
+  // Data quality
+  isComplete      Boolean @default(false) @map("is_complete")
+  sgComputable    Boolean @default(false) @map("sg_computable")
+  dataSource      String  @map("data_source") @db.VarChar(20) @default("manual") // 'manual', 'ai', 'mixed'
+
+  // Timestamps
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  // Relations
+  round       GolfRound @relation(fields: [roundId], references: [id], onDelete: Cascade)
+
+  @@unique([roundId, holeNumber])
+  @@index([roundId])
+  @@map("round_hole_data")
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// SHOT EVENT - Individual shot with start and end state (event sourced)
+// ────────────────────────────────────────────────────────────────────────────
+
+model ShotEvent {
+  id        String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  roundId   String @map("round_id") @db.Uuid
+
+  // Shot identification
+  holeNumber      Int @map("hole_number")
+  shotNumber      Int @map("shot_number") // 1 = tee shot, 2 = second shot, etc.
+
+  // Start state (REQUIRED for SG)
+  startDistanceM    Int         @map("start_distance_m")
+  startLie          LieCategory @map("start_lie")
+
+  // End state (REQUIRED for SG, except for holed shots)
+  endDistanceM      Int?        @map("end_distance_m")
+  endLie            LieCategory? @map("end_lie")
+  isHoled           Boolean     @default(false) @map("is_holed")
+
+  // Shot details (optional, for club stats)
+  club              String?     @db.VarChar(20)
+  distanceType      DistanceType? @map("distance_type")
+
+  // Categorization (computed)
+  shotCategory      ShotCategory @map("shot_category")
+
+  // Data quality
+  isEstimated       Boolean @default(false) @map("is_estimated")
+  dataSource        String  @map("data_source") @db.VarChar(20) @default("manual")
+  confidence        Float?  @db.Real
+
+  // Timestamps
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  // Relations
+  round       GolfRound       @relation(fields: [roundId], references: [id], onDelete: Cascade)
+  sgResult    SGShotResult?
+
+  @@unique([roundId, holeNumber, shotNumber])
+  @@index([roundId])
+  @@index([roundId, holeNumber])
+  @@index([club])
+  @@index([startLie, startDistanceM])
+  @@map("shot_events")
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// USER OVERRIDE - Audit trail for user corrections
+// ────────────────────────────────────────────────────────────────────────────
+
+model UserOverride {
+  id        String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  roundId   String @map("round_id") @db.Uuid
+  userId    String @map("user_id") @db.Uuid
+
+  // What was changed
+  entityType      String  @map("entity_type") @db.VarChar(50) // 'extraction_hole', 'shot_event', 'round_hole'
+  entityId        String  @map("entity_id") @db.Uuid
+  fieldName       String  @map("field_name") @db.VarChar(50)
+
+  // Change details
+  previousValue   String? @map("previous_value") @db.Text
+  newValue        String  @map("new_value") @db.Text
+
+  // Context
+  reason          String? @db.VarChar(255)
+
+  // Timestamp
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  // Relations
+  round       GolfRound @relation(fields: [roundId], references: [id], onDelete: Cascade)
+
+  @@index([roundId])
+  @@index([userId])
+  @@index([entityType, entityId])
+  @@map("user_overrides")
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// SG EXPECTED STROKES BASELINE - Versioned baseline table
+// ────────────────────────────────────────────────────────────────────────────
+
+model SGExpectedStrokesBaseline {
+  id        String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+
+  // Version info
+  version         String    @db.VarChar(20) // e.g., "1.0.0", "pga_2024"
+  description     String?   @db.VarChar(255)
+  isActive        Boolean   @default(true) @map("is_active")
+
+  // Lookup key
+  lieCategory       LieCategory @map("lie_category")
+  distanceBucketMin Int         @map("distance_bucket_min") // meters
+  distanceBucketMax Int         @map("distance_bucket_max") // meters
+
+  // Expected strokes value
+  expectedStrokes   Float @map("expected_strokes") @db.Real
+
+  // Metadata
+  sampleSize        Int?      @map("sample_size")
+  source            String?   @db.VarChar(100) // e.g., "PGA Tour 2023", "Synthetic"
+
+  // Timestamps
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@unique([version, lieCategory, distanceBucketMin, distanceBucketMax])
+  @@index([version, isActive])
+  @@index([lieCategory, distanceBucketMin])
+  @@map("sg_expected_strokes_baseline")
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// SG SHOT RESULT - Strokes gained per shot
+// ────────────────────────────────────────────────────────────────────────────
+
+model SGShotResult {
+  id        String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  shotId    String @unique @map("shot_id") @db.Uuid
+
+  // SG calculation
+  expectedStrokesStart    Float @map("expected_strokes_start") @db.Real
+  expectedStrokesEnd      Float @map("expected_strokes_end") @db.Real
+  strokesGained           Float @map("strokes_gained") @db.Real
+
+  // Baseline used
+  baselineVersion         String @map("baseline_version") @db.VarChar(20)
+
+  // Timestamps
+  calculatedAt  DateTime @default(now()) @map("calculated_at") @db.Timestamptz(6)
+
+  // Relations
+  shot          ShotEvent @relation(fields: [shotId], references: [id], onDelete: Cascade)
+
+  @@index([baselineVersion])
+  @@map("sg_shot_results")
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// SG ROUND RESULT - Aggregated strokes gained per round
+// ────────────────────────────────────────────────────────────────────────────
+
+model SGRoundResult {
+  id        String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  roundId   String @unique @map("round_id") @db.Uuid
+
+  // Aggregated SG by category
+  sgTee           Float? @map("sg_tee") @db.Real
+  sgApproach      Float? @map("sg_approach") @db.Real
+  sgShortGame     Float? @map("sg_short_game") @db.Real
+  sgPutting       Float? @map("sg_putting") @db.Real
+  sgTotal         Float? @map("sg_total") @db.Real
+
+  // Shot counts by category
+  shotCountTee        Int @default(0) @map("shot_count_tee")
+  shotCountApproach   Int @default(0) @map("shot_count_approach")
+  shotCountShortGame  Int @default(0) @map("shot_count_short_game")
+  shotCountPutting    Int @default(0) @map("shot_count_putting")
+
+  // Coverage metrics
+  holesWithSG         Int     @default(0) @map("holes_with_sg")
+  totalHoles          Int     @default(18) @map("total_holes")
+  coveragePercent     Float   @map("coverage_percent") @db.Real
+
+  // Baseline used
+  baselineVersion     String @map("baseline_version") @db.VarChar(20)
+
+  // Timestamps
+  calculatedAt  DateTime @default(now()) @map("calculated_at") @db.Timestamptz(6)
+
+  // Relations
+  round         GolfRound @relation(fields: [roundId], references: [id], onDelete: Cascade)
+
+  @@index([baselineVersion])
+  @@map("sg_round_results")
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// SG CATEGORY CONFIG - Configurable shot categorization rules (versioned)
+// ────────────────────────────────────────────────────────────────────────────
+
+model SGCategoryConfig {
+  id        String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+
+  // Version
+  version       String  @unique @db.VarChar(20)
+  isActive      Boolean @default(true) @map("is_active")
+
+  // Rules (stored as JSON for flexibility)
+  // Example: { "SHORT_GAME_MAX_DISTANCE_M": 50, "TEE_SHOT_NUMBER": 1 }
+  rules         Json    @db.JsonB
+
+  // Timestamps
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@map("sg_category_configs")
+}

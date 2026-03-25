@@ -1,0 +1,258 @@
+{
+  "pageId": "player-trening-teknikkplan",
+  "path": "/trening/teknikkplan",
+  "component": "TechniquePlanPage",
+  "analyzedAt": "2026-01-13T02:38:00Z",
+  "jtbdFramework": {
+    "1_pageIdentification": {
+      "name": "TechniquePlanPage (5-Tab Technique Management)",
+      "role": "player",
+      "frequency": "weekly",
+      "context": "training",
+      "clarityScore": 8
+    },
+    "2_primaryJTBD": {
+      "decision": "What technique tasks should I work on today and how am I progressing on my TrackMan goals?",
+      "isObviousIn5Seconds": true,
+      "clarity": 8,
+      "competingAttention": [
+        "5 tabs (Tasks/Goals/TrackMan/Progression/Badges)",
+        "Active tasks list",
+        "Import TrackMan button",
+        "Ny oppgave button"
+      ],
+      "primaryCTA": {
+        "component": "Task action buttons (Start/Complete)",
+        "label": "Work on technique tasks",
+        "isProminent": true
+      }
+    },
+    "3_decisionVsInfoRatio": {
+      "decisionElements": {
+        "count": 12,
+        "items": [
+          "5 tab buttons",
+          "Ny oppgave button",
+          "Import TrackMan button",
+          "Start oppgave buttons (per task)",
+          "Fullfør oppgave buttons (per task)",
+          "Se video buttons (per task)",
+          "Badge cards (implicit: work towards unlocking)"
+        ]
+      },
+      "informationElements": {
+        "count": 10,
+        "items": [
+          "Task cards with details",
+          "Goal cards with progress",
+          "Badge grid (locked/unlocked)",
+          "TrackMan session dashboard",
+          "Progression view",
+          "Technical area labels",
+          "Metric displays"
+        ]
+      },
+      "ratio": 0.55,
+      "assessment": "GOOD - Balanced decision/information for technique tool",
+      "dominantDecision": "Yes - Task completion is clear primary action"
+    },
+    "4_visualHierarchy": {
+      "eyeLandsOnFirst": "Page header + tab navigation",
+      "isCorrectFirstFocus": true,
+      "heroElement": "Active tab content (tasks, goals, etc.)",
+      "secondaryElements": [
+        "Action buttons (Ny oppgave, Import)",
+        "Status badges on cards"
+      ],
+      "noiseElements": [],
+      "isFlatHierarchy": false,
+      "assessment": "GOOD - Clear 5-tab structure with actionable cards"
+    },
+    "5_kpiQuality": {
+      "kpis": [
+        {
+          "metric": "Task status (pending/in_progress/completed)",
+          "type": "leading",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "high",
+          "note": "Shows what to start or complete"
+        },
+        {
+          "metric": "Goal progress (current/target with %)",
+          "type": "leading",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "high",
+          "note": "Shows TrackMan metric progression"
+        },
+        {
+          "metric": "Badge unlock progress (unlocked count)",
+          "type": "lagging",
+          "isActionable": false,
+          "hasContext": true,
+          "quality": "vanity",
+          "note": "Count without specific next steps"
+        },
+        {
+          "metric": "Target metrics (per task)",
+          "type": "leading",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "high",
+          "note": "Specific technical targets to achieve"
+        }
+      ],
+      "leadingPercentage": 0.75,
+      "actionablePercentage": 0.75,
+      "assessment": "EXCELLENT - Majority are actionable technical metrics"
+    },
+    "6_languageAndMentalModel": {
+      "style": "action_oriented",
+      "actionVerbs": [
+        "Start",
+        "Fullfør",
+        "Import",
+        "Oppnå",
+        "Lås opp"
+      ],
+      "systemNouns": [
+        "Oppgave",
+        "Mål",
+        "TrackMan",
+        "Merker",
+        "Metrikker"
+      ],
+      "coachActionPercentage": 0.7,
+      "assessment": "EXCELLENT - Action-oriented technical language",
+      "phrasesToRewrite": []
+    },
+    "7_flowAndNavigationCost": {
+      "clicksFromDashboard": 2,
+      "navigationDepth": 2,
+      "clicksToStartTask": 1,
+      "clicksToCompleteTask": 1,
+      "clicksToImportTrackMan": 1,
+      "clicksToViewBadge": 1,
+      "assessment": "EXCELLENT - Inline actions for all tasks",
+      "shouldBeInline": []
+    },
+    "8_stateCoverage": {
+      "hasEmptyState": true,
+      "hasLoadingState": true,
+      "hasErrorState": false,
+      "hasSuccessState": false,
+      "hasOverloadedState": false,
+      "hasAtRiskState": false,
+      "assessment": "GOOD - Loading and empty states present",
+      "gaps": [
+        "No error handling visible for API failures",
+        "No success toast after task completion",
+        "No success confirmation after TrackMan import"
+      ]
+    },
+    "9_roleScalability": {
+      "hasRoleConditionals": false,
+      "beginnerFriendly": true,
+      "eliteFriendly": true,
+      "scalabilityIssues": [],
+      "recommendation": "Well-designed for all levels - technical progression visible"
+    },
+    "10_strategicVerdict": {
+      "diagnosis": "Comprehensive technique management system with strong UX",
+      "currentBehavior": "5-tab technique hub (Tasks/Goals/TrackMan/Progression/Badges)",
+      "desiredBehavior": "5-tab technique hub (Tasks/Goals/TrackMan/Progression/Badges)",
+      "topIssues": [
+        {
+          "rank": 1,
+          "issue": "Badges tab uses hardcoded mock data (TECHNIQUE_BADGES constant)",
+          "severity": "high",
+          "impact": "Badge unlocking not connected to real progress"
+        },
+        {
+          "rank": 2,
+          "issue": "No success feedback after task completion or goal achievement",
+          "severity": "medium",
+          "impact": "Missing celebration/positive reinforcement"
+        },
+        {
+          "rank": 3,
+          "issue": "5 tabs may be overwhelming for beginners",
+          "severity": "low",
+          "impact": "Complex interface for new users"
+        }
+      ],
+      "structuralFix": "Connect badges to real API + add success celebrations + consider beginner mode with 2-3 tabs only"
+    },
+    "11_crossPageConsistency": {
+      "note": "Uses StandardPageHeader pattern. 5-tab structure is unique (most hubs have 2-4 tabs). Integrates TrackManSessionDashboard component. Uses apiClient for real data fetching."
+    }
+  },
+  "codeAnalysis": {
+    "componentCount": {
+      "interactive": 12,
+      "display": 15
+    },
+    "stateHandling": {
+      "loading": "loading state with Card + text message",
+      "empty": "Empty states for tasks and goals with AlertCircle/Target icons",
+      "error": "console.error but no visible error UI"
+    },
+    "dataSource": {
+      "isRealData": true,
+      "isMockData": true,
+      "hasMixedSources": true,
+      "note": "Tasks & Goals use apiClient (real), Badges use TECHNIQUE_BADGES constant (mock)"
+    },
+    "accessibility": {
+      "hasAriaLabels": false,
+      "semanticHTML": true,
+      "keyboardNav": "Good - uses Button primitives"
+    },
+    "responsiveDesign": {
+      "hasMobileLayout": true,
+      "breakpoints": ["md:grid-cols-2", "md:grid-cols-3"],
+      "mobileFirst": true
+    },
+    "migrationStatus": {
+      "note": "MIGRATED TO PAGE ARCHITECTURE - Zero inline styles",
+      "usesStandardPageHeader": true,
+      "usesCardPrimitive": true
+    },
+    "tabs": [
+      {
+        "id": "tasks",
+        "name": "Oppgaver",
+        "dataSource": "API",
+        "hasCount": true
+      },
+      {
+        "id": "goals",
+        "name": "Mål",
+        "dataSource": "API",
+        "hasCount": true
+      },
+      {
+        "id": "trackman",
+        "name": "TrackMan",
+        "dataSource": "TrackManSessionDashboard component",
+        "hasCount": false
+      },
+      {
+        "id": "progression",
+        "name": "Fremgang",
+        "dataSource": "TechniqueProgressionView component",
+        "hasCount": false
+      },
+      {
+        "id": "badges",
+        "name": "Merker",
+        "dataSource": "Mock (TECHNIQUE_BADGES constant)",
+        "hasCount": true
+      }
+    ]
+  },
+  "priorityScore": 85,
+  "implementationStatus": "partial",
+  "overallAssessment": "EXCELLENT - Comprehensive technique system with good UX, needs badge API integration and success feedback"
+}

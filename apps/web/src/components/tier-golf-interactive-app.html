@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TIER Golf - Interactive App</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      /* Blue Palette 01 */
+      --ink: #02060D;
+      --primary: #10456A;
+      --primary-light: #2C5F7F;
+      --snow: #EDF0F2;
+      --surface: #EBE5DA;
+      --gold: #C9A227;
+      --success: #4A7C59;
+      --warning: #D4A84B;
+      --error: #C45B4E;
+      --charcoal: #1C1C1E;
+      --steel: #8E8E93;
+      --mist: #E5E5EA;
+      --cloud: #F2F2F7;
+      --white: #FFFFFF;
+      /* Legacy aliases */
+      --forest: #10456A;
+      --forest-light: #2C5F7F;
+      --foam: #EDF0F2;
+      --ivory: #EBE5DA;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, system-ui, sans-serif;
+      background: var(--foam);
+      color: var(--charcoal);
+      overflow-x: hidden;
+    }
+
+    /* Navigation */
+    nav {
+      background: var(--forest);
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: 700;
+      color: white;
+      letter-spacing: -0.4px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .nav-btn {
+      padding: 8px 16px;
+      background: rgba(255,255,255,0.1);
+      border: none;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .nav-btn:hover { background: rgba(255,255,255,0.2); }
+    .nav-btn.active { background: var(--gold); color: var(--charcoal); }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .screen { display: none; }
+    .screen.active { display: block; animation: fadeIn 0.3s; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Cards */
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+      margin-bottom: 16px;
+    }
+
+    .card-header {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--forest);
+    }
+
+    /* Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: var(--steel);
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .stat-value {
+      font-size: 34px;
+      font-weight: 700;
+      color: var(--forest);
+      line-height: 1.1;
+    }
+
+    /* Buttons */
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: var(--forest);
+      color: white;
+    }
+    .btn-primary:hover { background: var(--forest-light); }
+
+    .btn-secondary {
+      background: var(--foam);
+      color: var(--charcoal);
+    }
+    .btn-secondary:hover { background: var(--cloud); }
+
+    /* Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th {
+      text-align: left;
+      padding: 12px;
+      font-size: 13px;
+      color: var(--steel);
+      font-weight: 600;
+      border-bottom: 1px solid var(--mist);
+    }
+
+    td {
+      padding: 12px;
+      border-bottom: 1px solid var(--cloud);
+      font-size: 15px;
+    }
+
+    tr:hover { background: var(--foam); }
+
+    /* Calendar */
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .calendar-day {
+      aspect-ratio: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: white;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .calendar-day:hover { background: var(--foam); }
+    .calendar-day.has-session { background: var(--forest); color: white; }
+    .calendar-day.today { border: 2px solid var(--gold); }
+
+    .session-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      margin-top: 4px;
+    }
+
+    /* Form */
+    .form-group { margin-bottom: 16px; }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--charcoal);
+      margin-bottom: 6px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid var(--mist);
+      border-radius: 8px;
+      font-size: 15px;
+      font-family: inherit;
+      background: white;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--forest);
+    }
+
+    /* Badge */
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .badge-success { background: var(--success); color: white; }
+    .badge-warning { background: var(--warning); color: white; }
+    .badge-error { background: var(--error); color: white; }
+
+    /* Progress */
+    .progress-bar {
+      height: 8px;
+      background: var(--cloud);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--success);
+      transition: width 0.3s;
+    }
+
+    /* Chart placeholder */
+    .chart-placeholder {
+      height: 200px;
+      background: var(--cloud);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--steel);
+      font-size: 13px;
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .container { padding: 16px; }
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <div class="logo">TIER Golf</div>
+    <div class="nav-links">
+      <button class="nav-btn active" onclick="showScreen('dashboard')">Dashboard</button>
+      <button class="nav-btn" onclick="showScreen('kalender')">Kalender</button>
+      <button class="nav-btn" onclick="showScreen('treningsprotokoll')">Trening</button>
+      <button class="nav-btn" onclick="showScreen('maalsetninger')">Mål</button>
+      <button class="nav-btn" onclick="showScreen('testresultater')">Tester</button>
+      <button class="nav-btn" onclick="showScreen('notater')">Notater</button>
+      <button class="nav-btn" onclick="showScreen('arkiv')">Arkiv</button>
+      <button class="nav-btn" onclick="showScreen('profil')">Profil</button>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <!-- DASHBOARD -->
+    <div id="dashboard" class="screen active">
+      <h1 style="font-size: 34px; font-weight: 700; margin-bottom: 24px; color: var(--forest);">Dashboard</h1>
+
+      <div class="grid">
+        <div class="stat-card">
+          <div class="stat-label">Treninger denne uken</div>
+          <div class="stat-value">8</div>
+          <div class="progress-bar"><div class="progress-fill" style="width: 80%"></div></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Totale timer i år</div>
+          <div class="stat-value">247</div>
+          <div class="progress-bar"><div class="progress-fill" style="width: 65%"></div></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Gjennomsnittlig score</div>
+          <div class="stat-value">72.4</div>
+          <span class="badge badge-success">↓ 1.2</span>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Neste turnering</div>
+          <div class="stat-value" style="font-size: 20px;">Nordisk U16</div>
+          <div style="font-size: 13px; color: var(--steel); margin-top: 4px;">15. januar 2025</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">Siste aktiviteter</div>
+        <table>
+          <tr>
+            <th>Dato</th>
+            <th>Type</th>
+            <th>Varighet</th>
+            <th>Status</th>
+          </tr>
+          <tr>
+            <td>14. des 2024</td>
+            <td>Teknikk - Driver</td>
+            <td>90 min</td>
+            <td><span class="badge badge-success">Fullført</span></td>
+          </tr>
+          <tr>
+            <td>13. des 2024</td>
+            <td>Golfslag - Jern</td>
+            <td>120 min</td>
+            <td><span class="badge badge-success">Fullført</span></td>
+          </tr>
+          <tr>
+            <td>12. des 2024</td>
+            <td>Spill - 18 hull</td>
+            <td>240 min</td>
+            <td><span class="badge badge-success">Fullført</span></td>
+          </tr>
+          <tr>
+            <td>11. des 2024</td>
+            <td>Fysisk - Styrke</td>
+            <td>60 min</td>
+            <td><span class="badge badge-success">Fullført</span></td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="card-header">Ukens fremgang</div>
+        <div class="chart-placeholder">Graf over treningsvolum og intensitet</div>
+      </div>
+    </div>
+
+    <!-- KALENDER -->
+    <div id="kalender" class="screen">
+      <h1 style="font-size: 34px; font-weight: 700; margin-bottom: 24px; color: var(--forest);">Kalender</h1>
+
+      <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <h2 style="font-size: 22px; font-weight: 700;">Desember 2024</h2>
+          <div>
+            <button class="btn btn-secondary">← Forrige</button>
+            <button class="btn btn-secondary">Neste →</button>
+          </div>
+        </div>
+
+        <div class="calendar-grid">
+          <div style="text-align: center; font-size: 12px; font-weight: 600; color: var(--steel);">Man</div>
+          <div style="text-align: center; font-size: 12px; font-weight: 600; color: var(--steel);">Tir</div>
+          <div style="text-align: center; font-size: 12px; font-weight: 600; color: var(--steel);">Ons</div>
+          <div style="text-align: center; font-size: 12px; font-weight: 600; color: var(--steel);">Tor</div>
+          <div style="text-align: center; font-size: 12px; font-weight: 600; color: var(--steel);">Fre</div>
+          <div style="text-align: center; font-size: 12px; font-weight: 600; color: var(--steel);">Lør</div>
+          <div style="text-align: center; font-size: 12px; font-weight: 600; color: var(--steel);">Søn</div>
+        </div>
+
+        <div class="calendar-grid">
+          <div class="calendar-day"></div>
+          <div class="calendar-day"></div>
+          <div class="calendar-day"></div>
+          <div class="calendar-day"></div>
+          <div class="calendar-day"></div>
+          <div class="calendar-day has-session">1<div class="session-dot" style="background: var(--gold)"></div></div>
+          <div class="calendar-day">2</div>
+          <div class="calendar-day has-session">3<div class="session-dot" style="background: var(--gold)"></div></div>
+          <div class="calendar-day has-session">4<div class="session-dot" style="background: var(--gold)"></div></div>
+          <div class="calendar-day">5</div>
+          <div class="calendar-day has-session">6<div class="session-dot" style="background: var(--gold)"></div></div>
+          <div class="calendar-day">7</div>
+          <div class="calendar-day has-session">8<div class="session-dot" style="background: var(--gold)"></div></div>
+          <div class="calendar-day">9</div>
+          <div class="calendar-day has-session">10<div class="session-dot" style="background: var(--gold)"></div></div>
+          <div class="calendar-day has-session">11<div class="session-dot" style="background: var(--gold)"></div></div>
+          <div class="calendar-day">12</div>
+          <div class="calendar-day has-session">13<div class="session-dot" style="background: var(--gold)"></div></div>
+          <div class="calendar-day today">14</div>
+          <div class="calendar-day">15</div>
+          <div class="calendar-day">16</div>
+          <div class="calendar-day">17</div>
+          <div class="calendar-day">18</div>
+          <div class="calendar-day">19</div>
+          <div class="calendar-day">20</div>
+          <div class="calendar-day">21</div>
+          <div class="calendar-day">22</div>
+          <div class="calendar-day">23</div>
+          <div class="calendar-day">24</div>
+          <div class="calendar-day">25</div>
+          <div class="calendar-day">26</div>
+          <div class="calendar-day">27</div>
+          <div class="calendar-day">28</div>
+          <div class="calendar-day">29</div>
+          <div class="calendar-day">30</div>
+          <div class="calendar-day">31</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">Kommende økter</div>
+        <table>
+          <tr>
+            <th>Dato</th>
+            <th>Tid</th>
+            <th>Type</th>
+            <th>Varighet</th>
+          </tr>
+          <tr>
+            <td>15. des 2024</td>
+            <td>10:00</td>
+            <td>Teknikk - Putting</td>
+            <td>60 min</td>
+          </tr>
+          <tr>
+            <td>16. des 2024</td>
+            <td>14:00</td>
+            <td>Golfslag - Kort spill</td>
+            <td>90 min</td>
+          </tr>
+          <tr>
+            <td>17. des 2024</td>
+            <td>09:00</td>
+            <td>Spill - 18 hull</td>
+            <td>240 min</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- TRENINGSPROTOKOLL -->
+    <div id="treningsprotokoll" class="screen">
+      <h1 style="font-size: 34px; font-weight: 700; margin-bottom: 24px; color: var(--forest);">Treningsprotokoll</h1>
+
+      <div class="card">
+        <div class="card-header">Ny treningsøkt</div>
+        <form>
+          <div class="form-group">
+            <label>Dato</label>
+            <input type="date" value="2024-12-14">
+          </div>
+          <div class="form-group">
+            <label>Type trening</label>
+            <select>
+              <option>Teknikk</option>
+              <option>Golfslag</option>
+              <option>Spill</option>
+              <option>Kompetanse</option>
+              <option>Fysisk</option>
+              <option>Funksjonell</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Varighet (minutter)</label>
+            <input type="number" placeholder="90">
+          </div>
+          <div class="form-group">
+            <label>Fokusområde</label>
+            <input type="text" placeholder="F.eks. Driver, Putting, Kort spill">
+          </div>
+          <div class="form-group">
+            <label>Notater</label>
+            <textarea rows="4" placeholder="Beskriv økten, hva fungerte bra, hva må forbedres..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>Intensitet (1-10)</label>
+            <input type="range" min="1" max="10" value="7">
+          </div>
+          <button type="submit" class="btn btn-primary">Lagre økt</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <div class="card-header">Siste økter</div>
+        <table>
+          <tr>
+            <th>Dato</th>
+            <th>Type</th>
+            <th>Fokus</th>
+            <th>Varighet</th>
+            <th>Intensitet</th>
+          </tr>
+          <tr>
+            <td>14. des</td>
+            <td>Teknikk</td>
+            <td>Driver - Bane</td>
+            <td>90 min</td>
+            <td>8/10</td>
+          </tr>
+          <tr>
+            <td>13. des</td>
+            <td>Golfslag</td>
+            <td>Jern 7-PW</td>
+            <td>120 min</td>
+            <td>7/10</td>
+          </tr>
+          <tr>
+            <td>12. des</td>
+            <td>Spill</td>
+            <td>18 hull - Score</td>
+            <td>240 min</td>
+            <td>6/10</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- MÅLSETNINGER -->
+    <div id="maalsetninger" class="screen">
+      <h1 style="font-size: 34px; font-weight: 700; margin-bottom: 24px; color: var(--forest);">Målsetninger</h1>
+
+      <div class="grid">
+        <div class="card">
+          <div class="card-header">Sesongmål 2025</div>
+          <div style="margin-bottom: 16px;">
+            <div style="font-weight: 600; margin-bottom: 4px;">Handicap</div>
+            <div style="font-size: 24px; font-weight: 700; color: var(--forest);">+2.0</div>
+            <div style="font-size: 13px; color: var(--steel);">Nåværende: +3.4</div>
+            <div class="progress-bar"><div class="progress-fill" style="width: 70%"></div></div>
+          </div>
+          <div style="margin-bottom: 16px;">
+            <div style="font-weight: 600; margin-bottom: 4px;">Gjennomsnittsscore</div>
+            <div style="font-size: 24px; font-weight: 700; color: var(--forest);">71.0</div>
+            <div style="font-size: 13px; color: var(--steel);">Nåværende: 72.4</div>
+            <div class="progress-bar"><div class="progress-fill" style="width: 60%"></div></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">Ferdighetsmål</div>
+          <div style="margin-bottom: 12px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+              <span style="font-weight: 600; font-size: 13px;">Driving accuracy</span>
+              <span style="font-size: 13px; color: var(--steel);">75%</span>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" style="width: 75%"></div></div>
+          </div>
+          <div style="margin-bottom: 12px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+              <span style="font-weight: 600; font-size: 13px;">GIR (Greens in Regulation)</span>
+              <span style="font-size: 13px; color: var(--steel);">68%</span>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" style="width: 68%"></div></div>
+          </div>
+          <div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+              <span style="font-weight: 600; font-size: 13px;">Putts per runde</span>
+              <span style="font-size: 13px; color: var(--steel);">29.5</span>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" style="width: 82%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">Månedlige milepæler</div>
+        <table>
+          <tr>
+            <th>Måned</th>
+            <th>Mål</th>
+            <th>Status</th>
+            <th>Fremgang</th>
+          </tr>
+          <tr>
+            <td>Januar</td>
+            <td>Handicap til +3.0</td>
+            <td><span class="badge badge-warning">Pågår</span></td>
+            <td>80%</td>
+          </tr>
+          <tr>
+            <td>Februar</td>
+            <td>Vinne junior turnering</td>
+            <td><span class="badge badge-warning">Planlagt</span></td>
+            <td>-</td>
+          </tr>
+          <tr>
+            <td>Mars</td>
+            <td>Forbedre kort spill 15%</td>
+            <td><span class="badge badge-warning">Planlagt</span></td>
+            <td>-</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- TESTRESULTATER -->
+    <div id="testresultater" class="screen">
+      <h1 style="font-size: 34px; font-weight: 700; margin-bottom: 24px; color: var(--forest);">Testresultater</h1>
+
+      <div class="card">
+        <div class="card-header">Siste fysiske tester</div>
+        <div class="grid">
+          <div class="stat-card">
+            <div class="stat-label">Clubhead Speed (Driver)</div>
+            <div class="stat-value" style="font-size: 28px;">112 mph</div>
+            <span class="badge badge-success">↑ 3 mph</span>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Bakkontakt</div>
+            <div class="stat-value" style="font-size: 28px;">-4.2°</div>
+            <span class="badge badge-success">Optimal</span>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Spin Rate</div>
+            <div class="stat-value" style="font-size: 28px;">2450 rpm</div>
+            <span class="badge badge-success">Meget bra</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">Slagtest - Jern 7</div>
+        <table>
+          <tr>
+            <th>Metrikk</th>
+            <th>Resultat</th>
+            <th>Mål</th>
+            <th>Status</th>
+          </tr>
+          <tr>
+            <td>Distanse</td>
+            <td>165 yards</td>
+            <td>160-170 yards</td>
+            <td><span class="badge badge-success">✓</span></td>
+          </tr>
+          <tr>
+            <td>Presisjon (8m sirkel)</td>
+            <td>78%</td>
+            <td>≥70%</td>
+            <td><span class="badge badge-success">✓</span></td>
+          </tr>
+          <tr>
+            <td>Konsistens</td>
+            <td>±7 yards</td>
+            <td>±10 yards</td>
+            <td><span class="badge badge-success">✓</span></td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="card-header">Utviklingsdiagram</div>
+        <div class="chart-placeholder">Graf over klubbhodehastighet og distanse over tid</div>
+      </div>
+    </div>
+
+    <!-- NOTATER -->
+    <div id="notater" class="screen">
+      <h1 style="font-size: 34px; font-weight: 700; margin-bottom: 24px; color: var(--forest);">Notater</h1>
+
+      <div style="margin-bottom: 16px;">
+        <button class="btn btn-primary">+ Nytt notat</button>
+      </div>
+
+      <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
+          <div>
+            <div style="font-size: 17px; font-weight: 600; margin-bottom: 4px;">Driver teknikk - Nye erkjennelser</div>
+            <div style="font-size: 13px; color: var(--steel);">14. des 2024 - Trening</div>
+          </div>
+          <span class="badge" style="background: var(--foam); color: var(--charcoal);">Teknikk</span>
+        </div>
+        <p style="line-height: 1.6; color: var(--charcoal);">
+          Jobbet med innsvingsbane i dag. Fokuserte på å holde høyre albue inn mot kroppen gjennom nedsvingen.
+          Resulterte i mer konsistent kontakt og bedre retningskontroll. Trener anbefalte å fortsette med denne følelsen.
+        </p>
+      </div>
+
+      <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
+          <div>
+            <div style="font-size: 17px; font-weight: 600; margin-bottom: 4px;">Mental trening - Turnering</div>
+            <div style="font-size: 13px; color: var(--steel);">10. des 2024 - Kompetanse</div>
+          </div>
+          <span class="badge" style="background: var(--error); color: white;">Kompetanse</span>
+        </div>
+        <p style="line-height: 1.6; color: var(--charcoal);">
+          Gjennomført mental forberedelse før siste turnering. Fokus på pustekontroll og positiv selvprat.
+          Merkbar forbedring i roet på greenen. Vil fortsette med dette opplegget.
+        </p>
+      </div>
+
+      <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
+          <div>
+            <div style="font-size: 17px; font-weight: 600; margin-bottom: 4px;">Kort spill - Chip shots</div>
+            <div style="font-size: 13px; color: var(--steel);">8. des 2024 - Trening</div>
+          </div>
+          <span class="badge" style="background: var(--success); color: white;">Spill</span>
+        </div>
+        <p style="line-height: 1.6; color: var(--charcoal);">
+          Øvde på forskjellige chip-teknikker fra 10-30 yards. Sand wedge for høyere baller,
+          8-jern for rullende chip and run. Beste resultat med 8-jern når greenen er jevn.
+        </p>
+      </div>
+    </div>
+
+    <!-- ARKIV -->
+    <div id="arkiv" class="screen">
+      <h1 style="font-size: 34px; font-weight: 700; margin-bottom: 24px; color: var(--forest);">Arkiv</h1>
+
+      <div class="card">
+        <div class="card-header">Filtrering</div>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <select style="width: auto; min-width: 150px;">
+            <option>Alle perioder</option>
+            <option>2024</option>
+            <option>2023</option>
+            <option>2022</option>
+          </select>
+          <select style="width: auto; min-width: 150px;">
+            <option>Alle typer</option>
+            <option>Treningsøkter</option>
+            <option>Turneringer</option>
+            <option>Tester</option>
+          </select>
+          <input type="text" placeholder="Søk..." style="width: auto; min-width: 200px;">
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">Historiske økter (2024)</div>
+        <table>
+          <tr>
+            <th>Dato</th>
+            <th>Type</th>
+            <th>Beskrivelse</th>
+            <th>Varighet</th>
+            <th>Handling</th>
+          </tr>
+          <tr>
+            <td>14. des 2024</td>
+            <td>Teknikk</td>
+            <td>Driver - Banetrening</td>
+            <td>90 min</td>
+            <td><button class="btn btn-secondary" style="padding: 6px 12px; font-size: 13px;">Vis detaljer</button></td>
+          </tr>
+          <tr>
+            <td>13. des 2024</td>
+            <td>Golfslag</td>
+            <td>Jern 7-PW Presisjon</td>
+            <td>120 min</td>
+            <td><button class="btn btn-secondary" style="padding: 6px 12px; font-size: 13px;">Vis detaljer</button></td>
+          </tr>
+          <tr>
+            <td>12. des 2024</td>
+            <td>Spill</td>
+            <td>18 hull - Scorecard</td>
+            <td>240 min</td>
+            <td><button class="btn btn-secondary" style="padding: 6px 12px; font-size: 13px;">Vis detaljer</button></td>
+          </tr>
+          <tr>
+            <td>11. des 2024</td>
+            <td>Fysisk</td>
+            <td>Styrketrening - Overkropp</td>
+            <td>60 min</td>
+            <td><button class="btn btn-secondary" style="padding: 6px 12px; font-size: 13px;">Vis detaljer</button></td>
+          </tr>
+          <tr>
+            <td>10. des 2024</td>
+            <td>Kompetanse</td>
+            <td>Junior turnering - Runde 1</td>
+            <td>240 min</td>
+            <td><button class="btn btn-secondary" style="padding: 6px 12px; font-size: 13px;">Vis detaljer</button></td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="card-header">Statistikk 2024</div>
+        <div class="grid">
+          <div class="stat-card">
+            <div class="stat-label">Totale økter</div>
+            <div class="stat-value" style="font-size: 28px;">247</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Totale timer</div>
+            <div class="stat-value" style="font-size: 28px;">412</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Turneringer</div>
+            <div class="stat-value" style="font-size: 28px;">18</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Handicap forbedring</div>
+            <div class="stat-value" style="font-size: 28px;">-2.1</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROFIL -->
+    <div id="profil" class="screen">
+      <h1 style="font-size: 34px; font-weight: 700; margin-bottom: 24px; color: var(--forest);">Spillerprofil</h1>
+
+      <div class="grid">
+        <div class="card">
+          <div class="card-header">Personlig informasjon</div>
+          <div class="form-group">
+            <label>Navn</label>
+            <input type="text" value="Anders Kristiansen">
+          </div>
+          <div class="form-group">
+            <label>Fødselsdato</label>
+            <input type="date" value="2008-06-15">
+          </div>
+          <div class="form-group">
+            <label>Klubb</label>
+            <input type="text" value="Oslo Golfklubb">
+          </div>
+          <div class="form-group">
+            <label>Handicap</label>
+            <input type="text" value="+3.4">
+          </div>
+          <button class="btn btn-primary">Oppdater profil</button>
+        </div>
+
+        <div class="card">
+          <div class="card-header">Spillerprofil</div>
+          <div style="margin-bottom: 16px;">
+            <div style="font-weight: 600; margin-bottom: 4px;">Kategori</div>
+            <div style="font-size: 20px; font-weight: 700; color: var(--forest);">Utvalgt B</div>
+          </div>
+          <div style="margin-bottom: 16px;">
+            <div style="font-weight: 600; margin-bottom: 4px;">Treningsfase</div>
+            <div style="font-size: 17px; color: var(--charcoal);">Grunnlag</div>
+          </div>
+          <div style="margin-bottom: 16px;">
+            <div style="font-weight: 600; margin-bottom: 4px;">Ukentlig volum (timer)</div>
+            <div style="font-size: 17px; color: var(--charcoal);">12-15 timer</div>
+          </div>
+          <div>
+            <div style="font-weight: 600; margin-bottom: 4px;">Hovedtrener</div>
+            <div style="font-size: 17px; color: var(--charcoal);">Ola Nordmann</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">Utstyr</div>
+        <table>
+          <tr>
+            <th>Type</th>
+            <th>Merke/Modell</th>
+            <th>Spesifikasjoner</th>
+          </tr>
+          <tr>
+            <td>Driver</td>
+            <td>Titleist TSR3</td>
+            <td>9°, X-stiv, 45.5"</td>
+          </tr>
+          <tr>
+            <td>Jern</td>
+            <td>Titleist T100</td>
+            <td>4-PW, Dynamic Gold S400</td>
+          </tr>
+          <tr>
+            <td>Wedges</td>
+            <td>Vokey SM9</td>
+            <td>50°, 54°, 58°</td>
+          </tr>
+          <tr>
+            <td>Putter</td>
+            <td>Scotty Cameron Newport 2</td>
+            <td>34"</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function showScreen(screenId) {
+      // Hide all screens
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+
+      // Remove active from all nav buttons
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+
+      // Show selected screen
+      document.getElementById(screenId).classList.add('active');
+
+      // Highlight active nav button
+      event.target.classList.add('active');
+
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>

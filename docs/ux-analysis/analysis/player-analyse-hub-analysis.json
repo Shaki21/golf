@@ -1,0 +1,206 @@
+{
+  "pageId": "player-analyse-hub",
+  "path": "/analyse",
+  "component": "AnalyseHub",
+  "analyzedAt": "2026-01-13T01:52:00Z",
+  "jtbdFramework": {
+    "1_pageIdentification": {
+      "name": "AnalyseHub (Analysis Landing Page)",
+      "role": "player",
+      "frequency": "weekly",
+      "context": "performance_review",
+      "clarityScore": 7
+    },
+    "2_primaryJTBD": {
+      "decision": "Which aspect of my performance should I analyze?",
+      "isObviousIn5Seconds": true,
+      "clarity": 7,
+      "competingAttention": [
+        "5 navigation cards (equal weight)",
+        "Recent activity section",
+        "Sparkline visualization"
+      ],
+      "primaryCTA": {
+        "component": "Navigation cards grid",
+        "label": "Multiple options: Statistikk, Sammenligninger, etc.",
+        "isProminent": true
+      }
+    },
+    "3_decisionVsInfoRatio": {
+      "decisionElements": {
+        "count": 5,
+        "items": [
+          "Statistikk card",
+          "Sammenligninger card",
+          "Rapporter card",
+          "Tester card",
+          "Prestasjoner card"
+        ]
+      },
+      "informationElements": {
+        "count": 4,
+        "items": [
+          "Page header (title + subtitle)",
+          "Sparkline visualization",
+          "Recent activity list",
+          "Card descriptions"
+        ]
+      },
+      "ratio": 0.56,
+      "assessment": "GOOD - Balanced decision-to-info ratio for navigation hub",
+      "dominantDecision": "No - Equal weight to all 5 options"
+    },
+    "4_visualHierarchy": {
+      "eyeLandsOnFirst": "Page title 'Analyse'",
+      "isCorrectFirstFocus": true,
+      "heroElement": "5-card grid (equal prominence)",
+      "secondaryElements": [
+        "Sparkline chart",
+        "Recent activity section"
+      ],
+      "noiseElements": [],
+      "isFlatHierarchy": true,
+      "assessment": "MODERATE - Flat hierarchy appropriate for navigation hub, but no guidance on where to start"
+    },
+    "5_kpiQuality": {
+      "kpis": [
+        {
+          "metric": "Sparkline data points",
+          "type": "lagging",
+          "isActionable": false,
+          "hasContext": false,
+          "quality": "low",
+          "note": "Visualization without labels or context - unclear what it shows"
+        },
+        {
+          "metric": "Recent activity items",
+          "type": "lagging",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "medium",
+          "note": "Shows recent events with links, somewhat actionable"
+        }
+      ],
+      "leadingPercentage": 0.0,
+      "actionablePercentage": 0.5,
+      "assessment": "WEAK - Sparkline lacks context, recent activity is better but still historical"
+    },
+    "6_languageAndMentalModel": {
+      "style": "system_neutral",
+      "actionVerbs": [
+        "View",
+        "Compare",
+        "Analyze"
+      ],
+      "systemNouns": [
+        "Statistics",
+        "Comparisons",
+        "Reports",
+        "Tests",
+        "Performance",
+        "Activity"
+      ],
+      "coachActionPercentage": 0.38,
+      "assessment": "MODERATE - Somewhat passive language",
+      "phrasesToRewrite": [
+        "'View statistics' → 'Track your progress'",
+        "'Analyze performance' → 'See where you're improving'"
+      ]
+    },
+    "7_flowAndNavigationCost": {
+      "clicksFromDashboard": 1,
+      "navigationDepth": 1,
+      "clicksToViewStats": 2,
+      "clicksToCompare": 2,
+      "clicksToViewReports": 2,
+      "assessment": "GOOD - 2-click depth to reach content, acceptable for hub",
+      "shouldBeInline": [
+        "Consider showing preview of most-viewed stat on hub itself"
+      ]
+    },
+    "8_stateCoverage": {
+      "hasEmptyState": false,
+      "hasLoadingState": false,
+      "hasErrorState": false,
+      "hasSuccessState": false,
+      "hasOverloadedState": false,
+      "hasAtRiskState": false,
+      "assessment": "CRITICAL - No state handling visible",
+      "gaps": [
+        "No empty state for new users with no data to analyze",
+        "No loading state for sparkline/recent activity",
+        "No error handling for data fetch failures",
+        "Recent activity appears to be hardcoded"
+      ]
+    },
+    "9_roleScalability": {
+      "hasRoleConditionals": false,
+      "beginnerFriendly": false,
+      "eliteFriendly": true,
+      "scalabilityIssues": [
+        "Assumes user has data to analyze - intimidating for beginners",
+        "No guidance on which analysis tool to use first",
+        "5 equal options overwhelming without prioritization"
+      ],
+      "recommendation": "Add beginner guidance: 'Start with Statistics' or progressive disclosure"
+    },
+    "10_strategicVerdict": {
+      "diagnosis": "Navigation hub lacking prioritization and state handling",
+      "currentBehavior": "Static directory of analysis tools",
+      "desiredBehavior": "Guided analysis entry point with smart defaults",
+      "topIssues": [
+        {
+          "rank": 1,
+          "issue": "No state handling - missing empty/loading/error states",
+          "severity": "high",
+          "impact": "Fragile user experience, especially for new users"
+        },
+        {
+          "rank": 2,
+          "issue": "No prioritization or guidance among 5 equal options",
+          "severity": "medium",
+          "impact": "Cognitive overload, especially for beginners"
+        },
+        {
+          "rank": 3,
+          "issue": "Sparkline visualization without context or labels",
+          "severity": "medium",
+          "impact": "Confusing data display, unclear purpose"
+        }
+      ],
+      "structuralFix": "Add StateCard for empty state + smart default (show most relevant analysis card first) + label sparkline"
+    },
+    "11_crossPageConsistency": {
+      "note": "Uses HubPage pattern (consistent). Navigation card grid pattern consistent with other hubs. Recent activity section is unique to this hub."
+    }
+  },
+  "codeAnalysis": {
+    "componentCount": {
+      "interactive": 5,
+      "display": 7
+    },
+    "stateHandling": {
+      "loading": "None visible",
+      "empty": "None",
+      "error": "None"
+    },
+    "dataSource": {
+      "isRealData": false,
+      "isMockData": true,
+      "note": "Recent activity appears hardcoded, sparkline data source unclear"
+    },
+    "accessibility": {
+      "hasAriaLabels": false,
+      "semanticHTML": true,
+      "keyboardNav": "Unknown - needs testing"
+    },
+    "responsiveDesign": {
+      "hasMobileLayout": true,
+      "breakpoints": ["grid responsive layout"],
+      "mobileFirst": true
+    }
+  },
+  "priorityScore": 85,
+  "implementationStatus": "partial",
+  "overallAssessment": "MODERATE - Good structure but needs state handling, data integration, and beginner guidance"
+}

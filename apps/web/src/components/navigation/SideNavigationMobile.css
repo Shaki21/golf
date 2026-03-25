@@ -1,0 +1,380 @@
+/**
+ * SideNavigationMobile Styles
+ *
+ * Mobile header bar and drawer navigation.
+ * Same IA as desktop, responsive presentation.
+ *
+ * Visible on: < 1024px
+ * Uses semantic tokens exclusively.
+ */
+
+/* ─────────────────────────────────────────
+   MOBILE HEADER BAR
+   ───────────────────────────────────────── */
+
+.mobile-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background-color: var(--background-white);
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  z-index: 200;
+  padding-top: var(--safe-area-inset-top);
+}
+
+/* Hide on desktop */
+@media (min-width: 1024px) {
+  .mobile-header {
+    display: none;
+  }
+}
+
+.mobile-header__menu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background-color 150ms ease;
+}
+
+.mobile-header__menu:hover {
+  background-color: var(--background-surface);
+}
+
+.mobile-header__menu:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.mobile-header__logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-header__avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: var(--accent);
+  color: var(--text-inverse);
+  font-size: var(--font-size-subheadline);
+  font-weight: 600;
+  text-decoration: none;
+  transition: opacity 150ms ease;
+}
+
+.mobile-header__avatar:hover {
+  opacity: 0.9;
+}
+
+/* ─────────────────────────────────────────
+   OVERLAY
+   ───────────────────────────────────────── */
+
+.mobile-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0);
+  z-index: 198;
+  pointer-events: none;
+  transition: background-color 200ms ease;
+}
+
+.mobile-overlay--open {
+  background-color: rgba(0, 0, 0, 0.4);
+  pointer-events: auto;
+}
+
+/* Hide on desktop */
+@media (min-width: 1024px) {
+  .mobile-overlay {
+    display: none;
+  }
+}
+
+/* ─────────────────────────────────────────
+   DRAWER
+   ───────────────────────────────────────── */
+
+.mobile-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 280px;
+  max-width: calc(100vw - 60px);
+  background-color: var(--background-white);
+  border-right: 1px solid var(--border-default);
+  z-index: 199;
+  transform: translateX(-100%);
+  transition: transform 250ms cubic-bezier(0.32, 0.72, 0, 1);
+  padding-top: var(--safe-area-inset-top);
+  padding-bottom: var(--safe-area-inset-bottom);
+}
+
+.mobile-drawer--open {
+  transform: translateX(0);
+}
+
+/* Hide on desktop */
+@media (min-width: 1024px) {
+  .mobile-drawer {
+    display: none;
+  }
+}
+
+.mobile-drawer__content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ─────────────────────────────────────────
+   NAVIGATION SECTIONS
+   ───────────────────────────────────────── */
+
+.mobile-drawer__sections {
+  flex: 1;
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mobile-drawer__section {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Navigation item (both link and button) */
+.mobile-drawer__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-body);
+  color: var(--text-secondary);
+  text-decoration: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  transition: background-color 150ms ease, color 150ms ease;
+  min-height: 48px;
+}
+
+.mobile-drawer__item:hover,
+.mobile-drawer__item:active {
+  background-color: var(--background-surface);
+  color: var(--text-primary);
+}
+
+.mobile-drawer__item:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+/* Active item */
+.mobile-drawer__item--active {
+  background-color: var(--background-elevated);
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.mobile-drawer__item--active:hover {
+  background-color: var(--background-elevated);
+}
+
+.mobile-drawer__icon {
+  flex-shrink: 0;
+  color: inherit;
+}
+
+.mobile-drawer__label {
+  flex: 1;
+}
+
+.mobile-drawer__chevron {
+  flex-shrink: 0;
+  color: var(--text-tertiary);
+}
+
+/* ─────────────────────────────────────────
+   SUB-ITEMS
+   ───────────────────────────────────────── */
+
+.mobile-drawer__subitems {
+  padding-left: 48px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.mobile-drawer__subitem {
+  display: block;
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-subheadline);
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: background-color 150ms ease, color 150ms ease;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+
+.mobile-drawer__subitem:hover,
+.mobile-drawer__subitem:active {
+  background-color: var(--background-surface);
+  color: var(--text-primary);
+}
+
+.mobile-drawer__subitem:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.mobile-drawer__subitem--active {
+  background-color: var(--background-elevated);
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+/* ─────────────────────────────────────────
+   DIVIDER
+   ───────────────────────────────────────── */
+
+.mobile-drawer__divider {
+  height: 1px;
+  background-color: var(--border-subtle);
+  margin: 8px 12px;
+  flex-shrink: 0;
+}
+
+/* ─────────────────────────────────────────
+   USER SECTION
+   ───────────────────────────────────────── */
+
+.mobile-drawer__user {
+  padding: 16px;
+  flex-shrink: 0;
+}
+
+.mobile-drawer__user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background-color: var(--background-surface);
+  border-radius: var(--radius-sm);
+  margin-bottom: 12px;
+}
+
+.mobile-drawer__user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--accent);
+  color: var(--text-inverse);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-body);
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.mobile-drawer__user-details {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile-drawer__user-name {
+  font-size: var(--font-size-body);
+  font-weight: 500;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mobile-drawer__user-email {
+  font-size: var(--font-size-footnote);
+  color: var(--text-tertiary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ─────────────────────────────────────────
+   USER ACTIONS
+   ───────────────────────────────────────── */
+
+.mobile-drawer__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.mobile-drawer__action {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-body);
+  color: var(--text-secondary);
+  text-decoration: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  transition: background-color 150ms ease, color 150ms ease;
+  min-height: 48px;
+}
+
+.mobile-drawer__action:hover,
+.mobile-drawer__action:active {
+  background-color: var(--background-surface);
+  color: var(--text-primary);
+}
+
+.mobile-drawer__action:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.mobile-drawer__action--logout {
+  color: var(--text-tertiary);
+}
+
+.mobile-drawer__action--logout:hover,
+.mobile-drawer__action--logout:active {
+  background-color: var(--error-muted);
+  color: var(--error);
+}

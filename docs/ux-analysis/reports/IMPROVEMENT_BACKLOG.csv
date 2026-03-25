@@ -1,0 +1,63 @@
+Priority,Page,Category,Issue,Effort,Hours,Impact,Status
+P0,coach-stats-overview,Data,Mock data fallback on error,Low,0.5,Critical,todo
+P0,coach-groups,Data,Mock data fallback on error,Low,0.5,Critical,todo
+P0,player-trening-hub,Data,Hardcoded mock data - no API,High,8,High,todo
+P0,coach-spillere-hub,Data,Hardcoded mock data - no API,High,8,High,todo
+P0,coach-analyse-hub,Data,Hardcoded mock data - no API,High,8,High,todo
+P0,player-analyse-prestasjoner,Data,Hardcoded mock data - no API,High,8,High,todo
+P0,player-trening-video-hub,Data,All tabs are placeholders,High,12,High,todo
+P0,all-pages,Architecture,Add error boundaries,Medium,4,High,todo
+P0,all-pages,UX,Add StateCard to missing pages (8),Medium,8,High,todo
+P1,player-plan-maal,UX,Missing success feedback,Low,0.5,Medium,todo
+P1,player-plan-booking,UX,Missing success feedback,Low,0.5,Medium,todo
+P1,player-trening-teknikkplan,UX,Missing success feedback,Low,0.5,Medium,todo
+P1,player-mer-meldinger,UX,Missing success feedback,Low,0.5,Medium,todo
+P1,coach-planning,UX,Missing success feedback,Low,0.5,Medium,todo
+P1,player-plan-aarsplan,UX,Missing success feedback,Low,0.5,Medium,todo
+P1,coach-groups,UX,Missing success feedback,Low,0.5,Medium,todo
+P1,all-pages,UX,Add toast notification library,Low,0.5,High,todo
+P1,player-plan-booking,UX,Browser confirm() instead of Modal,Low,1,Medium,todo
+P1,player-plan-maal,UX,Browser confirm() instead of Modal,Low,1,Medium,todo
+P1,player-plan-maal,UX,No empty state CTA,Low,0.25,Medium,todo
+P1,coach-planning,UX,No empty state CTA,Low,0.25,Medium,todo
+P1,player-analyse-prestasjoner,UX,No empty state CTA,Low,0.25,Medium,todo
+P1,coach-spillere-hub,UX,No empty state CTA,Low,0.25,Medium,todo
+P1,player-trening-teknikkplan,UX,No empty state CTA,Low,0.25,Medium,todo
+P1,player-plan-aarsplan,UX,No empty state CTA,Low,0.25,Medium,todo
+P1,all-pages,Accessibility,Add ARIA labels to interactive elements,Medium,6,Medium,todo
+P1,coach-dashboard,UX,Replace vanity metrics with actionable,Medium,1,Medium,todo
+P1,coach-groups,UX,Replace vanity metrics with actionable,Medium,1,Medium,todo
+P1,player-trening-hub,UX,Replace vanity metrics with actionable,Medium,1,Medium,todo
+P1,coach-spillere-hub,UX,Replace vanity metrics with actionable,Medium,1,Medium,todo
+P1,player-analyse-hub,UX,Replace vanity metrics with actionable,Medium,1,Medium,todo
+P1,coach-analyse-hub,UX,Replace vanity metrics with actionable,Medium,1,Medium,todo
+P2,all-pages,UX,Create reusable loading skeletons,Low,2,Low,todo
+P2,coach-athletes,UX,Add loading skeleton,Low,0.25,Low,todo
+P2,coach-planning,UX,Add loading skeleton,Low,0.25,Low,todo
+P2,player-plan-maal,UX,Add loading skeleton,Low,0.25,Low,todo
+P2,player-plan-booking,UX,Add loading skeleton,Low,0.25,Low,todo
+P2,coach-booking,UX,Add loading skeleton,Low,0.25,Low,todo
+P2,coach-groups,UX,Add loading skeleton,Low,0.25,Low,todo
+P2,player-plan-turneringer,UX,Add loading skeleton,Low,0.25,Low,todo
+P2,player-analyse-statistikk,UX,Add loading skeleton,Low,0.25,Low,todo
+P2,coach-stats-overview,UX,Add loading skeleton,Low,0.25,Low,todo
+P2,remaining-pages,Architecture,Migrate to Page component,High,24,Low,todo
+P2,player-plan-kalender,UX,Add URL-persisted filters,Medium,2,Low,todo
+P2,coach-athletes,UX,Add URL-persisted filters,Medium,2,Low,todo
+P2,player-plan-maal,UX,Add URL-persisted filters,Medium,2,Low,todo
+P2,coach-spillere-hub,UX,Add collapsible filter pattern,Medium,2,Low,todo
+P2,player-analyse-prestasjoner,UX,Add collapsible filter pattern,Medium,2,Low,todo
+P2,coach-booking,UX,Add pagination,Medium,2,Low,todo
+P2,coach-athletes,UX,Add pagination,Medium,2,Low,todo
+P2,player-plan-hub,Feature,Add AI Coach guide,Medium,1,Low,todo
+P2,player-dashboard,Feature,Add AI Coach guide,Medium,1,Low,todo
+P2,coach-athletes,Feature,Add AI Coach guide,Medium,1,Low,todo
+P2,coach-planning,Feature,Implement groups tab,High,8,Medium,todo
+P2,player-plan-aarsplan,Feature,Add progress tracking per focus area,Medium,4,Medium,todo
+P2,player-plan-turneringer,Feature,Add registration workflow,High,12,Medium,todo
+P2,player-trening-teknikkplan,Data,Connect badges to real API,Medium,4,Medium,todo
+P2,player-mer-meldinger,Feature,Implement WebSocket for real-time,High,8,Medium,todo
+P2,player-mer-meldinger,Feature,Implement new conversation creation,Medium,4,Medium,todo
+P2,coach-stats-overview,UX,Add inline quick actions,Medium,2,Low,todo
+P2,coach-groups,UX,Add trend indicators to stats,Low,1,Low,todo
+P2,player-plan-booking,UX,Add booking list filters,Low,1,Low,todo

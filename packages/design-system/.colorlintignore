@@ -1,0 +1,82 @@
+# AK Golf Color Lint Ignore File
+# Add file paths (relative to project root) to exclude from color linting
+
+# Token definition files (these define the source of truth)
+src/tokens/colors.ts
+tokens/design-tokens.js
+tokens/tailwind.config.js
+
+# Design-system reference components (use old palette for documentation)
+components/Avatar.tsx
+components/Badge.tsx
+components/Button.tsx
+components/Card.tsx
+components/Input.tsx
+components/Progress.tsx
+
+# Design documentation and showcase files
+# (These intentionally use raw colors for documentation purposes)
+apps/web/src/components/ui/AKGolfAppDesignSystem.jsx
+apps/web/src/components/ui/AKGolfLogo_Showcase.jsx
+apps/web/src/components/ui/AK_Golf_Design_Examples.jsx
+apps/web/src/components/ui/aarsplan_eksempel.jsx
+apps/web/src/components/ui/ak-benchmark-dashboard.jsx
+apps/web/src/components/ui/kategori_system_oversikt.jsx
+apps/web/src/components/ui/utviklingsplan_b_nivaa.jsx
+apps/web/src/design-tokens.js
+
+# UI Lab files (experimental/testing)
+apps/web/src/ui/lab/
+
+# Drawing/annotation color palettes (intentionally basic colors for tools)
+apps/web/src/hooks/useAnnotationCanvas.js
+
+# Third-party integrations (if any)
+# src/integrations/legacy-charts.tsx
+
+# Medal/rank color widgets (gold, silver, bronze are standard medal colors)
+apps/web/src/components/insights/SGJourneyWidget.jsx
+apps/web/src/components/insights/SkillDNAWidget.jsx
+apps/web/src/features/coach-tournaments/CoachTournamentResults.tsx
+
+# School plan color palettes (decorative category colors)
+apps/web/src/features/school/Skoleplan.jsx
+apps/web/src/features/school/SkoleplanContainer.jsx
+
+# Exercise library category colors (distinctive category colors)
+apps/web/src/features/sessions/ExerciseLibrary.jsx
+
+# Profile onboarding theme colors (theming)
+apps/web/src/features/profile/ak_golf_brukerprofil_onboarding.jsx
+
+# Analytics debug (dev tool)
+apps/web/src/analytics/AnalyticsDebug.tsx
+
+# Bounty board widget (rank/tier colors)
+apps/web/src/components/insights/BountyBoardWidget.jsx
+
+# Coach booking (specialized status colors)
+apps/web/src/features/coach-booking/CoachBookingCalendar.tsx
+apps/web/src/features/coach-booking/CoachBookingRequests.tsx
+
+# Coach exercise category colors
+apps/web/src/features/coach-exercises/CoachExerciseTemplates.tsx
+apps/web/src/features/coach-exercises/CoachMyExercises.tsx
+
+# Group colors (distinctive team colors)
+apps/web/src/features/coach-groups/CoachGroupCreate.tsx
+
+# Scheduled messages type indicators
+apps/web/src/features/coach-messages/CoachScheduledMessages.tsx
+
+# Coach statistics and data visualization
+apps/web/src/features/coach-statistics/CoachStatistics.tsx
+apps/web/src/features/coach-stats/CoachDataGolf.tsx
+apps/web/src/features/coach-stats/CoachStatsProgress.tsx
+
+# Tournament medal colors
+apps/web/src/features/coach-athlete-tournaments/CoachAthleteTournaments.tsx
+
+# Generated files
+# .next/
+# dist/

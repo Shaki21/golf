@@ -1,0 +1,685 @@
+// ============================================================================
+// FASE 1 & 2 - NYE MODELLER
+// ============================================================================
+// Task 1: Videoanalyse-verktøy
+// Task 2: Betalings- og faktureringssystem
+// Task 3: Foreldre-portal
+// Task 5: TrackMan/Launch monitor integrasjon
+// Task 6: Strokes Gained analytics
+// Task 8: Konkurranse-forberedelse tools
+// ============================================================================
+
+// ────────────────────────────────────────────────────────────────────────────
+// TASK 1: VIDEO ANALYSIS TOOLS
+// ────────────────────────────────────────────────────────────────────────────
+
+model VideoAnnotation {
+  id                String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  videoId           String    @map("video_id") @db.Uuid
+  playerId          String    @map("player_id") @db.Uuid
+  coachId           String    @map("coach_id") @db.Uuid
+
+  // Annotation data
+  type              String    @db.VarChar(50) // 'line', 'circle', 'angle', 'arrow', 'text'
+  timestamp         Float     // Video timestamp in seconds
+  data              Json      @db.JsonB // Drawing coordinates, color, thickness, etc.
+
+  // Metadata
+  label             String?   @db.VarChar(255)
+  notes             String?   @db.Text
+  isVisible         Boolean   @default(true) @map("is_visible")
+
+  createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt         DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  // Relations
+  video             Video     @relation(fields: [videoId], references: [id], onDelete: Cascade)
+  player            Player    @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  coach             Coach     @relation(fields: [coachId], references: [id], onDelete: Cascade)
+
+  @@index([videoId])
+  @@index([playerId])
+  @@index([coachId])
+  @@map("video_annotations")
+}
+
+model VideoComparison {
+  id                String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId          String    @map("tenant_id") @db.Uuid
+  playerId          String    @map("player_id") @db.Uuid
+  coachId           String    @map("coach_id") @db.Uuid
+
+  // Videos being compared
+  primaryVideoId    String    @map("primary_video_id") @db.Uuid
+  secondaryVideoId  String    @map("secondary_video_id") @db.Uuid
+
+  // Comparison settings
+  syncedTimestamp   Float?    @map("synced_timestamp") // Synced playback position
+  opacity           Float     @default(0.5) // Overlay opacity for secondary video
+  layout            String    @default("side-by-side") @db.VarChar(20) // 'side-by-side', 'overlay', 'split-screen'
+
+  // Metadata
+  title             String?   @db.VarChar(255)
+  notes             String?   @db.Text
+  isShared          Boolean   @default(false) @map("is_shared")
+
+  createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt         DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  // Relations
+  tenant            Tenant    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  player            Player    @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  coach             Coach     @relation(fields: [coachId], references: [id], onDelete: Cascade)
+  primaryVideo      Video     @relation("PrimaryVideoComparison", fields: [primaryVideoId], references: [id], onDelete: Cascade)
+  secondaryVideo    Video     @relation("SecondaryVideoComparison", fields: [secondaryVideoId], references: [id], onDelete: Cascade)
+
+  @@index([playerId])
+  @@index([coachId])
+  @@map("video_comparisons_v2")
+}
+
+model VideoKeyframe {
+  id                String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  videoId           String    @map("video_id") @db.Uuid
+  playerId          String    @map("player_id") @db.Uuid
+
+  // Keyframe data
+  timestamp         Float     // Video timestamp in seconds
+  imageUrl          String    @map("image_url") @db.Text // S3/storage URL for extracted frame
+  thumbnailUrl      String?   @map("thumbnail_url") @db.Text
+
+  // Metadata
+  label             String?   @db.VarChar(255)
+  notes             String?   @db.Text
+
+  createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  // Relations
+  video             Video     @relation(fields: [videoId], references: [id], onDelete: Cascade)
+  player            Player    @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@index([videoId])
+  @@index([playerId])
+  @@map("video_keyframes")
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// TASK 2: PAYMENT & BILLING SYSTEM
+// ────────────────────────────────────────────────────────────────────────────
+
+model PaymentMethod {
+  id                String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  playerId          String?   @map("player_id") @db.Uuid
+  parentId          String?   @map("parent_id") @db.Uuid
+
+  // Stripe integration
+  stripePaymentMethodId String @unique @map("stripe_payment_method_id") @db.VarChar(255)
+  stripeCustomerId      String @map("stripe_customer_id") @db.VarChar(255)
+
+  // Card details (last 4 digits, brand)
+  type              String    @db.VarChar(50) // 'card', 'bank_account', 'vipps'
+  brand             String?   @db.VarChar(50) // 'visa', 'mastercard', etc.
+  last4             String?   @db.VarChar(4)
+  expiryMonth       Int?      @map("expiry_month")
+  expiryYear        Int?      @map("expiry_year")
+
+  // Status
+  isDefault         Boolean   @default(false) @map("is_default")
+  isActive          Boolean   @default(true) @map("is_active")
+
+  createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt         DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  // Relations
+  player            Player?   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  parent            Parent?   @relation(fields: [parentId], references: [id], onDelete: Cascade)
+  payments          Payment[]
+  subscriptions     Subscription[]
+
+  @@index([playerId])
+  @@index([parentId])
+  @@index([stripeCustomerId])
+  @@map("payment_methods")
+}
+
+model Invoice {
+  id                String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId          String    @map("tenant_id") @db.Uuid
+  playerId          String?   @map("player_id") @db.Uuid
+  parentId          String?   @map("parent_id") @db.Uuid
+  coachId           String    @map("coach_id") @db.Uuid
+
+  // Invoice details
+  invoiceNumber     String    @unique @map("invoice_number") @db.VarChar(50)
+  amount            Decimal   @db.Decimal(10, 2)
+  currency          String    @default("NOK") @db.VarChar(3)
+  tax               Decimal   @default(0) @db.Decimal(10, 2)
+  totalAmount       Decimal   @map("total_amount") @db.Decimal(10, 2)
+
+  // Dates
+  invoiceDate       DateTime  @map("invoice_date") @db.Date
+  dueDate           DateTime  @map("due_date") @db.Date
+  paidAt            DateTime? @map("paid_at") @db.Timestamptz(6)
+
+  // Line items
+  items             Json      @db.JsonB // Array of {description, quantity, unitPrice, total}
+
+  // Status
+  status            String    @default("pending") @db.VarChar(20) // 'pending', 'paid', 'overdue', 'cancelled'
+
+  // Integration
+  stripeInvoiceId   String?   @unique @map("stripe_invoice_id") @db.VarChar(255)
+
+  // Notes
+  notes             String?   @db.Text
+  internalNotes     String?   @map("internal_notes") @db.Text
+
+  createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt         DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  // Relations
+  tenant            Tenant    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  player            Player?   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  parent            Parent?   @relation(fields: [parentId], references: [id], onDelete: Cascade)
+  coach             Coach     @relation(fields: [coachId], references: [id], onDelete: Cascade)
+  payments          Payment[]
+
+  @@index([playerId])
+  @@index([parentId])
+  @@index([coachId])
+  @@index([status])
+  @@index([dueDate])
+  @@map("invoices")
+}
+
+model Payment {
+  id                String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  invoiceId         String?   @map("invoice_id") @db.Uuid
+  subscriptionId    String?   @map("subscription_id") @db.Uuid
+  paymentMethodId   String    @map("payment_method_id") @db.Uuid
+
+  // Payment details
+  amount            Decimal   @db.Decimal(10, 2)
+  currency          String    @default("NOK") @db.VarChar(3)
+
+  // Stripe integration
+  stripePaymentIntentId String @unique @map("stripe_payment_intent_id") @db.VarChar(255)
+  stripeChargeId        String? @unique @map("stripe_charge_id") @db.VarChar(255)
+
+  // Status
+  status            String    @default("pending") @db.VarChar(20) // 'pending', 'succeeded', 'failed', 'refunded'
+  failureReason     String?   @map("failure_reason") @db.Text
+
+  // Metadata
+  metadata          Json?     @db.JsonB
+
+  createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt         DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  // Relations
+  invoice           Invoice?  @relation(fields: [invoiceId], references: [id], onDelete: SetNull)
+  subscription      Subscription? @relation(fields: [subscriptionId], references: [id], onDelete: SetNull)
+  paymentMethod     PaymentMethod @relation(fields: [paymentMethodId], references: [id], onDelete: Restrict)
+
+  @@index([invoiceId])
+  @@index([subscriptionId])
+  @@index([status])
+  @@map("payments")
+}
+
+model Subscription {
+  id                String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  playerId          String    @map("player_id") @db.Uuid
+  coachId           String    @map("coach_id") @db.Uuid
+  paymentMethodId   String    @map("payment_method_id") @db.Uuid
+
+  // Subscription details
+  planType          String    @map("plan_type") @db.VarChar(50) // 'monthly', 'annual', '10-pack', etc.
+  amount            Decimal   @db.Decimal(10, 2)
+  currency          String    @default("NOK") @db.VarChar(3)
+
+  // Billing cycle
+  billingInterval   String    @map("billing_interval") @db.VarChar(20) // 'month', 'year'
+  startDate         DateTime  @map("start_date") @db.Date
+  endDate           DateTime? @map("end_date") @db.Date
+  nextBillingDate   DateTime? @map("next_billing_date") @db.Date
+
+  // Status
+  status            String    @default("active") @db.VarChar(20) // 'active', 'cancelled', 'expired', 'paused'
+  cancelledAt       DateTime? @map("cancelled_at") @db.Timestamptz(6)
+  cancelReason      String?   @map("cancel_reason") @db.Text
+
+  // Stripe integration
+  stripeSubscriptionId String @unique @map("stripe_subscription_id") @db.VarChar(255)
+
+  createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt         DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  // Relations
+  player            Player    @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  coach             Coach     @relation(fields: [coachId], references: [id], onDelete: Cascade)
+  paymentMethod     PaymentMethod @relation(fields: [paymentMethodId], references: [id], onDelete: Restrict)
+  payments          Payment[]
+
+  @@index([playerId])
+  @@index([coachId])
+  @@index([status])
+  @@map("subscriptions")
+}
+
+model SessionPackage {
+  id                String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  playerId          String    @map("player_id") @db.Uuid
+  coachId           String    @map("coach_id") @db.Uuid
+  invoiceId         String?   @map("invoice_id") @db.Uuid
+
+  // Package details
+  packageType       String    @map("package_type") @db.VarChar(50) // '5-pack', '10-pack', '20-pack'
+  totalSessions     Int       @map("total_sessions")
+  usedSessions      Int       @default(0) @map("used_sessions")
+  remainingSessions Int       @map("remaining_sessions")
+
+  // Pricing
+  totalAmount       Decimal   @map("total_amount") @db.Decimal(10, 2)
+  pricePerSession   Decimal   @map("price_per_session") @db.Decimal(10, 2)
+
+  // Validity
+  purchaseDate      DateTime  @map("purchase_date") @db.Date
+  expiryDate        DateTime? @map("expiry_date") @db.Date
+  isActive          Boolean   @default(true) @map("is_active")
+
+  createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt         DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  // Relations
+  player            Player    @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  coach             Coach     @relation(fields: [coachId], references: [id], onDelete: Cascade)
+  invoice           Invoice?  @relation(fields: [invoiceId], references: [id], onDelete: SetNull)
+
+  @@index([playerId])
+  @@index([coachId])
+  @@index([isActive])
+  @@map("session_packages")
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// TASK 3: PARENT PORTAL (Already has Parent model, add progress reports)
+// ────────────────────────────────────────────────────────────────────────────
+
+model ProgressReport {
+  id                String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  playerId          String    @map("player_id") @db.Uuid
+  coachId           String    @map("coach_id") @db.Uuid
+  parentId          String?   @map("parent_id") @db.Uuid
+
+  // Report details
+  reportType        String    @map("report_type") @db.VarChar(50) // 'weekly', 'monthly', 'quarterly', 'season'
+  startDate         DateTime  @map("start_date") @db.Date
+  endDate           DateTime  @map("end_date") @db.Date
+
+  // Content
+  summary           String    @db.Text
+  strengths         String[]  @db.Text
+  areasForImprovement String[] @map("areas_for_improvement") @db.Text
+
+  // Metrics
+  sessionsCompleted Int       @map("sessions_completed")
+  practiceHours     Decimal   @map("practice_hours") @db.Decimal(5, 1)
+  handicapChange    Decimal?  @map("handicap_change") @db.Decimal(4, 2)
+
+  // Goals & achievements
+  goalsAchieved     String[]  @map("goals_achieved") @db.Text
+  upcomingGoals     String[]  @map("upcoming_goals") @db.Text
+
+  // Tournament performance
+  tournamentResults Json?     @map("tournament_results") @db.JsonB
+
+  // Next steps
+  recommendations   String    @db.Text
+
+  // Status
+  status            String    @default("draft") @db.VarChar(20) // 'draft', 'sent', 'read'
+  sentAt            DateTime? @map("sent_at") @db.Timestamptz(6)
+  readAt            DateTime? @map("read_at") @db.Timestamptz(6)
+
+  createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt         DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  // Relations
+  player            Player    @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  coach             Coach     @relation(fields: [coachId], references: [id], onDelete: Cascade)
+  parent            Parent?   @relation(fields: [parentId], references: [id], onDelete: SetNull)
+
+  @@index([playerId])
+  @@index([coachId])
+  @@index([parentId])
+  @@index([status])
+  @@map("progress_reports")
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// TASK 5: TRACKMAN / LAUNCH MONITOR INTEGRATION
+// ────────────────────────────────────────────────────────────────────────────
+
+model LaunchMonitorSession {
+  id                String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  playerId          String    @map("player_id") @db.Uuid
+  coachId           String?   @map("coach_id") @db.Uuid
+
+  // Session details
+  sessionDate       DateTime  @map("session_date") @db.Timestamptz(6)
+  location          String?   @db.VarChar(255)
+  deviceType        String    @map("device_type") @db.VarChar(50) // 'TrackMan', 'Foresight', 'SkyTrak', 'FlightScope'
+  deviceId          String?   @map("device_id") @db.VarChar(100)
+
+  // Session metadata
+  sessionType       String    @map("session_type") @db.VarChar(50) // 'practice', 'fitting', 'combine', 'lesson'
+  notes             String?   @db.Text
+
+  // Summary statistics
+  totalShots        Int       @default(0) @map("total_shots")
+  avgClubSpeed      Decimal?  @map("avg_club_speed") @db.Decimal(6, 2)
+  avgBallSpeed      Decimal?  @map("avg_ball_speed") @db.Decimal(6, 2)
+  avgCarryDistance  Decimal?  @map("avg_carry_distance") @db.Decimal(6, 2)
+
+  // Raw session data (for full export/import)
+  rawData           Json?     @map("raw_data") @db.JsonB
+
+  createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt         DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  // Relations
+  player            Player    @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  coach             Coach?    @relation(fields: [coachId], references: [id], onDelete: SetNull)
+  shots             LaunchMonitorShot[]
+
+  @@index([playerId])
+  @@index([coachId])
+  @@index([sessionDate])
+  @@map("launch_monitor_sessions")
+}
+
+model LaunchMonitorShot {
+  id                String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  sessionId         String    @map("session_id") @db.Uuid
+  playerId          String    @map("player_id") @db.Uuid
+
+  // Shot metadata
+  shotNumber        Int       @map("shot_number")
+  club              String    @db.VarChar(50) // 'Driver', '7 Iron', 'PW', etc.
+  timestamp         DateTime  @db.Timestamptz(6)
+
+  // Ball data
+  ballSpeed         Decimal?  @map("ball_speed") @db.Decimal(6, 2) // mph
+  launchAngle       Decimal?  @map("launch_angle") @db.Decimal(5, 2) // degrees
+  launchDirection   Decimal?  @map("launch_direction") @db.Decimal(5, 2) // degrees
+  spinRate          Int?      @map("spin_rate") // rpm
+  spinAxis          Decimal?  @map("spin_axis") @db.Decimal(5, 2) // degrees
+
+  // Club data
+  clubSpeed         Decimal?  @map("club_speed") @db.Decimal(6, 2) // mph
+  attackAngle       Decimal?  @map("attack_angle") @db.Decimal(5, 2) // degrees
+  clubPath          Decimal?  @map("club_path") @db.Decimal(5, 2) // degrees
+  faceAngle         Decimal?  @map("face_angle") @db.Decimal(5, 2) // degrees
+  faceToPath        Decimal?  @map("face_to_path") @db.Decimal(5, 2) // degrees
+  dynamicLoft       Decimal?  @map("dynamic_loft") @db.Decimal(5, 2) // degrees
+  smashFactor       Decimal?  @map("smash_factor") @db.Decimal(4, 3)
+
+  // Distance data
+  carryDistance     Decimal?  @map("carry_distance") @db.Decimal(6, 2) // yards
+  totalDistance     Decimal?  @map("total_distance") @db.Decimal(6, 2) // yards
+  offline           Decimal?  @db.Decimal(6, 2) // yards (left/right)
+
+  // Apex & landing
+  maxHeight         Decimal?  @map("max_height") @db.Decimal(6, 2) // yards
+  landingAngle      Decimal?  @map("landing_angle") @db.Decimal(5, 2) // degrees
+  hangTime          Decimal?  @map("hang_time") @db.Decimal(4, 2) // seconds
+
+  // Quality indicators
+  quality           String?   @db.VarChar(20) // 'good', 'ok', 'poor'
+  notes             String?   @db.Text
+
+  // Raw shot data
+  rawData           Json?     @map("raw_data") @db.JsonB
+
+  createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  // Relations
+  session           LaunchMonitorSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  player            Player    @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@index([sessionId])
+  @@index([playerId])
+  @@index([club])
+  @@map("launch_monitor_shots")
+}
+
+model ClubGapping {
+  id                String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  playerId          String    @map("player_id") @db.Uuid
+
+  // Analysis data
+  analysisDate      DateTime  @map("analysis_date") @db.Date
+  clubs             Json      @db.JsonB // Array of {club, avgCarry, avgTotal, gap}
+
+  // Recommendations
+  recommendations   String?   @db.Text
+  optimalGaps       Json?     @map("optimal_gaps") @db.JsonB
+
+  createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  // Relations
+  player            Player    @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@index([playerId])
+  @@map("club_gapping")
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// TASK 6: STROKES GAINED ANALYTICS
+// ────────────────────────────────────────────────────────────────────────────
+
+model StrokesGainedData {
+  id                String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  playerId          String    @map("player_id") @db.Uuid
+  roundId           String?   @map("round_id") @db.Uuid
+
+  // Round metadata
+  roundDate         DateTime  @map("round_date") @db.Date
+  courseName        String?   @map("course_name") @db.VarChar(255)
+  totalScore        Int?      @map("total_score")
+
+  // Strokes Gained categories
+  sgOffTheTee       Decimal?  @map("sg_off_the_tee") @db.Decimal(6, 3)
+  sgApproach        Decimal?  @map("sg_approach") @db.Decimal(6, 3)
+  sgAroundGreen     Decimal?  @map("sg_around_green") @db.Decimal(6, 3)
+  sgPutting         Decimal?  @map("sg_putting") @db.Decimal(6, 3)
+  sgTotal           Decimal?  @map("sg_total") @db.Decimal(6, 3)
+
+  // Additional breakdowns
+  sgTee2Green       Decimal?  @map("sg_tee_2_green") @db.Decimal(6, 3)
+  sgShortGame       Decimal?  @map("sg_short_game") @db.Decimal(6, 3)
+
+  // Benchmark comparison
+  benchmarkType     String?   @map("benchmark_type") @db.VarChar(50) // 'pga_tour', 'scratch', 'category_a', etc.
+
+  // Raw shot-by-shot data
+  shotData          Json?     @map("shot_data") @db.JsonB
+
+  createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  // Relations
+  player            Player    @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@index([playerId])
+  @@index([roundDate])
+  @@map("strokes_gained_data")
+}
+
+model StrokesGainedBenchmark {
+  id                String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+
+  // Benchmark details
+  benchmarkType     String    @map("benchmark_type") @db.VarChar(50) // 'pga_tour', 'scratch', 'category_a', etc.
+  category          String?   @db.VarChar(50)
+  handicapRange     String?   @map("handicap_range") @db.VarChar(20) // '0-5', '5-10', etc.
+
+  // Average values
+  avgSgOffTheTee    Decimal   @map("avg_sg_off_the_tee") @db.Decimal(6, 3)
+  avgSgApproach     Decimal   @map("avg_sg_approach") @db.Decimal(6, 3)
+  avgSgAroundGreen  Decimal   @map("avg_sg_around_green") @db.Decimal(6, 3)
+  avgSgPutting      Decimal   @map("avg_sg_putting") @db.Decimal(6, 3)
+  avgSgTotal        Decimal   @map("avg_sg_total") @db.Decimal(6, 3)
+
+  // Metadata
+  sampleSize        Int?      @map("sample_size")
+  lastUpdated       DateTime  @map("last_updated") @db.Timestamptz(6)
+
+  createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@unique([benchmarkType, category, handicapRange])
+  @@index([benchmarkType])
+  @@map("strokes_gained_benchmarks")
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// TASK 8: TOURNAMENT PREPARATION TOOLS
+// ────────────────────────────────────────────────────────────────────────────
+
+model TournamentPreparation {
+  id                String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  playerId          String    @map("player_id") @db.Uuid
+  tournamentId      String?   @map("tournament_id") @db.Uuid
+  coachId           String?   @map("coach_id") @db.Uuid
+
+  // Tournament details
+  tournamentName    String    @map("tournament_name") @db.VarChar(255)
+  courseName        String    @map("course_name") @db.VarChar(255)
+  startDate         DateTime  @map("start_date") @db.Date
+
+  // Pre-tournament checklist progress
+  checklistProgress Int       @default(0) @map("checklist_progress") // Percentage
+  checklistItems    Json      @db.JsonB // Array of {item, completed, notes}
+
+  // Mental preparation
+  mentalScore       Int?      @map("mental_score") // 1-10
+  confidenceLevel   Int?      @map("confidence_level") // 1-10
+  mentalNotes       String?   @map("mental_notes") @db.Text
+
+  // Physical readiness
+  physicalScore     Int?      @map("physical_score") // 1-10
+  injuryNotes       String?   @map("injury_notes") @db.Text
+
+  // Strategy notes
+  generalStrategy   String?   @map("general_strategy") @db.Text
+  weatherPlan       String?   @map("weather_plan") @db.Text
+
+  // Goals
+  goals             String[]  @db.Text
+  processGoals      String[]  @map("process_goals") @db.Text
+
+  // Status
+  status            String    @default("in_progress") @db.VarChar(20) // 'in_progress', 'completed'
+
+  createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt         DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  // Relations
+  player            Player    @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  tournament        Tournament? @relation(fields: [tournamentId], references: [id], onDelete: SetNull)
+  coach             Coach?    @relation(fields: [coachId], references: [id], onDelete: SetNull)
+  courseStrategy    CourseStrategy[]
+
+  @@index([playerId])
+  @@index([tournamentId])
+  @@index([startDate])
+  @@map("tournament_preparations")
+}
+
+model CourseStrategy {
+  id                String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tournamentPrepId  String    @map("tournament_prep_id") @db.Uuid
+  playerId          String    @map("player_id") @db.Uuid
+
+  // Course details
+  courseName        String    @map("course_name") @db.VarChar(255)
+  courseRating      Decimal?  @map("course_rating") @db.Decimal(4, 1)
+  slope             Int?
+
+  // Overall strategy
+  overallNotes      String?   @map("overall_notes") @db.Text
+  windStrategy      String?   @map("wind_strategy") @db.Text
+
+  createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt         DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  // Relations
+  tournamentPrep    TournamentPreparation @relation(fields: [tournamentPrepId], references: [id], onDelete: Cascade)
+  player            Player    @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  holeStrategies    HoleStrategy[]
+
+  @@index([tournamentPrepId])
+  @@index([playerId])
+  @@map("course_strategies")
+}
+
+model HoleStrategy {
+  id                String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  courseStrategyId  String    @map("course_strategy_id") @db.Uuid
+
+  // Hole details
+  holeNumber        Int       @map("hole_number")
+  par               Int
+  yardage           Int?
+  handicap          Int? // Stroke index
+
+  // Strategy
+  teeClub           String?   @map("tee_club") @db.VarChar(50)
+  targetLine        String?   @map("target_line") @db.Text
+  approachStrategy  String?   @map("approach_strategy") @db.Text
+  greenReading      String?   @map("green_reading") @db.Text
+
+  // Hazards & notes
+  hazards           String[]  @db.Text
+  missableAreas     String[]  @map("missable_areas") @db.Text
+  notes             String?   @db.Text
+
+  // Wind considerations
+  intoWind          String?   @map("into_wind") @db.Text
+  downWind          String?   @map("down_wind") @db.Text
+
+  createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt         DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  // Relations
+  courseStrategy    CourseStrategy @relation(fields: [courseStrategyId], references: [id], onDelete: Cascade)
+
+  @@unique([courseStrategyId, holeNumber])
+  @@index([courseStrategyId])
+  @@map("hole_strategies")
+}
+
+model PreTournamentChecklist {
+  id                String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  playerId          String    @map("player_id") @db.Uuid
+  coachId           String?   @map("coach_id") @db.Uuid
+
+  // Checklist details
+  name              String    @db.VarChar(255)
+  description       String?   @db.Text
+  isDefault         Boolean   @default(false) @map("is_default")
+
+  // Items
+  items             Json      @db.JsonB // Array of {category, item, description, priority}
+
+  createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt         DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  // Relations
+  player            Player    @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  coach             Coach?    @relation(fields: [coachId], references: [id], onDelete: SetNull)
+
+  @@index([playerId])
+  @@index([coachId])
+  @@map("pre_tournament_checklists")
+}

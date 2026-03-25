@@ -1,0 +1,225 @@
+{
+  "pageId": "coach-planning",
+  "path": "/coach/planlegging",
+  "component": "CoachPlanningHub",
+  "analyzedAt": "2026-01-13T02:45:00Z",
+  "jtbdFramework": {
+    "1_pageIdentification": {
+      "name": "CoachPlanningHub (Training Plan Management)",
+      "role": "coach",
+      "frequency": "weekly",
+      "context": "planning",
+      "clarityScore": 8
+    },
+    "2_primaryJTBD": {
+      "decision": "Which players need training plans created or updated?",
+      "isObviousIn5Seconds": true,
+      "clarity": 8,
+      "competingAttention": [
+        "2 tabs (Players vs Groups)",
+        "Quick stats cards (with/without plans)",
+        "Player search/filter",
+        "Player cards with plan status"
+      ],
+      "primaryCTA": {
+        "component": "Se plan / Lag plan buttons on player cards",
+        "label": "Create or view training plan",
+        "isProminent": true
+      }
+    },
+    "3_decisionVsInfoRatio": {
+      "decisionElements": {
+        "count": 7,
+        "items": [
+          "2 tab buttons",
+          "Search input",
+          "Filter dropdown",
+          "Se plan buttons (per player with plan)",
+          "Lag plan buttons (per player without plan)",
+          "Player card clicks"
+        ]
+      },
+      "informationElements": {
+        "count": 5,
+        "items": [
+          "Quick stats cards (4 metrics)",
+          "Player cards with details",
+          "Plan status badges",
+          "Last updated timestamps",
+          "Player counts"
+        ]
+      },
+      "ratio": 0.58,
+      "assessment": "GOOD - Strong decision focus for planning hub",
+      "dominantDecision": "Yes - Plan creation/viewing is clear primary action"
+    },
+    "4_visualHierarchy": {
+      "eyeLandsOnFirst": "Quick stats cards showing plan coverage",
+      "isCorrectFirstFocus": true,
+      "heroElement": "Stats cards + player grid below tabs",
+      "secondaryElements": [
+        "Search and filter controls",
+        "Tab navigation"
+      ],
+      "noiseElements": [],
+      "isFlatHierarchy": false,
+      "assessment": "EXCELLENT - Stats-first design shows coach what needs attention"
+    },
+    "5_kpiQuality": {
+      "kpis": [
+        {
+          "metric": "Players with plans (count + percentage)",
+          "type": "leading",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "high",
+          "note": "Shows coverage progress toward 100%"
+        },
+        {
+          "metric": "Players without plans (count)",
+          "type": "leading",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "high",
+          "note": "Direct action list - who needs plans"
+        },
+        {
+          "metric": "Plans needing review (count)",
+          "type": "leading",
+          "isActionable": true,
+          "hasContext": true,
+          "quality": "high",
+          "note": "Shows outdated plans requiring attention"
+        },
+        {
+          "metric": "Active players (total count)",
+          "type": "neutral",
+          "isActionable": false,
+          "hasContext": true,
+          "quality": "neutral",
+          "note": "Context for workload, not directly actionable"
+        }
+      ],
+      "leadingPercentage": 0.75,
+      "actionablePercentage": 0.75,
+      "assessment": "EXCELLENT - Majority are actionable leading indicators"
+    },
+    "6_languageAndMentalModel": {
+      "style": "action_oriented",
+      "actionVerbs": [
+        "Se plan",
+        "Lag plan",
+        "Søk",
+        "Filtrer"
+      ],
+      "systemNouns": [
+        "Treningsplan",
+        "Spiller",
+        "Gruppe"
+      ],
+      "coachActionPercentage": 0.8,
+      "assessment": "EXCELLENT - Strong coach action language",
+      "phrasesToRewrite": []
+    },
+    "7_flowAndNavigationCost": {
+      "clicksFromDashboard": 1,
+      "navigationDepth": 1,
+      "clicksToViewPlan": 1,
+      "clicksToCreatePlan": 1,
+      "clicksToSwitchTab": 1,
+      "assessment": "EXCELLENT - Minimal navigation cost for all actions",
+      "shouldBeInline": []
+    },
+    "8_stateCoverage": {
+      "hasEmptyState": true,
+      "hasLoadingState": true,
+      "hasErrorState": true,
+      "hasSuccessState": false,
+      "hasOverloadedState": false,
+      "hasAtRiskState": true,
+      "assessment": "EXCELLENT - Comprehensive state handling including 'at risk' for players without plans",
+      "gaps": [
+        "No success toast after plan creation (would need to check parent component)"
+      ]
+    },
+    "9_roleScalability": {
+      "hasRoleConditionals": false,
+      "beginnerFriendly": true,
+      "eliteFriendly": true,
+      "scalabilityIssues": [],
+      "recommendation": "Well-designed for coaches at all levels - clear triage"
+    },
+    "10_strategicVerdict": {
+      "diagnosis": "Effective coach planning hub with good triage UX",
+      "currentBehavior": "2-tab hub showing plan coverage stats + filterable player list",
+      "desiredBehavior": "2-tab hub showing plan coverage stats + filterable player list",
+      "topIssues": [
+        {
+          "rank": 1,
+          "issue": "Groups tab shows placeholder alert('Kommer snart')",
+          "severity": "medium",
+          "impact": "Cannot plan for groups, only individual players"
+        },
+        {
+          "rank": 2,
+          "issue": "No bulk actions to create plans for multiple players at once",
+          "severity": "low",
+          "impact": "Inefficient for coaches with many players"
+        },
+        {
+          "rank": 3,
+          "issue": "Stats cards don't show trend (is coverage improving?)",
+          "severity": "low",
+          "impact": "Missing momentum/progress feedback"
+        }
+      ],
+      "structuralFix": "Implement group planning + add bulk plan creation + add trend indicators to stats"
+    },
+    "11_crossPageConsistency": {
+      "note": "Uses PageHeader + PageContainer pattern. Similar stats-first hub design to CoachSpillereHub. Integrates with coachesAPI.getAthletes for real data."
+    }
+  },
+  "codeAnalysis": {
+    "componentCount": {
+      "interactive": 7,
+      "display": 8
+    },
+    "stateHandling": {
+      "loading": "StateCard component for loading state",
+      "empty": "No players found message with search guidance",
+      "error": "StateCard component with error message and retry"
+    },
+    "dataSource": {
+      "isRealData": true,
+      "isMockData": false,
+      "note": "Uses coachesAPI.getAthletes() for real player data with plan status"
+    },
+    "accessibility": {
+      "hasAriaLabels": false,
+      "semanticHTML": true,
+      "keyboardNav": "Good - uses button and input elements"
+    },
+    "responsiveDesign": {
+      "hasMobileLayout": true,
+      "breakpoints": ["grid-cols-1 md:grid-cols-2 lg:grid-cols-3"],
+      "mobileFirst": true
+    },
+    "tabs": [
+      {
+        "id": "players",
+        "name": "Spillere",
+        "dataSource": "API",
+        "hasCount": true
+      },
+      {
+        "id": "groups",
+        "name": "Grupper",
+        "dataSource": "Placeholder",
+        "hasCount": false
+      }
+    ]
+  },
+  "priorityScore": 80,
+  "implementationStatus": "partial",
+  "overallAssessment": "GOOD - Effective planning hub with strong triage UX, needs group planning implementation"
+}
